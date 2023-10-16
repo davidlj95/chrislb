@@ -1,5 +1,6 @@
 @use 'breakpoints';
 @use 'margins';
+@use 'paddings';
 
 :host {
   display: flex;
@@ -23,6 +24,7 @@
       width: auto;
     }
 
+    padding: paddings.$m 0;
     margin-bottom: margins.$xl;
 
     @include breakpoints.xs {
