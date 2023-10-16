@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'typographies';
 
 // CSS reset & normalization
 @import 'gardevoir/dist/mini.min.css';
@@ -9,4 +9,6 @@ html {
 body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
+  font-family: 'Fira Sans', sans-serif;
+  @include typographies.size(0);
 }

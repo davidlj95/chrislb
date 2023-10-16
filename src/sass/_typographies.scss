@@ -1,0 +1,5 @@
+@use 'sass:math';
+
+@mixin size($level: 0) {
+  font-size: #{math.pow(1.15, $level)}rem;
+}

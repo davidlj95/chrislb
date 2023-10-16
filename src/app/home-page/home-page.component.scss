@@ -1,0 +1,30 @@
+@use 'breakpoints';
+@use 'margins';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  app-header {
+  }
+
+  .logo {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-height: 150px;
+      width: auto;
+    }
+
+    margin-bottom: margins.$xl;
+
+    @include breakpoints.xs {
+      margin-bottom: margins.$m;
+    }
+  }
+}
