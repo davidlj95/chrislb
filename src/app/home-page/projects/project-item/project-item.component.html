@@ -1,0 +1,22 @@
+<div class="texts">
+  <span class="title">
+    {{ item.title }}
+  </span>
+  <span class="subtitle">
+    {{ item.subtitle }}
+  </span>
+  <span class="quote" *ngIf="item.quote"> "{{ item.quote }}" </span>
+  <div class="description">
+    <p *ngFor="let line of item.description">
+      {{ line }}
+    </p>
+  </div>
+  <div class="credits" *ngIf="item.credits.length">
+    <span *ngFor="let credit of item.credits">
+      {{ credit.role }}: {{ credit.name }} ({{ credit.nickname }})
+    </span>
+  </div>
+</div>
+<div class="images">
+  <img *ngFor="let image of item.images" [src]="image" alt="TODO" />
+</div>

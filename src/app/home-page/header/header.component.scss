@@ -1,0 +1,26 @@
+@use 'paddings';
+@use 'typographies';
+
+:host {
+  background-color: white;
+
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    @include typographies.size(0);
+    padding: paddings.$m;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+
+    ul {
+      display: flex;
+      gap: paddings.$xl;
+    }
+
+    .contacts {
+      display: flex;
+      gap: paddings.$m;
+    }
+  }
+}

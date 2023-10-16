@@ -1,0 +1,60 @@
+@use 'margins';
+@use 'paddings';
+@use 'typographies';
+
+:host {
+  padding: paddings.$m;
+  display: flex;
+  flex-wrap: wrap;
+  gap: margins.$l;
+
+  .texts {
+    display: flex;
+    flex-direction: column;
+    max-width: 60ch;
+  }
+
+  .title {
+    @include typographies.size(9);
+    margin-bottom: margins.$xxs;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    @include typographies.size(4);
+    font-weight: bold;
+  }
+
+  .quote {
+    margin: margins.$l 0;
+    font-weight: 400;
+    //font-style: italic;
+    @include typographies.size(1);
+  }
+
+  .description {
+    font-weight: 300;
+    @include typographies.size(1);
+
+    display: flex;
+    flex-direction: column;
+    gap: margins.$s;
+  }
+
+  .credits {
+    margin: margins.$l 0;
+    display: flex;
+    flex-direction: column;
+    gap: margins.$m;
+    font-weight: 400;
+  }
+
+  .images {
+    display: flex;
+    overflow: hidden;
+
+    img {
+      max-height: 800px;
+    }
+  }
+}

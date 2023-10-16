@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { HomePageComponent } from './home-page.component'
+import { MockComponents } from 'ng-mocks'
+import { ProjectsComponent } from './projects/projects.component'
+import { HeaderComponent } from './header/header.component'
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent
@@ -8,7 +11,10 @@ describe('HomePageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HomePageComponent],
+      declarations: [
+        HomePageComponent,
+        MockComponents(HeaderComponent, ProjectsComponent),
+      ],
     })
     fixture = TestBed.createComponent(HomePageComponent)
     component = fixture.componentInstance

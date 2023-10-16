@@ -34,6 +34,9 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/sass"]
+            },
             "styles": ["src/styles.scss"],
             "scripts": []
           },
@@ -89,6 +92,9 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/sass"]
+            },
             "styles": ["src/styles.scss"],
             "scripts": []
           }
@@ -99,7 +105,10 @@
             "outputPath": "dist/chrislb/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
-            "inlineStyleLanguage": "scss"
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/sass"]
+            }
           },
           "configurations": {
             "production": {
