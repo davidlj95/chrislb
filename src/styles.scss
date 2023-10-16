@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  // Do not allow scroll "bounce" effect
+  overscroll-behavior: none;
+}
