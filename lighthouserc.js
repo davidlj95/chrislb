@@ -10,7 +10,6 @@ module.exports = {
     assert: {
       preset: 'lighthouse:no-pwa',
       assertions: {
-        'link-name': 'warn',
         'meta-description': 'warn',
         'bf-cache': 'warn',
         'csp-xss': 'warn',
