@@ -1,13 +1,13 @@
 .PHONY: *
 
-build: prebuild
+build:
 	npm run prerender
 
 lint:
-	npm run lint --format eslint-formatter-multiple --max-warnings 0
+	npm run lint -- --max-warnings 0
 
 test:
-	npm run test --browsers=ChromeHeadless --no-watch --no-progress --reporters junit,progress --code-coverage
+	npm run test -- --browsers=ChromeHeadless --no-watch --no-progress --reporters progress --code-coverage
 
 run-main:
 	cd .. && act
