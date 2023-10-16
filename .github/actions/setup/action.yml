@@ -1,0 +1,13 @@
+name: Setup
+description: Checks out the repository and installs tooling
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3
+      with:
+        node-version-file: '.node-version'
+        cache: 'npm'
+    - name: Install dependencies
+      shell: bash
+      run: npm ci

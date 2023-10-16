@@ -1,0 +1,49 @@
+name: Deploy to production
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: |
+          Git branch or tag to checkout to build and deploy
+        type: string
+        required: true
+        default: main
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      artifact-name: build
+      ref: ${{ inputs.ref }}
+  test:
+    name: Test
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      ref: ${{ inputs.ref }}
+  lint:
+    name: Lint
+    uses: ./.github/workflows/reusable-lint.yml
+    with:
+      ref: ${{ inputs.ref }}
+  performance:
+    name: Performance
+    needs: build
+    uses: ./.github/workflows/reusable-performance.yml
+    with:
+      build-artifact-name: build
+      ref: ${{ inputs.ref }}
+    secrets:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  deploy:
+    name: Deploy
+    needs: [build, lint, test, performance]
+    uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
+    with:
+      build-artifact-name: build
+    secrets:
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    permissions:
+      contents: read
+      deployments: write
