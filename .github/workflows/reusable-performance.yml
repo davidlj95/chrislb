@@ -1,0 +1,44 @@
+name: Performance
+on:
+  workflow_call:
+    inputs:
+      build-artifact-name:
+        required: true
+        type: string
+      ref:
+        description: Git reference to checkout. Defaults to @actions/checkout default.
+        type: string
+        required: false
+        default: ''
+    secrets:
+      LHCI_GITHUB_APP_TOKEN:
+        required: true
+
+# Add those permissions if reporting test results
+# https://github.com/dorny/test-reporter/issues/229
+# permissions:
+#   checks: write
+
+jobs:
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+        with:
+          ref: ${{ inputs.ref }}
+        # No setup step needed: latest stable Node.js & npm comes included with GitHub runners
+        # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+      - name: Download built app
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+        with:
+          name: ${{ inputs.build-artifact-name }}
+      - name: Run Lighthouse CI
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          # Needed for status checks to appear on PR
+          # https://github.com/GoogleChrome/lighthouse-ci/issues/859#issuecomment-1574205125
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: cd .ci && make lighthouse

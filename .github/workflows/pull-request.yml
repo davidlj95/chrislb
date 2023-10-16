@@ -1,0 +1,48 @@
+name: Pull request
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/reusable-build.yml
+    permissions:
+      contents: write
+    with:
+      artifact-name: build
+      target: build-pull-request
+  test:
+    name: Test
+    uses: ./.github/workflows/reusable-test.yml
+  lint:
+    name: Lint
+    uses: ./.github/workflows/reusable-lint.yml
+  style:
+    name: Style
+    uses: ./.github/workflows/reusable-style.yml
+  performance:
+    name: Performance
+    needs: build
+    uses: ./.github/workflows/reusable-performance.yml
+    with:
+      build-artifact-name: build
+    secrets:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  deploy-preview:
+    name: Deploy preview
+    needs: [build, lint, test, performance]
+    uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
+    # Cannot run on PRs from forked repos right now.
+    # https://developers.cloudflare.com/pages/platform/known-issues/
+    # Quote to avoid YAML issues with "!" at the beginning
+    # https://github.com/actions/runner/issues/753
+    if: '! github.event.pull_request.head.repo.fork'
+    with:
+      build-artifact-name: build
+    secrets:
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    permissions:
+      contents: read
+      deployments: write

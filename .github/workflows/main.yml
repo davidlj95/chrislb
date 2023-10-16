@@ -1,0 +1,59 @@
+name: Push to main
+
+on:
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      artifact-name: build
+  test:
+    name: Test
+    uses: ./.github/workflows/reusable-test.yml
+  lint:
+    name: Lint
+    uses: ./.github/workflows/reusable-lint.yml
+    permissions:
+      checks: write
+  style:
+    name: Style
+    uses: ./.github/workflows/reusable-style.yml
+  performance:
+    name: Performance
+    needs: build
+    uses: ./.github/workflows/reusable-performance.yml
+    permissions:
+      checks: write
+    with:
+      build-artifact-name: build
+    secrets:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  deploy-gh-pages:
+    name: Deploy to GitHub Pages (latest)
+    needs: [build, lint, test, performance]
+    uses: ./.github/workflows/reusable-deploy-github-pages.yml
+    with:
+      build-artifact-name: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+  deploy-cloudflare-pages:
+    name: Deploy to Cloudflare Pages (pro)
+    if: fromJSON(vars.DEPLOY_TO_PRO_ON_MAIN)
+    needs: [build, lint, test, performance]
+    uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
+    with:
+      build-artifact-name: build
+    secrets:
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    permissions:
+      contents: read
+      deployments: write
