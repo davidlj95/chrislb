@@ -1,6 +1,16 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "schematics": {
+    "@schematics/angular": {
+      "component": {
+        "module": "app"
+      },
+      "directive": {
+        "module": "app"
+      }
+    }
+  },
   "newProjectRoot": "projects",
   "projects": {
     "chrislb": {
