@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component'
+import { MockComponents } from 'ng-mocks'
+import { HeaderComponent } from './header/header.component'
+import { LogoComponent } from './logo/logo.component'
 
 describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [AppComponent],
+      declarations: [
+        AppComponent,
+        MockComponents(HeaderComponent, LogoComponent),
+      ],
     }),
   )
 
@@ -14,11 +20,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
     expect(app).toBeTruthy()
-  })
-
-  it(`should have as title 'chrislb'`, () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    expect(app.title).toEqual('chrislb')
   })
 })

@@ -11,10 +11,7 @@ describe('HomePageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        HomePageComponent,
-        MockComponents(HeaderComponent, ProjectsComponent),
-      ],
+      declarations: [HomePageComponent, MockComponents(ProjectsComponent)],
     })
     fixture = TestBed.createComponent(HomePageComponent)
     component = fixture.componentInstance
