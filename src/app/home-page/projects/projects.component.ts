@@ -30,8 +30,8 @@ export class ProjectsComponent {
         },
       ],
       images: [
-        'assets/projects/chiasma/chiasma_100.jpg',
-        'assets/projects/chiasma/chiasma_101.jpg',
+        'assets/projects/chiasma/preview/chiasma_101.jpg',
+        'assets/projects/chiasma/preview/chiasma_102.jpg',
       ],
     },
   ]
