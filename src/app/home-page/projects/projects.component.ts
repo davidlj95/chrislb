@@ -21,12 +21,12 @@ export class ProjectsComponent {
         {
           role: 'Designer, Creative Director',
           name: 'Christian Lázaro',
-          nickname: '@christian_labu',
+          nickname: 'christian_labu',
         },
         {
           role: 'Photographer',
           name: 'Alejandro Flama',
-          nickname: '@flama.ph',
+          nickname: 'flama.ph',
         },
       ],
       images: [
