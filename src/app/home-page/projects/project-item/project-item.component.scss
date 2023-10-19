@@ -1,3 +1,6 @@
+@use 'breakpoints';
+@use 'header';
+@use 'logo';
 @use 'margins';
 @use 'paddings';
 @use 'typographies';
@@ -5,23 +8,61 @@
 :host {
   padding: paddings.$m;
   display: flex;
-  flex-wrap: wrap;
   gap: margins.$l;
+
+  $headerHeight: header.$height;
+  $logoHeight: logo.$height;
 
   .texts {
     display: flex;
     flex-direction: column;
+    min-width: 40ch;
     max-width: 60ch;
   }
 
+  .images {
+    min-height: 100%;
+    display: flex;
+    overflow: hidden;
+
+    img {
+      $extraSpaceBigScreens: 40px;
+      max-height: calc(
+        100vh - $headerHeight - $logoHeight - $extraSpaceBigScreens
+      );
+    }
+  }
+
+  @include breakpoints.xs-s {
+    flex-wrap: wrap;
+    gap: margins.$m;
+
+    .texts {
+      min-width: unset;
+      max-width: unset;
+      order: 2;
+    }
+
+    .images {
+      order: 1;
+
+      img {
+        $extraSpaceSmallScreens: 130px;
+        max-height: calc(
+          100vh - $headerHeight - $logoHeight - $extraSpaceSmallScreens
+        );
+      }
+    }
+  }
+
   .title {
-    @include typographies.size(9);
+    @include typographies.font-size(9);
     margin-bottom: margins.$xxs;
     font-weight: bold;
   }
 
   .subtitle {
-    @include typographies.size(4);
+    @include typographies.font-size(4);
     font-weight: bold;
   }
 
@@ -29,12 +70,12 @@
     margin: margins.$l 0;
     font-weight: 400;
     //font-style: italic;
-    @include typographies.size(1);
+    @include typographies.font-size(1);
   }
 
   .description {
     font-weight: 300;
-    @include typographies.size(1);
+    @include typographies.font-size(1);
 
     display: flex;
     flex-direction: column;
@@ -42,19 +83,10 @@
   }
 
   .credits {
-    margin: margins.$l 0;
+    margin-top: margins.$l;
     display: flex;
     flex-direction: column;
     gap: margins.$m;
     font-weight: 400;
-  }
-
-  .images {
-    display: flex;
-    overflow: hidden;
-
-    img {
-      max-height: 800px;
-    }
   }
 }

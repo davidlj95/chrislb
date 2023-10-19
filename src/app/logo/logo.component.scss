@@ -1,0 +1,31 @@
+@use 'breakpoints';
+@use 'logo';
+@use 'margins';
+@use 'paddings';
+
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+
+  background-color: white;
+
+  display: flex;
+  justify-content: center;
+
+  padding: logo.$vertical-padding paddings.$m;
+
+  /** UGLY
+  margin-bottom: margins.$xl;
+
+  @include breakpoints.xs {
+    margin-bottom: margins.$m;
+  }
+  **/
+
+  img {
+    max-height: logo.$image-height;
+    width: auto;
+  }
+}

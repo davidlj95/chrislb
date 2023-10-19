@@ -1,0 +1,5 @@
+@use 'paddings';
+
+$vertical-padding: paddings.$m;
+$image-height: 100px;
+$height: calc($image-height + $vertical-padding * 2);

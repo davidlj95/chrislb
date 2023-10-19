@@ -7,6 +7,7 @@ import { ProjectItem } from './project-item/project-item'
   styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent {
+  public readonly ASSETS_PATH = 'assets/projects'
   public readonly items: ReadonlyArray<ProjectItem> = [
     {
       title: 'CHIASMA',
@@ -21,18 +22,22 @@ export class ProjectsComponent {
         {
           role: 'Designer, Creative Director',
           name: 'Christian Lázaro',
-          nickname: '@christian_labu',
+          nickname: 'christian_labu',
         },
         {
           role: 'Photographer',
           name: 'Alejandro Flama',
-          nickname: '@flama.ph',
+          nickname: 'flama.ph',
         },
       ],
-      images: [
-        'assets/projects/chiasma/preview/chiasma_101.jpg',
-        'assets/projects/chiasma/preview/chiasma_102.jpg',
-      ],
+      images: new Array(15)
+        .fill(0)
+        .map(
+          (x, i) =>
+            `${this.ASSETS_PATH}/chiasma/preview/chiasma_1${(i + 1)
+              .toString()
+              .padStart(2, '0')}.jpg`,
+        ),
     },
   ]
 }

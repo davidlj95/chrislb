@@ -10,28 +10,8 @@
   }
 }
 
-$xs: 600px;
-
-@mixin s {
-  @media (min-width: 600px) and (max-width: 959.98px) {
-    @content;
-  }
-}
-
-@mixin m {
-  @media (min-width: 960px) and (max-width: 1279.98px) {
-    @content;
-  }
-}
-
-@mixin l {
-  @media (min-width: 1280px) and (max-width: 1919.98px) {
-    @content;
-  }
-}
-
-@mixin xl {
-  @media (min-width: 1920px) {
+@mixin xs-s {
+  @media (max-width: 959.98px) {
     @content;
   }
 }

@@ -10,5 +10,5 @@ body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
   font-family: 'Fira Sans', sans-serif;
-  @include typographies.size(0);
+  @include typographies.font-size(0);
 }

@@ -13,10 +13,16 @@
   </div>
   <div class="credits" *ngIf="item.credits.length">
     <span *ngFor="let credit of item.credits">
-      {{ credit.role }}: {{ credit.name }} ({{ credit.nickname }})
+      {{ credit.role }}: {{ credit.name }} (<a
+        href="https://instagram.com/_u/{{ credit.nickname }}"
+        target="_blank"
+        >@{{ credit.nickname }}</a
+      >)
     </span>
   </div>
 </div>
 <div class="images">
+  <!-- TODO: optimize image -->
+  <!--suppress AngularNgOptimizedImage -->
   <img *ngFor="let image of item.images" [src]="image" alt="TODO" />
 </div>

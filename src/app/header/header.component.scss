@@ -1,3 +1,4 @@
+@use 'header';
 @use 'paddings';
 @use 'typographies';
 
@@ -7,20 +8,13 @@
   header {
     display: flex;
     flex-wrap: wrap;
-    @include typographies.size(0);
-    padding: paddings.$m;
+    padding: header.$vertical-padding paddings.$m;
     justify-content: center;
-    position: sticky;
-    top: 0;
+    font-size: header.$font-size;
 
     ul {
       display: flex;
       gap: paddings.$xl;
-    }
-
-    .contacts {
-      display: flex;
-      gap: paddings.$m;
     }
   }
 }
