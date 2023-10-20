@@ -88,7 +88,9 @@ describe('SwiperDirective', () => {
         fixture.detectChanges()
 
         expect(initialize).toHaveBeenCalledOnceWith()
-        expect(swiperElement).toEqual(jasmine.objectContaining(options))
+        expect(swiperElement?.nativeElement).toEqual(
+          jasmine.objectContaining(options),
+        )
       })
     })
   })
