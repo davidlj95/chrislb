@@ -88,9 +88,7 @@ describe('SwiperDirective', () => {
         fixture.detectChanges()
 
         expect(initialize).toHaveBeenCalledOnceWith()
-        expect(getSwiperElement(fixture).nativeElement).toEqual(
-          jasmine.objectContaining(options),
-        )
+        expect(swiperElement).toEqual(jasmine.objectContaining(options))
       })
     })
   })
@@ -105,7 +103,9 @@ function makeComponentWithDirective({
   options?: SwiperOptions
   initialize?: () => void
 }): Type<unknown> {
-  const noOp = () => {}
+  const noOp = () => {
+    return
+  }
 
   @Component({
     template: ` <!--suppress AngularUndefinedBinding -->
