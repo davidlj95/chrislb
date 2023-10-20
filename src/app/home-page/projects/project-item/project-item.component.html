@@ -21,8 +21,11 @@
     </span>
   </div>
 </div>
-<div class="images">
-  <!-- TODO: optimize image -->
-  <!--suppress AngularNgOptimizedImage -->
-  <img *ngFor="let image of item.images" [src]="image" alt="TODO" />
-</div>
+<swiper-container [appSwiper]="options" init="false">
+  <swiper-slide *ngFor="let image of item.images">
+    <!-- TODO: optimize image, a11y -->
+    <!--suppress HtmlRequiredAltAttribute, AngularNgOptimizedImage -->
+    <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
+    <img [src]="image" />
+  </swiper-slide>
+</swiper-container>

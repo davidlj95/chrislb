@@ -8,50 +8,62 @@
 :host {
   padding: paddings.$m;
   display: flex;
+  align-content: flex-start;
   gap: margins.$l;
 
   $headerHeight: header.$height;
   $logoHeight: logo.$height;
+  $textsWidthBigScreen: 61ch;
 
   .texts {
     display: flex;
     flex-direction: column;
-    min-width: 40ch;
-    max-width: 60ch;
+    width: $textsWidthBigScreen;
   }
 
-  .images {
-    min-height: 100%;
-    display: flex;
-    overflow: hidden;
+  swiper-container {
+    float: left;
+    // 👇 Seems swiper needs size set to work fine
+    width: calc(100% - $textsWidthBigScreen);
+    $extraSpace: 40px;
+    max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
 
-    img {
-      $extraSpaceBigScreens: 40px;
-      max-height: calc(
-        100vh - $headerHeight - $logoHeight - $extraSpaceBigScreens
-      );
+    swiper-slide {
+      width: auto;
+      margin-right: 16px;
+
+      img {
+        display: block;
+        height: 100%;
+      }
     }
   }
 
-  @include breakpoints.xs-s {
+  @include breakpoints.until-s {
     flex-wrap: wrap;
     gap: margins.$m;
 
     .texts {
-      min-width: unset;
-      max-width: unset;
+      width: unset;
       order: 2;
     }
 
-    .images {
+    swiper-container {
+      width: 100%;
       order: 1;
 
-      img {
-        $extraSpaceSmallScreens: 130px;
-        max-height: calc(
-          100vh - $headerHeight - $logoHeight - $extraSpaceSmallScreens
-        );
+      $extraSpace: 120px;
+      max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
+
+      swiper-slide {
+        margin-right: 8px;
       }
+    }
+  }
+
+  @include breakpoints.s {
+    swiper-container {
+      max-height: calc(60vh - $headerHeight - $logoHeight);
     }
   }
 
@@ -69,7 +81,6 @@
   .quote {
     margin: margins.$l 0;
     font-weight: 400;
-    //font-style: italic;
     @include typographies.font-size(1);
   }
 
@@ -86,7 +97,7 @@
     margin-top: margins.$l;
     display: flex;
     flex-direction: column;
-    gap: margins.$m;
+    gap: margins.$xs;
     font-weight: 400;
   }
 }

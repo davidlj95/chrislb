@@ -12,6 +12,7 @@ module.exports = {
       assertions: {
         'meta-description': 'warn',
         'link-name': 'warn',
+        'image-alt': 'warn',
         'unsized-images': 'warn',
         'bf-cache': 'warn',
         'csp-xss': 'warn',

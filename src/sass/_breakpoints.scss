@@ -4,14 +4,26 @@
  * Obtained from Angular CDK
  * https://github.com/angular/components/blob/16.2.1/src/cdk/layout/breakpoints.ts
  */
+@function almost($pixels) {
+  @return $pixels - 0.02px;
+}
+
+$xs: 600px;
 @mixin xs {
-  @media (max-width: 599.98px) {
+  @media (max-width: almost($xs)) {
     @content;
   }
 }
 
-@mixin xs-s {
-  @media (max-width: 959.98px) {
+$s: 960px;
+@mixin until-s {
+  @media (max-width: almost($s)) {
+    @content;
+  }
+}
+
+@mixin s {
+  @media (min-width: $xs) and (max-width: almost($s)) {
     @content;
   }
 }
