@@ -1,15 +1,15 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core'
-import {BrowserModule} from '@angular/platform-browser'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 
-import {AppRoutingModule} from './app-routing.module'
-import {AppComponent} from './app.component'
-import {HomePageComponent} from './home-page/home-page.component'
-import {HeaderComponent} from './header/header.component'
-import {ProjectsComponent} from './home-page/projects/projects.component'
-import {ProjectItemComponent} from './home-page/projects/project-item/project-item.component'
-import {NgOptimizedImage} from '@angular/common'
-import {LogoComponent} from './logo/logo.component'
-import {register as registerSwiper} from 'swiper/element/bundle';
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { HomePageComponent } from './home-page/home-page.component'
+import { HeaderComponent } from './header/header.component'
+import { ProjectsComponent } from './home-page/projects/projects.component'
+import { ProjectItemComponent } from './home-page/projects/project-item/project-item.component'
+import { NgOptimizedImage } from '@angular/common'
+import { LogoComponent } from './logo/logo.component'
+import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './common/swiper.directive'
 
 // There's no fancier way to install Web Components in Angular :P
