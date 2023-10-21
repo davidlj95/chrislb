@@ -22,10 +22,13 @@
   </div>
 </div>
 <swiper-container [appSwiper]="options" init="false">
-  <swiper-slide *ngFor="let image of item.images">
+  <swiper-slide
+    *ngFor="let image of item.images; index as i"
+    [style.aspect-ratio]="image.width / image.height"
+  >
     <!-- TODO: optimize image, a11y -->
-    <!--suppress HtmlRequiredAltAttribute, AngularNgOptimizedImage -->
+    <!--suppress HtmlRequiredAltAttribute -->
     <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
-    <img [src]="image" loading="lazy" />
+    <img [ngSrc]="image.public_id" [fill]="true" [priority]="i < 3" />
   </swiper-slide>
 </swiper-container>
