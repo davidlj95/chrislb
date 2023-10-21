@@ -53,7 +53,10 @@
       order: 1;
 
       $extraSpace: 120px;
-      height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
+      height: min(
+        calc(100vh - $headerHeight - $logoHeight - $extraSpace),
+        500px
+      );
 
       swiper-slide {
         margin-right: 8px;
@@ -63,7 +66,7 @@
 
   @include breakpoints.s {
     swiper-container {
-      height: calc(60vh - $headerHeight - $logoHeight);
+      height: min(calc(60vh - $headerHeight - $logoHeight), 600px);
     }
   }
 
