@@ -9,13 +9,6 @@ on:
         default: ''
 
 jobs:
-  lfs:
-    name: Git LFS
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: LFS files check
-        uses: MPLew-is/lfs-check-action@1.0.0
   test:
     name: All tests
     runs-on: ubuntu-latest
