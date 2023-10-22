@@ -3,6 +3,10 @@
 build:
 	npm run prerender
 
+install:
+  # So @ngaox/seo installs (declares peer dep of Angular 15)
+	npm ci --legacy-peer-deps
+
 lint:
 	npm run lint -- --max-warnings 0
 

@@ -10,4 +10,4 @@ runs:
         cache: 'npm'
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: cd .ci && make install
