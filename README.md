@@ -47,3 +47,13 @@ You can find them in [the dashboard's developer options API keys section](https:
 Once this is configured, run the `generate-image-lists` script to update the images list querying [ImageKit.io].
 
 [ImageKit.io]: https://imagekit.io
+
+## Git hooks
+
+In order to ensure all code is formatted before committing, you can use Git hooks to automatically run the formatter on staged files.
+
+To do so, install the hooks by running
+
+```shell
+npm run git-hooks
+```
