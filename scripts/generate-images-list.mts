@@ -2,11 +2,14 @@ import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
 import * as fs from 'fs'
+import imagesPkg, { ImageAsset } from '../src/data/images.js'
+
+const { IMAGEKIT_URL } = imagesPkg
 
 dotenv.config()
 
-const { IMAGEKIT_URL, IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
-if (!IMAGEKIT_URL || !IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY) {
+const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
+if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY) {
   console.error('Either ImageKit URL, public key or private key is missing')
   console.error('Add them to the .env file and try again')
   process.exit(1)
@@ -22,7 +25,7 @@ const projectImages: { [id: string]: ProjectImages } = {}
 const images = { projects: projectImages }
 
 interface ProjectImages {
-  preview: ReducedFileObject[]
+  preview: ImageAsset[]
 }
 
 const PROJECTS_PATH = 'projects'
@@ -53,7 +56,7 @@ for (const projectFileObject of projectFileObjects) {
   const reducedPreviewFileObjects = projectPreviewFileObjects.map(
     (projectPreviewFileObject) => ({
       name: projectPreviewFileObject.name,
-      url: projectPreviewFileObject.url,
+      filePath: projectPreviewFileObject.filePath,
       height: projectPreviewFileObject.height,
       width: projectPreviewFileObject.width,
     }),
@@ -65,7 +68,7 @@ for (const projectFileObject of projectFileObjects) {
 }
 
 console.log('⚙️  Writing images list JSON')
-fs.writeFileSync('src/images.json', JSON.stringify(images, null, 2))
+fs.writeFileSync('src/data/images.json', JSON.stringify(images, null, 2))
 console.info('✅  Done')
 
 type FolderObject = Pick<
@@ -75,5 +78,3 @@ type FolderObject = Pick<
   folderId: string
   folderPath: string
 }
-
-type ReducedFileObject = Pick<FileObject, 'name' | 'url' | 'height' | 'width'>

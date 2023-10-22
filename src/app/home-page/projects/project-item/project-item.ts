@@ -1,10 +1,12 @@
+import { ImageAsset } from 'src/data/images'
+
 export interface ProjectItem {
   readonly title: string
   readonly subtitle: string
   readonly quote?: string
   readonly description: readonly string[]
   readonly credits: readonly Credit[]
-  readonly images: readonly ImageResource[]
+  readonly previewImages: ReadonlyArray<ImageAsset>
 }
 
 export interface Credit {
