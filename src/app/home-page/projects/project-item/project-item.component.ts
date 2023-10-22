@@ -10,10 +10,10 @@ import { SwiperOptions } from 'swiper/types'
 export class ProjectItemComponent {
   @Input({ required: true }) public item!: ProjectItem
   public readonly options: SwiperOptions = {
-    slidesPerView: 'auto',
     pagination: {
       enabled: true,
       clickable: true,
+      dynamicBullets: true,
     },
     navigation: {
       enabled: true,
@@ -21,11 +21,12 @@ export class ProjectItemComponent {
     keyboard: {
       enabled: true,
     },
-    //rewind: true,
-    // autoplay: {
-    //   disableOnInteraction: false,
-    //   delay: 2500,
-    // },
-    // loop: true,
+    rewind: true,
+    autoplay: {
+      disableOnInteraction: true,
+      delay: 2500,
+    },
+    //loop: true,
+    slidesPerView: 2,
   }
 }

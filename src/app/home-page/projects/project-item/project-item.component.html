@@ -26,9 +26,16 @@
     *ngFor="let image of item.images; index as i"
     [style.aspect-ratio]="image.width / image.height"
   >
-    <!-- TODO: optimize image, a11y -->
+    <!-- TODO: a11y -->
+    <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
     <!--suppress HtmlRequiredAltAttribute -->
     <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
-    <img [ngSrc]="image.public_id" [fill]="true" [priority]="i < 2" />
+    <img
+      [ngSrc]="image.public_id"
+      ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
+      sizes="(max-width: 959.98px) 50vw, 33vw"
+      [fill]="true"
+      [priority]="i < 2"
+    />
   </swiper-slide>
 </swiper-container>

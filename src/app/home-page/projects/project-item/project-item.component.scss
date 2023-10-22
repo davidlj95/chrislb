@@ -22,19 +22,14 @@
   }
 
   swiper-container {
-    float: left;
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $textsWidthBigScreen);
-    $extraSpace: 40px;
-    height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
+    $extraSpace: 48px;
+    max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
 
     swiper-slide {
-      width: auto;
-      margin-right: 16px;
-
       img {
-        display: block;
-        height: 100%;
+        object-fit: contain;
       }
     }
   }
@@ -52,21 +47,8 @@
       width: 100%;
       order: 1;
 
-      $extraSpace: 120px;
-      height: min(
-        calc(100vh - $headerHeight - $logoHeight - $extraSpace),
-        500px
-      );
-
-      swiper-slide {
-        margin-right: 8px;
-      }
-    }
-  }
-
-  @include breakpoints.s {
-    swiper-container {
-      height: min(calc(60vh - $headerHeight - $logoHeight), 600px);
+      $extraSpace: 128px;
+      max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
     }
   }
 
