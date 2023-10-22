@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+# Cloudflare things
+# https://developers.cloudflare.com/fundamentals/reference/cdn-cgi-endpoint/#disallow-using-robotstxt
+Disallow: /cdn-cgi/
