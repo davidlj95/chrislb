@@ -11,21 +11,21 @@
   align-content: flex-start;
   gap: margins.$l;
 
-  $headerHeight: header.$height;
-  $logoHeight: logo.$height;
-  $textsWidthBigScreen: 55ch;
+  $header-height: header.$height;
+  $logo-height: logo.$height;
+  $texts-width-big-screen: 55ch;
 
   .texts {
     display: flex;
     flex-direction: column;
-    width: $textsWidthBigScreen;
+    width: $texts-width-big-screen;
   }
 
   swiper-container {
     // 👇 Seems swiper needs size set to work fine
-    width: calc(100% - $textsWidthBigScreen);
-    $extraSpace: 48px;
-    max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
+    width: calc(100% - $texts-width-big-screen);
+    $extra-space: 48px;
+    max-height: calc(100vh - $header-height - $logo-height - $extra-space);
 
     swiper-slide {
       img {
@@ -34,22 +34,22 @@
     }
   }
 
-  $balancedLuminanceColor: lighten(black, 50%);
+  $balanced-luminance-color: lighten(black, 50%);
 
   swiper-container::part(button-prev) {
-    color: $balancedLuminanceColor;
+    color: $balanced-luminance-color;
   }
 
   swiper-container::part(button-next) {
-    color: $balancedLuminanceColor;
+    color: $balanced-luminance-color;
   }
 
   swiper-container::part(bullet-active) {
-    background-color: $balancedLuminanceColor;
+    background-color: $balanced-luminance-color;
   }
 
   swiper-container::part(bullet) {
-    background-color: $balancedLuminanceColor;
+    background-color: $balanced-luminance-color;
   }
 
   @include breakpoints.until-s {
@@ -65,31 +65,31 @@
       width: 100%;
       order: 1;
 
-      $extraSpace: 128px;
-      max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
+      $extra-space: 128px;
+      max-height: calc(100vh - $header-height - $logo-height - $extra-space);
     }
   }
 
   .title {
-    @include typographies.font-size(9);
+    @include typographies.size(9);
+    @include typographies.bold;
     margin-bottom: margins.$xxs;
-    font-weight: bold;
   }
 
   .subtitle {
-    @include typographies.font-size(4);
-    font-weight: bold;
+    @include typographies.size(4);
+    @include typographies.bold;
   }
 
   .quote {
+    @include typographies.size(1);
+    @include typographies.regular;
     margin: margins.$l 0;
-    font-weight: 400;
-    @include typographies.font-size(1);
   }
 
   .description {
-    font-weight: 300;
-    @include typographies.font-size(1);
+    @include typographies.size(1);
+    @include typographies.light;
 
     display: flex;
     flex-direction: column;

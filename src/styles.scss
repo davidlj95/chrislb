@@ -1,5 +1,7 @@
 @use 'typographies';
 
+@include typographies.styles;
+
 // CSS reset & normalization
 @import 'gardevoir/dist/mini.min.css';
 
@@ -10,5 +12,5 @@ html {
 body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
-  font-family: 'Fira Sans', sans-serif;
+  @include typographies.body-family;
 }
