@@ -35,7 +35,7 @@
       ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
       sizes="(max-width: 959.98px) 50vw, 33vw"
       [fill]="true"
-      [priority]="i < 2"
+      [priority]="priorityPreviewImages && i < SLIDES_PER_VIEW"
     />
   </swiper-slide>
 </swiper-container>

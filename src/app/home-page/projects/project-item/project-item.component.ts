@@ -11,6 +11,8 @@ import { ProjectService } from './project.service'
 })
 export class ProjectItemComponent implements OnChanges {
   @Input({ required: true }) public item!: ProjectItem
+  @Input() public priorityPreviewImages = false
+  public readonly SLIDES_PER_VIEW = 2
   public readonly options: SwiperOptions = {
     pagination: {
       enabled: true,
@@ -29,7 +31,7 @@ export class ProjectItemComponent implements OnChanges {
       delay: 2500,
     },
     //loop: true,
-    slidesPerView: 2,
+    slidesPerView: this.SLIDES_PER_VIEW,
   }
   public previewImages!: Promise<ReadonlyArray<ImageAsset>>
 
