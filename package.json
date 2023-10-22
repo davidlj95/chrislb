@@ -18,7 +18,9 @@
     "format": "prettier --ignore-unknown --write",
     "format-all": "npm run format -- .",
     "generate-image-lists": "ts-node scripts/src/generate-image-lists.mts",
-    "create-env-from-sample": "cp .env.sample .env"
+    "create-env-from-sample": "cp .env.sample .env",
+    "lint-staged": "lint-staged",
+    "git-hooks": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -61,6 +63,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
     "imagekit": "^4.1.3",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
@@ -68,6 +71,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.0.2",
     "ng-mocks": "^14.11.0",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
