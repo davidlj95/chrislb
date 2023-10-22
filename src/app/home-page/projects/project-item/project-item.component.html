@@ -23,7 +23,7 @@
 </div>
 <swiper-container [appSwiper]="options" init="false">
   <swiper-slide
-    *ngFor="let image of item.previewImages; index as i"
+    *ngFor="let image of previewImages | async; index as i"
     [style.aspect-ratio]="image.width / image.height"
   >
     <!-- TODO: a11y -->
