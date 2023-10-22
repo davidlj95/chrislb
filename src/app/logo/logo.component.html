@@ -1,8 +1,10 @@
+<!-- srcset subset from Angular defaults -->
 <img
-  src="assets/logo.png"
-  alt="LAZARO. Logotype in uppercase letters"
-  width="2757"
-  height="409"
-  loading="eager"
-  fetchpriority="high"
+  [ngSrc]="horizontal.filePath"
+  [alt]="horizontal.alt"
+  [width]="horizontal.width"
+  [height]="horizontal.height"
+  [priority]="true"
+  ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w, 2048w, 3840w"
+  sizes="100vw"
 />
