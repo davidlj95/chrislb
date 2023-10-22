@@ -34,6 +34,6 @@ In order to avoid having to manually use the image URLs of the image CDN, a scri
 
 You can find them in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the restricted one, no write access is needed, just read only.
 
-Once this is configured, run the `generate-images-list` script to update the images list querying [ImageKit.io].
+Once this is configured, run the `generate-image-lists` script to update the images list querying [ImageKit.io].
 
 [ImageKit.io]: https://imagekit.io

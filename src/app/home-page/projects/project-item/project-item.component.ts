@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core'
 import { ProjectItem } from './project-item'
 import { SwiperOptions } from 'swiper/types'
-import { ImageAsset } from '../../../../data/images'
-import { ProjectService } from './project.service'
+import { ImageAsset } from '../../../../data/images/types'
+import { ProjectPreviewImagesService } from '../project-preview-images.service'
 
 @Component({
   selector: 'app-project-item',
@@ -35,9 +35,11 @@ export class ProjectItemComponent implements OnChanges {
   }
   public previewImages!: Promise<ReadonlyArray<ImageAsset>>
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectPreviewImagesService: ProjectPreviewImagesService,
+  ) {}
 
   ngOnChanges(): void {
-    this.previewImages = this.projectService.getPreviewImages(this.item.id)
+    this.previewImages = this.projectPreviewImagesService.byId(this.item.id)
   }
 }

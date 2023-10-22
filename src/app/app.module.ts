@@ -12,7 +12,7 @@ import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './common/swiper.directive'
 import { HttpClientModule } from '@angular/common/http'
-import { IMAGEKIT_URL } from '../data/images'
+import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
