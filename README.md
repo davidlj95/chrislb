@@ -25,3 +25,15 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Images CDN
+
+Image assets of the project are hosted in an image CDN for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options). [ImageKit.io] in this case.
+
+In order to avoid having to manually use the image URLs of the image CDN, a script exists to list existing images in the CDN. However, that script requires authentication. To provide the authentication, run the `create-env-from-sample` run script and fill the public and private keys in there.
+
+You can find them in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the restricted one, no write access is needed, just read only.
+
+Once this is configured, run the `generate-image-lists` script to update the images list querying [ImageKit.io].
+
+[ImageKit.io]: https://imagekit.io

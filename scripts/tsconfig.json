@@ -1,0 +1,13 @@
+/* Dedicated to run several dev scripts with ts-node */
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "outDir": "dist",
+    "module": "nodenext",
+    "moduleResolution": "nodenext"
+  },
+  "ts-node": {
+    "esm": true
+  }
+}

@@ -13,7 +13,7 @@
 
   $headerHeight: header.$height;
   $logoHeight: logo.$height;
-  $textsWidthBigScreen: 61ch;
+  $textsWidthBigScreen: 55ch;
 
   .texts {
     display: flex;
@@ -22,21 +22,34 @@
   }
 
   swiper-container {
-    float: left;
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $textsWidthBigScreen);
-    $extraSpace: 40px;
+    $extraSpace: 48px;
     max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
 
     swiper-slide {
-      width: auto;
-      margin-right: 16px;
-
       img {
-        display: block;
-        height: 100%;
+        object-fit: contain;
       }
     }
+  }
+
+  $balancedLuminanceColor: lighten(black, 50%);
+
+  swiper-container::part(button-prev) {
+    color: $balancedLuminanceColor;
+  }
+
+  swiper-container::part(button-next) {
+    color: $balancedLuminanceColor;
+  }
+
+  swiper-container::part(bullet-active) {
+    background-color: $balancedLuminanceColor;
+  }
+
+  swiper-container::part(bullet) {
+    background-color: $balancedLuminanceColor;
   }
 
   @include breakpoints.until-s {
@@ -52,18 +65,8 @@
       width: 100%;
       order: 1;
 
-      $extraSpace: 120px;
+      $extraSpace: 128px;
       max-height: calc(100vh - $headerHeight - $logoHeight - $extraSpace);
-
-      swiper-slide {
-        margin-right: 8px;
-      }
-    }
-  }
-
-  @include breakpoints.s {
-    swiper-container {
-      max-height: calc(60vh - $headerHeight - $logoHeight);
     }
   }
 

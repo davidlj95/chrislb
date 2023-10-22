@@ -6,9 +6,9 @@
 html {
   scroll-behavior: smooth;
 }
+
 body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
   font-family: 'Fira Sans', sans-serif;
-  @include typographies.font-size(0);
 }

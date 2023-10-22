@@ -11,13 +11,10 @@ module.exports = {
       preset: 'lighthouse:no-pwa',
       assertions: {
         'meta-description': 'warn',
-        'link-name': 'warn',
         'image-alt': 'warn',
-        'unsized-images': 'warn',
         'bf-cache': 'warn',
         'csp-xss': 'warn',
         'unused-javascript': 'warn',
-        'uses-responsive-images': 'warn',
       },
     },
   },
