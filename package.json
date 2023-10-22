@@ -32,6 +32,7 @@
     "@angular/platform-server": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@fontsource/fira-sans": "^5.0.17",
+    "@ngaox/seo": "^5.0.0",
     "@nguniversal/express-engine": "^16.2.0",
     "compression": "^1.7.4",
     "express": "^4.15.2",

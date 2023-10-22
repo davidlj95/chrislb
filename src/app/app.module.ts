@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, VERSION } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
@@ -13,6 +13,8 @@ import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './common/swiper.directive'
 import { HttpClientModule } from '@angular/common/http'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
+import { SeoModule } from '@ngaox/seo'
+import meta from '../data/meta.json'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -33,6 +35,34 @@ registerSwiper()
     AppRoutingModule,
     NgOptimizedImage,
     HttpClientModule,
+    SeoModule.forRoot({
+      title: meta.siteName,
+      keywords: meta.keywords,
+      description: meta.description,
+      url: meta.canonicalUrl,
+      type: 'website',
+      image: {
+        url: new URL('assets/img/open_graph.png', meta.canonicalUrl).toString(),
+        alt: meta.imageAlt,
+        width: 875,
+        height: 875,
+        // I wouldn't set it, but if I don't set it, then it appears as "undefined" :(
+        mimeType: 'image/png',
+      },
+      twitter: {
+        card: 'summary',
+        creator: meta.author,
+        site: meta.siteName,
+      },
+      siteName: meta.siteName,
+      extra: [
+        { name: 'author', content: meta.author },
+        { property: 'og:locale', content: 'en' },
+        { name: 'generator', content: `Angular ${VERSION.full}` },
+        // See more in favicons doc. Related to Internet Explorer / Microsoft metro tiles
+        { name: 'application-name', content: meta.siteName },
+      ],
+    }),
   ],
   providers: [provideImageKitLoader(IMAGEKIT_URL)],
   bootstrap: [AppComponent],
