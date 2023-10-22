@@ -15,7 +15,6 @@ module.exports = {
         'bf-cache': 'warn',
         'csp-xss': 'warn',
         'unused-javascript': 'warn',
-        'uses-responsive-images': 'warn',
       },
     },
   },
