@@ -3,14 +3,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ng serve",
+      "name": "Install",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm install --legacy-peer-deps"
+    },
+    {
+      "name": "Dev Serve",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
       "url": "http://localhost:4200/"
     },
     {
-      "name": "ng test",
+      "name": "All tests",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: test",
