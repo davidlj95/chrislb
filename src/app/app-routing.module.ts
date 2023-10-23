@@ -1,28 +1,10 @@
 import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-import { ProjectsPageComponent } from './projects-page/projects-page.component'
-import { ProjectPageComponent } from './project-page/project-page.component'
-
-const projectsPath = 'projects'
-const routes: Routes = [
-  { path: '', redirectTo: projectsPath, pathMatch: 'full' },
-  {
-    path: `${projectsPath}/:slug`,
-    component: ProjectPageComponent,
-  },
-  {
-    path: projectsPath,
-    component: ProjectsPageComponent,
-  },
-  {
-    path: '**',
-    redirectTo: projectsPath,
-  },
-]
+import { RouterModule } from '@angular/router'
+import { ROUTES } from './routes'
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
+    RouterModule.forRoot(ROUTES, {
       initialNavigation: 'enabledBlocking',
       bindToComponentInputs: true,
     }),

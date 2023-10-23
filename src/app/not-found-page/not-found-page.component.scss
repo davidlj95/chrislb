@@ -1,0 +1,22 @@
+@use 'margins';
+@use 'typographies';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+
+  margin-top: margins.$l;
+
+  .sad-face {
+    @include typographies.size(10);
+    @include typographies.bold;
+    margin-bottom: margins.$m;
+  }
+
+  h2 {
+    @include typographies.size(8);
+    @include typographies.bold;
+  }
+}
