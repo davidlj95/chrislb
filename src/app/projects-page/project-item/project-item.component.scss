@@ -5,6 +5,8 @@
 @use 'paddings';
 @use 'page';
 @use 'typographies';
+@use 'theme';
+@use 'swiper';
 
 :host {
   display: flex;
@@ -23,6 +25,8 @@
     width: $texts-width-big-screen;
   }
 
+  @include swiper.theme(theme.$accent);
+
   swiper-container {
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $texts-width-big-screen);
@@ -34,24 +38,6 @@
         object-fit: contain;
       }
     }
-  }
-
-  $balanced-luminance-color: lighten(black, 50%);
-
-  swiper-container::part(button-prev) {
-    color: $balanced-luminance-color;
-  }
-
-  swiper-container::part(button-next) {
-    color: $balanced-luminance-color;
-  }
-
-  swiper-container::part(bullet-active) {
-    background-color: $balanced-luminance-color;
-  }
-
-  swiper-container::part(bullet) {
-    background-color: $balanced-luminance-color;
   }
 
   @include breakpoints.until-s {

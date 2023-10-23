@@ -1,0 +1,30 @@
+@use 'typographies';
+
+@mixin theme($accent-color) {
+  // https://css-tricks.com/css-link-hover-effects/#aa-the-growing-background-link-hover-effect
+  $color: inherit;
+  $hover-color: $accent-color;
+  a {
+    text-decoration: none;
+    color: $color;
+    @include typographies.bold;
+    position: relative;
+  }
+
+  a::before {
+    content: '';
+    background-color: $hover-color;
+    position: absolute;
+    left: 0;
+    bottom: 3px;
+    width: 100%;
+    height: 8px;
+    z-index: -1;
+    transition: all 0.3s ease-in-out;
+  }
+
+  a:hover::before {
+    bottom: 0;
+    height: 100%;
+  }
+}

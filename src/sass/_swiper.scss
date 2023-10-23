@@ -1,0 +1,19 @@
+@mixin theme($accent) {
+  $balanced-luminance-color: $accent;
+
+  swiper-container::part(button-prev) {
+    color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(button-next) {
+    color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(bullet-active) {
+    background-color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(bullet) {
+    background-color: $balanced-luminance-color;
+  }
+}

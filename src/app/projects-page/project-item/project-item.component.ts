@@ -3,6 +3,7 @@ import { ProjectItem } from './project-item'
 import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../../data/images/types'
 import { ProjectPreviewImagesService } from './project-preview-images.service'
+import { PROJECTS_PATH } from '../../routes'
 
 @Component({
   selector: 'app-project-item',
@@ -42,4 +43,6 @@ export class ProjectItemComponent implements OnChanges {
   ngOnChanges(): void {
     this.previewImages = this.projectPreviewImagesService.bySlug(this.item.slug)
   }
+
+  protected readonly PROJECTS_PATH = PROJECTS_PATH
 }
