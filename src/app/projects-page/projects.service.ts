@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import projects from '../../../data/projects.json'
+import projects from '../../data/projects.json'
 import { ProjectItem } from './project-item/project-item'
 
 @Injectable({

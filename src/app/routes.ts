@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router'
+import { Router, Routes } from '@angular/router'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { ProjectsPageComponent } from './projects-page/projects-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
@@ -54,4 +54,8 @@ export function getCanonicalUrlForPath(path: string) {
 
 function getTitle(title: string) {
   return `${title} | ${meta.default.siteName}`
+}
+
+export function displayNotFound(router: Router) {
+  return router.navigate([NOT_FOUND_PATH], { skipLocationChange: true })
 }

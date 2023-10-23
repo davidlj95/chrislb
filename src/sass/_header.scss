@@ -2,6 +2,6 @@
 @use 'typographies';
 
 $font-size: typographies.size(0);
-$line-height: calc($font-size + 3px);
-$vertical-padding: paddings.$m;
-$height: calc($line-height + $vertical-padding * 2);
+$height-line: calc($font-size + 3px);
+$padding-vertical: paddings.$m;
+$height: calc($height-line + $padding-vertical * 2);

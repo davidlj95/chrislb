@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core'
 import { ProjectItem } from './project-item'
 import { SwiperOptions } from 'swiper/types'
-import { ImageAsset } from '../../../../data/images/types'
-import { ProjectPreviewImagesService } from '../project-preview-images.service'
+import { ImageAsset } from '../../../data/images/types'
+import { ProjectPreviewImagesService } from './project-preview-images.service'
 
 @Component({
   selector: 'app-project-item',

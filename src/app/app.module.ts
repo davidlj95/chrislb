@@ -5,8 +5,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { ProjectsPageComponent } from './projects-page/projects-page.component'
 import { HeaderComponent } from './header/header.component'
-import { ProjectsComponent } from './projects-page/projects/projects.component'
-import { ProjectItemComponent } from './projects-page/projects/project-item/project-item.component'
+import { ProjectItemComponent } from './projects-page/project-item/project-item.component'
 import { NgOptimizedImage, provideImageKitLoader } from '@angular/common'
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
@@ -28,7 +27,6 @@ registerSwiper()
     AppComponent,
     ProjectsPageComponent,
     HeaderComponent,
-    ProjectsComponent,
     ProjectItemComponent,
     LogoComponent,
     SwiperDirective,

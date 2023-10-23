@@ -1,0 +1,8 @@
+@use 'paddings';
+
+$padding-horizontal: paddings.$m;
+$padding-vertical: paddings.$m;
+
+@mixin padding() {
+  padding: $padding-vertical $padding-horizontal;
+}

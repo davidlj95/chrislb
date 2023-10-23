@@ -1,13 +1,13 @@
-@use 'margins';
+@use 'page';
 @use 'typographies';
+@use 'margins';
 
 :host {
+  @include page.padding;
   display: flex;
   flex-direction: column;
   place-content: center;
   text-align: center;
-
-  margin-top: margins.$l;
 
   .sad-face {
     @include typographies.size(10);
