@@ -16,6 +16,8 @@ import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way t
 import { SeoModule } from '@ngaox/seo'
 import meta from '../data/meta.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
+import { getCanonicalUrlForPath } from './routes'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -31,6 +33,7 @@ registerSwiper()
     LogoComponent,
     SwiperDirective,
     ProjectPageComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,14 +41,10 @@ registerSwiper()
     NgOptimizedImage,
     HttpClientModule,
     SeoModule.forRoot({
-      title: meta.siteName,
-      keywords: meta.keywords,
-      description: meta.description,
-      url: meta.canonicalUrl,
       type: 'website',
       image: {
-        url: new URL('assets/img/open_graph.png', meta.canonicalUrl).toString(),
-        alt: meta.imageAlt,
+        url: getCanonicalUrlForPath('assets/img/open_graph.png'),
+        alt: meta.default.imageAlt,
         width: 875,
         height: 875,
         // I wouldn't set it, but if I don't set it, then it appears as "undefined" :(
@@ -53,16 +52,16 @@ registerSwiper()
       },
       twitter: {
         card: 'summary',
-        creator: meta.author,
-        site: meta.siteName,
+        creator: `@${meta.default.twitter}`,
+        site: `@${meta.default.twitter}`,
       },
-      siteName: meta.siteName,
+      siteName: meta.default.siteName,
       extra: [
-        { name: 'author', content: meta.author },
+        { name: 'author', content: meta.default.author },
         { property: 'og:locale', content: 'en' },
         { name: 'generator', content: `Angular ${VERSION.full}` },
         // See more in favicons doc. Related to Internet Explorer / Microsoft metro tiles
-        { name: 'application-name', content: meta.siteName },
+        { name: 'application-name', content: meta.default.siteName },
       ],
     }),
   ],
