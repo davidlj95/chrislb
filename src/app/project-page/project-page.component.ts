@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core'
 import { Lookbook, ProjectLookbooksService } from './project-lookbooks.service'
 import { Router } from '@angular/router'
-import { displayNotFound } from '../routes'
 import { noop } from 'rxjs'
+import { displayNotFound } from '../common/navigation'
 
 @Component({
   selector: 'app-project-page',
