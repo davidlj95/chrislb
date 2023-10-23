@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HomePageComponent } from './home-page/home-page.component'
+import { ProjectsPageComponent } from './projects-page/projects-page.component'
+import { ProjectPageComponent } from './project-page/project-page.component'
 
+const projectsPath = 'projects'
 const routes: Routes = [
-  { path: '', component: HomePageComponent, pathMatch: 'full' },
+  { path: '', redirectTo: projectsPath, pathMatch: 'full' },
+  {
+    path: `${projectsPath}/:slug`,
+    component: ProjectPageComponent,
+  },
+  {
+    path: projectsPath,
+    component: ProjectsPageComponent,
+  },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: projectsPath,
   },
 ]
 
@@ -14,6 +24,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       initialNavigation: 'enabledBlocking',
+      bindToComponentInputs: true,
     }),
   ],
   exports: [RouterModule],

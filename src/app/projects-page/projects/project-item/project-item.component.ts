@@ -40,6 +40,6 @@ export class ProjectItemComponent implements OnChanges {
   ) {}
 
   ngOnChanges(): void {
-    this.previewImages = this.projectPreviewImagesService.byId(this.item.id)
+    this.previewImages = this.projectPreviewImagesService.bySlug(this.item.slug)
   }
 }

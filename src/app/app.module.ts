@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { HomePageComponent } from './home-page/home-page.component'
+import { ProjectsPageComponent } from './projects-page/projects-page.component'
 import { HeaderComponent } from './header/header.component'
-import { ProjectsComponent } from './home-page/projects/projects.component'
-import { ProjectItemComponent } from './home-page/projects/project-item/project-item.component'
+import { ProjectsComponent } from './projects-page/projects/projects.component'
+import { ProjectItemComponent } from './projects-page/projects/project-item/project-item.component'
 import { NgOptimizedImage, provideImageKitLoader } from '@angular/common'
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 import { SeoModule } from '@ngaox/seo'
 import meta from '../data/meta.json'
+import { ProjectPageComponent } from './project-page/project-page.component'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -23,12 +24,13 @@ registerSwiper()
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
+    ProjectsPageComponent,
     HeaderComponent,
     ProjectsComponent,
     ProjectItemComponent,
     LogoComponent,
     SwiperDirective,
+    ProjectPageComponent,
   ],
   imports: [
     BrowserModule,
