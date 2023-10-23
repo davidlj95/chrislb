@@ -49,6 +49,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
       {
         initialNavigation: 'enabledBlocking',
         bindToComponentInputs: true,
+        scrollPositionRestoration: 'enabled',
       },
     ),
   ],

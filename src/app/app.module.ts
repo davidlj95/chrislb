@@ -10,13 +10,13 @@ import { NgOptimizedImage, provideImageKitLoader } from '@angular/common'
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './common/swiper.directive'
-import { HttpClientModule } from '@angular/common/http'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 import { SeoModule } from '@ngaox/seo'
 import meta from '../data/meta.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { getCanonicalUrlForPath } from './routes'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -37,7 +37,7 @@ registerSwiper()
     BrowserModule,
     AppRoutingModule,
     NgOptimizedImage,
-    HttpClientModule,
+    BrowserAnimationsModule,
     SeoModule.forRoot({
       type: 'website',
       image: {
