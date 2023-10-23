@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HomePageComponent } from './home-page.component'
+import { ProjectsPageComponent } from './projects-page.component'
 import { MockComponents } from 'ng-mocks'
 import { ProjectsComponent } from './projects/projects.component'
 
-describe('HomePageComponent', () => {
-  let component: HomePageComponent
-  let fixture: ComponentFixture<HomePageComponent>
+describe('ProjectsPageComponent', () => {
+  let component: ProjectsPageComponent
+  let fixture: ComponentFixture<ProjectsPageComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HomePageComponent, MockComponents(ProjectsComponent)],
+      declarations: [ProjectsPageComponent, MockComponents(ProjectsComponent)],
     })
-    fixture = TestBed.createComponent(HomePageComponent)
+    fixture = TestBed.createComponent(ProjectsPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

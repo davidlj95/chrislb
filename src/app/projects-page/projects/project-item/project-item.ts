@@ -1,5 +1,5 @@
 export interface ProjectItem {
-  readonly id: string
+  readonly slug: string
   readonly title: string
   readonly subtitle: string
   readonly quote?: string

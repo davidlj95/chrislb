@@ -11,16 +11,16 @@ export class ProjectPreviewImagesService {
     private projectsPreviewImagesJson: JsonProjectsPreviewImages,
   ) {}
 
-  async byId(id: string): Promise<ReadonlyArray<ImageAsset>> {
-    if (!this.projectIdExists(id)) {
-      console.warn("No preview images found for project id '%s'", id)
+  async bySlug(slug: string): Promise<ReadonlyArray<ImageAsset>> {
+    if (!this.projectSlugExists(slug)) {
+      console.warn("No preview images found for project slug '%s'", slug)
       return []
     }
-    return this.projectsPreviewImagesJson[id]
+    return this.projectsPreviewImagesJson[slug]
   }
 
-  projectIdExists(id: string): id is ProjectId {
-    return Object.keys(this.projectsPreviewImagesJson).includes(id)
+  projectSlugExists(slug: string): slug is ProjectSlug {
+    return Object.keys(this.projectsPreviewImagesJson).includes(slug)
   }
 }
 
@@ -29,4 +29,4 @@ const PROJECT_PREVIEW_IMAGES_JSON =
     factory: () => projectPreviewImages,
   })
 type JsonProjectsPreviewImages = typeof projectPreviewImages
-type ProjectId = keyof JsonProjectsPreviewImages
+type ProjectSlug = keyof JsonProjectsPreviewImages

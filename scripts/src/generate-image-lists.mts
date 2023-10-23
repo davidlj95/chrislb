@@ -73,7 +73,7 @@ async function generateProjectsPreviewImagesList(imagekit: ImageKit) {
 
   const PREVIEWS_DIR = 'preview'
   const projectsPreviewImages: {
-    [id: string]: ReadonlyArray<ImageAsset>
+    [slug: string]: ReadonlyArray<ImageAsset>
   } = Object.fromEntries(
     await Promise.all(
       projectFileObjects.map(async (projectFileObject) => {
