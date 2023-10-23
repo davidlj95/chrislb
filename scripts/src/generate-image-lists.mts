@@ -17,7 +17,7 @@ async function generateImageLists() {
 }
 
 async function generateLogoImagesList(imagekit: ImageKit) {
-  console.info('Looking for logo images')
+  console.info('⚙️ Looking for logo images')
   const LOGOS_PATH = 'logos'
   const logoFileObjects = await imagekit.listFiles({ path: LOGOS_PATH })
   if (logoFileObjects.length === 0) {
@@ -53,7 +53,7 @@ async function generateLogoImagesList(imagekit: ImageKit) {
 
 async function generateProjectsPreviewImagesList(imagekit: ImageKit) {
   const PROJECTS_PATH = 'projects'
-  console.info("Looking for project directories inside '%s'", PROJECTS_PATH)
+  console.info("⚙️ Looking for project directories inside '%s'", PROJECTS_PATH)
   const projectFileObjects = await imagekit.listFiles({
     includeFolder: true,
     path: PROJECTS_PATH,
@@ -69,15 +69,25 @@ async function generateProjectsPreviewImagesList(imagekit: ImageKit) {
   projectFileObjects.forEach((projectFileObject) => {
     console.log(' - %s', projectFileObject.name)
   })
+  console.info('✅  Project directories done')
   console.log('')
 
-  const PREVIEWS_DIR = 'preview'
+  await getProjectsPreviewImages(imagekit, projectFileObjects)
+  await getProjectsLookbookImages(imagekit, projectFileObjects)
+}
+
+async function getProjectsPreviewImages(
+  imagekit: ImageKit,
+  projectFileObjects: ReadonlyArray<FileObject>,
+) {
+  console.info('⚙️ Looking for projects preview images')
   const projectsPreviewImages: {
     [slug: string]: ReadonlyArray<ImageAsset>
   } = Object.fromEntries(
     await Promise.all(
       projectFileObjects.map(async (projectFileObject) => {
         const projectFolderObject = projectFileObject as unknown as FolderObject
+        const PREVIEWS_DIR = 'preview'
         console.info(
           "Finding preview images of project '%s' ('%s')",
           projectFolderObject.name,
@@ -88,10 +98,8 @@ async function generateProjectsPreviewImagesList(imagekit: ImageKit) {
           sort: 'ASC_NAME',
         })
         console.log(' - Found %d images', projectPreviewFileObjects.length)
-        console.log('')
-
         return [
-          projectFileObject.name,
+          projectFolderObject.name,
           projectPreviewFileObjects.map(imageAssetFromFileObject),
         ]
       }),
@@ -99,6 +107,58 @@ async function generateProjectsPreviewImagesList(imagekit: ImageKit) {
   )
   writeData(projectsPreviewImages, 'projects-preview.json')
   console.info('✅  Projects preview images done')
+  console.log('')
+}
+
+async function getProjectsLookbookImages(
+  imagekit: ImageKit,
+  projectFileObjects: ReadonlyArray<FileObject>,
+) {
+  type Lookbook = ReadonlyArray<ImageAsset>
+  const projectsLookbooks: {
+    [slug: string]: ReadonlyArray<Lookbook>
+  } = {}
+  console.info('⚙️ Looking for projects lookbooks images')
+  for (const projectFileObject of projectFileObjects) {
+    const projectFolderObject = projectFileObject as unknown as FolderObject
+    const LOOKBOOKS_DIR = 'lookbooks'
+    console.info(
+      "Finding lookbooks of project '%s' ('%s')",
+      projectFolderObject.name,
+      projectFolderObject.folderPath,
+    )
+    const lookbooksFileObjects = await imagekit.listFiles({
+      path: `${projectFolderObject.folderPath}/${LOOKBOOKS_DIR}`,
+      includeFolder: true,
+      sort: 'ASC_NAME',
+    })
+    const lookbooksFolderObjects =
+      lookbooksFileObjects as unknown as ReadonlyArray<FolderObject>
+    if (lookbooksFolderObjects.length < 1) {
+      console.log(
+        " - No lookbooks found for project '%s'",
+        projectFolderObject.name,
+      )
+      continue
+    }
+    console.log(' - Found %d lookbooks', lookbooksFolderObjects.length)
+    console.log('')
+    const lookbookAssets: ImageAsset[][] = []
+    for (const lookbookFolderObject of lookbooksFolderObjects) {
+      console.log(
+        " - Finding lookbook '%s' image assets",
+        lookbookFolderObject.name,
+      )
+      const lookbookFileObjects = await imagekit.listFiles({
+        path: lookbookFolderObject.folderPath,
+        sort: 'ASC_NAME',
+      })
+      lookbookAssets.push(lookbookFileObjects.map(imageAssetFromFileObject))
+    }
+    projectsLookbooks[projectFolderObject.name] = lookbookAssets
+  }
+  writeData(projectsLookbooks, 'projects-lookbooks.json')
+  console.info('✅  Projects lookbooks images done')
   console.log('')
 }
 

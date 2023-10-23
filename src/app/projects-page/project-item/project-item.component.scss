@@ -3,16 +3,18 @@
 @use 'logo';
 @use 'margins';
 @use 'paddings';
+@use 'page';
 @use 'typographies';
 
 :host {
-  padding: paddings.$m;
   display: flex;
   align-content: flex-start;
   gap: margins.$l;
 
-  $header-height: header.$height;
-  $logo-height: logo.$height;
+  $height-header: header.$height;
+  $height-logo: logo.$height;
+  $height-page-padding: page.$padding-vertical;
+  $height-before: calc($height-header + $height-logo + $height-page-padding);
   $texts-width-big-screen: 55ch;
 
   .texts {
@@ -25,7 +27,7 @@
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $texts-width-big-screen);
     $extra-space: 48px;
-    max-height: calc(100vh - $header-height - $logo-height - $extra-space);
+    max-height: calc(100vh - $height-before - $extra-space);
 
     swiper-slide {
       img {
@@ -66,13 +68,14 @@
       order: 1;
 
       $extra-space: 128px;
-      max-height: calc(100vh - $header-height - $logo-height - $extra-space);
+      max-height: calc(100vh - $height-before - $extra-space);
     }
   }
 
   .title {
     @include typographies.size(9);
     @include typographies.bold;
+
     margin-bottom: margins.$xxs;
   }
 
@@ -84,6 +87,7 @@
   .quote {
     @include typographies.size(1);
     @include typographies.regular;
+
     margin: margins.$l 0;
   }
 
@@ -97,10 +101,12 @@
   }
 
   .credits {
-    margin-top: margins.$l;
+    @include typographies.regular;
+
     display: flex;
     flex-direction: column;
     gap: margins.$xs;
-    font-weight: 400;
+
+    margin-top: margins.$l;
   }
 }

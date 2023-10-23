@@ -1,2 +1,8 @@
+@use 'page';
+
 :host {
+  @include page.padding;
+
+  display: flex;
+  flex-direction: column;
 }

@@ -1,4 +1,8 @@
 import { Component, Input } from '@angular/core'
+import { Lookbook, ProjectLookbooksService } from './project-lookbooks.service'
+import { Router } from '@angular/router'
+import { noop } from 'rxjs'
+import { displayNotFound } from '../common/navigation'
 
 @Component({
   selector: 'app-project-page',
@@ -6,5 +10,22 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./project-page.component.scss'],
 })
 export class ProjectPageComponent {
-  @Input({ required: true }) public slug!: string
+  @Input({ required: true })
+  public set slug(slug: string) {
+    this.lookbooks = this.projectsLookbooksService
+      .bySlug(slug)
+      .then((lookbooks) => {
+        if (lookbooks.length == 0) {
+          displayNotFound(this.router).then(noop)
+        }
+        return lookbooks
+      })
+  }
+
+  public lookbooks!: Promise<ReadonlyArray<Lookbook>>
+
+  constructor(
+    private projectsLookbooksService: ProjectLookbooksService,
+    private router: Router,
+  ) {}
 }

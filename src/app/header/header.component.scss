@@ -1,20 +1,19 @@
 @use 'header';
 @use 'paddings';
+@use 'page';
 @use 'typographies';
 
 :host {
   background-color: white;
 
   header {
-    display: flex;
-    flex-wrap: wrap;
-    padding: header.$vertical-padding paddings.$m;
+    padding: header.$padding-vertical page.$padding-horizontal;
     justify-content: center;
     font-size: header.$font-size;
 
     ul {
       display: flex;
-      gap: paddings.$xl;
+      justify-content: space-around;
     }
   }
 }
