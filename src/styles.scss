@@ -1,4 +1,6 @@
+@use 'anchors';
 @use 'typographies';
+@use 'theme';
 
 @include typographies.styles;
 
@@ -14,3 +16,5 @@ body {
   overscroll-behavior: none;
   @include typographies.body-family;
 }
+
+@include anchors.theme(theme.$accent);

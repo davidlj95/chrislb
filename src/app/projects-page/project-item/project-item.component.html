@@ -1,6 +1,13 @@
 <div class="texts">
   <span class="title">
-    {{ item.title }}
+    <ng-container *ngIf="item.hasDetails">
+      <a [routerLink]="[PROJECTS_PATH, item.slug]"
+        ><ng-container [ngTemplateOutlet]="title"></ng-container
+      ></a>
+    </ng-container>
+    <ng-template #title>
+      {{ item.title }}
+    </ng-template>
   </span>
   <span class="subtitle">
     {{ item.subtitle }}
