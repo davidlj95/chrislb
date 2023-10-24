@@ -3,6 +3,7 @@
 @use 'page';
 @use 'margins';
 @use 'paddings';
+@use 'theme';
 
 :host {
   position: sticky;
@@ -10,20 +11,12 @@
   z-index: 10;
   width: 100%;
 
-  background-color: white;
+  background-color: theme.$background;
 
   display: flex;
   justify-content: center;
 
   padding: logo.$padding-vertical page.$padding-horizontal;
-
-  /** UGLY
-  margin-bottom: margins.$xl;
-
-  @include breakpoints.xs {
-    margin-bottom: margins.$m;
-  }
-  **/
 
   img {
     max-height: logo.$height-image;

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'anchors';
 @use 'typographies';
 @use 'theme';
@@ -15,6 +16,7 @@ body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
   @include typographies.body-family;
+  background-color: theme.$background;
 }
 
 @include anchors.theme;
