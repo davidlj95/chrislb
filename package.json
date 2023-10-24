@@ -11,7 +11,7 @@
     "dev:ssr": "ng run chrislb:serve-ssr",
     "serve:ssr": "node dist/chrislb/server/main.js",
     "build:ssr": "ng build && ng run chrislb:server",
-    "prerender": "ng run chrislb:prerender",
+    "prerender": "ng run chrislb:prerender --routes-file routes-file.txt",
     "lint": "ng lint",
     "format-check": "prettier --check",
     "format-check-all": "npm run format-check -- .",
