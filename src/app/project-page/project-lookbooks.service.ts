@@ -1,6 +1,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
 import { ImageAsset } from '../../data/images/types'
 import projectsLookbooks from '../../data/images/projects-lookbooks.json'
+import { Observable, of } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ export class ProjectLookbooksService {
     private projectLookbooksJson: ProjectsLookbooksJson,
   ) {}
 
-  async bySlug(slug: string): Promise<ReadonlyArray<Lookbook>> {
+  bySlug(slug: string): Observable<ReadonlyArray<ReadonlyArray<ImageAsset>>> {
     if (!this.projectSlugExists(slug)) {
       console.warn("No lookbooks found for project slug '%s'", slug)
-      return []
+      return of([])
     }
-    return this.projectLookbooksJson[slug]
+    return of(this.projectLookbooksJson[slug])
   }
 
   projectSlugExists(slug: string): slug is ProjectSlug {
@@ -32,4 +33,3 @@ const PROJECT_PREVIEW_IMAGES_JSON = new InjectionToken<ProjectsLookbooksJson>(
 )
 type ProjectsLookbooksJson = typeof projectsLookbooks
 type ProjectSlug = keyof ProjectsLookbooksJson
-export type Lookbook = ReadonlyArray<ImageAsset>

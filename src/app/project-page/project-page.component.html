@@ -1,4 +1,26 @@
-<main>
-  <p>Project lookbooks</p>
-  <pre>{{ lookbooks | async | json }}</pre>
-</main>
+<div
+  class="lookbook"
+  *ngFor="let lookbook of lookbooks | async; index as lookbookIndex"
+>
+  <h2>Lookbook {{ lookbookIndex + 1 }}</h2>
+  <swiper-container [appSwiper]="lookbook.swiperOptions" init="false">
+    <swiper-slide
+      *ngFor="let image of lookbook.images; index as imageIndex"
+      [style.aspect-ratio]="image.width / image.height"
+    >
+      <!-- TODO: a11y -->
+      <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
+      <img
+        [ngSrc]="image.filePath"
+        ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
+        sizes="(max-width: 959.98px) 50vw, 33vw"
+        [fill]="true"
+        [priority]="
+          lookbookIndex < MAX_LOOKBOOKS_PER_VIEWPORT &&
+          imageIndex < MAX_SLIDES_PER_VIEW
+        "
+        [alt]="image.alt ?? DEFAULT_IMAGE_ALT"
+      />
+    </swiper-slide>
+  </swiper-container>
+</div>

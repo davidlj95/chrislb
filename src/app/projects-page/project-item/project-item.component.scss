@@ -5,7 +5,6 @@
 @use 'paddings';
 @use 'page';
 @use 'typographies';
-@use 'theme';
 @use 'swiper';
 
 :host {
@@ -25,7 +24,7 @@
     width: $texts-width-big-screen;
   }
 
-  @include swiper.theme(theme.$accent);
+  @include swiper.theme;
 
   swiper-container {
     // 👇 Seems swiper needs size set to work fine

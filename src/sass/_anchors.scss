@@ -1,10 +1,11 @@
 @use 'typographies';
 @use 'animations';
+@use 'theme';
 
-@mixin theme($accent-color) {
+@mixin theme {
   // https://css-tricks.com/css-link-hover-effects/#aa-the-growing-background-link-hover-effect
   $color: inherit;
-  $hover-color: $accent-color;
+  $hover-color: theme.$accent;
   a {
     text-decoration: none;
     color: $color;

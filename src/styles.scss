@@ -17,4 +17,4 @@ body {
   @include typographies.body-family;
 }
 
-@include anchors.theme(theme.$accent);
+@include anchors.theme;
