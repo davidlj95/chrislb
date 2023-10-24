@@ -50,8 +50,6 @@ registerSwiper()
       },
       twitter: {
         card: 'summary',
-        creator: `@${meta.default.twitter}`,
-        site: `@${meta.default.twitter}`,
       },
       siteName: meta.default.siteName,
       extra: [
