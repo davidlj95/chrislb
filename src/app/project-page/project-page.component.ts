@@ -6,6 +6,7 @@ import { displayNotFound } from '../common/navigation'
 import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../data/images/types'
 import { DEFAULT_IMAGE_ALT } from '../common/default-image-alt'
+import projects from '../../data/projects.json'
 
 @Component({
   selector: 'app-project-page',
@@ -14,6 +15,7 @@ import { DEFAULT_IMAGE_ALT } from '../common/default-image-alt'
 })
 export class ProjectPageComponent {
   public lookbooks!: Observable<ReadonlyArray<Lookbook>>
+  public lookbookNames = projects[0].lookbooks
   protected readonly MAX_SLIDES_PER_VIEW = 3
   protected readonly MAX_LOOKBOOKS_PER_VIEWPORT = 2
   protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
