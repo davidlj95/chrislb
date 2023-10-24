@@ -41,7 +41,7 @@
       sizes="(max-width: 959.98px) 50vw, 33vw"
       [fill]="true"
       [priority]="priorityPreviewImages && i < SLIDES_PER_VIEW"
-      alt="Image"
+      [alt]="image.alt ?? DEFAULT_IMAGE_ALT"
     />
   </swiper-slide>
 </swiper-container>

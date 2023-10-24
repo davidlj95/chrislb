@@ -1,5 +1,7 @@
-@mixin theme($accent) {
-  $balanced-luminance-color: $accent;
+@use 'theme';
+
+@mixin theme() {
+  $balanced-luminance-color: theme.$accent;
 
   swiper-container::part(button-prev) {
     color: $balanced-luminance-color;
