@@ -1,0 +1,13 @@
+// To keep in sync with TypeScript code
+$timing-function: cubic-bezier(0.2, 0, 0, 1);
+$standard-duration: 0.3s;
+@mixin standard {
+  transition-duration: $standard-duration;
+  transition-timing-function: $timing-function;
+}
+
+$emphasized-duration: 0.5s;
+@mixin emphasized {
+  transition-duration: $emphasized-duration;
+  transition-timing-function: $timing-function;
+}

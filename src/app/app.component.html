@@ -1,5 +1,5 @@
-<app-header></app-header>
-<app-logo></app-logo>
-<main>
-  <router-outlet></router-outlet>
+<app-header [@enterLeave]="true"></app-header>
+<app-logo [@enterLeave]="true"></app-logo>
+<main [@routeAnimations]="outlet.isActivated && outlet.activatedRoute">
+  <router-outlet #outlet="outlet"></router-outlet>
 </main>
