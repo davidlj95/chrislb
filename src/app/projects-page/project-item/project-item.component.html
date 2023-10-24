@@ -35,14 +35,13 @@
   >
     <!-- TODO: a11y -->
     <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
-    <!--suppress HtmlRequiredAltAttribute -->
-    <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
     <img
       [ngSrc]="image.filePath"
       ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
       sizes="(max-width: 959.98px) 50vw, 33vw"
       [fill]="true"
       [priority]="priorityPreviewImages && i < SLIDES_PER_VIEW"
+      alt="Image"
     />
   </swiper-slide>
 </swiper-container>
