@@ -12,10 +12,10 @@ export const NOT_FOUND_DATA: RouteData = {
 export const NOT_FOUND_PATH = '404'
 type RouteData = { NgaoxSeo?: IPageSeoData }
 
-export function getCanonicalUrlForPath(path: string) {
-  return new URL(path, new URL(meta.default.canonicalUrl)).toString()
+export function getCanonicalUrlForPath(...paths: ReadonlyArray<string>) {
+  return new URL(paths.join('/'), new URL(meta.default.canonicalUrl)).toString()
 }
 
-function getTitle(title: string) {
+export function getTitle(title: string) {
   return `${title} | ${meta.default.siteName}`
 }

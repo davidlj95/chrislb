@@ -11,6 +11,10 @@ export class ProjectsService {
   async getProjects(): Promise<ReadonlyArray<ProjectItem>> {
     return this.projectsJson
   }
+
+  async bySlug(slug: string): Promise<ProjectItem | null> {
+    return this.projectsJson.find((project) => project.slug === slug) ?? null
+  }
 }
 
 const PROJECTS_JSON = new InjectionToken<JsonProjects>('Projects JSON', {
