@@ -4,268 +4,311 @@
       {
         "name": "lookbook01.jpg",
         "filePath": "/projects/chiasma/lookbooks/01-ego/lookbook01.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook02.jpg",
         "filePath": "/projects/chiasma/lookbooks/01-ego/lookbook02.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook03.jpg",
         "filePath": "/projects/chiasma/lookbooks/01-ego/lookbook03.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook04.jpg",
         "filePath": "/projects/chiasma/lookbooks/01-ego/lookbook04.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook05.jpg",
         "filePath": "/projects/chiasma/lookbooks/01-ego/lookbook05.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       }
     ],
     "defiant": [
       {
         "name": "lookbook06.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook06.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook07.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook07.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook08.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook08.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook09.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook09.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook10.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook10.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook11.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook11.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook12.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook12.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook13.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook13.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook14.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook14.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook15.jpg",
         "filePath": "/projects/chiasma/lookbooks/02-defiant/lookbook15.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       }
     ],
     "moratorium": [
       {
         "name": "lookbook16.jpg",
         "filePath": "/projects/chiasma/lookbooks/03-moratorium/lookbook16.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook17.jpg",
         "filePath": "/projects/chiasma/lookbooks/03-moratorium/lookbook17.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook18.jpg",
         "filePath": "/projects/chiasma/lookbooks/03-moratorium/lookbook18.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook19.jpg",
         "filePath": "/projects/chiasma/lookbooks/03-moratorium/lookbook19.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook20.jpg",
         "filePath": "/projects/chiasma/lookbooks/03-moratorium/lookbook20.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       }
     ],
     "foreclosure": [
       {
         "name": "lookbook21.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook21.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook22.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook22.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook23.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook23.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook24.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook24.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook25.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook25.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook26.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook26.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook27.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook27.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook28.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook28.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook29.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook29.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook30.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook30.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook31.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook31.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook32.jpg",
         "filePath": "/projects/chiasma/lookbooks/04-foreclosure/lookbook32.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       }
     ],
     "diffusion": [
       {
         "name": "lookbook33.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook33.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook34.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook34.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook35.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook35.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook36.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook36.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook37.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook37.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook38.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook38.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook39.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook39.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook40.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook40.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook41.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook41.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook42.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook42.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       },
       {
         "name": "lookbook43.jpg",
         "filePath": "/projects/chiasma/lookbooks/05-diffusion/lookbook43.jpg",
-        "height": 1560,
-        "width": 1040
+        "height": 3240,
+        "width": 2160,
+        "alt": ""
       }
     ]
   }
