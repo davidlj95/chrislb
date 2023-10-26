@@ -26,7 +26,7 @@ export class ProjectLookbooksService {
     return of(
       Object.entries(lookbooks).map(([lookbookSlug, images]) => ({
         slug: lookbookSlug,
-        images,
+        images: images ?? [],
         name: this.projectLookbookNamesService.bySlug(lookbookSlug),
       })),
     )

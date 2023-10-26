@@ -19,6 +19,7 @@ import { getCanonicalUrlForPath } from './routes'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component'
 import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
+import { TechMaterialComponent } from './project-page/tech-material/tech-material.component'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -36,6 +37,7 @@ registerSwiper()
     NotFoundPageComponent,
     LookbooksComponent,
     LookbookComponent,
+    TechMaterialComponent,
   ],
   imports: [
     BrowserModule,
