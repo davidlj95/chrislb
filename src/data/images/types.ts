@@ -12,17 +12,17 @@ export interface LogoImages {
 }
 
 export interface PreviewImagesByProjectSlug {
-  [slug: string]: ReadonlyArray<ImageAsset>
+  [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }
 
 export interface LookbooksByProjectSlug {
-  [slug: string]: LookbookImagesBySlug
+  [slug: string]: LookbookImagesBySlug | undefined
 }
 
 export interface LookbookImagesBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset>
+  [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }
 
 export interface TechMaterialsBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset>
+  [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }

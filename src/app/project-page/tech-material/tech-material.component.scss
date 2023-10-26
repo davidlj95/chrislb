@@ -1,9 +1,12 @@
-@use 'page';
 @use 'margins';
+@use 'swiper';
 
 :host {
   display: flex;
   flex-direction: column;
-  @include page.padding;
   gap: margins.$m;
+
+  text-align: center;
+
+  @include swiper.theme;
 }
