@@ -1,0 +1,6 @@
+<app-lookbook
+  *ngFor="let lookbook of lookbooks | async; index as index"
+  [lookbook]="lookbook"
+  [index]="index + 1"
+  [priority]="index < MAX_LOOKBOOKS_PER_VIEWPORT"
+></app-lookbook>

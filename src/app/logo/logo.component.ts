@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'
-import { LogoImagesService } from './logo-images.service'
-import { ImageAsset } from '../../data/images/types'
+import { Component, Inject, InjectionToken } from '@angular/core'
+import { LogoImages } from '../../data/images/types'
+import logoImages from '../../data/images/logos.json'
 
 @Component({
   selector: 'app-logo',
@@ -8,9 +8,9 @@ import { ImageAsset } from '../../data/images/types'
   styleUrls: ['./logo.component.scss'],
 })
 export class LogoComponent {
-  public readonly horizontal: ImageAsset
-
-  constructor(logoImagesService: LogoImagesService) {
-    this.horizontal = logoImagesService.horizontal
-  }
+  constructor(@Inject(LOGO_IMAGES) public logoImages: LogoImages) {}
 }
+
+const LOGO_IMAGES = new InjectionToken<LogoImages>('Logo images', {
+  factory: () => logoImages,
+})

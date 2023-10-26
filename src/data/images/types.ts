@@ -6,3 +6,19 @@ export type ImageAsset = Pick<
 > & {
   alt?: string
 }
+
+export interface LogoImages {
+  horizontal: ImageAsset
+}
+
+export interface PreviewImagesByProjectSlug {
+  [slug: string]: ReadonlyArray<ImageAsset>
+}
+
+export interface LookbooksByProjectSlug {
+  [slug: string]: LookbookImagesBySlug
+}
+
+export interface LookbookImagesBySlug {
+  [slug: string]: ReadonlyArray<ImageAsset>
+}

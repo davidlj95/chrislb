@@ -77,7 +77,6 @@
   }
 
   .description {
-    @include typographies.size(1);
     @include typographies.light;
 
     display: flex;

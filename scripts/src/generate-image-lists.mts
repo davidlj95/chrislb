@@ -3,7 +3,13 @@ import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
 import * as fs from 'fs'
 import imagesConfigPkg from '../../src/data/images/config.js'
-import { ImageAsset } from '../../src/data/images/types.js'
+import {
+  ImageAsset,
+  LogoImages,
+  LookbookImagesBySlug,
+  LookbooksByProjectSlug,
+  PreviewImagesByProjectSlug,
+} from '../../src/data/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
@@ -75,7 +81,7 @@ class ImageListsGenerator {
     }
 
     Log.ok('Horizontal logo found')
-    const logoImages: { [id: string]: ImageAsset } = {
+    const logoImages: LogoImages = {
       horizontal: this.imageAssetFromFileObject(horizontalLogoFileObject),
     }
     this.writeJson(logoImages, 'logos.json')
@@ -107,39 +113,38 @@ class ImageListsGenerator {
     projectFolderObjects: ReadonlyArray<FolderObject>,
   ): Promise<void> {
     Log.group('Projects preview images')
-    const projectsPreviewImages: {
-      [slug: string]: ReadonlyArray<ImageAsset>
-    } = Object.fromEntries(
-      await Promise.all(
-        projectFolderObjects.map(async (projectFolderObject) => {
-          const PREVIEWS_DIR = 'preview'
-          Log.info(
-            "Finding preview images of project '%s' ('%s')",
-            projectFolderObject.name,
-            projectFolderObject.folderPath,
-          )
-          const projectPreviewFileObjects = await this.imageKit.listFiles({
-            path: `${projectFolderObject.folderPath}/${PREVIEWS_DIR}`,
-            sort: 'ASC_NAME',
-          })
-          if (projectPreviewFileObjects.length < 1) {
-            Log.warn(
-              "No preview images found for project '%s'",
+    const projectsPreviewImages: PreviewImagesByProjectSlug =
+      Object.fromEntries(
+        await Promise.all(
+          projectFolderObjects.map(async (projectFolderObject) => {
+            const PREVIEWS_DIR = 'preview'
+            Log.info(
+              "Finding preview images of project '%s' ('%s')",
               projectFolderObject.name,
+              projectFolderObject.folderPath,
             )
-          } else {
-            Log.item(
-              'Found %d preview images',
-              projectPreviewFileObjects.length,
-            )
-          }
-          return [
-            projectFolderObject.name,
-            projectPreviewFileObjects.map(this.imageAssetFromFileObject),
-          ]
-        }),
-      ),
-    )
+            const projectPreviewFileObjects = await this.imageKit.listFiles({
+              path: `${projectFolderObject.folderPath}/${PREVIEWS_DIR}`,
+              sort: 'ASC_NAME',
+            })
+            if (projectPreviewFileObjects.length < 1) {
+              Log.warn(
+                "No preview images found for project '%s'",
+                projectFolderObject.name,
+              )
+            } else {
+              Log.item(
+                'Found %d preview images',
+                projectPreviewFileObjects.length,
+              )
+            }
+            return [
+              projectFolderObject.name,
+              projectPreviewFileObjects.map(this.imageAssetFromFileObject),
+            ]
+          }),
+        ),
+      )
     this.writeJson(projectsPreviewImages, 'projects-preview.json')
     Log.ok('Done')
     Log.groupEnd()
@@ -148,10 +153,7 @@ class ImageListsGenerator {
   private async projectsLookbooksImages(
     projectFolderObjects: ReadonlyArray<FolderObject>,
   ) {
-    type Lookbook = ReadonlyArray<ImageAsset>
-    const projectsLookbooks: {
-      [slug: string]: ReadonlyArray<Lookbook>
-    } = {}
+    const lookbooksByProjectSlug: LookbooksByProjectSlug = {}
     Log.group('Projects lookbooks images')
     for (const projectFolderObject of projectFolderObjects) {
       const LOOKBOOKS_DIR = 'lookbooks'
@@ -175,7 +177,7 @@ class ImageListsGenerator {
         continue
       }
       Log.item('Found %d lookbooks', lookbooksFolderObjects.length)
-      const lookbookAssets: ImageAsset[][] = []
+      const lookbooksBySlug: LookbookImagesBySlug = {}
       for (const lookbookFolderObject of lookbooksFolderObjects) {
         Log.group(
           "Project '%s' lookbook '%s' images",
@@ -191,14 +193,15 @@ class ImageListsGenerator {
         } else {
           Log.item('Found %d images', lookbookFileObjects.length)
         }
-        lookbookAssets.push(
-          lookbookFileObjects.map(this.imageAssetFromFileObject),
+        const slug = this.removeOrderPrefix(lookbookFolderObject.name)
+        lookbooksBySlug[slug] = lookbookFileObjects.map(
+          this.imageAssetFromFileObject,
         )
         Log.groupEnd()
       }
-      projectsLookbooks[projectFolderObject.name] = lookbookAssets
+      lookbooksByProjectSlug[projectFolderObject.name] = lookbooksBySlug
     }
-    this.writeJson(projectsLookbooks, 'projects-lookbooks.json')
+    this.writeJson(lookbooksByProjectSlug, 'projects-lookbooks.json')
     Log.ok('Done')
     Log.groupEnd()
   }
@@ -218,6 +221,10 @@ class ImageListsGenerator {
       path.join(this.IMAGES_DATA_DIR, filename),
       JSON.stringify(json, null, 2),
     )
+  }
+
+  private removeOrderPrefix(name: string): string {
+    return name.replace(/^\d+-/, '')
   }
 }
 
