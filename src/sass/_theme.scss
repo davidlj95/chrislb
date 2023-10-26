@@ -1,5 +1,7 @@
 @use 'sass:color';
 
 // 👇 From the Internet
-$accent: hsla(196, 61%, 58%, 0.75);
+// $accent: hsla(196, 61%, 58%, 0.75);
+// 👇 From squared logo
+$accent: hsla(58, 79%, 51%, 0.75);
 $background: color.change($accent, $lightness: 98%);

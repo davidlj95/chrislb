@@ -3,7 +3,7 @@
   "short_name": "LAZARO",
   "display": "browser",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#e5de1fbf",
   "icons": [
     {
       "src": "assets/favicons/maskable-icon-x48.png",
