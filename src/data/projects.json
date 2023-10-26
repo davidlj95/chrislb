@@ -20,28 +20,6 @@
         "nickname": "flama.ph"
       }
     ],
-    "hasDetails": true,
-    "lookbooks": [
-      {
-        "slug": "ego",
-        "name": "Ego"
-      },
-      {
-        "slug": "defiant",
-        "name": "Defiant"
-      },
-      {
-        "slug": "moratorium",
-        "name": "Moratorium"
-      },
-      {
-        "slug": "foreclosure",
-        "name": "Foreclosure"
-      },
-      {
-        "slug": "diffusion",
-        "name": "Diffusion"
-      }
-    ]
+    "hasDetails": true
   }
 ]

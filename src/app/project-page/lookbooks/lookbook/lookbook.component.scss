@@ -1,0 +1,30 @@
+@use 'margins';
+@use 'swiper';
+@use 'header';
+@use 'logo';
+@use 'page';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: margins.$m;
+  text-align: center;
+
+  @include swiper.theme;
+
+  swiper-container {
+    $height-header: header.$height;
+    $height-logo: logo.$height;
+    $height-page-padding: page.$padding-vertical;
+    $height-before: calc($height-header + $height-logo + $height-page-padding);
+    $extra-space: margins.$xxl;
+
+    swiper-slide {
+      max-height: calc(100vh - $height-before - $extra-space) !important;
+
+      img {
+        object-fit: contain;
+      }
+    }
+  }
+}
