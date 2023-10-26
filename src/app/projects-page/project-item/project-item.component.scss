@@ -9,8 +9,14 @@
 
 :host {
   display: flex;
-  align-content: flex-start;
-  gap: margins.$l;
+  flex-direction: column;
+  gap: margins.$m;
+
+  .text-and-images {
+    display: flex;
+    align-content: flex-start;
+    gap: margins.$l;
+  }
 
   $height-header: header.$height;
   $height-logo: logo.$height;
@@ -40,8 +46,10 @@
   }
 
   @include breakpoints.until-s {
-    flex-wrap: wrap;
-    gap: margins.$m;
+    .text-and-images {
+      flex-wrap: wrap;
+      gap: margins.$m;
+    }
 
     .texts {
       width: unset;
@@ -88,9 +96,7 @@
     @include typographies.regular;
 
     display: flex;
-    flex-direction: column;
-    gap: margins.$xs;
-
-    margin-top: margins.$l;
+    gap: margins.$s;
+    justify-content: flex-start;
   }
 }

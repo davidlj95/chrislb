@@ -1,47 +1,49 @@
-<div class="texts">
-  <span class="title">
-    <ng-container *ngIf="item.hasDetails">
-      <a [routerLink]="[PROJECTS_PATH, item.slug]"
-        ><ng-container [ngTemplateOutlet]="title"></ng-container
-      ></a>
-    </ng-container>
-    <ng-template #title>
-      {{ item.title }}
-    </ng-template>
-  </span>
-  <span class="subtitle">
-    {{ item.subtitle }}
-  </span>
-  <span class="quote" *ngIf="item.quote"> "{{ item.quote }}" </span>
-  <div class="description">
-    <p *ngFor="let line of item.description">
-      {{ line }}
-    </p>
-  </div>
-  <div class="credits" *ngIf="item.credits.length">
-    <span *ngFor="let credit of item.credits">
-      {{ credit.role }}: {{ credit.name }} (<a
-        href="https://instagram.com/_u/{{ credit.nickname }}"
-        target="_blank"
-        >@{{ credit.nickname }}</a
-      >)
+<div class="text-and-images">
+  <div class="texts">
+    <span class="title">
+      <ng-container *ngIf="item.hasDetails">
+        <a [routerLink]="[PROJECTS_PATH, item.slug]"
+          ><ng-container [ngTemplateOutlet]="title"></ng-container
+        ></a>
+      </ng-container>
+      <ng-template #title>
+        {{ item.title }}
+      </ng-template>
     </span>
+    <span class="subtitle">
+      {{ item.subtitle }}
+    </span>
+    <span class="quote" *ngIf="item.quote"> "{{ item.quote }}" </span>
+    <div class="description">
+      <p *ngFor="let line of item.description">
+        {{ line }}
+      </p>
+    </div>
   </div>
+  <swiper-container [appSwiper]="options" init="false">
+    <swiper-slide
+      *ngFor="let image of previewImages | async; index as i"
+      [style.aspect-ratio]="image.width / image.height"
+    >
+      <!-- TODO: a11y -->
+      <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
+      <img
+        [ngSrc]="image.filePath"
+        ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
+        sizes="(max-width: 959.98px) 50vw, 33vw"
+        [fill]="true"
+        [priority]="priorityPreviewImages && i < SLIDES_PER_VIEW"
+        [alt]="image.alt || DEFAULT_IMAGE_ALT"
+      />
+    </swiper-slide>
+  </swiper-container>
 </div>
-<swiper-container [appSwiper]="options" init="false">
-  <swiper-slide
-    *ngFor="let image of previewImages | async; index as i"
-    [style.aspect-ratio]="image.width / image.height"
-  >
-    <!-- TODO: a11y -->
-    <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
-    <img
-      [ngSrc]="image.filePath"
-      ngSrcset="128w, 256w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
-      sizes="(max-width: 959.98px) 50vw, 33vw"
-      [fill]="true"
-      [priority]="priorityPreviewImages && i < SLIDES_PER_VIEW"
-      [alt]="image.alt || DEFAULT_IMAGE_ALT"
-    />
-  </swiper-slide>
-</swiper-container>
+<div class="credits" *ngIf="item.credits.length">
+  <span *ngFor="let credit of item.credits">
+    {{ credit.role }}: {{ credit.name }} (<a
+      href="https://instagram.com/_u/{{ credit.nickname }}"
+      target="_blank"
+      >@{{ credit.nickname }}</a
+    >)
+  </span>
+</div>
