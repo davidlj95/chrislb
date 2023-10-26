@@ -36,8 +36,10 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
           path: NOT_FOUND_PATH,
           component: NotFoundPageComponent,
           data: {
-            NOT_FOUND_DATA,
-            url: getCanonicalUrlForPath(NOT_FOUND_PATH),
+            NgaoxSeo: {
+              ...NOT_FOUND_DATA.NgaoxSeo,
+              url: getCanonicalUrlForPath(NOT_FOUND_PATH),
+            },
           },
         },
         {
