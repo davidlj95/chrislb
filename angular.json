@@ -39,7 +39,7 @@
               "src/assets",
               "src/browserconfig.xml",
               "src/favicon.ico",
-              "src/favicon.png",
+              "src/favicon.svg",
               "src/robots.txt",
               "src/site.webmanifest"
             ],
@@ -106,7 +106,7 @@
               "src/assets",
               "src/browserconfig.xml",
               "src/favicon.ico",
-              "src/favicon.png",
+              "src/favicon.svg",
               "src/robots.txt",
               "src/site.webmanifest"
             ],

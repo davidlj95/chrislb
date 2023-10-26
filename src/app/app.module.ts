@@ -47,7 +47,7 @@ registerSwiper()
     SeoModule.forRoot({
       type: 'website',
       image: {
-        url: getCanonicalUrlForPath('assets/img/open_graph.png'),
+        url: getCanonicalUrlForPath('assets/favicons/open-graph.png'),
         alt: meta.default.imageAlt,
         width: 875,
         height: 875,
