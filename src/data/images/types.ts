@@ -22,3 +22,7 @@ export interface LookbooksByProjectSlug {
 export interface LookbookImagesBySlug {
   [slug: string]: ReadonlyArray<ImageAsset>
 }
+
+export interface TechMaterialsBySlug {
+  [slug: string]: ReadonlyArray<ImageAsset>
+}

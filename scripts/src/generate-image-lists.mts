@@ -9,6 +9,7 @@ import {
   LookbookImagesBySlug,
   LookbooksByProjectSlug,
   PreviewImagesByProjectSlug,
+  TechMaterialsBySlug,
 } from '../../src/data/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
@@ -52,6 +53,7 @@ class ImageListsGenerator {
     const projects = await this.projects()
     await this.projectsPreviewImages(projects)
     await this.projectsLookbooksImages(projects)
+    await this.projectsTechMaterials(projects)
   }
 
   private async logos(): Promise<void> {
@@ -202,6 +204,38 @@ class ImageListsGenerator {
       lookbooksByProjectSlug[projectFolderObject.name] = lookbooksBySlug
     }
     this.writeJson(lookbooksByProjectSlug, 'projects-lookbooks.json')
+    Log.ok('Done')
+    Log.groupEnd()
+  }
+
+  private async projectsTechMaterials(
+    projectFolderObjects: ReadonlyArray<FolderObject>,
+  ) {
+    const techMaterialsBySlug: TechMaterialsBySlug = {}
+    Log.group('Projects tech material images')
+    for (const projectFolderObject of projectFolderObjects) {
+      const TECH_MATERIALS_DIR = 'tech-material'
+      Log.info(
+        "Finding tech materials of project '%s' ('%s')",
+        projectFolderObject.name,
+        projectFolderObject.folderPath,
+      )
+      const techMaterialFileObjects = await this.imageKit.listFiles({
+        path: `${projectFolderObject.folderPath}/${TECH_MATERIALS_DIR}`,
+        sort: 'ASC_NAME',
+      })
+      if (techMaterialFileObjects.length < 1) {
+        Log.warn(
+          "No tech materials found for project '%s'",
+          projectFolderObject.name,
+        )
+        continue
+      }
+      Log.item('Found %d tech material images', techMaterialFileObjects.length)
+      techMaterialsBySlug[projectFolderObject.name] =
+        techMaterialFileObjects.map(this.imageAssetFromFileObject)
+    }
+    this.writeJson(techMaterialsBySlug, 'projects-tech-materials.json')
     Log.ok('Done')
     Log.groupEnd()
   }
