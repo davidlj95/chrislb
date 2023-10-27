@@ -24,11 +24,6 @@ export class TechMaterialComponent {
     .toSrcSet()
   public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
     slidesPerView: 1,
-    breakpoints: {
-      959.98: {
-        slidesPerView: 2,
-      },
-    },
   }
 
   constructor(
