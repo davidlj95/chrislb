@@ -4,7 +4,7 @@ import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../../data/images/types'
 import { ProjectPreviewImagesService } from './project-preview-images.service'
 import { PROJECTS_PATH } from '../../routes'
-import { DEFAULT_IMAGE_ALT } from '../../common/default-image-alt'
+import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
 
 @Component({
   selector: 'app-project-item',
@@ -13,34 +13,22 @@ import { DEFAULT_IMAGE_ALT } from '../../common/default-image-alt'
 })
 export class ProjectItemComponent implements OnChanges {
   @Input({ required: true }) public item!: ProjectItem
-  @Input() public priorityPreviewImages = false
-  public readonly SLIDES_PER_VIEW = 2
-  public readonly options: SwiperOptions = {
-    pagination: {
-      enabled: true,
-      clickable: true,
-      dynamicBullets: true,
-    },
-    navigation: {
-      enabled: true,
-    },
-    keyboard: {
-      enabled: true,
-    },
-    rewind: true,
-    autoplay: {
-      disableOnInteraction: true,
-      delay: 2500,
-    },
-    //loop: true,
-    slidesPerView: this.SLIDES_PER_VIEW,
+  @Input() public priority?: boolean
+  public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
+    slidesPerView: 2,
   }
   public previewImages!: Promise<ReadonlyArray<ImageAsset>>
+  public srcSet = this.imageResponsiveBreakpointsService
+    .range(
+      this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
+      this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 3,
+    )
+    .toSrcSet()
   protected readonly PROJECTS_PATH = PROJECTS_PATH
-  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
 
   constructor(
     private projectPreviewImagesService: ProjectPreviewImagesService,
+    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
   ) {}
 
   ngOnChanges(): void {
