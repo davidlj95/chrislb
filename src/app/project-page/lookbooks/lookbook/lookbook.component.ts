@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-import { DEFAULT_IMAGE_ALT } from '../../../common/default-image-alt'
 import { Lookbook } from './lookbook'
+import { ImageResponsiveBreakpointsService } from '../../../common/image-responsive-breakpoints.service'
+import { ImageResponsiveBreakpoints } from '../../../common/image-responsive-breakpoints'
 
 @Component({
   selector: 'app-lookbook',
@@ -9,50 +10,25 @@ import { Lookbook } from './lookbook'
   styleUrls: ['./lookbook.component.scss'],
 })
 export class LookbookComponent {
-  public swiperOptions!: SwiperOptions
   @Input() public index?: number
   @Input() public priority?: boolean
-  protected readonly MAX_SLIDES_PER_VIEW = 3
-  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
-
-  protected _lookbook!: Lookbook
-
-  @Input({ required: true })
-  public set lookbook(lookbook: Lookbook) {
-    this._lookbook = lookbook
-    this.swiperOptions = this.getSwiperOptions(this._lookbook.images.length)
+  @Input({ required: true }) public lookbook!: Lookbook
+  public readonly MAX_WIDTH_PX = 850
+  public readonly SLIDES_PER_VIEW = 2
+  public readonly MAX_SLIDE_WIDTH_PX = this.MAX_WIDTH_PX / this.SLIDES_PER_VIEW
+  public readonly srcSet = new ImageResponsiveBreakpoints(
+    this.imageResponsiveBreakpointsService
+      .range(
+        this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
+        this.MAX_SLIDE_WIDTH_PX,
+      )
+      .pxValues.concat([this.MAX_SLIDE_WIDTH_PX]),
+  ).toSrcSet()
+  public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
+    slidesPerView: this.SLIDES_PER_VIEW,
   }
 
-  public get lookbook(): Lookbook {
-    return this._lookbook
-  }
-
-  private getSwiperOptions(slidesCount: number): SwiperOptions {
-    const loop = slidesCount > this.MAX_SLIDES_PER_VIEW * 2
-    return {
-      pagination: {
-        enabled: true,
-        clickable: true,
-        dynamicBullets: true,
-      },
-      navigation: {
-        enabled: true,
-      },
-      keyboard: {
-        enabled: true,
-      },
-      loop,
-      rewind: !loop,
-      autoplay: {
-        disableOnInteraction: true,
-        delay: 2500,
-      },
-      slidesPerView: 2,
-      breakpoints: {
-        959.98: {
-          slidesPerView: this.MAX_SLIDES_PER_VIEW,
-        },
-      },
-    }
-  }
+  constructor(
+    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
+  ) {}
 }
