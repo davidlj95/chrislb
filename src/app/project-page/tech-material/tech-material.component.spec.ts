@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { TechMaterialComponent } from './tech-material.component'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { MockComponents } from 'ng-mocks'
+import { ImageSwiperComponent } from '../../image-swiper/image-swiper.component'
 
 describe('TechMaterialComponent', () => {
   let component: TechMaterialComponent
@@ -9,9 +10,10 @@ describe('TechMaterialComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TechMaterialComponent],
-      //👇 To include swiper element
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [
+        TechMaterialComponent,
+        MockComponents(ImageSwiperComponent),
+      ],
     })
     fixture = TestBed.createComponent(TechMaterialComponent)
     component = fixture.componentInstance
