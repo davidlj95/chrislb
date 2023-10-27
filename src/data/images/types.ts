@@ -26,3 +26,7 @@ export interface LookbookImagesBySlug {
 export interface TechMaterialsBySlug {
   [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }
+
+export interface ImageAssetsBySlug {
+  [slug: string]: ReadonlyArray<ImageAsset> | undefined
+}

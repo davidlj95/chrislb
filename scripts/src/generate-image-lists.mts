@@ -5,11 +5,10 @@ import * as fs from 'fs'
 import imagesConfigPkg from '../../src/data/images/config.js'
 import {
   ImageAsset,
+  ImageAssetsBySlug,
   LogoImages,
   LookbookImagesBySlug,
   LookbooksByProjectSlug,
-  PreviewImagesByProjectSlug,
-  TechMaterialsBySlug,
 } from '../../src/data/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
@@ -51,9 +50,19 @@ class ImageListsGenerator {
   public async all(): Promise<void> {
     await this.logos()
     const projects = await this.projects()
-    await this.projectsPreviewImages(projects)
+    await this.projectsDirectoryImageAssetsBySlug({
+      projectFolderObjects: projects,
+      directory: 'preview',
+      name: 'preview images',
+      filename: 'projects-preview.json',
+    })
     await this.projectsLookbooksImages(projects)
-    await this.projectsTechMaterials(projects)
+    await this.projectsDirectoryImageAssetsBySlug({
+      projectFolderObjects: projects,
+      directory: 'tech-material',
+      name: 'tech material images',
+      filename: 'projects-tech-materials.json',
+    })
   }
 
   private async logos(): Promise<void> {
@@ -109,47 +118,6 @@ class ImageListsGenerator {
     Log.ok('Done')
     Log.groupEnd()
     return projectFileObjects as unknown as ReadonlyArray<FolderObject>
-  }
-
-  private async projectsPreviewImages(
-    projectFolderObjects: ReadonlyArray<FolderObject>,
-  ): Promise<void> {
-    Log.group('Projects preview images')
-    const projectsPreviewImages: PreviewImagesByProjectSlug =
-      Object.fromEntries(
-        await Promise.all(
-          projectFolderObjects.map(async (projectFolderObject) => {
-            const PREVIEWS_DIR = 'preview'
-            Log.info(
-              "Finding preview images of project '%s' ('%s')",
-              projectFolderObject.name,
-              projectFolderObject.folderPath,
-            )
-            const projectPreviewFileObjects = await this.imageKit.listFiles({
-              path: `${projectFolderObject.folderPath}/${PREVIEWS_DIR}`,
-              sort: 'ASC_NAME',
-            })
-            if (projectPreviewFileObjects.length < 1) {
-              Log.warn(
-                "No preview images found for project '%s'",
-                projectFolderObject.name,
-              )
-            } else {
-              Log.item(
-                'Found %d preview images',
-                projectPreviewFileObjects.length,
-              )
-            }
-            return [
-              projectFolderObject.name,
-              projectPreviewFileObjects.map(this.imageAssetFromFileObject),
-            ]
-          }),
-        ),
-      )
-    this.writeJson(projectsPreviewImages, 'projects-preview.json')
-    Log.ok('Done')
-    Log.groupEnd()
   }
 
   private async projectsLookbooksImages(
@@ -208,34 +176,40 @@ class ImageListsGenerator {
     Log.groupEnd()
   }
 
-  private async projectsTechMaterials(
-    projectFolderObjects: ReadonlyArray<FolderObject>,
-  ) {
-    const techMaterialsBySlug: TechMaterialsBySlug = {}
-    Log.group('Projects tech material images')
+  private async projectsDirectoryImageAssetsBySlug({
+    projectFolderObjects,
+    directory,
+    name,
+    filename,
+  }: {
+    projectFolderObjects: ReadonlyArray<FolderObject>
+    directory: string
+    name: string
+    filename: string
+  }): Promise<void> {
+    const assetsByProjectSlug: ImageAssetsBySlug = {}
+    Log.group('Projects %s assets', name)
     for (const projectFolderObject of projectFolderObjects) {
-      const TECH_MATERIALS_DIR = 'tech-material'
       Log.info(
-        "Finding tech materials of project '%s' ('%s')",
+        "Finding %s of project '%s' ('%s')",
+        name,
         projectFolderObject.name,
         projectFolderObject.folderPath,
       )
-      const techMaterialFileObjects = await this.imageKit.listFiles({
-        path: `${projectFolderObject.folderPath}/${TECH_MATERIALS_DIR}`,
+      const assetFileObjects = await this.imageKit.listFiles({
+        path: `${projectFolderObject.folderPath}/${directory}`,
         sort: 'ASC_NAME',
       })
-      if (techMaterialFileObjects.length < 1) {
-        Log.warn(
-          "No tech materials found for project '%s'",
-          projectFolderObject.name,
-        )
+      if (assetFileObjects.length < 1) {
+        Log.warn("No %s found for project '%s'", name, projectFolderObject.name)
         continue
       }
-      Log.item('Found %d tech material images', techMaterialFileObjects.length)
-      techMaterialsBySlug[projectFolderObject.name] =
-        techMaterialFileObjects.map(this.imageAssetFromFileObject)
+      Log.item('Found %d assets', assetFileObjects.length)
+      assetsByProjectSlug[projectFolderObject.name] = assetFileObjects.map(
+        this.imageAssetFromFileObject,
+      )
     }
-    this.writeJson(techMaterialsBySlug, 'projects-tech-materials.json')
+    this.writeJson(assetsByProjectSlug, filename)
     Log.ok('Done')
     Log.groupEnd()
   }
