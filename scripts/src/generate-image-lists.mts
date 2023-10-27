@@ -63,6 +63,12 @@ class ImageListsGenerator {
       name: 'tech material images',
       filename: 'projects-tech-materials.json',
     })
+    await this.projectsDirectoryImageAssetsBySlug({
+      projectFolderObjects: projects,
+      directory: 'book-design',
+      name: 'book design images',
+      filename: 'projects-book-design.json',
+    })
   }
 
   private async logos(): Promise<void> {
