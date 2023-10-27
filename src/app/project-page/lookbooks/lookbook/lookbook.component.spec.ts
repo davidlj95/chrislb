@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { LookbookComponent } from './lookbook.component'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { MockComponents } from 'ng-mocks'
+import { ImageSwiperComponent } from '../../../image-swiper/image-swiper.component'
 
 describe('LookbookComponent', () => {
   let component: LookbookComponent
@@ -9,9 +10,7 @@ describe('LookbookComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LookbookComponent],
-      //👇 To include swiper element
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [LookbookComponent, MockComponents(ImageSwiperComponent)],
     })
     fixture = TestBed.createComponent(LookbookComponent)
     component = fixture.componentInstance
