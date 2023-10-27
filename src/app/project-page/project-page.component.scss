@@ -1,3 +1,4 @@
+@use 'breakpoints';
 @use 'page';
 @use 'margins';
 
@@ -6,4 +7,23 @@
   flex-direction: column;
   @include page.padding;
   gap: margins.$m;
+
+  .material-and-book {
+    display: flex;
+    gap: margins.$m;
+    max-width: 100%;
+
+    > * {
+      $marginM: margins.$m;
+      width: calc((100% - $marginM) / 2);
+    }
+
+    @include breakpoints.until-s {
+      flex-direction: column;
+
+      > * {
+        width: 100%;
+      }
+    }
+  }
 }
