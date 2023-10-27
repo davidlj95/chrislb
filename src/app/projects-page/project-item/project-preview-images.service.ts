@@ -1,8 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import {
-  ImageAsset,
-  PreviewImagesByProjectSlug,
-} from '../../../data/images/types'
+import { ImageAsset, ImageAssetsBySlug } from '../../../data/images/types'
 import projectsPreviewImages from '../../../data/images/projects-preview.json'
 
 @Injectable({
@@ -11,7 +8,7 @@ import projectsPreviewImages from '../../../data/images/projects-preview.json'
 export class ProjectPreviewImagesService {
   constructor(
     @Inject(PREVIEW_IMAGES_BY_PROJECT_SLUG)
-    private previewImagesByProjectSlug: PreviewImagesByProjectSlug,
+    private previewImagesByProjectSlug: ImageAssetsBySlug,
   ) {}
 
   async bySlug(slug: string): Promise<ReadonlyArray<ImageAsset>> {
@@ -19,10 +16,9 @@ export class ProjectPreviewImagesService {
   }
 }
 
-const PREVIEW_IMAGES_BY_PROJECT_SLUG =
-  new InjectionToken<PreviewImagesByProjectSlug>(
-    'Preview images by project slug',
-    {
-      factory: () => projectsPreviewImages,
-    },
-  )
+const PREVIEW_IMAGES_BY_PROJECT_SLUG = new InjectionToken<ImageAssetsBySlug>(
+  'Preview images by project slug',
+  {
+    factory: () => projectsPreviewImages,
+  },
+)

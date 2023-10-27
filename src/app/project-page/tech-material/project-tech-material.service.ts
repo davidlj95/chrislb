@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
 import projectsTechMaterials from '../../../data/images/projects-tech-materials.json'
 import { Observable, of } from 'rxjs'
-import { ImageAsset, TechMaterialsBySlug } from '../../../data/images/types'
+import { ImageAsset, ImageAssetsBySlug } from '../../../data/images/types'
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { ImageAsset, TechMaterialsBySlug } from '../../../data/images/types'
 export class ProjectTechMaterialService {
   constructor(
     @Inject(TECH_MATERIALS_BY_SLUG)
-    private techMaterialsBySlug: TechMaterialsBySlug,
+    private techMaterialsBySlug: ImageAssetsBySlug,
   ) {}
 
   bySlug(projectSlug: string): Observable<ReadonlyArray<ImageAsset>> {
@@ -17,7 +17,7 @@ export class ProjectTechMaterialService {
   }
 }
 
-const TECH_MATERIALS_BY_SLUG = new InjectionToken<TechMaterialsBySlug>(
+const TECH_MATERIALS_BY_SLUG = new InjectionToken<ImageAssetsBySlug>(
   'Tech materials by project slug',
   {
     factory: () => projectsTechMaterials,
