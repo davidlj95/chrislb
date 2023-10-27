@@ -3,7 +3,7 @@ import { SwiperOptions } from 'swiper/types'
 import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
 import { ProjectTechMaterialService } from './project-tech-material.service'
-import { DEFAULT_IMAGE_ALT } from '../../common/default-image-alt'
+import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
 
 @Component({
   selector: 'app-tech-material',
@@ -16,23 +16,13 @@ export class TechMaterialComponent {
   }
 
   public techMaterials!: Observable<ReadonlyArray<ImageAsset>>
-  public readonly swiperOptions: SwiperOptions = {
-    pagination: {
-      enabled: true,
-      clickable: true,
-      dynamicBullets: true,
-    },
-    navigation: {
-      enabled: true,
-    },
-    keyboard: {
-      enabled: true,
-    },
-    rewind: true,
-    autoplay: {
-      disableOnInteraction: true,
-      delay: 2500,
-    },
+  public readonly srcSet = this.imageResponsiveBreakpointsService
+    .range(
+      this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
+      this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 2,
+    )
+    .toSrcSet()
+  public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
     slidesPerView: 1,
     breakpoints: {
       959.98: {
@@ -41,7 +31,8 @@ export class TechMaterialComponent {
     },
   }
 
-  constructor(private projectTechMaterialService: ProjectTechMaterialService) {}
-
-  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
+  constructor(
+    private projectTechMaterialService: ProjectTechMaterialService,
+    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
+  ) {}
 }
