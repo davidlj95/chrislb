@@ -91,5 +91,9 @@
     display: flex;
     gap: margins.$s;
     justify-content: flex-start;
+
+    .anchor {
+      display: inline-block;
+    }
   }
 }
