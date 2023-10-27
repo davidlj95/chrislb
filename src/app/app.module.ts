@@ -21,6 +21,7 @@ import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component
 import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
 import { TechMaterialComponent } from './project-page/tech-material/tech-material.component'
 import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
+import { DesignBookComponent } from './project-page/design-book/design-book.component'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -40,6 +41,7 @@ registerSwiper()
     LookbookComponent,
     TechMaterialComponent,
     ImageSwiperComponent,
+    DesignBookComponent,
   ],
   imports: [
     BrowserModule,

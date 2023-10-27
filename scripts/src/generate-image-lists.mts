@@ -65,9 +65,9 @@ class ImageListsGenerator {
     })
     await this.projectsDirectoryImageAssetsBySlug({
       projectFolderObjects: projects,
-      directory: 'book-design',
-      name: 'book design images',
-      filename: 'projects-book-design.json',
+      directory: 'design-book',
+      name: 'design book images',
+      filename: 'projects-design-books.json',
     })
   }
 

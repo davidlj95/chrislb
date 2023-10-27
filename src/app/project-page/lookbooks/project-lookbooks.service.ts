@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { Lookbook } from './lookbook/lookbook'
 import { ProjectLookbookNamesService } from './project-lookbook-names.service'
 import {
-  LookbookImagesBySlug,
+  ImageAssetsBySlug,
   LookbooksByProjectSlug,
 } from '../../../data/images/types'
 
@@ -32,7 +32,7 @@ export class ProjectLookbooksService {
     )
   }
 
-  private getLookbooks(projectSlug: string): LookbookImagesBySlug | undefined {
+  private getLookbooks(projectSlug: string): ImageAssetsBySlug | undefined {
     return this.lookbooksByProjectSlug[projectSlug]
   }
 }

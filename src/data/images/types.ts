@@ -11,22 +11,10 @@ export interface LogoImages {
   horizontal: ImageAsset
 }
 
-export interface PreviewImagesByProjectSlug {
+export interface ImageAssetsBySlug {
   [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }
 
 export interface LookbooksByProjectSlug {
-  [slug: string]: LookbookImagesBySlug | undefined
-}
-
-export interface LookbookImagesBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset> | undefined
-}
-
-export interface TechMaterialsBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset> | undefined
-}
-
-export interface ImageAssetsBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset> | undefined
+  [slug: string]: ImageAssetsBySlug | undefined
 }
