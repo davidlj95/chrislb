@@ -34,6 +34,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/admin",
               "src/apple-touch-icon.png",
               "src/apple-touch-icon-precomposed.png",
               "src/assets",
@@ -101,6 +102,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/admin",
               "src/apple-touch-icon.png",
               "src/apple-touch-icon-precomposed.png",
               "src/assets",
