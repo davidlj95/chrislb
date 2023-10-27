@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnChanges } from '@angular/core'
 import { DEFAULT_IMAGE_ALT } from '../common/default-image-alt'
 import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../data/images/types'
@@ -8,18 +8,12 @@ import { ImageAsset } from '../../data/images/types'
   templateUrl: './image-swiper.component.html',
   styleUrls: ['./image-swiper.component.scss'],
 })
-export class ImageSwiperComponent {
-  protected _images!: ReadonlyArray<ImageAsset> | null
-
-  @Input({ required: true })
-  public set images(images: ReadonlyArray<ImageAsset> | null) {
-    this._images = images
-    this.updateSwiperOptionsWithLoopOrRewind()
-  }
-
+export class ImageSwiperComponent implements OnChanges {
+  @Input({ required: true }) public images!: ReadonlyArray<ImageAsset> | null
   @Input({ required: true }) public srcSet!: string
   @Input({ required: true }) public sizes!: string
   @Input() public priority?: boolean
+  @Input() public customSwiperOptions?: SwiperOptions
   protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
   protected readonly DEFAULT_SWIPER_OPTIONS: SwiperOptions = {
     pagination: {
@@ -38,23 +32,28 @@ export class ImageSwiperComponent {
       delay: 2500,
     },
   }
-
+  protected _maxSlidesPerView: number | null = null
   protected _swiperOptions: SwiperOptions = this.DEFAULT_SWIPER_OPTIONS
-  protected _customSwiperOptions: SwiperOptions = {}
 
-  @Input()
-  public set swiperOptions(swiperOptions: SwiperOptions) {
-    this._customSwiperOptions = swiperOptions
-    this.updateSwiperOptionsWithLoopOrRewind()
+  ngOnChanges(): void {
+    const swiperOptions: SwiperOptions = {
+      ...this.DEFAULT_SWIPER_OPTIONS,
+      ...this.customSwiperOptions,
+    }
+    this._maxSlidesPerView = this.getMaxSlidesPerView(swiperOptions)
+    this._swiperOptions = this.updateSwiperOptionsWithLoopOrRewind(
+      swiperOptions,
+      this._maxSlidesPerView,
+    )
   }
 
-  public get maxSlidesPerView(): number | null {
-    const breakpointSlidesPerViews = this._swiperOptions.breakpoints
-      ? Object.values(this._swiperOptions.breakpoints).map(
+  public getMaxSlidesPerView(swiperOptions: SwiperOptions): number | null {
+    const breakpointSlidesPerViews = swiperOptions.breakpoints
+      ? Object.values(swiperOptions.breakpoints).map(
           (options) => options.slidesPerView,
         )
       : []
-    const defaultSlidesPerView = this._swiperOptions.slidesPerView
+    const defaultSlidesPerView = swiperOptions.slidesPerView
     const allSlidesPerView = breakpointSlidesPerViews
       .concat([defaultSlidesPerView])
       .filter(
@@ -67,17 +66,24 @@ export class ImageSwiperComponent {
     return Math.max(...allSlidesPerView)
   }
 
-  private updateSwiperOptionsWithLoopOrRewind() {
-    const maxSlidesPerView = this.maxSlidesPerView
+  private updateSwiperOptionsWithLoopOrRewind(
+    swiperOptions: SwiperOptions,
+    maxSlidesPerView: number | null,
+  ): SwiperOptions {
+    if (
+      swiperOptions.loop !== undefined ||
+      swiperOptions.rewind !== undefined
+    ) {
+      return swiperOptions
+    }
     const loop =
-      !!this._images &&
+      !!this.images &&
       maxSlidesPerView !== null &&
-      this._images.length > maxSlidesPerView * 2
-    this._swiperOptions = {
-      ...this.DEFAULT_SWIPER_OPTIONS,
+      this.images.length > maxSlidesPerView * 2
+    return {
+      ...swiperOptions,
       loop,
       rewind: !loop,
-      ...this._customSwiperOptions,
     }
   }
 }
