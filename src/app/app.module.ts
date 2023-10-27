@@ -9,7 +9,7 @@ import { ProjectItemComponent } from './projects-page/project-item/project-item.
 import { NgOptimizedImage, provideImageKitLoader } from '@angular/common'
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
-import { SwiperDirective } from './common/swiper.directive'
+import { SwiperDirective } from './image-swiper/swiper.directive'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 import { SeoModule } from '@ngaox/seo'
 import meta from '../data/meta.json'
@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component'
 import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
 import { TechMaterialComponent } from './project-page/tech-material/tech-material.component'
+import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -38,6 +39,7 @@ registerSwiper()
     LookbooksComponent,
     LookbookComponent,
     TechMaterialComponent,
+    ImageSwiperComponent,
   ],
   imports: [
     BrowserModule,

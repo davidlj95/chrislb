@@ -1,0 +1,35 @@
+@use 'theme';
+
+:host {
+  swiper-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    swiper-slide {
+      max-height: inherit;
+
+      img {
+        object-fit: contain;
+      }
+    }
+  }
+
+  $balanced-luminance-color: theme.$accent;
+
+  swiper-container::part(button-prev) {
+    color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(button-next) {
+    color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(bullet-active) {
+    background-color: $balanced-luminance-color;
+  }
+
+  swiper-container::part(bullet) {
+    background-color: $balanced-luminance-color;
+  }
+}
