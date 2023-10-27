@@ -1,18 +1,8 @@
 <h2>Tech material</h2>
-<swiper-container [appSwiper]="swiperOptions" init="false">
-  <swiper-slide
-    *ngFor="let image of techMaterials | async"
-    [style.aspect-ratio]="image.width / image.height"
-  >
-    <!-- TODO: a11y -->
-    <!-- Keep in sync with breakpoints SCSS. srcset subset from Angular defaults -->
-    <!-- Added 320w to make Lighthouse happy -->
-    <img
-      [ngSrc]="image.filePath"
-      ngSrcset="128w, 256w, 320w, 384w, 640w, 750w, 828w, 1080w, 1200w, 1920w"
-      sizes="calc(50vw - 16px), calc(100vw - 16px)"
-      [fill]="true"
-      [alt]="image.alt || DEFAULT_IMAGE_ALT"
-    />
-  </swiper-slide>
-</swiper-container>
+<app-image-swiper
+  [images]="techMaterials | async"
+  [srcSet]="srcSet"
+  sizes="calc(50vw - 16px), calc(100vw - 16px)"
+  [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
+>
+</app-image-swiper>
