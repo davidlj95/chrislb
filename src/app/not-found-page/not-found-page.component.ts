@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import meta from '../../data/meta.json'
+import notFoundPageMetadata from '../../data/pages/not-found.json'
 
 @Component({
   selector: 'app-not-found-page',
@@ -7,5 +7,5 @@ import meta from '../../data/meta.json'
   styleUrls: ['./not-found-page.component.scss'],
 })
 export class NotFoundPageComponent {
-  public readonly description: string = meta.notFound.description
+  public readonly description: string = notFoundPageMetadata.description
 }
