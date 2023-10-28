@@ -1,8 +1,10 @@
 import { IPageSeoData } from '@ngaox/seo'
 import meta from '../data/meta.json'
+import notFoundPage from '../data/pages/not-found.json'
+import projectsPage from '../data/pages/projects.json'
 
-export const PROJECTS_PATH = 'projects'
-export const NOT_FOUND_PATH = '404'
+export const PROJECTS_PATH = projectsPage.slug
+export const NOT_FOUND_PATH = notFoundPage.slug
 
 type RouteData = {
   NgaoxSeo?: IPageSeoData

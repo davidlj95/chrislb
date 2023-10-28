@@ -1,0 +1,112 @@
+backend:
+  name: github
+  repo: davidlj95/chrislb
+  branch: main
+publish_mode: editorial_workflow
+media_folder: 'src/assets/cms'
+site_url: https://christianlazaro.es
+display_url: https://github.com/davidlj95/chrislb
+logo_url: https://christianlazaro.es/favicon.svg
+slug:
+  encoding: 'ascii'
+  clean_accents: true
+  sanitize_replacement: '-'
+collections:
+  - name: 'metadata'
+    label: 'Metadata'
+    files:
+      - label: 'Default'
+        name: 'default'
+        file: 'src/data/meta.json'
+        fields:
+          - label: 'Site name'
+            name: 'siteName'
+            widget: 'string'
+            hint: 'This will appear in page titles in browser tabs / windows. Including the page title. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro"'
+            pattern: ['.{1,}', 'Must have at least 1 character']
+          - label: 'Author'
+            name: 'author'
+            widget: 'string'
+            pattern: ['.{1,}', 'Must have at least 1 character']
+          - label: 'Canonical URL'
+            name: 'canonicalUrl'
+            widget: 'string'
+            pattern: ['^https:\/\/.*', 'Must start with https://']
+  - name: 'pages'
+    label: 'Pages'
+    label_singular: 'Page'
+    folder: 'src/data/pages'
+    extension: 'json'
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    identifier_field: 'slug'
+    preview_path: '{{slug}}'
+    fields:
+      - label: 'Name'
+        name: 'name'
+        widget: 'string'
+        pattern: ['.{1,}', 'Must have at least 1 character']
+        hint: 'Identifies the page in the content manager. But nothing a visitor would see'
+      - label: 'Slug'
+        name: 'slug'
+        widget: 'string'
+        pattern:
+          [
+            '^[a-z0-9-]+$',
+            'Must have at least 1 character and only contain lowercase alphabetic characters, numbers and hyphens (-)',
+          ]
+        hint: '⚠️ Avoid updating without notifying developer :) Sets the page path in the URL. And the filename containing this configuration'
+      - label: 'Title'
+        name: 'title'
+        widget: 'string'
+        hint: 'This will appear in page titles in browser tabs / windows. Including the site name. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro". Leave it empty to show site name only'
+      - label: 'Description'
+        name: 'description'
+        widget: 'string'
+        pattern: ['.{1,}', 'Must have at least 1 character']
+      - label: 'Keywords'
+        name: 'keywords'
+        widget: 'list'
+        summary: '{{fields.keyword}}'
+        required: false
+        field:
+          label: 'Keyword'
+          name: 'keyword'
+          widget: 'string'
+          pattern: ['.{1,}', 'Must have at least 1 character']
+      - label: 'Image'
+        name: 'image'
+        widget: 'object'
+        required: false
+        fields:
+          - label: 'URL'
+            name: 'url'
+            widget: 'string'
+            pattern: ['^https:\/\/.*', 'Must start with https://']
+          - label: 'Alternative text'
+            name: 'alt'
+            widget: 'string'
+            pattern: ['.{1,}', 'Must have at least 1 character']
+          - label: 'Width'
+            name: 'width'
+            widget: 'number'
+            value_type: 'int'
+            min: 256
+          - label: 'Height'
+            name: 'height'
+            widget: 'number'
+            value_type: 'int'
+            min: 256
+          - label: 'MIME Type'
+            name: 'mimeType'
+            widget: 'select'
+            options:
+              - label: 'PNG'
+                value: 'image/png'
+              - label: 'JPG / JPEG'
+                value: 'image/jpeg'
+              - label: 'SVG'
+                value: 'image/svg+xml'

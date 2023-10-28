@@ -27,6 +27,10 @@ import notFoundPageMetadata from '../data/pages/not-found.json'
           component: ProjectPageComponent,
         },
         {
+          path: PROJECTS_PATH,
+          redirectTo: '/',
+        },
+        {
           path: NOT_FOUND_PATH,
           component: NotFoundPageComponent,
           data: makeRouteMetadadata(notFoundPageMetadata, NOT_FOUND_PATH),
