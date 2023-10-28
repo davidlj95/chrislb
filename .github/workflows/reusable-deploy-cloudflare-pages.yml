@@ -86,6 +86,7 @@ jobs:
               repo: context.repo.repo,
               sha: context.sha,
               state: 'success',
+              description: 'Deploy preview',
               context: '${{ env.STATUS_CONTEXT }}',
               target_url: '${{ steps.deploy.outputs.url }}'
             });
