@@ -11,9 +11,9 @@ on:
         required: false
         default: ''
 
-permissions:
-  # 👇 For Decap CMS commit status
-  statuses: write
+# 👇 For Decap CMS commit status, only in PRs
+#permissions:
+#  statuses: write
 
 jobs:
   build:
