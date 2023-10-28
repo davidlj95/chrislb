@@ -30,7 +30,7 @@ jobs:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   deploy-preview:
     name: Deploy preview
-    needs: [build, lint, test, performance]
+    needs: [build, lint, test]
     uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
     # Cannot run on PRs from forked repos right now.
     # https://developers.cloudflare.com/pages/platform/known-issues/
@@ -45,3 +45,4 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      statuses: write

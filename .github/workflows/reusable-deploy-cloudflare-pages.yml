@@ -15,6 +15,8 @@ on:
 permissions:
   contents: read
   deployments: write
+  # 👇 For Decap CMS commit status
+  statuses: write
 
 concurrency:
   group: cloudflare-pages-${{ github.ref }}
@@ -58,6 +60,7 @@ jobs:
       - name: Publish
         if: "! (github.event_name == 'pull_request' && steps.ref-exists.outputs.result == 'false')"
         uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # 1
+        id: deploy
         with:
           accountId: ${{ secrets.cloudflare-account-id }}
           apiToken: ${{ secrets.cloudflare-api-token }}
@@ -67,3 +70,23 @@ jobs:
           projectName: 'chrislb'
           directory: '.'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      # 👇 Needed for Decap CMS. It will read this status to create the preview URL
+      - name: Set deploy status
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        env:
+          # 👇 To be in sync with Decap CMS config
+          STATUS_CONTEXT: 'deploy/preview'
+        with:
+          retries: 3
+          script: |
+            const result = await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: 'success',
+              description: 'Deploy preview',
+              context: '${{ env.STATUS_CONTEXT }}',
+              target_url: '${{ steps.deploy.outputs.url }}'
+            });
+            console.log(result);

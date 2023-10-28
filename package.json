@@ -18,10 +18,10 @@
     "format": "prettier --ignore-unknown --write",
     "format-all": "npm run format -- .",
     "generate-image-lists": "ts-node scripts/src/generate-image-lists.mts",
-    "postgenerate-image-lists": "npm run format -- src/data/images/**/*.json",
     "create-env-from-sample": "cp .env.sample .env",
     "lint-staged": "lint-staged",
-    "git-hooks": "husky install"
+    "git-hooks": "husky install",
+    "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore"
   },
   "private": true,
   "dependencies": {

@@ -2,8 +2,12 @@ backend:
   name: github
   repo: davidlj95/chrislb
   branch: main
+  # 👇 To be in sync with Cloudflare Pages deploy previews
+  preview_context: 'deploy/preview'
+  cms_label_prefix: decap-cms/
 publish_mode: editorial_workflow
 media_folder: 'src/assets/cms'
+public_folder: '/assets/cms'
 site_url: https://christianlazaro.es
 display_url: https://github.com/davidlj95/chrislb
 logo_url: https://christianlazaro.es/favicon.svg
@@ -39,16 +43,14 @@ collections:
     extension: 'json'
     create: false
     delete: false
-    slug: '{{slug}}'
-    editor:
-      preview: false
+    slug: '{{fields.slug}}'
     identifier_field: 'slug'
     preview_path: '{{slug}}'
+    summary: '{{name}}'
     fields:
       - label: 'Name'
         name: 'name'
         widget: 'string'
-        pattern: ['.{1,}', 'Must have at least 1 character']
         hint: 'Identifies the page in the content manager. But nothing a visitor would see'
       - label: 'Slug'
         name: 'slug'
@@ -63,10 +65,10 @@ collections:
         name: 'title'
         widget: 'string'
         hint: 'This will appear in page titles in browser tabs / windows. Including the site name. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro". Leave it empty to show site name only'
+        required: false
       - label: 'Description'
         name: 'description'
         widget: 'string'
-        pattern: ['.{1,}', 'Must have at least 1 character']
       - label: 'Keywords'
         name: 'keywords'
         widget: 'list'
@@ -76,7 +78,6 @@ collections:
           label: 'Keyword'
           name: 'keyword'
           widget: 'string'
-          pattern: ['.{1,}', 'Must have at least 1 character']
       - label: 'Image'
         name: 'image'
         widget: 'object'
@@ -89,7 +90,6 @@ collections:
           - label: 'Alternative text'
             name: 'alt'
             widget: 'string'
-            pattern: ['.{1,}', 'Must have at least 1 character']
           - label: 'Width'
             name: 'width'
             widget: 'number'
