@@ -5,6 +5,7 @@ backend:
   # 👇 To be in sync with Cloudflare Pages deploy previews
   preview_context: 'deploy/preview'
   cms_label_prefix: decap-cms/
+  squash_merges: true
 publish_mode: editorial_workflow
 media_folder: 'src/assets/cms'
 public_folder: '/assets/cms'
