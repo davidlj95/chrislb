@@ -57,3 +57,5 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      #👇 For Decap CMS
+      statuses: write
