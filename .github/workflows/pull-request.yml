@@ -9,6 +9,7 @@ jobs:
     uses: ./.github/workflows/reusable-build.yml
     permissions:
       contents: write
+      statuses: write
     with:
       artifact-name: build
   test:
