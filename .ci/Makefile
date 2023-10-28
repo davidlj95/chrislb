@@ -1,6 +1,9 @@
 .PHONY: *
 
-build:
+prebuild:
+	npm run generate-data
+
+build: prebuild
 	npm run prerender
 
 install:

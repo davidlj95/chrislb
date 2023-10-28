@@ -11,6 +11,6 @@ export class ProjectsPageComponent {
   public readonly projects: Promise<ReadonlyArray<ProjectItem>>
 
   constructor(projectsService: ProjectsService) {
-    this.projects = projectsService.getProjects()
+    this.projects = projectsService.getAll()
   }
 }
