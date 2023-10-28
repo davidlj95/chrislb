@@ -72,12 +72,14 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       # 👇 Needed for Decap CMS. It will read this status to create the preview URL
       - name: Set deploy status
+        id: deploy-status
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v6
         env:
           # 👇 To be in sync with Decap CMS config
           STATUS_CONTEXT: 'deploy/preview'
         with:
+          result-encoding: string
           retries: 3
           script: |
             github.rest.repos.createCommitStatus({
@@ -88,3 +90,6 @@ jobs:
               context: '${{ env.STATUS_CONTEXT }}',
               target_url: '${{ steps.deploy.outputs.url }}'
             })
+      - name: Print commit status result
+        if: github.event_name == 'pull_request'
+        run: echo "${{steps.deploy-status.outputs.result}}"
