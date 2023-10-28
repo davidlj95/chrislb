@@ -15,8 +15,8 @@ on:
 permissions:
   contents: read
   deployments: write
-  # 👇 For Decap CMS commit status
-  statuses: write
+  # 👇 For Decap CMS commit status. PRs only
+  # statuses: write
 
 concurrency:
   group: cloudflare-pages-${{ github.ref }}
