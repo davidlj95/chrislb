@@ -18,3 +18,7 @@ export interface ImageAssetsBySlug {
 export interface LookbooksByProjectSlug {
   [slug: string]: ImageAssetsBySlug | undefined
 }
+
+export interface LookbookImagesBySlug {
+  [slug: string]: ReadonlyArray<ImageAsset> | undefined
+}
