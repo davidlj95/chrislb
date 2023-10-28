@@ -15,7 +15,6 @@ import { SeoModule } from '@ngaox/seo'
 import meta from '../data/meta.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
-import { getCanonicalUrlForPath } from './routes'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component'
 import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
@@ -50,24 +49,16 @@ registerSwiper()
     BrowserAnimationsModule,
     SeoModule.forRoot({
       type: 'website',
-      image: {
-        url: getCanonicalUrlForPath('assets/favicons/open-graph.png'),
-        alt: meta.default.imageAlt,
-        width: 875,
-        height: 875,
-        // I wouldn't set it, but if I don't set it, then it appears as "undefined" :(
-        mimeType: 'image/png',
-      },
       twitter: {
         card: 'summary',
       },
-      siteName: meta.default.siteName,
+      siteName: meta.siteName,
       extra: [
-        { name: 'author', content: meta.default.author },
+        { name: 'author', content: meta.author },
         { property: 'og:locale', content: 'en' },
         { name: 'generator', content: `Angular ${VERSION.full}` },
         // See more in favicons doc. Related to Internet Explorer / Microsoft metro tiles
-        { name: 'application-name', content: meta.default.siteName },
+        { name: 'application-name', content: meta.siteName },
       ],
     }),
   ],

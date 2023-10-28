@@ -1,0 +1,20 @@
+{
+  "name": "Projects",
+  "title": "",
+  "description": "Fashion designer and stylist, @christian_labu",
+  "keywords": [
+    "fashion design",
+    "stylist",
+    "art",
+    "photography",
+    "projects",
+    "christian_labu"
+  ],
+  "image": {
+    "url": "https://christianlazaro.es/assets/favicons/open-graph.png",
+    "alt": "LAZARO. In uppercase letters. Surrounded by yellow decorations",
+    "width": 875,
+    "height": 875,
+    "mimeType": "image/png"
+  }
+}

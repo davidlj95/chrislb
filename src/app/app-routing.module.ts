@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import {
-  getCanonicalUrlForPath,
-  NOT_FOUND_DATA,
+  getMetadataFromJson,
+  makeRouteMetadadata,
   NOT_FOUND_PATH,
   PROJECTS_PATH,
 } from './routes'
 import { ProjectsPageComponent } from './projects-page/projects-page.component'
-import meta from '../data/meta.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
+import projectsPageMetadata from '../data/pages/projects.json'
+import notFoundPageMetadata from '../data/pages/not-found.json'
 
 @NgModule({
   imports: [
@@ -18,14 +19,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         {
           path: '',
           component: ProjectsPageComponent,
-          data: {
-            NgaoxSeo: {
-              title: meta.default.siteName,
-              description: meta.default.description,
-              keywords: meta.default.keywords,
-              url: getCanonicalUrlForPath(''),
-            },
-          },
+          data: makeRouteMetadadata(projectsPageMetadata),
           pathMatch: 'full',
         },
         {
@@ -35,17 +29,17 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         {
           path: NOT_FOUND_PATH,
           component: NotFoundPageComponent,
-          data: {
-            NgaoxSeo: {
-              ...NOT_FOUND_DATA.NgaoxSeo,
-              url: getCanonicalUrlForPath(NOT_FOUND_PATH),
-            },
-          },
+          data: makeRouteMetadadata(notFoundPageMetadata, NOT_FOUND_PATH),
         },
         {
           path: '**',
           component: NotFoundPageComponent,
-          data: NOT_FOUND_DATA,
+          data: {
+            NgaoxSeo: {
+              ...getMetadataFromJson(notFoundPageMetadata),
+              url: undefined,
+            },
+          },
         },
       ],
       {
