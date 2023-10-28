@@ -5,7 +5,6 @@ export interface ProjectItem {
   readonly quote?: string
   readonly description: readonly string[]
   readonly credits: readonly Credit[]
-  readonly hasDetails: boolean
 }
 
 export interface Credit {
