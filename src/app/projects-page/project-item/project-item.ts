@@ -3,7 +3,7 @@ export interface ProjectItem {
   readonly title: string
   readonly subtitle: string
   readonly quote?: string
-  readonly description: readonly string[]
+  readonly description: string
   readonly credits: readonly Credit[]
 }
 
