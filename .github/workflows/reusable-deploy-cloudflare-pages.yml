@@ -82,7 +82,7 @@ jobs:
           result-encoding: string
           retries: 3
           script: |
-            github.rest.repos.createCommitStatus({
+            return await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
