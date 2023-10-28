@@ -71,22 +71,10 @@ jobs:
           directory: '.'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       # 👇 Needed for Decap CMS. It will read this status to create the preview URL
-      - name: Set deploy status
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        env:
-          # 👇 To be in sync with Decap CMS config
-          STATUS_CONTEXT: 'deploy/preview'
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      - name: Deploy preview status
+        uses: ./.github/actions/deploy-preview-status
         with:
-          retries: 3
-          script: |
-            const result = await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'success',
-              description: 'Deploy preview',
-              context: '${{ env.STATUS_CONTEXT }}',
-              target_url: '${{ steps.deploy.outputs.url }}'
-            });
-            console.log(result);
+          state: 'success'
+          url: ${{ steps.deploy.outputs.url }}

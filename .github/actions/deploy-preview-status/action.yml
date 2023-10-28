@@ -1,0 +1,33 @@
+name: Deploy preview status
+description: Sets a GitHub status for the given commit to notify about deploy preview. So Decap CMS can read it.
+inputs:
+  state:
+    # https://docs.github.com/en/rest/commits/statuses?apiVersion=2022-11-28#create-a-commit-status
+    description: 'State to set to the status to'
+    required: true
+  url:
+    description: 'URL containing the deploy preview'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Set deploy status
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      env:
+        # 👇 To be in sync with Decap CMS config
+        STATUS_CONTEXT: 'deploy/preview'
+      with:
+        retries: 3
+        script: |
+          const result = await github.rest.repos.createCommitStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            // 👇 context.sha refers to merge branch SHA
+            sha: context.payload.pull_request.head.sha,
+            state: '${{ inputs.state }}',
+            description: 'Deploy preview (to notify Decap CMS)',
+            context: '${{ env.STATUS_CONTEXT }}',
+            target_url: '${{ inputs.url }}' || undefined
+          });
+          console.log(result);
