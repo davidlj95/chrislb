@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import notFoundPageMetadata from '../../data/pages/not-found.json'
+import notFoundPageMetadata from '../../data/pages/404.json'
 
 @Component({
   selector: 'app-not-found-page',
