@@ -80,6 +80,7 @@ jobs:
         with:
           retries: 3
           script: |
+            console.log('SHA is', context.sha);
             const result = await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
