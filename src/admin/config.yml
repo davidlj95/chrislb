@@ -153,7 +153,7 @@ collections:
         required: false
       - label: 'Description'
         name: 'description'
-        widget: 'markdown'
+        widget: 'text'
       - label: 'Credits'
         name: 'credits'
         widget: 'list'
