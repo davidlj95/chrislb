@@ -12,6 +12,16 @@ npm i --legacy-peer-deps
 
 There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. Here it's using 16
 
+## Generated data
+
+Some data files required by the app need to be generated from the data managed by the CMS.
+
+Run the generation script before building or serving the app
+
+```shell
+npm run generate-data
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

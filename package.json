@@ -21,7 +21,8 @@
     "create-env-from-sample": "cp .env.sample .env",
     "lint-staged": "lint-staged",
     "git-hooks": "husky install",
-    "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore"
+    "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
+    "generate-data": "ts-node scripts/src/generate-data.mts"
   },
   "private": true,
   "dependencies": {

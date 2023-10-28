@@ -20,5 +20,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Setup
         uses: ./.github/actions/setup
+      - name: Generate data
+        run: npm run generate-data
       - name: Run tests
         run: cd .ci && make test
