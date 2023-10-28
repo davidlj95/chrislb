@@ -2,6 +2,7 @@ backend:
   name: github
   repo: davidlj95/chrislb
   branch: main
+  cms_label_prefix: decap-cms/
 publish_mode: editorial_workflow
 media_folder: 'src/assets/cms'
 public_folder: '/assets/cms'
