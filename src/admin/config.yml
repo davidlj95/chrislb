@@ -16,6 +16,8 @@ slug:
   encoding: 'ascii'
   clean_accents: true
   sanitize_replacement: '-'
+editor:
+  preview: false
 collections:
   - name: 'metadata'
     label: 'Metadata'
