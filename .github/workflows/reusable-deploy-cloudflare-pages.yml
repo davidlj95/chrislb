@@ -83,7 +83,8 @@ jobs:
             const result = await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.sha,
+              // 👇 context.sha refers to merge branch SHA
+              sha: context.payload.pull_request.head.sha,
               state: 'success',
               description: 'Deploy preview',
               context: '${{ env.STATUS_CONTEXT }}',
