@@ -1,11 +1,9 @@
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      <ng-container *ngIf="item.hasDetails">
-        <a [routerLink]="[PROJECTS_PATH, item.slug]"
-          ><ng-container [ngTemplateOutlet]="title"></ng-container
-        ></a>
-      </ng-container>
+      <a [routerLink]="[PROJECTS_PATH, item.slug]"
+        ><ng-container [ngTemplateOutlet]="title"></ng-container
+      ></a>
       <ng-template #title>
         {{ item.title }}
       </ng-template>
