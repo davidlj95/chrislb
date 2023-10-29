@@ -7,17 +7,18 @@ import {
   ImageAsset,
   ImageAssetsBySlug,
   LogoImages,
-  LookbookImagesBySlug,
-  LookbooksByProjectSlug,
 } from '../../src/data/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { Log } from './log.mjs'
 import directoriesPkg from '../../src/app/common/data/directories.js'
+import { Lookbook } from '../../src/app/project-page/lookbooks/lookbook/lookbook.js'
+import filesPkg from '../../src/app/common/data/files.js'
 
 const { IMAGEKIT_URL } = imagesConfigPkg
 const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
+const { LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } = filesPkg
 
 class ImageListsGenerator {
   private imageKit: ImageKit
@@ -75,7 +76,7 @@ class ImageListsGenerator {
       projectFolderObjects: projects,
       directory: 'preview',
       name: 'preview images',
-      filename: 'preview-images.json',
+      filename: PREVIEW_IMAGES_FILENAME,
     })
   }
 
@@ -142,7 +143,6 @@ class ImageListsGenerator {
   private async projectsLookbooksImages(
     projectFolderObjects: ReadonlyArray<FolderObject>,
   ) {
-    const lookbooksByProjectSlug: LookbooksByProjectSlug = {}
     Log.group('Projects lookbooks images')
     for (const projectFolderObject of projectFolderObjects) {
       const LOOKBOOKS_DIR = 'lookbooks'
@@ -166,7 +166,7 @@ class ImageListsGenerator {
         continue
       }
       Log.item('Found %d lookbooks', lookbooksFolderObjects.length)
-      const lookbooksBySlug: LookbookImagesBySlug = {}
+      const lookbooks: Lookbook[] = []
       for (const lookbookFolderObject of lookbooksFolderObjects) {
         Log.group(
           "Project '%s' lookbook '%s' images",
@@ -182,18 +182,21 @@ class ImageListsGenerator {
         } else {
           Log.item('Found %d images', lookbookFileObjects.length)
         }
-        const slug = this.removeOrderPrefix(lookbookFolderObject.name)
-        lookbooksBySlug[slug] = lookbookFileObjects.map(
-          this.imageAssetFromFileObject,
-        )
+        lookbooks.push({
+          slug: this.removeOrderPrefix(lookbookFolderObject.name),
+          images: lookbookFileObjects.map(this.imageAssetFromFileObject),
+        })
         Log.groupEnd()
       }
-      lookbooksByProjectSlug[projectFolderObject.name] = lookbooksBySlug
+      const projectAssetsDirectory = await this.makeProjectDirectory(
+        projectFolderObject.name,
+      )
+      Log.info('Writing lookbooks for project %s', projectFolderObject.name)
+      await this.writeJson(
+        lookbooks,
+        path.join(projectAssetsDirectory, LOOKBOOKS_IMAGES_FILENAME),
+      )
     }
-    await this.writeImagesJson(
-      lookbooksByProjectSlug,
-      'projects-lookbooks.json',
-    )
     Log.ok('Done')
     Log.groupEnd()
   }
