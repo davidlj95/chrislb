@@ -7,15 +7,11 @@
   "credits": [
     {
       "role": "Designer, Creative Director",
-      "slug": "christian-lazaro",
-      "name": "Christian Lázaro",
-      "nickname": "christian_labu"
+      "authorSlug": "christian-lazaro"
     },
     {
       "role": "Photographer",
-      "slug": "alejandro-flama",
-      "name": "Alejandro Flama",
-      "nickname": "flama.ph"
+      "authorSlug": "alejandro-flama"
     }
   ]
 }

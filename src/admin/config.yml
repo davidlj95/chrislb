@@ -157,18 +157,19 @@ collections:
       - label: 'Credits'
         name: 'credits'
         widget: 'list'
+        summary: '{{fields.role}}: {{fields.authorSlug}}'
         required: false
         fields:
-          - label: 'Name'
-            name: 'name'
-            widget: 'string'
           - label: 'Role'
             name: 'role'
             widget: 'string'
-          - label: 'Nickname'
-            name: 'nickname'
-            widget: 'string'
-            hint: 'Without the @. Links to instagram profile'
+          - label: 'Author'
+            name: 'authorSlug'
+            widget: 'relation'
+            collection: 'authors'
+            search_fields: ['name', 'social.instagram']
+            value_field: '{{slug}}'
+            display_fields: ['{{name}} ({{social.instagram}})']
   - name: 'authors'
     label: 'Authors'
     label_singular: 'author'
