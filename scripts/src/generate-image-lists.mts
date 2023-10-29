@@ -18,7 +18,11 @@ import filesPkg from '../../src/app/common/data/files.js'
 
 const { IMAGEKIT_URL } = imagesConfigPkg
 const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
-const { LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } = filesPkg
+const {
+  LOOKBOOKS_IMAGES_FILENAME,
+  PREVIEW_IMAGES_FILENAME,
+  TECH_MATERIAL_IMAGES_FILENAME,
+} = filesPkg
 
 class ImageListsGenerator {
   private imageKit: ImageKit
@@ -62,12 +66,6 @@ class ImageListsGenerator {
     await this.projectsLookbooksImages(projects)
     await this.projectsDirectoryImageAssetsBySlug({
       projectFolderObjects: projects,
-      directory: 'tech-material',
-      name: 'tech material images',
-      filename: 'projects-tech-materials.json',
-    })
-    await this.projectsDirectoryImageAssetsBySlug({
-      projectFolderObjects: projects,
       directory: 'design-book',
       name: 'design book images',
       filename: 'projects-design-books.json',
@@ -77,6 +75,12 @@ class ImageListsGenerator {
       directory: 'preview',
       name: 'preview images',
       filename: PREVIEW_IMAGES_FILENAME,
+    })
+    await this.projectsDirectoryImageAssets({
+      projectFolderObjects: projects,
+      directory: 'tech-material',
+      name: 'tech material images',
+      filename: TECH_MATERIAL_IMAGES_FILENAME,
     })
   }
 
