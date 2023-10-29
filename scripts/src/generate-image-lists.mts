@@ -3,11 +3,7 @@ import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
 import { mkdir, writeFile } from 'fs/promises'
 import imagesConfigPkg from '../../src/data/images/config.js'
-import {
-  ImageAsset,
-  ImageAssetsBySlug,
-  LogoImages,
-} from '../../src/data/images/types.js'
+import { ImageAsset, LogoImages } from '../../src/data/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
@@ -22,6 +18,7 @@ const {
   LOOKBOOKS_IMAGES_FILENAME,
   PREVIEW_IMAGES_FILENAME,
   TECH_MATERIAL_IMAGES_FILENAME,
+  DESIGN_BOOK_IMAGES_FILENAME,
 } = filesPkg
 
 class ImageListsGenerator {
@@ -64,12 +61,6 @@ class ImageListsGenerator {
     await this.logos()
     const projects = await this.projects()
     await this.projectsLookbooksImages(projects)
-    await this.projectsDirectoryImageAssetsBySlug({
-      projectFolderObjects: projects,
-      directory: 'design-book',
-      name: 'design book images',
-      filename: 'projects-design-books.json',
-    })
     await this.projectsDirectoryImageAssets({
       projectFolderObjects: projects,
       directory: 'preview',
@@ -81,6 +72,12 @@ class ImageListsGenerator {
       directory: 'tech-material',
       name: 'tech material images',
       filename: TECH_MATERIAL_IMAGES_FILENAME,
+    })
+    await this.projectsDirectoryImageAssets({
+      projectFolderObjects: projects,
+      directory: 'design-book',
+      name: 'design book images',
+      filename: DESIGN_BOOK_IMAGES_FILENAME,
     })
   }
 
@@ -201,44 +198,6 @@ class ImageListsGenerator {
         path.join(projectAssetsDirectory, LOOKBOOKS_IMAGES_FILENAME),
       )
     }
-    Log.ok('Done')
-    Log.groupEnd()
-  }
-
-  private async projectsDirectoryImageAssetsBySlug({
-    projectFolderObjects,
-    directory,
-    name,
-    filename,
-  }: {
-    projectFolderObjects: ReadonlyArray<FolderObject>
-    directory: string
-    name: string
-    filename: string
-  }): Promise<void> {
-    const assetsByProjectSlug: ImageAssetsBySlug = {}
-    Log.group('Projects %s assets', name)
-    for (const projectFolderObject of projectFolderObjects) {
-      Log.info(
-        "Finding %s of project '%s' ('%s')",
-        name,
-        projectFolderObject.name,
-        projectFolderObject.folderPath,
-      )
-      const assetFileObjects = await this.imageKit.listFiles({
-        path: `${projectFolderObject.folderPath}/${directory}`,
-        sort: 'ASC_NAME',
-      })
-      if (assetFileObjects.length < 1) {
-        Log.warn("No %s found for project '%s'", name, projectFolderObject.name)
-        continue
-      }
-      Log.item('Found %d assets', assetFileObjects.length)
-      assetsByProjectSlug[projectFolderObject.name] = assetFileObjects.map(
-        this.imageAssetFromFileObject,
-      )
-    }
-    await this.writeImagesJson(assetsByProjectSlug, filename)
     Log.ok('Done')
     Log.groupEnd()
   }

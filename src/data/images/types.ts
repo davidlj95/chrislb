@@ -10,7 +10,3 @@ export type ImageAsset = Pick<
 export interface LogoImages {
   horizontal: ImageAsset
 }
-
-export interface ImageAssetsBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset> | undefined
-}

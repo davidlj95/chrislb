@@ -3,7 +3,8 @@ import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
 import { SwiperOptions } from 'swiper/types'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
-import { ProjectDesignBookService } from './project-design-book.service'
+import { ProjectImagesService } from '../project-images.service'
+import { DESIGN_BOOK_IMAGES_FILENAME } from '../../common/data/files'
 
 @Component({
   selector: 'app-design-book',
@@ -12,7 +13,10 @@ import { ProjectDesignBookService } from './project-design-book.service'
 })
 export class DesignBookComponent {
   @Input({ required: true }) set slug(slug: string) {
-    this.images = this.projectDesignBookService.bySlug(slug)
+    this.images = this.projectImagesService.bySlugAndFilename(
+      slug,
+      DESIGN_BOOK_IMAGES_FILENAME,
+    )
   }
 
   public images!: Observable<ReadonlyArray<ImageAsset>>
@@ -27,7 +31,7 @@ export class DesignBookComponent {
   }
 
   constructor(
-    private projectDesignBookService: ProjectDesignBookService,
+    private projectImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
   ) {}
 }
