@@ -48,7 +48,9 @@ collections:
             pattern: ['^https:\/\/.*', 'Must start with https://']
   - name: 'pages'
     label: 'Pages'
-    label_singular: 'Page'
+    # 👇 Apparently only used in commit messages / PR titles
+    # So lowercase is better for those contexts
+    label_singular: 'page'
     folder: 'src/data/pages'
     extension: 'json'
     create: false
@@ -120,3 +122,50 @@ collections:
                 value: 'image/jpeg'
               - label: 'SVG'
                 value: 'image/svg+xml'
+  - name: 'projects'
+    label: 'Projects'
+    label_singular: 'project'
+    folder: 'src/data/projects'
+    extension: 'json'
+    create: true
+    slug: '{{fields.slug}}'
+    identifier_field: 'slug'
+    summary: '{{title}}'
+    fields:
+      - label: 'Slug'
+        name: 'slug'
+        widget: 'string'
+        pattern:
+          [
+            '^[a-z0-9-]+$',
+            'Must have at least 1 character and only contain lowercase alphabetic characters, numbers and hyphens (-)',
+          ]
+        hint: '⚠️ Avoid updating CHIASMA one without notifying developer :) Sets the project path in the URL. Use it in the image CDN as directory name to include images for this project.'
+      - label: 'Title'
+        name: 'title'
+        widget: 'string'
+      - label: 'Subtitle'
+        name: 'subtitle'
+        widget: 'string'
+      - label: 'Quote'
+        name: 'quote'
+        widget: 'string'
+        required: false
+      - label: 'Description'
+        name: 'description'
+        widget: 'text'
+      - label: 'Credits'
+        name: 'credits'
+        widget: 'list'
+        required: false
+        fields:
+          - label: 'Name'
+            name: 'name'
+            widget: 'string'
+          - label: 'Role'
+            name: 'role'
+            widget: 'string'
+          - label: 'Nickname'
+            name: 'nickname'
+            widget: 'string'
+            hint: 'Without the @. Links to instagram profile'
