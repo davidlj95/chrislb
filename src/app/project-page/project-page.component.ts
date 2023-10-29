@@ -28,7 +28,7 @@ export class ProjectPageComponent implements OnInit {
         return
       }
       this.seo.setTitle(getTitle(projectItem.title))
-      this.seo.setDescription(projectItem.description.join('. '))
+      this.seo.setDescription(projectItem.description)
     })
   }
 }

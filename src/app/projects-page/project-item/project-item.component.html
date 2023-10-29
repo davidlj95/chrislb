@@ -12,11 +12,7 @@
       {{ item.subtitle }}
     </span>
     <span class="quote" *ngIf="item.quote"> "{{ item.quote }}" </span>
-    <div class="description">
-      <p *ngFor="let line of item.description">
-        {{ line }}
-      </p>
-    </div>
+    <div class="description" [innerHtml]="item.description"></div>
   </div>
   <app-image-swiper
     [images]="previewImages | async"
