@@ -377,6 +377,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,vim,visualstudiocode,node,webstorm+iml,macos,linux,windows,lighthouseci,dotenv
 src/data/*-list.json
+src/data/images/*.json
 # Manual edit
 # - Remove .idea from Angular. We want some IDE settings!
 # - Add generated JSON lists
+# - Add generated image lists
