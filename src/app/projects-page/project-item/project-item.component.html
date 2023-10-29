@@ -1,18 +1,18 @@
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      <a [routerLink]="[PROJECTS_PATH, item.slug]"
+      <a [routerLink]="[PROJECTS_PATH, _item.slug]"
         ><ng-container [ngTemplateOutlet]="title"></ng-container
       ></a>
       <ng-template #title>
-        {{ item.title }}
+        {{ _item.title }}
       </ng-template>
     </span>
     <span class="subtitle">
-      {{ item.subtitle }}
+      {{ _item.subtitle }}
     </span>
-    <span class="quote" *ngIf="item.quote"> "{{ item.quote }}" </span>
-    <div class="description" [innerHtml]="item.description"></div>
+    <span class="quote" *ngIf="_item.quote"> "{{ _item.quote }}" </span>
+    <div class="description" [innerHtml]="_item.description"></div>
   </div>
   <app-image-swiper
     [images]="previewImages | async"
@@ -22,13 +22,17 @@
     [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
   ></app-image-swiper>
 </div>
-<div class="credits" *ngIf="item.credits.length">
-  <span *ngFor="let credit of item.credits">
-    {{ credit.role }}: {{ credit.name }}
-    <span class="anchor"
-      >(<a href="https://instagram.com/_u/{{ credit.nickname }}" target="_blank"
-        >@{{ credit.nickname }}</a
-      >)</span
-    >
-  </span>
+<div class="credits" *ngIf="credits.length">
+  <ng-container *ngFor="let credit of credits">
+    <span *ngIf="credit.author">
+      {{ credit.role }}: {{ credit.author.name }}
+      <span class="anchor"
+        >(<a
+          href="https://instagram.com/_u/{{ credit.author.social.instagram }}"
+          target="_blank"
+          >@{{ credit.author.social.instagram }}</a
+        >)</span
+      >
+    </span>
+  </ng-container>
 </div>

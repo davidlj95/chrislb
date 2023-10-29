@@ -11,4 +11,5 @@ export interface Credit {
   readonly role: string
   readonly name: string
   readonly nickname: string
+  readonly slug: string
 }
