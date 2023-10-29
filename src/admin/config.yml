@@ -192,3 +192,18 @@ collections:
                 'Must have at least 1 character. Must not start with @ (will be added automagically 🪄)',
               ]
             hint: 'Links to instagram profile. Without the @ at the beginning'
+  - name: 'lookbooks'
+    label: 'Lookbooks'
+    files:
+      - label: 'Names by slug'
+        name: 'names-by-slug'
+        file: 'src/data/lookbook-names.json'
+        fields:
+          - label: 'Names by slug'
+            name: 'namesBySlug'
+            widget: 'list'
+            hint: 'Maps the slugs (directory names in the image CDN) to names to display in the website'
+            summary: '{{fields.slug}}: {{fields.name}}'
+            fields:
+              - *slug
+              - *name

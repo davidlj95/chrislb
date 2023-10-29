@@ -14,11 +14,3 @@ export interface LogoImages {
 export interface ImageAssetsBySlug {
   [slug: string]: ReadonlyArray<ImageAsset> | undefined
 }
-
-export interface LookbooksByProjectSlug {
-  [slug: string]: ImageAssetsBySlug | undefined
-}
-
-export interface LookbookImagesBySlug {
-  [slug: string]: ReadonlyArray<ImageAsset> | undefined
-}

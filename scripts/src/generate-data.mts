@@ -6,9 +6,12 @@ import path from 'path'
 import { Dirent } from 'fs'
 import directoriesPkg from '../../src/app/common/data/directories.js'
 import filesPkg from '../../src/app/common/data/files.js'
+import lookbookNames from '../../src/data/lookbook-names.json' assert { type: 'json' }
+import { Lookbook } from '../../src/app/project-page/lookbooks/lookbook/lookbook.js'
 
 const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
-const { getListFilename } = filesPkg
+const { getListFilename, LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } =
+  filesPkg
 
 const DATA_PATH = path.join(getRepositoryRootDir(), 'src', DATA_DIR)
 const DATA_EXTENSION = '.json'
@@ -19,8 +22,9 @@ class DataGenerator {
     await this.listFromDirectoryWithJsons('authors')
     await this.addContentToListFile({
       dataSubdirectory: PROJECTS_DIR,
-      contentSlug: 'preview-images',
+      contentFilename: PREVIEW_IMAGES_FILENAME,
     })
+    await this.addNamesToLookbooks()
   }
 
   private async listFromDirectoryWithJsons(dataSubdirectory: string) {
@@ -33,7 +37,9 @@ class DataGenerator {
         Log.item(dataFile.name)
         const json = (await this.readJson(
           path.join(directoryPath, dataFile.name),
-        )) as { slug: string | undefined }
+        )) as {
+          slug: string | undefined
+        }
         if (!json.slug) {
           json.slug = path.basename(dataFile.name, DATA_EXTENSION)
         }
@@ -46,12 +52,12 @@ class DataGenerator {
 
   private async addContentToListFile({
     dataSubdirectory,
-    contentSlug,
+    contentFilename,
   }: {
     dataSubdirectory: string
-    contentSlug: string
+    contentFilename: string
   }) {
-    Log.group('Add %s to %s', contentSlug, dataSubdirectory)
+    Log.group('Add %s to %s', contentFilename, dataSubdirectory)
     const directoryPath = path.join(DATA_PATH, dataSubdirectory)
     const dataFiles = await this.getDataFilesInDirectory(directoryPath)
     Log.info('Reading content from each file homonym directory')
@@ -60,7 +66,6 @@ class DataGenerator {
         const slug = path.basename(jsonFile.name, DATA_EXTENSION)
         // noinspection UnnecessaryLocalVariableJS
         const homonymDirectory = slug
-        const contentFilename = `${contentSlug}${DATA_EXTENSION}`
         const contentFile = path.join(
           directoryPath,
           homonymDirectory,
@@ -78,9 +83,45 @@ class DataGenerator {
       [key: string]: unknown
     }>
     listJson.forEach((item) => {
-      item[this.camelize(contentSlug)] = contentsBySlug.get(item.slug)
+      item[this.camelize(contentFilename)] = contentsBySlug.get(item.slug)
     })
     await this.writeListFile(dataSubdirectory, listJson)
+    Log.groupEnd()
+  }
+
+  private async addNamesToLookbooks() {
+    Log.group('Add names to lookbooks')
+    Log.info('Reading lookbook names file')
+    const lookbookNamesBySlug = new Map(
+      lookbookNames.namesBySlug.map(({ slug, name }) => [slug, name]),
+    )
+    const directoryPath = path.join(DATA_PATH, PROJECTS_DIR)
+    const dataFiles = await this.getDataFilesInDirectory(directoryPath)
+    Log.info("Adding lookbook names to each project's lookbooks")
+    await Promise.all(
+      dataFiles.map(async (jsonFile) => {
+        Log.item(jsonFile.name)
+        // noinspection UnnecessaryLocalVariableJS
+        const slug = path.basename(jsonFile.name, DATA_EXTENSION)
+        // noinspection UnnecessaryLocalVariableJS
+        const homonymDirectory = slug
+        const lookbookFilename = path.join(
+          directoryPath,
+          homonymDirectory,
+          LOOKBOOKS_IMAGES_FILENAME,
+        )
+        const lookbookContents = await this.readJson(lookbookFilename)
+        if (!lookbookContents) {
+          return
+        }
+        const lookbookJson = lookbookContents as ReadonlyArray<Lookbook>
+        const lookbookJsonWithNames = lookbookJson.map((lookbook) => ({
+          ...lookbook,
+          name: lookbookNamesBySlug.get(lookbook.slug),
+        }))
+        await this.writeJson(lookbookFilename, lookbookJsonWithNames)
+      }),
+    )
     Log.groupEnd()
   }
 

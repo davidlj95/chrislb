@@ -1,45 +1,28 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core'
-import projectsLookbooks from '../../../data/images/projects-lookbooks.json'
-import { Observable, of } from 'rxjs'
+import { Injectable } from '@angular/core'
+import { from, Observable } from 'rxjs'
 import { Lookbook } from './lookbook/lookbook'
-import { ProjectLookbookNamesService } from './project-lookbook-names.service'
-import {
-  ImageAssetsBySlug,
-  LookbooksByProjectSlug,
-} from '../../../data/images/types'
+import { JsonFetcher } from '../../common/json-fetcher/json-fetcher-injection-token'
+import { PROJECTS_DIR } from '../../common/data/directories'
+import { LOOKBOOKS_IMAGES_FILENAME } from '../../common/data/files'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectLookbooksService {
-  constructor(
-    @Inject(LOOKBOOKS_BY_PROJECT_SLUG)
-    private lookbooksByProjectSlug: LookbooksByProjectSlug,
-    private projectLookbookNamesService: ProjectLookbookNamesService,
-  ) {}
+  constructor(private jsonFetcher: JsonFetcher) {}
 
   bySlug(projectSlug: string): Observable<ReadonlyArray<Lookbook>> {
-    const lookbooks = this.getLookbooks(projectSlug)
-    if (!lookbooks) {
-      return of()
-    }
-    return of(
-      Object.entries(lookbooks).map(([lookbookSlug, images]) => ({
-        slug: lookbookSlug,
-        images: images ?? [],
-        name: this.projectLookbookNamesService.bySlug(lookbookSlug),
-      })),
-    )
+    return from(this.getLookbooks(projectSlug))
   }
 
-  private getLookbooks(projectSlug: string): ImageAssetsBySlug | undefined {
-    return this.lookbooksByProjectSlug[projectSlug]
+  private async getLookbooks(
+    projectSlug: string,
+  ): Promise<ReadonlyArray<Lookbook>> {
+    const lookbooksImages = await this.jsonFetcher.fetch(
+      PROJECTS_DIR,
+      projectSlug,
+      LOOKBOOKS_IMAGES_FILENAME,
+    )
+    return (lookbooksImages as ReadonlyArray<Lookbook> | undefined) ?? []
   }
 }
-
-const LOOKBOOKS_BY_PROJECT_SLUG = new InjectionToken<LookbooksByProjectSlug>(
-  'Lookbooks by project slug',
-  {
-    factory: () => projectsLookbooks,
-  },
-)
