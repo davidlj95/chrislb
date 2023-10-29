@@ -39,6 +39,7 @@
               "src/apple-touch-icon-precomposed.png",
               "src/assets",
               "src/browserconfig.xml",
+              "src/data",
               "src/favicon.ico",
               "src/favicon.svg",
               "src/robots.txt",
@@ -107,6 +108,7 @@
               "src/apple-touch-icon-precomposed.png",
               "src/assets",
               "src/browserconfig.xml",
+              "src/data",
               "src/favicon.ico",
               "src/favicon.svg",
               "src/robots.txt",
@@ -128,7 +130,8 @@
             "inlineStyleLanguage": "scss",
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
-            }
+            },
+            "assets": ["src/data"]
           },
           "configurations": {
             "production": {

@@ -14,22 +14,24 @@ import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { Log } from './log.mjs'
+import directoriesPkg from '../../src/app/common/data/directories.js'
 
 const { IMAGEKIT_URL } = imagesConfigPkg
+const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
 
 class ImageListsGenerator {
   private imageKit: ImageKit
   private readonly IMAGES_DATA_DIR = path.join(
     getRepositoryRootDir(),
     'src',
-    'data',
+    DATA_DIR,
     'images',
   )
   private readonly PROJECTS_DATA_DIR = path.join(
     getRepositoryRootDir(),
     'src',
-    'data',
-    'projects',
+    DATA_DIR,
+    PROJECTS_DIR,
   )
 
   constructor() {
