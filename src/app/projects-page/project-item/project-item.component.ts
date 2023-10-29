@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { Credit, ProjectItem } from './project-item'
+import { Credit, ProjectListItem } from './project-item'
 import { SwiperOptions } from 'swiper/types'
 import { PROJECTS_PATH } from '../../routes'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
@@ -11,9 +11,9 @@ import { Author, AuthorsService } from '../../common/authors.service'
   styleUrls: ['./project-item.component.scss'],
 })
 export class ProjectItemComponent {
-  protected _item!: ProjectItem
+  protected _item!: ProjectListItem
   @Input({ required: true })
-  public set item(item: ProjectItem) {
+  public set item(item: ProjectListItem) {
     this._item = item
     this.credits = item.credits.map((credit) => ({
       ...credit,

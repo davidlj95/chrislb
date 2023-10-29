@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
-import { ProjectItem } from './project-item/project-item'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
 import { PROJECTS_DIR } from '../common/data/directories'
-import { getListFilename } from '../common/data/files'
+import { addJsonExtension, getListFilename } from '../common/data/files'
+import { Project, ProjectListItem } from './project-item/project-item'
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +10,18 @@ import { getListFilename } from '../common/data/files'
 export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 
-  async getAll(): Promise<ReadonlyArray<ProjectItem>> {
-    return (await this.jsonFetcher.fetch(
+  async getAll(): Promise<ReadonlyArray<ProjectListItem>> {
+    const listItems = await this.jsonFetcher.fetch(
       getListFilename(PROJECTS_DIR),
-    )) as unknown as ReadonlyArray<ProjectItem>
+    )
+    return (listItems as ReadonlyArray<ProjectListItem> | undefined) ?? []
   }
 
-  async bySlug(slug: string): Promise<ProjectItem | null> {
-    const allProjects = await this.getAll()
-    return allProjects.find((project) => project.slug === slug) ?? null
+  async bySlug(slug: string): Promise<Project | undefined> {
+    const project = await this.jsonFetcher.fetch(
+      PROJECTS_DIR,
+      addJsonExtension(slug),
+    )
+    return project as Project | undefined
   }
 }
