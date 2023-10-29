@@ -1,12 +1,15 @@
 import { ImageAsset } from '../../../data/images/types'
 
-export interface ProjectItem {
+export interface Project {
   readonly slug: string
   readonly title: string
   readonly subtitle: string
   readonly quote?: string
   readonly description: string
   readonly credits: readonly Credit[]
+}
+
+export interface ProjectListItem extends Project {
   readonly previewImages: ReadonlyArray<ImageAsset>
 }
 
