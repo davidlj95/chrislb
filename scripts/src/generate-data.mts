@@ -5,31 +5,47 @@ import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import path from 'path'
 
 const DATA_DIR = path.join(getRepositoryRootDir(), 'src', 'data')
-const PROJECTS_DIR = path.join(DATA_DIR, 'projects')
-const LIST_JSON_FILE_PATH = path.join(DATA_DIR, 'projects-list.json')
+const DATA_EXTENSION = '.json'
 
-async function generateData() {
-  const projectJsonFiles = (
-    await readdir(PROJECTS_DIR, { withFileTypes: true })
-  ).filter((dirent) => dirent.isFile() && dirent.name.endsWith('json'))
-  Log.info('Found %d project JSON files', projectJsonFiles.length)
-  projectJsonFiles.forEach((projectDirectory) =>
-    Log.item(projectDirectory.name),
-  )
-  Log.info('Reading data from each file')
-  const projectsJsons = await Promise.all(
-    projectJsonFiles.map(async (projectJsonFile) => {
-      Log.item(projectJsonFile.name)
-      const buffer = await readFile(
-        path.join(PROJECTS_DIR, projectJsonFile.name),
-      )
-      return JSON.parse(buffer.toString())
-    }),
-  )
-  await writeFile(LIST_JSON_FILE_PATH, JSON.stringify(projectsJsons, null, 2))
+class DataGenerator {
+  async all() {
+    await this.listFromDirectoryWithJsons('projects')
+    await this.listFromDirectoryWithJsons('authors')
+  }
+
+  private async listFromDirectoryWithJsons(directory: string) {
+    Log.group('List of %s', directory)
+    const jsonFilesDirectory = path.join(DATA_DIR, directory)
+    const jsonFiles = (
+      await readdir(jsonFilesDirectory, { withFileTypes: true })
+    ).filter(
+      (dirent) => dirent.isFile() && dirent.name.endsWith(DATA_EXTENSION),
+    )
+    Log.info('Found %d JSON files', jsonFiles.length)
+    jsonFiles.forEach((jsonFile) => Log.item(jsonFile.name))
+    Log.info('Reading data from each file')
+    const jsons = await Promise.all(
+      jsonFiles.map(async (jsonFile) => {
+        Log.item(jsonFile.name)
+        const buffer = await readFile(
+          path.join(jsonFilesDirectory, jsonFile.name),
+        )
+        const json = JSON.parse(buffer.toString())
+        if (!json.slug) {
+          json.slug = path.basename(jsonFile.name, DATA_EXTENSION)
+        }
+        return json
+      }),
+    )
+    await writeFile(
+      path.join(DATA_DIR, `${directory}-list.json`),
+      JSON.stringify(jsons, null, 2),
+    )
+    Log.groupEnd()
+  }
 }
 
 if (isMain(import.meta.url)) {
-  await generateData()
+  await new DataGenerator().all()
   Log.ok('All done')
 }

@@ -67,3 +67,25 @@ To do so, install the hooks by running
 ```shell
 npm run git-hooks
 ```
+
+## CMS
+
+Contents can be edited easily thanks to a CMS. That CMS is [Decap CMS] (formerly known as Netlify CMS). To access it, just access the `/admin/` path.
+
+Production: https://christianlazaro.es/admin/
+
+Push access to the repo is needed, given the CMS will create pull requests with content changes.
+
+### Locally
+
+To work locally, add uncomment the `local_backend: true` line in the configuration.
+
+Then, run the local server:
+
+```
+npm run cms-server
+```
+
+> ⚠️ Do not commit the local backend configuration to main branch
+
+[Decap CMS]: https://decapcms.org

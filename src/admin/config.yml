@@ -169,3 +169,29 @@ collections:
             name: 'nickname'
             widget: 'string'
             hint: 'Without the @. Links to instagram profile'
+  - name: 'authors'
+    label: 'Authors'
+    label_singular: 'author'
+    folder: 'src/data/authors'
+    extension: 'json'
+    create: true
+    slug: '{{slug}}'
+    identifier_field: 'name'
+    summary: '{{name}}'
+    fields:
+      - label: 'Name'
+        name: 'name'
+        widget: 'string'
+      - label: 'Social'
+        name: 'social'
+        widget: 'object'
+        fields:
+          - label: 'Instagram'
+            name: 'instagram'
+            widget: 'string'
+            pattern:
+              [
+                '^[^@]*+',
+                'Must have at least 1 character. Must not start with @ (will be added automagically 🪄)',
+              ]
+            hint: 'Links to instagram profile. Without the @ at the beginning'

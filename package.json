@@ -22,7 +22,8 @@
     "lint-staged": "lint-staged",
     "git-hooks": "husky install",
     "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
-    "generate-data": "ts-node scripts/src/generate-data.mts"
+    "generate-data": "ts-node scripts/src/generate-data.mts",
+    "cms-server": "npx decap-server"
   },
   "private": true,
   "dependencies": {
