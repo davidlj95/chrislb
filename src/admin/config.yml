@@ -1,3 +1,4 @@
+#local_backend: true
 backend:
   name: github
   repo: davidlj95/chrislb
@@ -25,6 +26,29 @@ slug:
   sanitize_replacement: '-'
 editor:
   preview: false
+field_definitions:
+  - title: &title
+      label: 'Title'
+      name: 'title'
+      widget: 'string'
+  - slug: &slug
+      label: 'Slug'
+      name: 'slug'
+      widget: 'string'
+      pattern:
+        [
+          '^[a-z0-9-]+$',
+          'Must have at least 1 character. Must contain only lowercase alphabetic characters, numbers and hyphens (-)',
+        ]
+  - url: &url
+      label: 'URL'
+      name: 'url'
+      widget: 'string'
+      pattern: ['^https:\/\/.*', 'Must start with https://']
+  - name: &name
+      label: 'Name'
+      name: 'name'
+      widget: 'string'
 collections:
   - name: 'metadata'
     label: 'Metadata'
@@ -37,15 +61,12 @@ collections:
             name: 'siteName'
             widget: 'string'
             hint: 'This will appear in page titles in browser tabs / windows. Including the page title. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro"'
-            pattern: ['.{1,}', 'Must have at least 1 character']
           - label: 'Author'
             name: 'author'
             widget: 'string'
-            pattern: ['.{1,}', 'Must have at least 1 character']
-          - label: 'Canonical URL'
+          - <<: *url
+            label: 'Canonical URL'
             name: 'canonicalUrl'
-            widget: 'string'
-            pattern: ['^https:\/\/.*', 'Must start with https://']
   - name: 'pages'
     label: 'Pages'
     # 👇 Apparently only used in commit messages / PR titles
@@ -60,22 +81,11 @@ collections:
     preview_path: '{{slug}}'
     summary: '{{name}}'
     fields:
-      - label: 'Name'
-        name: 'name'
-        widget: 'string'
+      - <<: *name
         hint: 'Identifies the page in the content manager. But nothing a visitor would see'
-      - label: 'Slug'
-        name: 'slug'
-        widget: 'string'
-        pattern:
-          [
-            '^[a-z0-9-]+$',
-            'Must have at least 1 character and only contain lowercase alphabetic characters, numbers and hyphens (-)',
-          ]
+      - <<: *slug
         hint: '⚠️ Avoid updating without notifying developer :) Sets the page path in the URL. And the filename containing this configuration'
-      - label: 'Title'
-        name: 'title'
-        widget: 'string'
+      - <<: *title
         hint: 'This will appear in page titles in browser tabs / windows. Including the site name. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro". Leave it empty to show site name only'
         required: false
       - label: 'Description'
@@ -95,10 +105,7 @@ collections:
         widget: 'object'
         required: false
         fields:
-          - label: 'URL'
-            name: 'url'
-            widget: 'string'
-            pattern: ['^https:\/\/.*', 'Must start with https://']
+          - *url
           - label: 'Alternative text'
             name: 'alt'
             widget: 'string'
@@ -132,18 +139,9 @@ collections:
     identifier_field: 'slug'
     summary: '{{title}}'
     fields:
-      - label: 'Slug'
-        name: 'slug'
-        widget: 'string'
-        pattern:
-          [
-            '^[a-z0-9-]+$',
-            'Must have at least 1 character and only contain lowercase alphabetic characters, numbers and hyphens (-)',
-          ]
-        hint: '⚠️ Avoid updating CHIASMA one without notifying developer :) Sets the project path in the URL. Use it in the image CDN as directory name to include images for this project.'
-      - label: 'Title'
-        name: 'title'
-        widget: 'string'
+      - <<: *slug
+        hint: '⚠️ Avoid updating "chiasma" one without notifying developer :) Sets the project path in the URL. Use it in the image CDN as directory name to include images for this project.'
+      - *title
       - label: 'Subtitle'
         name: 'subtitle'
         widget: 'string'
@@ -180,9 +178,7 @@ collections:
     identifier_field: 'name'
     summary: '{{name}}'
     fields:
-      - label: 'Name'
-        name: 'name'
-        widget: 'string'
+      - *name
       - label: 'Social'
         name: 'social'
         widget: 'object'
