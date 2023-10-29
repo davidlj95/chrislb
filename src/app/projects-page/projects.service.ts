@@ -1,31 +1,23 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core'
-import projectsList from '../../data/projects-list.json'
+import { Injectable } from '@angular/core'
 import { ProjectItem } from './project-item/project-item'
+import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
+import { PROJECTS_DIR } from '../common/data/directories'
+import { getListFilename } from '../common/data/files'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService {
-  constructor(
-    @Inject(PROJECTS_LIST_JSON) private projectsListJson: ProjectsListJson,
-  ) {}
+  constructor(private jsonFetcher: JsonFetcher) {}
 
   async getAll(): Promise<ReadonlyArray<ProjectItem>> {
-    return this.projectsListJson
+    return (await this.jsonFetcher.fetch(
+      getListFilename(PROJECTS_DIR),
+    )) as unknown as ReadonlyArray<ProjectItem>
   }
 
   async bySlug(slug: string): Promise<ProjectItem | null> {
-    return (
-      this.projectsListJson.find((project) => project.slug === slug) ?? null
-    )
+    const allProjects = await this.getAll()
+    return allProjects.find((project) => project.slug === slug) ?? null
   }
 }
-
-const PROJECTS_LIST_JSON = new InjectionToken<ProjectsListJson>(
-  'Projects JSON',
-  {
-    factory: () => projectsList,
-  },
-)
-
-type ProjectsListJson = typeof projectsList
