@@ -4,7 +4,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { Json } from './json-types'
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalJsonFetcherService implements JsonFetcher {
   constructor(@Inject(JSON_DATA_DIR) private jsonDataDir: string) {}
 

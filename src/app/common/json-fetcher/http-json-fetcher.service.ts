@@ -5,7 +5,7 @@ import { Inject, Injectable } from '@angular/core'
 import { APP_BASE_HREF } from '@angular/common'
 import { Json } from './json-types'
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HttpJsonFetcherService implements JsonFetcher {
   constructor(
     private httpClient: HttpClient,
