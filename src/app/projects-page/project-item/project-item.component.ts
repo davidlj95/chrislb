@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { Credit, ProjectItem } from './project-item'
 import { SwiperOptions } from 'swiper/types'
-import { ImageAsset } from '../../../data/images/types'
-import { ProjectPreviewImagesService } from './project-preview-images.service'
 import { PROJECTS_PATH } from '../../routes'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
 import { Author, AuthorsService } from '../../common/authors.service'
@@ -17,7 +15,6 @@ export class ProjectItemComponent {
   @Input({ required: true })
   public set item(item: ProjectItem) {
     this._item = item
-    this.previewImages = this.projectPreviewImagesService.bySlug(item.slug)
     this.credits = item.credits.map((credit) => ({
       ...credit,
       author: this.authorsService.bySlug(credit.authorSlug),
@@ -28,7 +25,6 @@ export class ProjectItemComponent {
   public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
     slidesPerView: 2,
   }
-  public previewImages!: Promise<ReadonlyArray<ImageAsset>>
   public srcSet = this.imageResponsiveBreakpointsService
     .range(
       this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
@@ -39,7 +35,6 @@ export class ProjectItemComponent {
   protected readonly PROJECTS_PATH = PROJECTS_PATH
 
   constructor(
-    private projectPreviewImagesService: ProjectPreviewImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
     private authorsService: AuthorsService,
   ) {}

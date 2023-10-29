@@ -24,7 +24,7 @@
     "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
     "generate-data": "ts-node scripts/src/generate-data.mts",
     "cms-server": "npx decap-server",
-    "prebuild": "concurrently \"npm:generate-data\" \"npm:generate-image-lists\""
+    "prebuild": "npm run generate-image-lists && npm run generate-data"
   },
   "private": true,
   "dependencies": {
@@ -64,7 +64,6 @@
     "@types/node": "^16.11.7",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",

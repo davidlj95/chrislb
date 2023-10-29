@@ -15,7 +15,7 @@
     <div class="description" [innerHtml]="_item.description"></div>
   </div>
   <app-image-swiper
-    [images]="previewImages | async"
+    [images]="_item.previewImages"
     sizes="calc(50vw - 16px), 33.33vw"
     [srcSet]="srcSet"
     [priority]="priority"
