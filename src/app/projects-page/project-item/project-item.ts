@@ -1,3 +1,5 @@
+import { ImageAsset } from '../../../data/images/types'
+
 export interface ProjectItem {
   readonly slug: string
   readonly title: string
@@ -5,6 +7,7 @@ export interface ProjectItem {
   readonly quote?: string
   readonly description: string
   readonly credits: readonly Credit[]
+  readonly previewImages: ReadonlyArray<ImageAsset>
 }
 
 export interface Credit {

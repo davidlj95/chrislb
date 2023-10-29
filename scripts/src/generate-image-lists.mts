@@ -1,7 +1,7 @@
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
-import * as fs from 'fs'
+import { mkdir, writeFile } from 'fs/promises'
 import imagesConfigPkg from '../../src/data/images/config.js'
 import {
   ImageAsset,
@@ -24,6 +24,12 @@ class ImageListsGenerator {
     'src',
     'data',
     'images',
+  )
+  private readonly PROJECTS_DATA_DIR = path.join(
+    getRepositoryRootDir(),
+    'src',
+    'data',
+    'projects',
   )
 
   constructor() {
@@ -50,12 +56,6 @@ class ImageListsGenerator {
   public async all(): Promise<void> {
     await this.logos()
     const projects = await this.projects()
-    await this.projectsDirectoryImageAssetsBySlug({
-      projectFolderObjects: projects,
-      directory: 'preview',
-      name: 'preview images',
-      filename: 'projects-preview.json',
-    })
     await this.projectsLookbooksImages(projects)
     await this.projectsDirectoryImageAssetsBySlug({
       projectFolderObjects: projects,
@@ -68,6 +68,12 @@ class ImageListsGenerator {
       directory: 'design-book',
       name: 'design book images',
       filename: 'projects-design-books.json',
+    })
+    await this.projectsDirectoryImageAssets({
+      projectFolderObjects: projects,
+      directory: 'preview',
+      name: 'preview images',
+      filename: 'preview-images.json',
     })
   }
 
@@ -101,7 +107,7 @@ class ImageListsGenerator {
     const logoImages: LogoImages = {
       horizontal: this.imageAssetFromFileObject(horizontalLogoFileObject),
     }
-    this.writeJson(logoImages, 'logos.json')
+    await this.writeImagesJson(logoImages, 'logos.json')
     Log.ok('Done')
     Log.groupEnd()
   }
@@ -109,10 +115,15 @@ class ImageListsGenerator {
   private async projects(): Promise<ReadonlyArray<FolderObject>> {
     const PROJECTS_PATH = 'projects'
     Log.group("Project directories (inside '%s')", PROJECTS_PATH)
-    const projectFileObjects = await this.imageKit.listFiles({
-      includeFolder: true,
-      path: PROJECTS_PATH,
-    })
+    const projectFileObjects = (
+      await this.imageKit.listFiles({
+        includeFolder: true,
+        path: PROJECTS_PATH,
+      })
+    ).map((projectFileObject) => ({
+      ...projectFileObject,
+      name: this.removeOrderPrefix(projectFileObject.name),
+    }))
     if (projectFileObjects.length === 0) {
       Log.error("No project directories found within path '%s'", PROJECTS_PATH)
       process.exit(1)
@@ -177,7 +188,10 @@ class ImageListsGenerator {
       }
       lookbooksByProjectSlug[projectFolderObject.name] = lookbooksBySlug
     }
-    this.writeJson(lookbooksByProjectSlug, 'projects-lookbooks.json')
+    await this.writeImagesJson(
+      lookbooksByProjectSlug,
+      'projects-lookbooks.json',
+    )
     Log.ok('Done')
     Log.groupEnd()
   }
@@ -215,7 +229,54 @@ class ImageListsGenerator {
         this.imageAssetFromFileObject,
       )
     }
-    this.writeJson(assetsByProjectSlug, filename)
+    await this.writeImagesJson(assetsByProjectSlug, filename)
+    Log.ok('Done')
+    Log.groupEnd()
+  }
+
+  private async projectsDirectoryImageAssets({
+    projectFolderObjects,
+    directory,
+    name,
+    filename,
+  }: {
+    projectFolderObjects: ReadonlyArray<FolderObject>
+    directory: string
+    name: string
+    filename: string
+  }): Promise<void> {
+    Log.group('Projects %s assets', name)
+    for (const projectFolderObject of projectFolderObjects) {
+      Log.info(
+        "Finding %s of project '%s' ('%s')",
+        name,
+        projectFolderObject.name,
+        projectFolderObject.folderPath,
+      )
+      const assetFileObjects = await this.imageKit.listFiles({
+        path: `${projectFolderObject.folderPath}/${directory}`,
+        sort: 'ASC_NAME',
+      })
+      if (assetFileObjects.length < 1) {
+        Log.warn("No %s found for project '%s'", name, projectFolderObject.name)
+        continue
+      }
+      Log.item('Found %d assets', assetFileObjects.length)
+      const projectAssetsDirectory = await this.makeProjectDirectory(
+        projectFolderObject.name,
+      )
+      Log.item(
+        'Writing %s file %s',
+        name,
+        path.join(projectFolderObject.name, filename),
+      )
+      const assetsFile = path.join(projectAssetsDirectory, filename)
+      await this.writeJson(
+        assetFileObjects.map(this.imageAssetFromFileObject),
+        assetsFile,
+      )
+      break
+    }
     Log.ok('Done')
     Log.groupEnd()
   }
@@ -230,11 +291,21 @@ class ImageListsGenerator {
     }
   }
 
-  private writeJson(json: object, filename: string): void {
-    fs.writeFileSync(
+  private async writeImagesJson(json: object, filename: string): Promise<void> {
+    return writeFile(
       path.join(this.IMAGES_DATA_DIR, filename),
       JSON.stringify(json, null, 2),
     )
+  }
+
+  private async writeJson(json: object, filepath: string): Promise<void> {
+    return writeFile(filepath, JSON.stringify(json, null, 2))
+  }
+
+  private async makeProjectDirectory(slug: string): Promise<string> {
+    const projectDirectory = path.join(this.PROJECTS_DATA_DIR, slug)
+    await mkdir(projectDirectory, { recursive: true })
+    return projectDirectory
   }
 
   private removeOrderPrefix(name: string): string {
