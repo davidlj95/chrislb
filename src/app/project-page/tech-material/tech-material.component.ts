@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
 import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
-import { ProjectTechMaterialService } from './project-tech-material.service'
+import { ProjectImagesService } from '../project-images.service'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
+import { TECH_MATERIAL_IMAGES_FILENAME } from '../../common/data/files'
 
 @Component({
   selector: 'app-tech-material',
@@ -12,7 +13,10 @@ import { ImageResponsiveBreakpointsService } from '../../common/image-responsive
 })
 export class TechMaterialComponent {
   @Input({ required: true }) set slug(slug: string) {
-    this.techMaterials = this.projectTechMaterialService.bySlug(slug)
+    this.techMaterials = this.projectImagesService.bySlugAndFilename(
+      slug,
+      TECH_MATERIAL_IMAGES_FILENAME,
+    )
   }
 
   public techMaterials!: Observable<ReadonlyArray<ImageAsset>>
@@ -27,7 +31,7 @@ export class TechMaterialComponent {
   }
 
   constructor(
-    private projectTechMaterialService: ProjectTechMaterialService,
+    private projectImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
   ) {}
 }
