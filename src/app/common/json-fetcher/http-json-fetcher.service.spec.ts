@@ -11,7 +11,7 @@ describe('HttpJsonFetcherService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [MockProvider(APP_BASE_HREF, '/')],
+      providers: [MockProvider(APP_BASE_HREF, '/'), HttpJsonFetcherService],
     })
     service = TestBed.inject(HttpJsonFetcherService)
   })
