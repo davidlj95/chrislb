@@ -1,5 +1,5 @@
 import { IPageSeoData } from '@ngaox/seo'
-import meta from '../data/meta.json'
+import defaultMetadata from '../data/metadata/default.json'
 import notFoundPageMetadata from '../data/pages/404.json'
 import projectsPageMetadata from '../data/pages/projects.json'
 
@@ -52,11 +52,14 @@ export function getMetadataFromJson(
 
 export function getTitle(title: string) {
   if (!title || title.length === 0) {
-    return meta.siteName
+    return defaultMetadata.siteName
   }
-  return `${title} | ${meta.siteName}`
+  return `${title} | ${defaultMetadata.siteName}`
 }
 
 export function getCanonicalUrlForPath(...pathSegments: ReadonlyArray<string>) {
-  return new URL(pathSegments.join('/'), new URL(meta.canonicalUrl)).toString()
+  return new URL(
+    pathSegments.join('/'),
+    new URL(defaultMetadata.canonicalUrl),
+  ).toString()
 }

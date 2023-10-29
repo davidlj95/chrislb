@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
-import { PROJECTS_DIR } from '../common/data/directories'
-import { addJsonExtension, getListFilename } from '../common/data/files'
+import { PROJECTS_DIR } from '../common/directories'
+import { addJsonExtension, getListFilename } from '../common/files'
 import { Project, ProjectListItem } from './project-item/project-item'
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import authorsList from '../../data/authors-list.json'
+import authors from '../../data/authors.json'
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class AuthorsService {
 }
 
 export const AUTHORS_JSON = new InjectionToken('Authors list JSON', {
-  factory: () => authorsList,
+  factory: () => authors,
 })
-export type Authors = typeof authorsList
+export type Authors = typeof authors
 export type Author = Authors[number]

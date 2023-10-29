@@ -22,9 +22,9 @@
     "lint-staged": "lint-staged",
     "git-hooks": "husky install",
     "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
-    "generate-data": "ts-node scripts/src/generate-data.mts",
+    "generate-content": "ts-node scripts/src/generate-content.mts",
     "cms-server": "npx decap-server",
-    "prebuild": "npm run generate-image-lists && npm run generate-data",
+    "prebuild": "npm run generate-image-lists && npm run generate-content",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js"
   },
   "private": true,

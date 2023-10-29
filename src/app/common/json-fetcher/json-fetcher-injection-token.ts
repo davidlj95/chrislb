@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core'
 import { Json } from './json-types'
-import { DATA_DIR } from '../data/directories'
+import { CONTENTS_DIR } from '../directories'
 
 export const JSON_DATA_DIR = new InjectionToken<string>('JSON data dir', {
-  factory: () => DATA_DIR,
+  factory: () => CONTENTS_DIR,
 })
 
 export abstract class JsonFetcher {

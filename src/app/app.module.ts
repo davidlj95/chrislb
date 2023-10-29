@@ -16,7 +16,7 @@ import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './image-swiper/swiper.directive'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 import { SeoModule } from '@ngaox/seo'
-import meta from '../data/meta.json'
+import defaultMetadata from '../data/metadata/default.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -60,13 +60,13 @@ registerSwiper()
       twitter: {
         card: 'summary',
       },
-      siteName: meta.siteName,
+      siteName: defaultMetadata.siteName,
       extra: [
-        { name: 'author', content: meta.author },
+        { name: 'author', content: defaultMetadata.author },
         { property: 'og:locale', content: 'en' },
         { name: 'generator', content: `Angular ${VERSION.full}` },
         // See more in favicons doc. Related to Internet Explorer / Microsoft metro tiles
-        { name: 'application-name', content: meta.siteName },
+        { name: 'application-name', content: defaultMetadata.siteName },
       ],
     }),
   ],
