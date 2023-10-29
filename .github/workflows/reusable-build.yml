@@ -10,6 +10,11 @@ on:
         type: string
         required: false
         default: ''
+    secrets:
+      imagekit-public-key:
+        required: true
+      imagekit-private-key:
+        required: true
 
 # 👇 For Decap CMS commit status, only in PRs
 #permissions:
@@ -41,6 +46,9 @@ jobs:
           restore-keys: |
             ${{ env.cache-name }}
       - name: Build and prerender app
+        env:
+          IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
+          IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}
         run: cd .ci && make build
       - name: Upload built app
         if: ${{ inputs.artifact-name != '' }}
