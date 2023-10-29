@@ -4,24 +4,28 @@ import { readdir, readFile, writeFile } from 'fs/promises'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import path from 'path'
 import { Dirent } from 'fs'
+import directoriesPkg from '../../src/app/common/data/directories.js'
+import filesPkg from '../../src/app/common/data/files.js'
 
-const DATA_DIR = path.join(getRepositoryRootDir(), 'src', 'data')
+const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
+const { getListFilename } = filesPkg
+
+const DATA_PATH = path.join(getRepositoryRootDir(), 'src', DATA_DIR)
 const DATA_EXTENSION = '.json'
 
 class DataGenerator {
   async all() {
-    const PROJECTS_SUBDIR = 'projects'
-    await this.listFromDirectoryWithJsons(PROJECTS_SUBDIR)
+    await this.listFromDirectoryWithJsons(PROJECTS_DIR)
     await this.listFromDirectoryWithJsons('authors')
     await this.addContentToListFile({
-      dataSubdirectory: PROJECTS_SUBDIR,
+      dataSubdirectory: PROJECTS_DIR,
       contentSlug: 'preview-images',
     })
   }
 
   private async listFromDirectoryWithJsons(dataSubdirectory: string) {
     Log.group('List of %s', dataSubdirectory)
-    const directoryPath = path.join(DATA_DIR, dataSubdirectory)
+    const directoryPath = path.join(DATA_PATH, dataSubdirectory)
     const dataFiles = await this.getDataFilesInDirectory(directoryPath)
     Log.info('Reading data from each file')
     const jsons = await Promise.all(
@@ -48,7 +52,7 @@ class DataGenerator {
     contentSlug: string
   }) {
     Log.group('Add %s to %s', contentSlug, dataSubdirectory)
-    const directoryPath = path.join(DATA_DIR, dataSubdirectory)
+    const directoryPath = path.join(DATA_PATH, dataSubdirectory)
     const dataFiles = await this.getDataFilesInDirectory(directoryPath)
     Log.info('Reading content from each file homonym directory')
     const slugsAndContents = (await Promise.all(
@@ -97,25 +101,21 @@ class DataGenerator {
     dataSubdirectory: string,
     data: unknown,
   ): Promise<void> {
-    const listFilename = this.getListFilename(dataSubdirectory)
+    const listFilename = getListFilename(dataSubdirectory)
     Log.info('Writing list file', listFilename)
     const listFilePath = this.getListFilePath(listFilename)
     return this.writeJson(listFilePath, data)
   }
 
   private async readListFile(dataSubdirectory: string): Promise<unknown> {
-    const listFilename = this.getListFilename(dataSubdirectory)
+    const listFilename = getListFilename(dataSubdirectory)
     Log.info('Reading list file', listFilename)
     const listFilePath = this.getListFilePath(listFilename)
     return this.readJson(listFilePath)
   }
 
-  private getListFilename(dataSubdirectory: string): string {
-    return `${dataSubdirectory}-list${DATA_EXTENSION}`
-  }
-
   private getListFilePath(listFilename: string): string {
-    return path.join(DATA_DIR, listFilename)
+    return path.join(DATA_PATH, listFilename)
   }
 
   private async readJson(filename: string): Promise<unknown> {
