@@ -14,3 +14,4 @@ export function addJsonExtension(filename: string): string {
 export const PREVIEW_IMAGES_FILENAME = getImagesFilename('preview')
 export const LOOKBOOKS_IMAGES_FILENAME = getImagesFilename('lookbooks')
 export const TECH_MATERIAL_IMAGES_FILENAME = getImagesFilename('tech-material')
+export const DESIGN_BOOK_IMAGES_FILENAME = getImagesFilename('design-book')
