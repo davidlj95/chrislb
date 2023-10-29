@@ -20,7 +20,7 @@ export class ProjectItemComponent {
     this.previewImages = this.projectPreviewImagesService.bySlug(item.slug)
     this.credits = item.credits.map((credit) => ({
       ...credit,
-      author: this.authorsService.bySlug(credit.slug),
+      author: this.authorsService.bySlug(credit.authorSlug),
     }))
   }
 
@@ -45,6 +45,6 @@ export class ProjectItemComponent {
   ) {}
 }
 
-type CreditItem = Omit<Credit, 'slug'> & {
+type CreditItem = Omit<Credit, 'authorSlug'> & {
   author: Author | undefined
 }
