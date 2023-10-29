@@ -11,9 +11,15 @@ jobs:
       statuses: write
     with:
       artifact-name: build
+    secrets:
+      imagekit-public-key: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
+      imagekit-private-key: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
   test:
     name: Test
     uses: ./.github/workflows/reusable-test.yml
+    secrets:
+      imagekit-public-key: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
+      imagekit-private-key: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
   lint:
     name: Lint
     uses: ./.github/workflows/reusable-lint.yml

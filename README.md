@@ -12,15 +12,17 @@ npm i --legacy-peer-deps
 
 There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. Here it's using 16
 
-## Generated data
+## Prebuild
 
-Some data files required by the app need to be generated from the data managed by the CMS.
+Some files required by the app need to be generated from the data managed by the CMS and the image CDN.
 
-Run the generation script before building or serving the app
+[Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
 
 ```shell
-npm run generate-data
+npm run prebuild
 ```
+
+> If you run `npm run build`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
 
 ## Development server
 

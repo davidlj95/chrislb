@@ -1,7 +1,7 @@
 .PHONY: *
 
 prebuild:
-	npm run generate-data
+	npm run prebuild
 
 build: prebuild
 	npm run prerender
