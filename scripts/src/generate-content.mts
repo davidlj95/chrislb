@@ -7,7 +7,7 @@ import { Dirent } from 'fs'
 import directoriesPkg from '../../src/app/common/directories.js'
 import filesPkg from '../../src/app/common/files.js'
 import lookbookNamesAndSlugs from '../../src/data/lookbooks/names-by-slug.json' assert { type: 'json' }
-import { Lookbook } from '../../src/app/project-page/lookbook'
+import { Lookbook } from '../../src/app/project-page/lookbook.js'
 import { JsonFile } from './json-file.mjs'
 
 const { CONTENTS_DIR, PROJECTS_DIR, DATA_DIR } = directoriesPkg

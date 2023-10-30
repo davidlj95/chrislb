@@ -79,7 +79,7 @@ export class ProjectPageComponent {
         )
         .pxValues.concat([this.LOOKBOOK_MAX_SLIDE_WIDTH_PX]),
     ).toSrcSet(),
-    sizes: `'alc(50vw - 16px), ${this.LOOKBOOK_MAX_SLIDE_WIDTH_PX}px`,
+    sizes: `calc(50vw - 16px), ${this.LOOKBOOK_MAX_SLIDE_WIDTH_PX}px`,
   }
 
   constructor(

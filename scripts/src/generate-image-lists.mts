@@ -9,7 +9,7 @@ import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { Log } from './log.mjs'
 import directoriesPkg from '../../src/app/common/directories.js'
-import { Lookbook } from '../../src/app/project-page/lookbook'
+import { Lookbook } from '../../src/app/project-page/lookbook.js'
 import filesPkg from '../../src/app/common/files.js'
 import { JsonFile } from './json-file.mjs'
 
