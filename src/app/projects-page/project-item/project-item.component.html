@@ -14,13 +14,13 @@
     <span class="quote" *ngIf="_item.quote"> "{{ _item.quote }}" </span>
     <div class="description" [innerHtml]="_item.description"></div>
   </div>
-  <app-image-swiper
+  <app-images-swiper
     [images]="_item.previewImages"
     sizes="calc(50vw - 16px), 33.33vw"
     [srcSet]="srcSet"
     [priority]="priority"
     [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
-  ></app-image-swiper>
+  ></app-images-swiper>
 </div>
 <div class="credits" *ngIf="credits.length">
   <ng-container *ngFor="let credit of credits">

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectItemComponent } from './project-item.component'
 import { MockComponents } from 'ng-mocks'
-import { ImageSwiperComponent } from '../../image-swiper/image-swiper.component'
+import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 
 describe('ProjectItemComponent', () => {
   let component: ProjectItemComponent
@@ -12,7 +12,7 @@ describe('ProjectItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ProjectItemComponent,
-        MockComponents(ImageSwiperComponent),
+        MockComponents(ImagesSwiperComponent),
       ],
     })
     fixture = TestBed.createComponent(ProjectItemComponent)

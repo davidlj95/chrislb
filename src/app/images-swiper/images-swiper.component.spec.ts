@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ImageSwiperComponent } from './image-swiper.component'
+import { ImagesSwiperComponent } from './images-swiper.component'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
-describe('ImageSwiperComponent', () => {
-  let component: ImageSwiperComponent
-  let fixture: ComponentFixture<ImageSwiperComponent>
+describe('ImagesSwiperComponent', () => {
+  let component: ImagesSwiperComponent
+  let fixture: ComponentFixture<ImagesSwiperComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ImageSwiperComponent],
+      declarations: [ImagesSwiperComponent],
       //👇 To use swiper-[container|slide] HTML element
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-    fixture = TestBed.createComponent(ImageSwiperComponent)
+    fixture = TestBed.createComponent(ImagesSwiperComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
