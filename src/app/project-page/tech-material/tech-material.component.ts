@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
 import { ProjectImagesService } from '../project-images.service'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
@@ -19,7 +18,7 @@ export class TechMaterialComponent {
     )
   }
 
-  public techMaterials!: Observable<ReadonlyArray<ImageAsset>>
+  public techMaterials!: Promise<ReadonlyArray<ImageAsset>>
   public readonly srcSet = this.imageResponsiveBreakpointsService
     .range(
       this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,

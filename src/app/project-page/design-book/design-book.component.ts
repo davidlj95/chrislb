@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core'
-import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
 import { SwiperOptions } from 'swiper/types'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
@@ -19,7 +18,7 @@ export class DesignBookComponent {
     )
   }
 
-  public images!: Observable<ReadonlyArray<ImageAsset>>
+  public images!: Promise<ReadonlyArray<ImageAsset>>
   public readonly srcSet = this.imageResponsiveBreakpointsService
     .range(
       this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,

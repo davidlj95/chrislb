@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core'
-import { Observable } from 'rxjs'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { Lookbook } from './lookbook/lookbook'
 
@@ -9,7 +8,7 @@ import { Lookbook } from './lookbook/lookbook'
   styleUrls: ['./lookbooks.component.scss'],
 })
 export class LookbooksComponent {
-  public lookbooks?: Observable<ReadonlyArray<Lookbook>>
+  public lookbooks!: Promise<ReadonlyArray<Lookbook>>
   protected readonly MAX_LOOKBOOKS_PER_VIEWPORT = 2
 
   constructor(private lookbooksService: ProjectLookbooksService) {}

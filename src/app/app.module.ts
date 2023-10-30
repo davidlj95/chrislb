@@ -25,7 +25,7 @@ import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.co
 import { TechMaterialComponent } from './project-page/tech-material/tech-material.component'
 import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
 import { DesignBookComponent } from './project-page/design-book/design-book.component'
-import { JsonFetcher } from './common/json-fetcher/json-fetcher-injection-token'
+import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { HttpClientModule } from '@angular/common/http'
 

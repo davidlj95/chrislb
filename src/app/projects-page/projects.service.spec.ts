@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 
 import { ProjectsService } from './projects.service'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
+import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { MockProviders } from 'ng-mocks'
 
 describe('ProjectsService', () => {

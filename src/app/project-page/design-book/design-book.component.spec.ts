@@ -4,7 +4,6 @@ import { DesignBookComponent } from './design-book.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ImageSwiperComponent } from '../../image-swiper/image-swiper.component'
 import { ProjectImagesService } from '../project-images.service'
-import { of } from 'rxjs'
 
 describe('DesignBookComponent', () => {
   let component: DesignBookComponent
@@ -15,8 +14,8 @@ describe('DesignBookComponent', () => {
       declarations: [DesignBookComponent, MockComponents(ImageSwiperComponent)],
       providers: [
         MockProvider(ProjectImagesService, {
-          bySlugAndFilename() {
-            return of()
+          async bySlugAndFilename() {
+            return []
           },
         }),
       ],

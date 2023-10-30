@@ -4,7 +4,6 @@ import { TechMaterialComponent } from './tech-material.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ImageSwiperComponent } from '../../image-swiper/image-swiper.component'
 import { ProjectImagesService } from '../project-images.service'
-import { of } from 'rxjs'
 
 describe('TechMaterialComponent', () => {
   let component: TechMaterialComponent
@@ -18,8 +17,8 @@ describe('TechMaterialComponent', () => {
       ],
       providers: [
         MockProvider(ProjectImagesService, {
-          bySlugAndFilename() {
-            return of([])
+          async bySlugAndFilename() {
+            return []
           },
         }),
       ],
