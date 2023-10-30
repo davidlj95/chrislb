@@ -20,8 +20,6 @@ import defaultMetadata from '../data/metadata/default.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component'
-import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
 import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
@@ -41,8 +39,6 @@ registerSwiper()
     SwiperDirective,
     ProjectPageComponent,
     NotFoundPageComponent,
-    LookbooksComponent,
-    LookbookComponent,
     ImageSwiperComponent,
   ],
   imports: [

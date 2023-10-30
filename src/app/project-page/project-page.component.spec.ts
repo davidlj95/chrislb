@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectPageComponent } from './project-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
-import { LookbooksComponent } from './lookbooks/lookbooks.component'
 import { ProjectsService } from '../projects-page/projects.service'
 import { Project } from '../projects-page/project-item/project-item'
 import { ImageSwiperComponent } from '../image-swiper/image-swiper.component'
+import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ProjectImagesService } from './project-images.service'
 
 describe('ProjectPageComponent', () => {
@@ -16,12 +16,17 @@ describe('ProjectPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ProjectPageComponent,
-        MockComponents(LookbooksComponent, ImageSwiperComponent),
+        MockComponents(ImageSwiperComponent),
       ],
       providers: [
         MockProvider(ProjectsService, {
           async bySlug(): Promise<Project> {
             return { title: 'Title', description: 'Description' } as Project
+          },
+        }),
+        MockProvider(ProjectLookbooksService, {
+          async bySlug() {
+            return []
           },
         }),
         MockProvider(ProjectImagesService, {

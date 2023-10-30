@@ -12,6 +12,24 @@
     text-align: center;
   }
 
+  .lookbooks {
+    display: flex;
+    flex-direction: column;
+    gap: margins.$m;
+
+    .lookbook {
+      display: flex;
+      flex-direction: column;
+      gap: margins.$m;
+      align-items: center;
+
+      > * {
+        width: 100%;
+        //ℹ️ max-width set by component for big screens
+      }
+    }
+  }
+
   .material-and-book {
     display: flex;
     gap: margins.$m;

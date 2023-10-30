@@ -12,6 +12,9 @@ import {
   DESIGN_BOOK_IMAGES_FILENAME,
   TECH_MATERIAL_IMAGES_FILENAME,
 } from '../common/files'
+import { Lookbook } from './lookbook'
+import { ProjectLookbooksService } from './project-lookbooks.service'
+import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
 
 @Component({
   selector: 'app-project-page',
@@ -31,6 +34,7 @@ export class ProjectPageComponent {
       this.seo.setTitle(getTitle(projectItem.title))
       this.seo.setDescription(projectItem.description)
     })
+    this.lookbooks = this.projectLookbooksService.bySlug(slug)
     this.techMaterialImages = this.projectsImagesService.bySlugAndFilename(
       slug,
       TECH_MATERIAL_IMAGES_FILENAME,
@@ -43,25 +47,46 @@ export class ProjectPageComponent {
 
   protected _slug!: string
 
+  public lookbooks!: Promise<ReadonlyArray<Lookbook>>
+  protected readonly MAX_LOOKBOOKS_PER_VIEWPORT = 2
   public techMaterialImages!: Promise<ReadonlyArray<ImageAsset>>
   public designBookImages!: Promise<ReadonlyArray<ImageAsset>>
   public readonly HALF_SCREEN_SWIPER = {
+    customSwiperOptions: {
+      slidesPerView: 1,
+    },
     srcSet: this.imageResponsiveBreakpointsService
       .range(
         this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
         this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 2,
       )
       .toSrcSet(),
-    customSwiperOptions: {
-      slidesPerView: 1,
-    },
     sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
+  }
+  public readonly LOOKBOOK_MAX_WIDTH_PX = 850
+  public readonly LOOKBOOK_SLIDES_PER_VIEW = 2
+  public readonly LOOKBOOK_MAX_SLIDE_WIDTH_PX =
+    this.LOOKBOOK_MAX_WIDTH_PX / this.LOOKBOOK_SLIDES_PER_VIEW
+  public readonly LOOKBOOK_SWIPER = {
+    customSwiperOptions: {
+      slidesPerView: this.LOOKBOOK_SLIDES_PER_VIEW,
+    },
+    srcSet: new ImageResponsiveBreakpoints(
+      this.imageResponsiveBreakpointsService
+        .range(
+          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
+          this.LOOKBOOK_MAX_SLIDE_WIDTH_PX,
+        )
+        .pxValues.concat([this.LOOKBOOK_MAX_SLIDE_WIDTH_PX]),
+    ).toSrcSet(),
+    sizes: `'alc(50vw - 16px), ${this.LOOKBOOK_MAX_SLIDE_WIDTH_PX}px`,
   }
 
   constructor(
     private projectsService: ProjectsService,
     private router: Router,
     private seo: SeoService,
+    private projectLookbooksService: ProjectLookbooksService,
     private projectsImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
   ) {}
