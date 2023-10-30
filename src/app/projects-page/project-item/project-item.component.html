@@ -1,7 +1,9 @@
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      <a [routerLink]="[PROJECTS_PATH, _item.slug]"
+      <a
+        *ngIf="_item.hasContent; else title"
+        [routerLink]="[PROJECTS_PATH, _item.slug]"
         ><ng-container [ngTemplateOutlet]="title"></ng-container
       ></a>
       <ng-template #title>
