@@ -4,7 +4,7 @@ import { ProjectPageComponent } from './project-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectsService } from '../projects-page/projects.service'
 import { Project } from '../projects-page/project-item/project-item'
-import { ImageSwiperComponent } from '../image-swiper/image-swiper.component'
+import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ProjectImagesService } from './project-images.service'
 
@@ -16,7 +16,7 @@ describe('ProjectPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ProjectPageComponent,
-        MockComponents(ImageSwiperComponent),
+        MockComponents(ImagesSwiperComponent),
       ],
       providers: [
         MockProvider(ProjectsService, {

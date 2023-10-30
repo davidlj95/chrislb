@@ -13,14 +13,14 @@ import {
 } from '@angular/common'
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
-import { SwiperDirective } from './image-swiper/swiper.directive'
+import { SwiperDirective } from './images-swiper/swiper.directive'
 import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
 import { SeoModule } from '@ngaox/seo'
 import defaultMetadata from '../data/metadata/default.json'
 import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
+import { ImagesSwiperComponent } from './images-swiper/images-swiper.component'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { HttpClientModule } from '@angular/common/http'
@@ -39,7 +39,7 @@ registerSwiper()
     SwiperDirective,
     ProjectPageComponent,
     NotFoundPageComponent,
-    ImageSwiperComponent,
+    ImagesSwiperComponent,
   ],
   imports: [
     BrowserModule,

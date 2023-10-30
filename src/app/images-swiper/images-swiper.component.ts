@@ -4,11 +4,11 @@ import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../data/images/types'
 
 @Component({
-  selector: 'app-image-swiper',
-  templateUrl: './image-swiper.component.html',
-  styleUrls: ['./image-swiper.component.scss'],
+  selector: 'app-images-swiper',
+  templateUrl: './images-swiper.component.html',
+  styleUrls: ['./images-swiper.component.scss'],
 })
-export class ImageSwiperComponent implements OnChanges {
+export class ImagesSwiperComponent implements OnChanges {
   @Input({ required: true }) public images!: ReadonlyArray<ImageAsset> | null
   @Input({ required: true }) public srcSet!: string
   @Input({ required: true }) public sizes!: string
