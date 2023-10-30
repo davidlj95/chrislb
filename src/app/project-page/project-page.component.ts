@@ -6,7 +6,7 @@ import { noop } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
 import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../routes'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
-import { ImageAsset } from '../../data/images/types'
+import { ImageAsset } from '../common/images/types'
 import { ProjectImagesService } from './project-images.service'
 import {
   DESIGN_BOOK_IMAGES_FILENAME,

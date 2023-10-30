@@ -1,6 +1,6 @@
 <app-project-item
-  *ngFor="let item of projects | async; first as isFirst"
+  *ngFor="let item of projects | async; index as index"
   [item]="item"
-  [priority]="isFirst"
+  [priority]="index < MAX_PROJECTS_PER_PAGE"
   [class.has-preview-images]="item.previewImages && item.previewImages.length"
 ></app-project-item>
