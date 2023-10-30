@@ -2,4 +2,5 @@
   *ngFor="let item of projects | async; first as isFirst"
   [item]="item"
   [priority]="isFirst"
+  [class.has-preview-images]="item.previewImages && item.previewImages.length"
 ></app-project-item>
