@@ -1,6 +1,6 @@
 import { isMain } from './is-main.mjs'
 import { Log } from './log.mjs'
-import { readdir, readFile, writeFile } from 'fs/promises'
+import { readdir } from 'fs/promises'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import path from 'path'
 import { Dirent } from 'fs'
@@ -8,6 +8,7 @@ import directoriesPkg from '../../src/app/common/directories.js'
 import filesPkg from '../../src/app/common/files.js'
 import lookbookNamesAndSlugs from '../../src/data/lookbooks/names-by-slug.json' assert { type: 'json' }
 import { Lookbook } from '../../src/app/project-page/lookbooks/lookbook/lookbook.js'
+import { JsonFile } from './json-file.mjs'
 
 const { CONTENTS_DIR, PROJECTS_DIR, DATA_DIR } = directoriesPkg
 const { getListFilename, LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } =
@@ -39,9 +40,9 @@ class ContentsGenerator {
     const jsons = await Promise.all(
       files.map(async (file) => {
         Log.item(file.name)
-        const json = (await this.readJson(
+        const json = (await new JsonFile(
           path.join(directoryPath, file.name),
-        )) as {
+        ).read()) as {
           slug: string | undefined
         }
         if (!json.slug) {
@@ -78,7 +79,7 @@ class ContentsGenerator {
           subContentFilename,
         )
         Log.item(path.join(homonymDirectory, subContentFilename))
-        return [slug, await this.readJson(subContentFile)]
+        return [slug, await new JsonFile(subContentFile).read()]
       }),
     )) as ReadonlyArray<[string, unknown]>
     const contentsBySlug = new Map(slugsAndContents)
@@ -119,7 +120,8 @@ class ContentsGenerator {
           homonymDirectory,
           LOOKBOOKS_IMAGES_FILENAME,
         )
-        const lookbookContents = await this.readJson(lookbookFilename)
+        const lookbookJsonFile = new JsonFile(lookbookFilename)
+        const lookbookContents = await lookbookJsonFile.read()
         if (!lookbookContents) {
           return
         }
@@ -128,7 +130,7 @@ class ContentsGenerator {
           ...lookbook,
           name: lookbookNamesBySlug.get(lookbook.slug),
         }))
-        await this.writeJson(lookbookFilename, lookbookJsonWithNames)
+        await lookbookJsonFile.write(lookbookJsonWithNames)
       }),
     )
     Log.groupEnd()
@@ -153,7 +155,7 @@ class ContentsGenerator {
     const listFilename = getListFilename(subdirectory)
     Log.info('Writing list file %s/%s', directory, listFilename)
     const listFilePath = this.getListFilePath(directory, listFilename)
-    return this.writeJson(listFilePath, contents)
+    return new JsonFile(listFilePath).write(contents)
   }
 
   private async readListFile(
@@ -163,24 +165,11 @@ class ContentsGenerator {
     const listFilename = getListFilename(subdirectory)
     Log.info('Reading list file %s/%s', directory, listFilename)
     const listFilePath = this.getListFilePath(directory, listFilename)
-    return this.readJson(listFilePath)
+    return new JsonFile(listFilePath).read()
   }
 
   private getListFilePath(directory: string, listFilename: string): string {
     return path.join(SRC_PATH, directory, listFilename)
-  }
-
-  private async readJson(filename: string): Promise<unknown> {
-    try {
-      return JSON.parse(await readFile(filename, 'utf-8'))
-    } catch (error) {
-      Log.warn('Unable to read file %s', filename)
-      return undefined
-    }
-  }
-
-  private async writeJson(filename: string, json: unknown): Promise<void> {
-    return writeFile(filename, JSON.stringify(json, null, 2))
   }
 
   private camelize(s: string) {

@@ -1,7 +1,7 @@
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
-import { mkdir, writeFile } from 'fs/promises'
+import { mkdir } from 'fs/promises'
 import imagesConfigPkg from '../../src/data/images/config.js'
 import { ImageAsset, LogoImages } from '../../src/data/images/types.js'
 import path from 'path'
@@ -11,6 +11,7 @@ import { Log } from './log.mjs'
 import directoriesPkg from '../../src/app/common/directories.js'
 import { Lookbook } from '../../src/app/project-page/lookbooks/lookbook/lookbook.js'
 import filesPkg from '../../src/app/common/files.js'
+import { JsonFile } from './json-file.mjs'
 
 const { IMAGEKIT_URL } = imagesConfigPkg
 const { DATA_DIR, PROJECTS_DIR, CONTENTS_DIR } = directoriesPkg
@@ -23,15 +24,10 @@ const {
 
 class ImageListsGenerator {
   private imageKit: ImageKit
-  private readonly IMAGES_DATA_DIR = path.join(
-    getRepositoryRootDir(),
-    'src',
-    DATA_DIR,
-    'images',
-  )
+  private readonly SRC_DIR = path.join(getRepositoryRootDir(), 'src')
+  private readonly IMAGES_DATA_DIR = path.join(this.SRC_DIR, DATA_DIR, 'images')
   private readonly PROJECTS_CONTENTS_DIR = path.join(
-    getRepositoryRootDir(),
-    'src',
+    this.SRC_DIR,
     CONTENTS_DIR,
     PROJECTS_DIR,
   )
@@ -46,7 +42,9 @@ class ImageListsGenerator {
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
     if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY) {
       Log.error('Either ImageKit URL, public key or private key is missing')
-      Log.error('Add them to the .env file and try again')
+      Log.error(
+        'Add them to the .env file or as environment variables and try again',
+      )
       process.exit(1)
     }
 
@@ -111,9 +109,8 @@ class ImageListsGenerator {
     const logoImages: LogoImages = {
       horizontal: this.imageAssetFromFileObject(horizontalLogoFileObject),
     }
-    await this.writeJson(
+    await new JsonFile(path.join(this.IMAGES_DATA_DIR, 'logos.json')).write(
       logoImages,
-      path.join(this.IMAGES_DATA_DIR, 'logos.json'),
     )
     Log.ok('Done')
     Log.groupEnd()
@@ -191,10 +188,9 @@ class ImageListsGenerator {
         projectFolderObject.name,
       )
       Log.info('Writing lookbooks for project %s', projectFolderObject.name)
-      await this.writeJson(
-        lookbooks,
+      await new JsonFile(
         path.join(projectAssetsDirectory, LOOKBOOKS_IMAGES_FILENAME),
-      )
+      ).write(lookbooks)
     }
     Log.ok('Done')
     Log.groupEnd()
@@ -232,9 +228,8 @@ class ImageListsGenerator {
       const projectAssetsDirectory = await this.makeProjectDirectory(project)
       Log.item('Writing %s file %s', name, path.join(project, filename))
       const assetsFile = path.join(projectAssetsDirectory, filename)
-      await this.writeJson(
+      await new JsonFile(assetsFile).write(
         assetFileObjects.map(this.imageAssetFromFileObject),
-        assetsFile,
       )
       break
     }
@@ -250,10 +245,6 @@ class ImageListsGenerator {
       width: fileObject.width,
       alt: (fileObject.customMetadata as CustomMetadata)?.alt,
     }
-  }
-
-  private async writeJson(json: object, filepath: string): Promise<void> {
-    return writeFile(filepath, JSON.stringify(json, null, 2))
   }
 
   private async makeProjectDirectory(slug: string): Promise<string> {
