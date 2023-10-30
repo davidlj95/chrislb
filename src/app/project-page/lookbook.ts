@@ -1,4 +1,4 @@
-import { ImageAsset } from '../../../../data/images/types'
+import { ImageAsset } from '../../data/images/types'
 
 export interface Lookbook {
   readonly slug: string

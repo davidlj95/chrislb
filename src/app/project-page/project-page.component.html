@@ -1,4 +1,22 @@
-<app-lookbooks [slug]="_slug"></app-lookbooks>
+<div class="lookbooks">
+  <div
+    class="lookbook"
+    *ngFor="let lookbook of lookbooks | async; index as index"
+  >
+    <h2>
+      Look {{ index + 1 }}
+      <ng-container *ngIf="lookbook.name">"{{ lookbook.name }}"</ng-container>
+    </h2>
+    <app-image-swiper
+      [images]="lookbook.images"
+      [srcSet]="LOOKBOOK_SWIPER.srcSet"
+      [sizes]="LOOKBOOK_SWIPER.sizes"
+      [priority]="index < MAX_LOOKBOOKS_PER_VIEWPORT"
+      [customSwiperOptions]="LOOKBOOK_SWIPER.customSwiperOptions"
+      [style.max-width]="LOOKBOOK_MAX_WIDTH_PX + 'px'"
+    ></app-image-swiper>
+  </div>
+</div>
 <div class="material-and-book">
   <div class="tech-material">
     <h2>Tech material</h2>
