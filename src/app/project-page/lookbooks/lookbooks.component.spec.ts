@@ -4,7 +4,6 @@ import { LookbooksComponent } from './lookbooks.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { LookbookComponent } from './lookbook/lookbook.component'
 import { ProjectLookbooksService } from './project-lookbooks.service'
-import { of } from 'rxjs'
 
 describe('LookbooksComponent', () => {
   let component: LookbooksComponent
@@ -15,8 +14,8 @@ describe('LookbooksComponent', () => {
       declarations: [LookbooksComponent, MockComponents(LookbookComponent)],
       providers: [
         MockProvider(ProjectLookbooksService, {
-          bySlug() {
-            return of([])
+          async bySlug() {
+            return []
           },
         }),
       ],

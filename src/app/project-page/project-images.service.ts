@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
-import { from, Observable } from 'rxjs'
 import { ImageAsset } from '../../data/images/types'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
+import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
 
 @Injectable({
@@ -13,11 +12,7 @@ export class ProjectImagesService {
   bySlugAndFilename(
     slug: string,
     filename: string,
-  ): Observable<ReadonlyArray<ImageAsset>> {
-    const imagesPromise = async () => {
-      const images = await this.jsonFetcher.fetch(PROJECTS_DIR, slug, filename)
-      return (images as ReadonlyArray<ImageAsset> | undefined) ?? []
-    }
-    return from(imagesPromise())
+  ): Promise<ReadonlyArray<ImageAsset>> {
+    return this.jsonFetcher.fetch(PROJECTS_DIR, slug, filename)
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
+import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
 import { addJsonExtension, getListFilename } from '../common/files'
 import { Project, ProjectListItem } from './project-item/project-item'
@@ -11,17 +11,10 @@ export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 
   async getAll(): Promise<ReadonlyArray<ProjectListItem>> {
-    const listItems = await this.jsonFetcher.fetch(
-      getListFilename(PROJECTS_DIR),
-    )
-    return (listItems as ReadonlyArray<ProjectListItem> | undefined) ?? []
+    return this.jsonFetcher.fetch(getListFilename(PROJECTS_DIR))
   }
 
-  async bySlug(slug: string): Promise<Project | undefined> {
-    const project = await this.jsonFetcher.fetch(
-      PROJECTS_DIR,
-      addJsonExtension(slug),
-    )
-    return project as Project | undefined
+  async bySlug(slug: string): Promise<Project> {
+    return this.jsonFetcher.fetch(PROJECTS_DIR, addJsonExtension(slug))
   }
 }
