@@ -4,7 +4,7 @@ import { ImageAsset } from '../../../data/images/types'
 import { SwiperOptions } from 'swiper/types'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
 import { ProjectImagesService } from '../project-images.service'
-import { DESIGN_BOOK_IMAGES_FILENAME } from '../../common/data/files'
+import { DESIGN_BOOK_IMAGES_FILENAME } from '../../common/files'
 
 @Component({
   selector: 'app-design-book',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { from, Observable } from 'rxjs'
 import { ImageAsset } from '../../data/images/types'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher-injection-token'
-import { PROJECTS_DIR } from '../common/data/directories'
+import { PROJECTS_DIR } from '../common/directories'
 
 @Injectable({
   providedIn: 'root',

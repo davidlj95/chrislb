@@ -1,5 +1,5 @@
 export function getListFilename(directory: string) {
-  return addJsonExtension(`${directory}-list`)
+  return addJsonExtension(directory)
 }
 
 export function getImagesFilename(name: string) {

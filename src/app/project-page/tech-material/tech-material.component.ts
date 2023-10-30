@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { ImageAsset } from '../../../data/images/types'
 import { ProjectImagesService } from '../project-images.service'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
-import { TECH_MATERIAL_IMAGES_FILENAME } from '../../common/data/files'
+import { TECH_MATERIAL_IMAGES_FILENAME } from '../../common/files'
 
 @Component({
   selector: 'app-tech-material',

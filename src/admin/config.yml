@@ -55,7 +55,7 @@ collections:
     files:
       - label: 'Default'
         name: 'default'
-        file: 'src/data/meta.json'
+        file: 'src/data/metadata/default.json'
         fields:
           - label: 'Site name'
             name: 'siteName'
@@ -132,7 +132,7 @@ collections:
   - name: 'projects'
     label: 'Projects'
     label_singular: 'project'
-    folder: 'src/data/projects'
+    folder: 'src/content/projects'
     extension: 'json'
     create: true
     slug: '{{fields.slug}}'
@@ -197,7 +197,7 @@ collections:
     files:
       - label: 'Names by slug'
         name: 'names-by-slug'
-        file: 'src/data/lookbook-names.json'
+        file: 'src/data/lookbooks/names-by-slug.json'
         fields:
           - label: 'Names by slug'
             name: 'namesBySlug'

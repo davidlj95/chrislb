@@ -8,12 +8,12 @@ import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { Log } from './log.mjs'
-import directoriesPkg from '../../src/app/common/data/directories.js'
+import directoriesPkg from '../../src/app/common/directories.js'
 import { Lookbook } from '../../src/app/project-page/lookbooks/lookbook/lookbook.js'
-import filesPkg from '../../src/app/common/data/files.js'
+import filesPkg from '../../src/app/common/files.js'
 
 const { IMAGEKIT_URL } = imagesConfigPkg
-const { DATA_DIR, PROJECTS_DIR } = directoriesPkg
+const { DATA_DIR, PROJECTS_DIR, CONTENTS_DIR } = directoriesPkg
 const {
   LOOKBOOKS_IMAGES_FILENAME,
   PREVIEW_IMAGES_FILENAME,
@@ -29,10 +29,10 @@ class ImageListsGenerator {
     DATA_DIR,
     'images',
   )
-  private readonly PROJECTS_DATA_DIR = path.join(
+  private readonly PROJECTS_CONTENTS_DIR = path.join(
     getRepositoryRootDir(),
     'src',
-    DATA_DIR,
+    CONTENTS_DIR,
     PROJECTS_DIR,
   )
 
@@ -111,7 +111,10 @@ class ImageListsGenerator {
     const logoImages: LogoImages = {
       horizontal: this.imageAssetFromFileObject(horizontalLogoFileObject),
     }
-    await this.writeImagesJson(logoImages, 'logos.json')
+    await this.writeJson(
+      logoImages,
+      path.join(this.IMAGES_DATA_DIR, 'logos.json'),
+    )
     Log.ok('Done')
     Log.groupEnd()
   }
@@ -119,15 +122,10 @@ class ImageListsGenerator {
   private async projects(): Promise<ReadonlyArray<FolderObject>> {
     const PROJECTS_PATH = 'projects'
     Log.group("Project directories (inside '%s')", PROJECTS_PATH)
-    const projectFileObjects = (
-      await this.imageKit.listFiles({
-        includeFolder: true,
-        path: PROJECTS_PATH,
-      })
-    ).map((projectFileObject) => ({
-      ...projectFileObject,
-      name: this.removeOrderPrefix(projectFileObject.name),
-    }))
+    const projectFileObjects = await this.imageKit.listFiles({
+      includeFolder: true,
+      path: PROJECTS_PATH,
+    })
     if (projectFileObjects.length === 0) {
       Log.error("No project directories found within path '%s'", PROJECTS_PATH)
       process.exit(1)
@@ -215,10 +213,11 @@ class ImageListsGenerator {
   }): Promise<void> {
     Log.group('Projects %s assets', name)
     for (const projectFolderObject of projectFolderObjects) {
+      const project = this.removeOrderPrefix(projectFolderObject.name)
       Log.info(
         "Finding %s of project '%s' ('%s')",
         name,
-        projectFolderObject.name,
+        project,
         projectFolderObject.folderPath,
       )
       const assetFileObjects = await this.imageKit.listFiles({
@@ -226,18 +225,12 @@ class ImageListsGenerator {
         sort: 'ASC_NAME',
       })
       if (assetFileObjects.length < 1) {
-        Log.warn("No %s found for project '%s'", name, projectFolderObject.name)
+        Log.warn("No %s found for project '%s'", name, project)
         continue
       }
       Log.item('Found %d assets', assetFileObjects.length)
-      const projectAssetsDirectory = await this.makeProjectDirectory(
-        projectFolderObject.name,
-      )
-      Log.item(
-        'Writing %s file %s',
-        name,
-        path.join(projectFolderObject.name, filename),
-      )
+      const projectAssetsDirectory = await this.makeProjectDirectory(project)
+      Log.item('Writing %s file %s', name, path.join(project, filename))
       const assetsFile = path.join(projectAssetsDirectory, filename)
       await this.writeJson(
         assetFileObjects.map(this.imageAssetFromFileObject),
@@ -259,19 +252,12 @@ class ImageListsGenerator {
     }
   }
 
-  private async writeImagesJson(json: object, filename: string): Promise<void> {
-    return writeFile(
-      path.join(this.IMAGES_DATA_DIR, filename),
-      JSON.stringify(json, null, 2),
-    )
-  }
-
   private async writeJson(json: object, filepath: string): Promise<void> {
     return writeFile(filepath, JSON.stringify(json, null, 2))
   }
 
   private async makeProjectDirectory(slug: string): Promise<string> {
-    const projectDirectory = path.join(this.PROJECTS_DATA_DIR, slug)
+    const projectDirectory = path.join(this.PROJECTS_CONTENTS_DIR, slug)
     await mkdir(projectDirectory, { recursive: true })
     return projectDirectory
   }
