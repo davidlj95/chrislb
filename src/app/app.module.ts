@@ -22,9 +22,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LookbooksComponent } from './project-page/lookbooks/lookbooks.component'
 import { LookbookComponent } from './project-page/lookbooks/lookbook/lookbook.component'
-import { TechMaterialComponent } from './project-page/tech-material/tech-material.component'
 import { ImageSwiperComponent } from './image-swiper/image-swiper.component'
-import { DesignBookComponent } from './project-page/design-book/design-book.component'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { HttpClientModule } from '@angular/common/http'
@@ -45,9 +43,7 @@ registerSwiper()
     NotFoundPageComponent,
     LookbooksComponent,
     LookbookComponent,
-    TechMaterialComponent,
     ImageSwiperComponent,
-    DesignBookComponent,
   ],
   imports: [
     BrowserModule,
