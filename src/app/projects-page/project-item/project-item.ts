@@ -13,6 +13,7 @@ export interface Project {
 
 export interface ProjectListItem extends Project {
   readonly previewImages?: ReadonlyArray<ImageAsset>
+  readonly hasContent: boolean
 }
 
 export interface Credit {

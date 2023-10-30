@@ -26,6 +26,7 @@ class ContentsGenerator {
       subdirectory: PROJECTS_DIR,
       subContentFilename: PREVIEW_IMAGES_FILENAME,
     })
+    await this.addHasContentToListFile(CONTENTS_DIR, PROJECTS_DIR)
     await this.addNamesToLookbooks()
   }
 
@@ -99,6 +100,39 @@ class ContentsGenerator {
     Log.groupEnd()
   }
 
+  private async addHasContentToListFile(
+    directory: string,
+    subdirectory: string,
+  ) {
+    Log.group('Add hasContent %s to %s/%s', directory, subdirectory)
+    const directoryPath = path.join(SRC_PATH, directory, subdirectory)
+    const contentFiles = await this.getFilesInDirectory(directoryPath)
+    const slugsAndHasContents = (await Promise.all(
+      contentFiles.map(async (contentFile) => {
+        const slug = path.basename(contentFile.name, CONTENTS_EXTENSION)
+        // noinspection UnnecessaryLocalVariableJS
+        const homonymDirectory = slug
+        const contentFiles = await this.getFilesInDirectory(
+          path.join(directoryPath, homonymDirectory),
+        )
+        return [slug, contentFiles.length > 0]
+      }),
+    )) as ReadonlyArray<[string, unknown]>
+    const hasContentBySlug = new Map(slugsAndHasContents)
+    const listJson = (await this.readListFile(
+      directory,
+      subdirectory,
+    )) as ReadonlyArray<{
+      slug: string
+      [key: string]: unknown
+    }>
+    listJson.forEach((item) => {
+      item['hasContent'] = hasContentBySlug.get(item.slug)
+    })
+    await this.writeListFile(directory, subdirectory, listJson)
+    Log.groupEnd()
+  }
+
   private async addNamesToLookbooks() {
     Log.group('Add names to lookbooks')
     Log.info('Reading lookbook names file')
@@ -139,12 +173,17 @@ class ContentsGenerator {
   private async getFilesInDirectory(
     directory: string,
   ): Promise<ReadonlyArray<Dirent>> {
-    const files = (await readdir(directory, { withFileTypes: true })).filter(
-      (dirent) => dirent.isFile() && dirent.name.endsWith(CONTENTS_EXTENSION),
-    )
-    Log.info('Found %d JSON files', files.length)
-    files.forEach((file) => Log.item(file.name))
-    return files
+    try {
+      const files = (await readdir(directory, { withFileTypes: true })).filter(
+        (dirent) => dirent.isFile() && dirent.name.endsWith(CONTENTS_EXTENSION),
+      )
+      Log.info('Found %d JSON files', files.length)
+      files.forEach((file) => Log.item(file.name))
+      return files
+    } catch {
+      Log.warn("Directory not found '%s'", directory)
+      return []
+    }
   }
 
   private async writeListFile(
