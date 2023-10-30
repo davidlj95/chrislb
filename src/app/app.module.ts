@@ -14,7 +14,7 @@ import {
 import { LogoComponent } from './logo/logo.component'
 import { register as registerSwiper } from 'swiper/element/bundle'
 import { SwiperDirective } from './images-swiper/swiper.directive'
-import { IMAGEKIT_URL } from '../data/images/config' // There's no fancier way to install Web Components in Angular :P
+import { IMAGEKIT_URL } from './common/images/cdn-config'
 import { SeoModule } from '@ngaox/seo'
 import defaultMetadata from '../data/metadata/default.json'
 import { ProjectPageComponent } from './project-page/project-page.component'

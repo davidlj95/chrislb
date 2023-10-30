@@ -1,4 +1,4 @@
-import { ImageAsset } from '../../../data/images/types'
+import { ImageAsset } from '../../common/images/types'
 
 export interface Project {
   readonly slug: string

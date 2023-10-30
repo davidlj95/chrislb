@@ -2,8 +2,8 @@ import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
 import { mkdir } from 'fs/promises'
-import imagesConfigPkg from '../../src/data/images/config.js'
-import { ImageAsset, LogoImages } from '../../src/data/images/types.js'
+import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
+import { ImageAsset, LogoImages } from '../../src/app/common/images/types.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
@@ -13,7 +13,7 @@ import { Lookbook } from '../../src/app/project-page/lookbook.js'
 import filesPkg from '../../src/app/common/files.js'
 import { JsonFile } from './json-file.mjs'
 
-const { IMAGEKIT_URL } = imagesConfigPkg
+const { IMAGEKIT_URL } = imagesCdnConfigPkg
 const { DATA_DIR, PROJECTS_DIR, CONTENTS_DIR } = directoriesPkg
 const {
   LOOKBOOKS_IMAGES_FILENAME,
@@ -231,7 +231,6 @@ class ImageListsGenerator {
       await new JsonFile(assetsFile).write(
         assetFileObjects.map(this.imageAssetFromFileObject),
       )
-      break
     }
     Log.ok('Done')
     Log.groupEnd()
@@ -240,7 +239,11 @@ class ImageListsGenerator {
   private imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
     return {
       name: fileObject.name,
-      filePath: fileObject.filePath,
+      //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
+      filePath: fileObject.filePath
+        .split('/')
+        .map(encodeURIComponent)
+        .join('/'),
       height: fileObject.height,
       width: fileObject.width,
       alt: (fileObject.customMetadata as CustomMetadata)?.alt,

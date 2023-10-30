@@ -104,7 +104,7 @@ class ContentsGenerator {
     directory: string,
     subdirectory: string,
   ) {
-    Log.group('Add hasContent %s to %s/%s', directory, subdirectory)
+    Log.group('Add hasContent to %s/%s', directory, subdirectory)
     const directoryPath = path.join(SRC_PATH, directory, subdirectory)
     const contentFiles = await this.getFilesInDirectory(directoryPath)
     const slugsAndHasContents = (await Promise.all(
@@ -115,7 +115,12 @@ class ContentsGenerator {
         const contentFiles = await this.getFilesInDirectory(
           path.join(directoryPath, homonymDirectory),
         )
-        return [slug, contentFiles.length > 0]
+        return [
+          slug,
+          contentFiles.filter(
+            (contentFile) => contentFile.name !== PREVIEW_IMAGES_FILENAME,
+          ).length > 0,
+        ]
       }),
     )) as ReadonlyArray<[string, unknown]>
     const hasContentBySlug = new Map(slugsAndHasContents)

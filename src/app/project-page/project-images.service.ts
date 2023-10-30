@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ImageAsset } from '../../data/images/types'
+import { ImageAsset } from '../common/images/types'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
 

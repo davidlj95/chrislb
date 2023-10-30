@@ -9,6 +9,7 @@ import { ProjectListItem } from './project-item/project-item'
 })
 export class ProjectsPageComponent {
   public readonly projects: Promise<ReadonlyArray<ProjectListItem>>
+  protected readonly MAX_PROJECTS_PER_PAGE = 2
 
   constructor(projectsService: ProjectsService) {
     this.projects = projectsService.getAll()

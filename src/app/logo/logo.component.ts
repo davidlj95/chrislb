@@ -1,5 +1,5 @@
 import { Component, Inject, InjectionToken } from '@angular/core'
-import { LogoImages } from '../../data/images/types'
+import { LogoImages } from '../common/images/types'
 import logoImages from '../../data/images/logos.json'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
 import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
