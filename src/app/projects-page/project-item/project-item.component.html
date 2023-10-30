@@ -15,6 +15,7 @@
     <div class="description" [innerHtml]="_item.description"></div>
   </div>
   <app-images-swiper
+    *ngIf="_item.previewImages && _item.previewImages.length"
     [images]="_item.previewImages"
     sizes="calc(50vw - 16px), 33.33vw"
     [srcSet]="srcSet"
@@ -22,7 +23,7 @@
     [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
   ></app-images-swiper>
 </div>
-<div class="credits" *ngIf="credits.length">
+<div class="credits" *ngIf="credits && credits.length">
   <ng-container *ngFor="let credit of credits">
     <span *ngIf="credit.author">
       {{ credit.role }}: {{ credit.author.name }}

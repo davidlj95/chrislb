@@ -1,8 +1,20 @@
 @use 'page';
+@use 'margins';
 
 :host {
   @include page.padding;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: margins.$l;
+
+  app-project-item {
+    flex: 1;
+
+    &.has-preview-images {
+      flex: unset;
+      max-width: 100%;
+    }
+  }
 }
