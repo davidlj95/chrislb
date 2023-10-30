@@ -15,7 +15,7 @@ export class ProjectItemComponent {
   @Input({ required: true })
   public set item(item: ProjectListItem) {
     this._item = item
-    this.credits = item.credits.map((credit) => ({
+    this.credits = item.credits?.map((credit) => ({
       ...credit,
       author: this.authorsService.bySlug(credit.authorSlug),
     }))
@@ -31,7 +31,7 @@ export class ProjectItemComponent {
       this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 3,
     )
     .toSrcSet()
-  public credits!: ReadonlyArray<CreditItem>
+  public credits?: ReadonlyArray<CreditItem>
   protected readonly PROJECTS_PATH = PROJECTS_PATH
 
   constructor(

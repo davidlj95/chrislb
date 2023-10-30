@@ -28,7 +28,6 @@
   .texts {
     display: flex;
     flex-direction: column;
-    width: $texts-width-big-screen;
   }
 
   app-images-swiper {
@@ -45,7 +44,6 @@
     }
 
     .texts {
-      width: unset;
       order: 2;
     }
 
