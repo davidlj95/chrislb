@@ -8,6 +8,10 @@
   @include page.padding;
   gap: margins.$m;
 
+  h2 {
+    text-align: center;
+  }
+
   .material-and-book {
     display: flex;
     gap: margins.$m;

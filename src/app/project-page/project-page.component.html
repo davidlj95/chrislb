@@ -1,5 +1,21 @@
-<app-lookbooks [slug]="slug"></app-lookbooks>
+<app-lookbooks [slug]="_slug"></app-lookbooks>
 <div class="material-and-book">
-  <app-tech-material [slug]="slug"></app-tech-material>
-  <app-design-book [slug]="slug"></app-design-book>
+  <div class="tech-material">
+    <h2>Tech material</h2>
+    <app-image-swiper
+      [images]="techMaterialImages | async"
+      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+      [sizes]="HALF_SCREEN_SWIPER.sizes"
+      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+    ></app-image-swiper>
+  </div>
+  <div class="design-book">
+    <h2>Design book</h2>
+    <app-image-swiper
+      [images]="designBookImages | async"
+      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+      [sizes]="HALF_SCREEN_SWIPER.sizes"
+      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+    ></app-image-swiper>
+  </div>
 </div>
