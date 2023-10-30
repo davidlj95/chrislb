@@ -42,7 +42,9 @@ class ImageListsGenerator {
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
     if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY) {
       Log.error('Either ImageKit URL, public key or private key is missing')
-      Log.error('Add them to the .env file and try again')
+      Log.error(
+        'Add them to the .env file or as environment variables and try again',
+      )
       process.exit(1)
     }
 
