@@ -5,6 +5,7 @@ prebuild:
 
 build: prebuild
 	npm run prerender
+	npm run postbuild
 
 install:
   # So @ngaox/seo installs (declares peer dep of Angular 15)
