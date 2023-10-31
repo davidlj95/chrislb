@@ -14,10 +14,13 @@ const { CONTENTS_DIR, PROJECTS_DIR, DATA_DIR } = directoriesPkg
 const { getListFilename, LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } =
   filesPkg
 
-const SRC_PATH = path.join(getRepositoryRootDir(), 'src')
-const CONTENTS_EXTENSION = '.json'
+export class ContentsGenerator {
+  readonly SRC_PATH = path.join(getRepositoryRootDir(), 'src')
+  readonly CONTENTS_EXTENSION = '.json'
+  public static readonly PROJECTS_CONTENT_DETAIL_EXCEPTIONS = [
+    PREVIEW_IMAGES_FILENAME,
+  ]
 
-class ContentsGenerator {
   async all() {
     await this.listFromDirectoryWithJsons(CONTENTS_DIR, PROJECTS_DIR)
     await this.listFromDirectoryWithJsons(DATA_DIR, 'authors')
@@ -35,7 +38,7 @@ class ContentsGenerator {
     subdirectory: string,
   ) {
     Log.group('List of %s in %s', subdirectory, directory)
-    const directoryPath = path.join(SRC_PATH, directory, subdirectory)
+    const directoryPath = path.join(this.SRC_PATH, directory, subdirectory)
     const files = await this.getFilesInDirectory(directoryPath)
     Log.info('Reading contents from each file')
     const jsons = await Promise.all(
@@ -47,7 +50,7 @@ class ContentsGenerator {
           slug: string | undefined
         }
         if (!json.slug) {
-          json.slug = path.basename(file.name, CONTENTS_EXTENSION)
+          json.slug = path.basename(file.name, this.CONTENTS_EXTENSION)
         }
         return json
       }),
@@ -66,12 +69,12 @@ class ContentsGenerator {
     subContentFilename: string
   }) {
     Log.group('Add %s to %s/%s', subContentFilename, directory, subdirectory)
-    const directoryPath = path.join(SRC_PATH, directory, subdirectory)
+    const directoryPath = path.join(this.SRC_PATH, directory, subdirectory)
     const contentFiles = await this.getFilesInDirectory(directoryPath)
     Log.info('Reading content from each file homonym directory')
     const slugsAndContents = (await Promise.all(
       contentFiles.map(async (contentFile) => {
-        const slug = path.basename(contentFile.name, CONTENTS_EXTENSION)
+        const slug = path.basename(contentFile.name, this.CONTENTS_EXTENSION)
         // noinspection UnnecessaryLocalVariableJS
         const homonymDirectory = slug
         const subContentFile = path.join(
@@ -93,7 +96,9 @@ class ContentsGenerator {
     }>
     listJson.forEach((item) => {
       item[
-        this.camelize(path.basename(subContentFilename, CONTENTS_EXTENSION))
+        this.camelize(
+          path.basename(subContentFilename, this.CONTENTS_EXTENSION),
+        )
       ] = contentsBySlug.get(item.slug)
     })
     await this.writeListFile(directory, subdirectory, listJson)
@@ -105,11 +110,11 @@ class ContentsGenerator {
     subdirectory: string,
   ) {
     Log.group('Add hasContent to %s/%s', directory, subdirectory)
-    const directoryPath = path.join(SRC_PATH, directory, subdirectory)
+    const directoryPath = path.join(this.SRC_PATH, directory, subdirectory)
     const contentFiles = await this.getFilesInDirectory(directoryPath)
     const slugsAndHasContents = (await Promise.all(
       contentFiles.map(async (contentFile) => {
-        const slug = path.basename(contentFile.name, CONTENTS_EXTENSION)
+        const slug = path.basename(contentFile.name, this.CONTENTS_EXTENSION)
         // noinspection UnnecessaryLocalVariableJS
         const homonymDirectory = slug
         const contentFiles = await this.getFilesInDirectory(
@@ -118,7 +123,10 @@ class ContentsGenerator {
         return [
           slug,
           contentFiles.filter(
-            (contentFile) => contentFile.name !== PREVIEW_IMAGES_FILENAME,
+            (contentFile) =>
+              !ContentsGenerator.PROJECTS_CONTENT_DETAIL_EXCEPTIONS.includes(
+                contentFile.name,
+              ),
           ).length > 0,
         ]
       }),
@@ -144,14 +152,14 @@ class ContentsGenerator {
     const lookbookNamesBySlug = new Map(
       lookbookNamesAndSlugs.namesBySlug.map(({ slug, name }) => [slug, name]),
     )
-    const directoryPath = path.join(SRC_PATH, CONTENTS_DIR, PROJECTS_DIR)
+    const directoryPath = path.join(this.SRC_PATH, CONTENTS_DIR, PROJECTS_DIR)
     const contentFiles = await this.getFilesInDirectory(directoryPath)
     Log.info("Adding lookbook names to each project's lookbooks")
     await Promise.all(
       contentFiles.map(async (contentFile) => {
         Log.item(contentFile.name)
         // noinspection UnnecessaryLocalVariableJS
-        const slug = path.basename(contentFile.name, CONTENTS_EXTENSION)
+        const slug = path.basename(contentFile.name, this.CONTENTS_EXTENSION)
         // noinspection UnnecessaryLocalVariableJS
         const homonymDirectory = slug
         const lookbookFilename = path.join(
@@ -180,7 +188,8 @@ class ContentsGenerator {
   ): Promise<ReadonlyArray<Dirent>> {
     try {
       const files = (await readdir(directory, { withFileTypes: true })).filter(
-        (dirent) => dirent.isFile() && dirent.name.endsWith(CONTENTS_EXTENSION),
+        (dirent) =>
+          dirent.isFile() && dirent.name.endsWith(this.CONTENTS_EXTENSION),
       )
       Log.info('Found %d JSON files', files.length)
       files.forEach((file) => Log.item(file.name))
@@ -213,7 +222,7 @@ class ContentsGenerator {
   }
 
   private getListFilePath(directory: string, listFilename: string): string {
-    return path.join(SRC_PATH, directory, listFilename)
+    return path.join(this.SRC_PATH, directory, listFilename)
   }
 
   private camelize(s: string) {
