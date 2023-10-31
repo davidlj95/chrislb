@@ -32,12 +32,13 @@
 
   .material-and-book {
     display: flex;
-    gap: margins.$m;
+    $margin: margins.$m;
+    gap: $margin;
     max-width: 100%;
+    justify-content: center;
 
     > * {
-      $marginM: margins.$m;
-      width: calc((100% - $marginM) / 2);
+      width: calc((100% - $margin) / 2);
     }
 
     @include breakpoints.until-s {
