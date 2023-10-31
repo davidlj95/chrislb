@@ -7,6 +7,7 @@ import { Project } from '../projects-page/project-item/project-item'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ProjectImagesService } from './project-images.service'
+import { of } from 'rxjs'
 
 describe('ProjectPageComponent', () => {
   let component: ProjectPageComponent
@@ -25,13 +26,13 @@ describe('ProjectPageComponent', () => {
           },
         }),
         MockProvider(ProjectLookbooksService, {
-          async bySlug() {
-            return []
+          bySlug() {
+            return of([])
           },
         }),
         MockProvider(ProjectImagesService, {
-          async bySlugAndFilename() {
-            return []
+          bySlugAndFilename() {
+            return of([])
           },
         }),
       ],

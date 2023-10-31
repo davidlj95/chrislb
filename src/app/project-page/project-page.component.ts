@@ -2,7 +2,16 @@ import { Component, Input } from '@angular/core'
 import { ProjectsService } from '../projects-page/projects.service'
 import { displayNotFound } from '../common/navigation'
 import { Router } from '@angular/router'
-import { noop } from 'rxjs'
+import {
+  catchError,
+  EMPTY,
+  finalize,
+  map,
+  merge,
+  noop,
+  Observable,
+  tap,
+} from 'rxjs'
 import { SeoService } from '@ngaox/seo'
 import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../routes'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
@@ -24,7 +33,6 @@ import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoin
 export class ProjectPageComponent {
   @Input({ required: true })
   public set slug(slug: string) {
-    this._slug = slug
     this.projectsService.bySlug(slug).then((projectItem) => {
       this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
       if (!projectItem) {
@@ -34,23 +42,45 @@ export class ProjectPageComponent {
       this.seo.setTitle(getTitle(projectItem.title))
       this.seo.setDescription(projectItem.description)
     })
-    this.lookbooks = this.projectLookbooksService.bySlug(slug)
-    this.techMaterialImages = this.projectsImagesService.bySlugAndFilename(
-      slug,
-      TECH_MATERIAL_IMAGES_FILENAME,
-    )
-    this.designBookImages = this.projectsImagesService.bySlugAndFilename(
-      slug,
-      DESIGN_BOOK_IMAGES_FILENAME,
+    this.data$ = merge(
+      this.projectLookbooksService.bySlug(slug).pipe(
+        map((lookbooks) => ({ ...this.lastData, lookbooks })),
+        catchError(() => EMPTY),
+      ),
+      this.projectsImagesService
+        .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
+        .pipe(
+          map((techMaterialImages) => ({
+            ...this.lastData,
+            techMaterialImages,
+          })),
+          catchError(() => EMPTY),
+        ),
+      this.projectsImagesService
+        .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
+        .pipe(
+          map((designBookImages) => ({ ...this.lastData, designBookImages })),
+          catchError(() => EMPTY),
+        ),
+    ).pipe(
+      tap((data) => {
+        this.lastData = data
+      }),
+      finalize(() => {
+        if (
+          !this.lastData?.lookbooks?.length &&
+          !this.lastData?.techMaterialImages?.length &&
+          !this.lastData?.designBookImages?.length
+        ) {
+          displayNotFound(this.router).then(noop)
+        }
+      }),
     )
   }
 
-  protected _slug!: string
-
-  public lookbooks!: Promise<ReadonlyArray<Lookbook>>
+  public data$!: Observable<ViewModel>
+  private lastData?: ViewModel
   protected readonly MAX_LOOKBOOKS_PER_VIEWPORT = 2
-  public techMaterialImages!: Promise<ReadonlyArray<ImageAsset>>
-  public designBookImages!: Promise<ReadonlyArray<ImageAsset>>
   public readonly HALF_SCREEN_SWIPER = {
     customSwiperOptions: {
       slidesPerView: 1,
@@ -90,4 +120,10 @@ export class ProjectPageComponent {
     private projectsImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
   ) {}
+}
+
+interface ViewModel {
+  readonly lookbooks?: ReadonlyArray<Lookbook>
+  readonly techMaterialImages?: ReadonlyArray<ImageAsset>
+  readonly designBookImages?: ReadonlyArray<ImageAsset>
 }

@@ -1,39 +1,50 @@
-<div class="lookbooks">
+<ng-container *ngIf="data$ | async as data">
+  <div class="lookbooks" *ngIf="data.lookbooks?.length">
+    <div
+      class="lookbook"
+      *ngFor="let lookbook of data.lookbooks; index as index"
+    >
+      <h2>
+        Look {{ index + 1 }}
+        <ng-container *ngIf="lookbook.name">"{{ lookbook.name }}"</ng-container>
+      </h2>
+      <app-images-swiper
+        [images]="lookbook.images"
+        [srcSet]="LOOKBOOK_SWIPER.srcSet"
+        [sizes]="LOOKBOOK_SWIPER.sizes"
+        [priority]="index < MAX_LOOKBOOKS_PER_VIEWPORT"
+        [customSwiperOptions]="LOOKBOOK_SWIPER.customSwiperOptions"
+        [style.max-width]="LOOKBOOK_MAX_WIDTH_PX + 'px'"
+      ></app-images-swiper>
+    </div>
+  </div>
   <div
-    class="lookbook"
-    *ngFor="let lookbook of lookbooks | async; index as index"
+    class="material-and-book"
+    *ngIf="data.techMaterialImages?.length || data.designBookImages?.length"
   >
-    <h2>
-      Look {{ index + 1 }}
-      <ng-container *ngIf="lookbook.name">"{{ lookbook.name }}"</ng-container>
-    </h2>
-    <app-images-swiper
-      [images]="lookbook.images"
-      [srcSet]="LOOKBOOK_SWIPER.srcSet"
-      [sizes]="LOOKBOOK_SWIPER.sizes"
-      [priority]="index < MAX_LOOKBOOKS_PER_VIEWPORT"
-      [customSwiperOptions]="LOOKBOOK_SWIPER.customSwiperOptions"
-      [style.max-width]="LOOKBOOK_MAX_WIDTH_PX + 'px'"
-    ></app-images-swiper>
+    <div
+      class="tech-material"
+      *ngIf="data.techMaterialImages && data.techMaterialImages.length"
+    >
+      <h2>Tech material</h2>
+      <app-images-swiper
+        [images]="data.techMaterialImages"
+        [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+        [sizes]="HALF_SCREEN_SWIPER.sizes"
+        [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+      ></app-images-swiper>
+    </div>
+    <div
+      class="design-book"
+      *ngIf="data.designBookImages && data.designBookImages.length"
+    >
+      <h2>Design book</h2>
+      <app-images-swiper
+        [images]="data.designBookImages"
+        [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+        [sizes]="HALF_SCREEN_SWIPER.sizes"
+        [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+      ></app-images-swiper>
+    </div>
   </div>
-</div>
-<div class="material-and-book">
-  <div class="tech-material">
-    <h2>Tech material</h2>
-    <app-images-swiper
-      [images]="techMaterialImages | async"
-      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
-      [sizes]="HALF_SCREEN_SWIPER.sizes"
-      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
-    ></app-images-swiper>
-  </div>
-  <div class="design-book">
-    <h2>Design book</h2>
-    <app-images-swiper
-      [images]="designBookImages | async"
-      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
-      [sizes]="HALF_SCREEN_SWIPER.sizes"
-      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
-    ></app-images-swiper>
-  </div>
-</div>
+</ng-container>

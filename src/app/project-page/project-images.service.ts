@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { ImageAsset } from '../common/images/types'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
+import { from, Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,13 @@ export class ProjectImagesService {
   bySlugAndFilename(
     slug: string,
     filename: string,
-  ): Promise<ReadonlyArray<ImageAsset>> {
-    return this.jsonFetcher.fetch(PROJECTS_DIR, slug, filename)
+  ): Observable<ReadonlyArray<ImageAsset>> {
+    return from(
+      this.jsonFetcher.fetch<ReadonlyArray<ImageAsset>>(
+        PROJECTS_DIR,
+        slug,
+        filename,
+      ),
+    )
   }
 }
