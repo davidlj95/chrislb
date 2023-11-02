@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AboutPageComponent } from './about-page/about-page.component'
 import { SocialComponent } from './about-page/social/social.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { ResumeComponent } from './about-page/resume/resume.component'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -45,6 +46,7 @@ registerSwiper()
     ImagesSwiperComponent,
     AboutPageComponent,
     SocialComponent,
+    ResumeComponent,
   ],
   imports: [
     BrowserModule,
