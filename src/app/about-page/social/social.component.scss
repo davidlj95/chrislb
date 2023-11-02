@@ -1,0 +1,18 @@
+@use 'margins';
+
+:host {
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: margins.$m;
+  }
+
+  li {
+    height: 32px;
+
+    fa-icon {
+      // To take 32px height
+      font-size: 26.5px;
+    }
+  }
+}

@@ -25,6 +25,8 @@ import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { HttpClientModule } from '@angular/common/http'
 import { AboutPageComponent } from './about-page/about-page.component'
+import { SocialComponent } from './about-page/social/social.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -42,6 +44,7 @@ registerSwiper()
     NotFoundPageComponent,
     ImagesSwiperComponent,
     AboutPageComponent,
+    SocialComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ registerSwiper()
     NgOptimizedImage,
     BrowserAnimationsModule,
     HttpClientModule,
+    FontAwesomeModule,
     SeoModule.forRoot({
       type: 'website',
       twitter: {

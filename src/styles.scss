@@ -20,12 +20,10 @@ body {
   background-color: theme.$background;
 }
 
-main,
-app-logo {
-  @include anchors.theme;
-}
+@include anchors.theme;
 
-a {
-  color: inherit;
-  text-decoration-line: none;
+fa-icon {
+  svg {
+    height: 100% !important;
+  }
 }
