@@ -1,7 +1,7 @@
 @use 'paddings';
 @use 'typographies';
 
-$font-size: typographies.size(0);
+$font-size: typographies.size(3);
 $height-line: calc($font-size + 3px);
 $padding-vertical: paddings.$m;
 $height: calc($height-line + $padding-vertical * 2);

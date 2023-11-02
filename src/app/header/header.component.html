@@ -1,9 +1,11 @@
 <header>
   <nav>
     <ul>
-      <li>Contact</li>
-      <li><a routerLink="/">Projects</a></li>
-      <li><a [routerLink]="['/', ABOUT_PATH]">About me</a></li>
+      <li *ngFor="let item of items">
+        <a [routerLink]="item.path">
+          {{ item.displayName }}
+        </a>
+      </li>
     </ul>
   </nav>
 </header>
