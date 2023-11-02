@@ -37,7 +37,7 @@ field_definitions:
       widget: 'string'
       pattern:
         [
-          '^[a-z0-9-]+$',
+          '^[a-z0-9-._]+$',
           'Must have at least 1 character. Must contain only lowercase alphabetic characters, numbers and hyphens (-)',
         ]
   - url: &url
@@ -49,6 +49,15 @@ field_definitions:
       label: 'Name'
       name: 'name'
       widget: 'string'
+  - username: &username
+      label: 'Username'
+      name: 'username'
+      widget: 'string'
+      pattern:
+        [
+          '^[^@]*+',
+          'Must have at least 1 character. Must not start with @ (will be added automagically if needed 🪄)',
+        ]
 collections:
   - name: 'pages'
     label: 'Pages'
@@ -166,15 +175,21 @@ collections:
         name: 'social'
         widget: 'object'
         fields:
-          - label: 'Instagram'
+          - <<: *username
+            label: 'Instagram'
             name: 'instagram'
-            widget: 'string'
-            pattern:
-              [
-                '^[^@]*+',
-                'Must have at least 1 character. Must not start with @ (will be added automagically 🪄)',
-              ]
-            hint: 'Links to instagram profile. Without the @ at the beginning'
+            hint: 'Used to link to Instagram profile (https://instagram.com/_u/<username>). To change yours: https://help.instagram.com/583107688369069'
+            required: false
+          - <<: *username
+            label: 'LinkedIn'
+            name: 'linkedin'
+            required: false
+            hint: 'Used to link to LinkedIn profile (https://linkedin.com/in/<username>). To create yours: https://www.linkedin.com/help/linkedin/answer/a542685'
+          - <<: *username
+            label: 'TikTok'
+            name: 'tiktok'
+            required: false
+            hint: 'Used to link to TikTok profile (https://tiktok.com/@<username>). To change yours: https://support.tiktok.com/en/getting-started/setting-up-your-profile/changing-your-username'
   - name: 'misc'
     label: 'Miscellaneous'
     files:
@@ -207,6 +222,7 @@ collections:
       - label: 'About page'
         name: 'about'
         file: 'src/data/misc/about.json'
+        preview_path: 'about'
         fields:
           - label: 'Title'
             name: 'title'
