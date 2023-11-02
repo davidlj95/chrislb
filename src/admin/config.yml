@@ -192,13 +192,27 @@ collections:
             value: 'male'
           - label: 'Female'
             value: 'female'
-      - <<: *username
-        required: false
-        hint: 'Will only be used for main website author metadata. More info: https://ogp.me/#type_profile'
       - label: 'Social'
         name: 'social'
         widget: 'object'
         fields:
+          - label: 'Main social network'
+            name: 'mainName'
+            hint: 'Will be used in credits. If unset, defaults to default social network preference (currently being first Instagram, then LinkedIn or finally TikTok)'
+            required: false
+            widget: 'select'
+            options:
+              - label: 'Instagram'
+                value: 'instagram'
+              - label: 'LinkedIn'
+                value: 'linkedin'
+              - label: 'TikTok'
+                value: 'tiktok'
+          - <<: *username
+            label: 'Main username'
+            name: 'mainUsername'
+            required: false
+            hint: 'Will only be used for main website author metadata. More info: https://ogp.me/#type_profile'
           - <<: *username
             label: 'Instagram'
             name: 'instagram'

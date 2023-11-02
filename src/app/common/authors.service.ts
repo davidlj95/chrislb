@@ -8,7 +8,7 @@ import christianLazaro from '../../data/authors/christian-lazaro.json'
 export class AuthorsService {
   private authorBySlug: Map<string, Author>
 
-  constructor(@Inject(AUTHORS_JSON) authorsJson: Authors) {
+  constructor(@Inject(AUTHORS_JSON) authorsJson: typeof authors) {
     this.authorBySlug = new Map(
       authorsJson.map((author) => [author.slug, author]),
     )
@@ -23,8 +23,23 @@ export class AuthorsService {
   }
 }
 
-export const AUTHORS_JSON = new InjectionToken('Authors list JSON', {
-  factory: () => authors,
-})
-export type Authors = typeof authors
-export type Author = Omit<Authors[number], 'slug'>
+export const AUTHORS_JSON = new InjectionToken<typeof authors>(
+  'Authors list JSON',
+  {
+    factory: () => authors,
+  },
+)
+export type Author = {
+  slug?: string
+  firstName: string
+  lastName: string
+  gender?: string
+  username?: string
+  social?: {
+    mainName?: string | null
+    mainUsername?: string
+    instagram?: string
+    linkedin?: string
+    tiktok?: string
+  }
+}

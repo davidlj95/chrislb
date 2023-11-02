@@ -4,6 +4,8 @@ import { SwiperOptions } from 'swiper/types'
 import { PROJECTS_PATH } from '../../routes'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
 import { Author, AuthorsService } from '../../common/authors.service'
+import { Social } from '../../about-page/social/social'
+import { SocialService } from '../../about-page/social/social.service'
 
 @Component({
   selector: 'app-project-item',
@@ -15,10 +17,15 @@ export class ProjectItemComponent {
   @Input({ required: true })
   public set item(item: ProjectListItem) {
     this._item = item
-    this.credits = item.credits?.map((credit) => ({
-      ...credit,
-      author: this.authorsService.bySlug(credit.authorSlug),
-    }))
+    this.credits = item.credits?.map((credit) => {
+      const author = this.authorsService.bySlug(credit.authorSlug)
+      const social = author ? this.socialService.getMain(author) : undefined
+      return {
+        ...credit,
+        author,
+        social,
+      }
+    })
   }
 
   @Input() public priority?: boolean
@@ -37,9 +44,11 @@ export class ProjectItemComponent {
   constructor(
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
     private authorsService: AuthorsService,
+    private socialService: SocialService,
   ) {}
 }
 
 type CreditItem = Omit<Credit, 'authorSlug'> & {
   author: Author | undefined
+  social: Social | undefined
 }
