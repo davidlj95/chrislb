@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import {
   ABOUT_PATH,
+  addOpenGraphProfileMetadataFromAuthor,
   getMetadataFromJson,
   makeRouteMetadadata,
   NOT_FOUND_PATH,
@@ -14,6 +15,7 @@ import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
 import { AboutPageComponent } from './about-page/about-page.component'
 import aboutPageMetadata from '../data/pages/about.json'
+import christianLazaro from '../data/authors/christian-lazaro.json'
 
 @NgModule({
   imports: [
@@ -36,7 +38,14 @@ import aboutPageMetadata from '../data/pages/about.json'
         {
           path: ABOUT_PATH,
           component: AboutPageComponent,
-          data: makeRouteMetadadata(aboutPageMetadata),
+          data: {
+            NgaoxSeo: {
+              ...addOpenGraphProfileMetadataFromAuthor(
+                getMetadataFromJson(aboutPageMetadata),
+                christianLazaro,
+              ),
+            },
+          },
         },
         {
           path: NOT_FOUND_PATH,

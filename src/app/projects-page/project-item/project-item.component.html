@@ -28,7 +28,10 @@
 <div class="credits" *ngIf="credits && credits.length">
   <ng-container *ngFor="let credit of credits">
     <span *ngIf="credit.author">
-      {{ credit.role }}: {{ credit.author.name }}
+      {{ credit.role }}: {{ credit.author.firstName }}
+      <ng-container *ngIf="credit.author.lastName">
+        {{ credit.author.lastName }}
+      </ng-container>
       <span class="anchor"
         >(<a
           href="https://instagram.com/_u/{{ credit.author.social.instagram }}"
