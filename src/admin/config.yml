@@ -50,23 +50,6 @@ field_definitions:
       name: 'name'
       widget: 'string'
 collections:
-  - name: 'metadata'
-    label: 'Metadata'
-    files:
-      - label: 'Default'
-        name: 'default'
-        file: 'src/data/metadata/default.json'
-        fields:
-          - label: 'Site name'
-            name: 'siteName'
-            widget: 'string'
-            hint: 'This will appear in page titles in browser tabs / windows. Including the page title. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro"'
-          - label: 'Author'
-            name: 'author'
-            widget: 'string'
-          - <<: *url
-            label: 'Canonical URL'
-            name: 'canonicalUrl'
   - name: 'pages'
     label: 'Pages'
     # 👇 Apparently only used in commit messages / PR titles
@@ -192,12 +175,26 @@ collections:
                 'Must have at least 1 character. Must not start with @ (will be added automagically 🪄)',
               ]
             hint: 'Links to instagram profile. Without the @ at the beginning'
-  - name: 'lookbooks'
-    label: 'Lookbooks'
+  - name: 'misc'
+    label: 'Miscellaneous'
     files:
-      - label: 'Names by slug'
+      - label: 'Default metadata'
+        name: 'metadata'
+        file: 'src/data/misc/metadata.json'
+        fields:
+          - label: 'Site name'
+            name: 'siteName'
+            widget: 'string'
+            hint: 'This will appear in page titles in browser tabs / windows. Including the page title. Something like: "<Page title> - <Site name>". For instance: "About | Christian Lazaro"'
+          - label: 'Author'
+            name: 'author'
+            widget: 'string'
+          - <<: *url
+            label: 'Canonical URL'
+            name: 'canonicalUrl'
+      - label: 'Lookbook names by slug'
         name: 'names-by-slug'
-        file: 'src/data/lookbooks/names-by-slug.json'
+        file: 'src/data/misc/lookbook-names-by-slug.json'
         fields:
           - label: 'Names by slug'
             name: 'namesBySlug'
@@ -207,3 +204,13 @@ collections:
             fields:
               - *slug
               - *name
+      - label: 'About page'
+        name: 'about'
+        file: 'src/data/misc/about.json'
+        fields:
+          - label: 'Title'
+            name: 'title'
+            widget: 'string'
+          - label: 'Text'
+            name: 'text'
+            widget: 'text'

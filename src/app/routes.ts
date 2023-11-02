@@ -1,10 +1,12 @@
 import { IPageSeoData } from '@ngaox/seo'
-import defaultMetadata from '../data/metadata/default.json'
+import defaultMetadata from '../data/misc/metadata.json'
 import notFoundPageMetadata from '../data/pages/404.json'
 import projectsPageMetadata from '../data/pages/projects.json'
+import aboutPageMetadata from '../data/pages/about.json'
 
 export const PROJECTS_PATH = projectsPageMetadata.slug
 export const NOT_FOUND_PATH = notFoundPageMetadata.slug
+export const ABOUT_PATH = aboutPageMetadata.slug
 
 type RouteData = {
   NgaoxSeo?: IPageSeoData

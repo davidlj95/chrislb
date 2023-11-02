@@ -1,0 +1,36 @@
+@use 'breakpoints';
+@use 'page';
+@use 'typographies';
+@use 'margins';
+@use 'content';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  @include page.padding;
+  gap: margins.$m;
+  align-items: center;
+
+  .contents {
+    display: flex;
+    justify-content: space-around;
+    max-width: 900px;
+    gap: margins.$m;
+  }
+
+  h1 {
+    @include typographies.size(7);
+    @include typographies.bold;
+  }
+
+  p {
+    white-space: pre-wrap;
+    max-width: 55ch;
+  }
+
+  img {
+    width: 33.33vw;
+    object-fit: contain;
+    object-position: top;
+  }
+}

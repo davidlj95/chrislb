@@ -16,7 +16,16 @@ body {
   // Do not allow scroll "bounce" effect
   overscroll-behavior: none;
   @include typographies.body-family;
+  @include typographies.light;
   background-color: theme.$background;
 }
 
-@include anchors.theme;
+main,
+app-logo {
+  @include anchors.theme;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: none;
+}

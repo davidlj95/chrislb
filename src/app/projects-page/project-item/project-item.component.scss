@@ -1,6 +1,5 @@
 @use 'breakpoints';
-@use 'header';
-@use 'logo';
+@use 'content';
 @use 'margins';
 @use 'paddings';
 @use 'page';
@@ -17,12 +16,6 @@
     gap: margins.$l;
   }
 
-  $height-header: header.$height;
-  $height-logo: logo.$height;
-  $height-page-padding: page.$padding-vertical;
-  $height-before: calc(
-    $height-header + $height-logo + $height-page-padding * 2
-  );
   $texts-width-big-screen: 55ch;
 
   .texts {
@@ -30,11 +23,13 @@
     flex-direction: column;
   }
 
+  $available-height: content.$available-height;
+
   app-images-swiper {
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $texts-width-big-screen);
     $extra-space: 48px;
-    max-height: calc(100vh - $height-before - $extra-space);
+    max-height: calc($available-height - $extra-space);
   }
 
   @include breakpoints.until-s {
@@ -52,7 +47,7 @@
       order: 1;
 
       $extra-space: 128px;
-      max-height: calc(100vh - $height-before - $extra-space);
+      max-height: calc($available-height - $extra-space);
     }
   }
 
