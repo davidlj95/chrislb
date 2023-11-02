@@ -8,6 +8,18 @@
   @include page.padding;
   gap: margins.$m;
 
+  .videos {
+    display: flex;
+    flex-direction: column;
+    gap: margins.$m;
+    place-content: center;
+    align-items: center;
+
+    iframe {
+      max-width: 100%;
+    }
+  }
+
   h2 {
     text-align: center;
   }

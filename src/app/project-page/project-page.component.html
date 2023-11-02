@@ -1,4 +1,16 @@
 <ng-container *ngIf="data$ | async as data">
+  <div class="videos" *ngIf="youtubeIframeUrl">
+    <h2>Videos</h2>
+    <iframe
+      width="560"
+      height="315"
+      [attr.src]="youtubeIframeUrl"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
   <div class="lookbooks" *ngIf="data.lookbooks?.length">
     <div
       class="lookbook"

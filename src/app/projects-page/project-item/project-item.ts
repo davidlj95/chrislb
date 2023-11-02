@@ -7,6 +7,7 @@ export interface Project {
   readonly subtitle: string
   readonly quote?: string
   readonly description: string
+  readonly youtubePlaylistId?: string
   //👇 When hasn't been set, CMS doesn't set the property
   //   CMS sets it after though (if adding & removing)
   readonly credits?: readonly Credit[]
