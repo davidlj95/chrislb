@@ -22,11 +22,11 @@
       </h2>
       <app-images-swiper
         [images]="lookbook.images"
-        [srcSet]="LOOKBOOK_SWIPER.srcSet"
-        [sizes]="LOOKBOOK_SWIPER.sizes"
-        [priority]="index < MAX_LOOKBOOKS_PER_VIEWPORT"
-        [customSwiperOptions]="LOOKBOOK_SWIPER.customSwiperOptions"
-        [style.max-width]="LOOKBOOK_MAX_WIDTH_PX + 'px'"
+        [srcSet]="FULL_SCREEN_SWIPER.srcSet"
+        [sizes]="FULL_SCREEN_SWIPER.sizes"
+        [customSwiperOptions]="FULL_SCREEN_SWIPER.customSwiperOptions"
+        [style.max-width]="FULL_SCREEN_SWIPER_MAX_WIDTH + 'px'"
+        [priority]="index < MAX_SWIPERS_PER_VIEWPORT"
       ></app-images-swiper>
     </div>
   </div>
@@ -58,5 +58,18 @@
         [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
       ></app-images-swiper>
     </div>
+  </div>
+  <div
+    class="concept-images"
+    *ngIf="data.conceptImages && data.conceptImages.length"
+  >
+    <h2>Concept images</h2>
+    <app-images-swiper
+      [images]="data.conceptImages"
+      [srcSet]="FULL_SCREEN_SWIPER.srcSet"
+      [sizes]="FULL_SCREEN_SWIPER.sizes"
+      [customSwiperOptions]="FULL_SCREEN_SWIPER.customSwiperOptions"
+      [style.max-width]="FULL_SCREEN_SWIPER_MAX_WIDTH + 'px'"
+    ></app-images-swiper>
   </div>
 </ng-container>

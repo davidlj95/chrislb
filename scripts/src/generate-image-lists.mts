@@ -20,6 +20,7 @@ const {
   PREVIEW_IMAGES_FILENAME,
   TECH_MATERIAL_IMAGES_FILENAME,
   DESIGN_BOOK_IMAGES_FILENAME,
+  CONCEPT_IMAGES_FILENAME,
 } = filesPkg
 
 class ImageListsGenerator {
@@ -76,6 +77,12 @@ class ImageListsGenerator {
       directory: 'design-book',
       name: 'design book images',
       filename: DESIGN_BOOK_IMAGES_FILENAME,
+    })
+    await this.projectsDirectoryImageAssets({
+      projectFolderObjects: projects,
+      directory: 'concept',
+      name: 'concept images',
+      filename: CONCEPT_IMAGES_FILENAME,
     })
   }
 
