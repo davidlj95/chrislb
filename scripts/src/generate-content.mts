@@ -6,7 +6,7 @@ import path from 'path'
 import { Dirent } from 'fs'
 import directoriesPkg from '../../src/app/common/directories.js'
 import filesPkg from '../../src/app/common/files.js'
-import lookbookNamesAndSlugs from '../../src/data/lookbooks/names-by-slug.json' assert { type: 'json' }
+import lookbookNamesAndSlugs from '../../src/data/misc/lookbook-names-by-slug.json' assert { type: 'json' }
 import { Lookbook } from '../../src/app/project-page/lookbook.js'
 import { JsonFile } from './json-file.mjs'
 

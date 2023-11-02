@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import {
+  ABOUT_PATH,
   getMetadataFromJson,
   makeRouteMetadadata,
   NOT_FOUND_PATH,
@@ -11,6 +12,8 @@ import { ProjectPageComponent } from './project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
+import { AboutPageComponent } from './about-page/about-page.component'
+import aboutPageMetadata from '../data/pages/about.json'
 
 @NgModule({
   imports: [
@@ -29,6 +32,11 @@ import notFoundPageMetadata from '../data/pages/404.json'
         {
           path: PROJECTS_PATH,
           redirectTo: '/',
+        },
+        {
+          path: ABOUT_PATH,
+          component: AboutPageComponent,
+          data: makeRouteMetadadata(aboutPageMetadata),
         },
         {
           path: NOT_FOUND_PATH,

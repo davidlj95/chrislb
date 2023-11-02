@@ -1,0 +1,44 @@
+@use 'breakpoints';
+@use 'page';
+@use 'typographies';
+@use 'margins';
+@use 'content';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  @include page.padding;
+  gap: margins.$m;
+  align-items: center;
+
+  .contents {
+    display: flex;
+    justify-content: space-around;
+    gap: margins.$m;
+  }
+
+  h1 {
+    @include typographies.size(7);
+    @include typographies.bold;
+  }
+
+  p {
+    white-space: pre-wrap;
+    width: 55ch;
+
+    @include breakpoints.until-s {
+      min-width: unset;
+      width: unset;
+    }
+  }
+
+  img {
+    max-width: 20vw;
+    object-fit: contain;
+    object-position: top;
+
+    @include breakpoints.until-s {
+      max-width: 33.33vw;
+    }
+  }
+}

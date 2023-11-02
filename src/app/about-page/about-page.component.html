@@ -1,0 +1,13 @@
+<h1>{{ title }}</h1>
+<div class="contents">
+  <img
+    [ngSrc]="'/about/portrait.jpg?updatedAt=1698936154350'"
+    [ngSrcset]="srcSet"
+    [sizes]="sizes"
+    height="4096"
+    width="3072"
+    alt="Portrait picture"
+    priority="true"
+  />
+  <p>{{ text }}</p>
+</div>

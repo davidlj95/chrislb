@@ -1,0 +1,10 @@
+@use 'header';
+@use 'logo';
+@use 'page';
+
+$height-header: header.$height;
+$height-logo: logo.$height;
+$height-page-padding: page.$padding-vertical;
+$height-before: calc($height-header + $height-logo + $height-page-padding * 2);
+
+$available-height: calc(100vh - $height-before);
