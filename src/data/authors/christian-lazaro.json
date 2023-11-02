@@ -1,5 +1,8 @@
 {
-  "name": "Christian Lazaro",
+  "firstName": "Christian",
+  "lastName": "Lázaro",
+  "gender": "male",
+  "username": "christian_labu",
   "social": {
     "instagram": "christian_labu",
     "linkedin": "christianlazarobustamante",

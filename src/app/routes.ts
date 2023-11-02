@@ -3,6 +3,8 @@ import defaultMetadata from '../data/misc/metadata.json'
 import notFoundPageMetadata from '../data/pages/404.json'
 import projectsPageMetadata from '../data/pages/projects.json'
 import aboutPageMetadata from '../data/pages/about.json'
+import { Author } from './common/authors.service'
+import { MetaDefinition } from '@angular/platform-browser'
 
 export const PROJECTS_PATH = projectsPageMetadata.slug
 export const NOT_FOUND_PATH = notFoundPageMetadata.slug
@@ -49,6 +51,43 @@ export function getMetadataFromJson(
       !!jsonMetadata.keywords && jsonMetadata.keywords.length
         ? jsonMetadata.keywords.join(', ')
         : undefined,
+  }
+}
+
+export function addOpenGraphProfileMetadataFromAuthor(
+  metadata: IPageSeoData,
+  author: Author,
+): IPageSeoData {
+  const extras: MetaDefinition[] = []
+  if (author.firstName && author.firstName.length > 0) {
+    extras.push({
+      property: 'og:profile:first_name',
+      content: author.firstName,
+    })
+  }
+  if (author.lastName && author.lastName.length > 0) {
+    extras.push({
+      property: 'og:profile:last_name',
+      content: author.lastName,
+    })
+  }
+  if (author.gender && author.gender.length > 0) {
+    extras.push({
+      property: 'og:profile:gender',
+      content: author.gender,
+    })
+  }
+  if (author.username && author.username.length > 0) {
+    extras.push({
+      property: 'og:profile:username',
+      content: author.username,
+    })
+  }
+
+  return {
+    ...metadata,
+    type: 'profile',
+    extra: [...(metadata.extra ?? []), ...extras],
   }
 }
 

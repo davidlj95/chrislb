@@ -168,9 +168,27 @@ collections:
     create: true
     slug: '{{slug}}'
     identifier_field: 'name'
-    summary: '{{name}}'
+    summary: '{{firstName}} {{lastName}}'
     fields:
-      - *name
+      - label: 'First name'
+        name: 'firstName'
+        widget: 'string'
+      - label: 'Last name'
+        name: 'lastName'
+        widget: 'string'
+      - label: 'Gender'
+        widget: 'select'
+        name: 'gender'
+        required: false
+        hint: 'Will only be used for main website author metadata. Unfortunately specification only accepts male or female 😬 . More info: https://ogp.me/#type_profile'
+        options:
+          - label: 'Male'
+            value: 'male'
+          - label: 'Female'
+            value: 'female'
+      - <<: *username
+        required: false
+        hint: 'Will only be used for main website author metadata. More info: https://ogp.me/#type_profile'
       - label: 'Social'
         name: 'social'
         widget: 'object'
