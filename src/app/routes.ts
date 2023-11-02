@@ -77,10 +77,10 @@ export function addOpenGraphProfileMetadataFromAuthor(
       content: author.gender,
     })
   }
-  if (author.username && author.username.length > 0) {
+  if (author.social?.mainUsername && author.social.mainUsername.length > 0) {
     extras.push({
       property: 'og:profile:username',
-      content: author.username,
+      content: author.social.mainUsername,
     })
   }
 

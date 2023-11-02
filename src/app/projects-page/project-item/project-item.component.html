@@ -32,11 +32,9 @@
       <ng-container *ngIf="credit.author.lastName">
         {{ credit.author.lastName }}
       </ng-container>
-      <span class="anchor"
-        >(<a
-          href="https://instagram.com/_u/{{ credit.author.social.instagram }}"
-          target="_blank"
-          >@{{ credit.author.social.instagram }}</a
+      <span class="anchor" *ngIf="credit.social"
+        >(<a [href]="credit.social.url.toString()" target="_blank"
+          >@{{ credit.social.username }}</a
         >)</span
       >
     </span>

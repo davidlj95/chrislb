@@ -1,7 +1,16 @@
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons'
 
 export interface Social {
+  readonly name: SocialName
+  readonly username: string
+  readonly url: URL
   readonly icon: IconDefinition
   readonly displayName: string
-  readonly url: URL
+}
+
+// To keep in sync with CMS
+export enum SocialName {
+  Instagram = 'instagram',
+  TikTok = 'tiktok',
+  LinkedIn = 'linkedin',
 }
