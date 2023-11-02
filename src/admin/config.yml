@@ -133,6 +133,12 @@ collections:
     fields:
       - <<: *slug
         hint: '⚠️ Avoid updating "chiasma" one without notifying developer :) Sets the project path in the URL. Use it in the image CDN as directory name to include images for this project.'
+      - label: 'Date'
+        name: 'date'
+        widget: 'datetime'
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        format: 'YYYY-MM-DD'
       - *title
       - label: 'Subtitle'
         name: 'subtitle'
