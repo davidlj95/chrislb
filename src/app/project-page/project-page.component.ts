@@ -24,6 +24,7 @@ import {
 import { Lookbook } from './lookbook'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-project-page',
@@ -34,6 +35,9 @@ export class ProjectPageComponent {
   @Input({ required: true })
   public set slug(slug: string) {
     this.projectsService.bySlug(slug).then((projectItem) => {
+      if (projectItem.youtubePlaylistId) {
+        this.youtubePlaylistId = projectItem.youtubePlaylistId
+      }
       this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
       if (!projectItem) {
         displayNotFound(this.router).then(noop)
@@ -68,6 +72,7 @@ export class ProjectPageComponent {
       }),
       finalize(() => {
         if (
+          !this.youtubeIframeUrl &&
           !this.lastData?.lookbooks?.length &&
           !this.lastData?.techMaterialImages?.length &&
           !this.lastData?.designBookImages?.length
@@ -75,6 +80,18 @@ export class ProjectPageComponent {
           displayNotFound(this.router).then(noop)
         }
       }),
+    )
+  }
+
+  public youtubeIframeUrl?: SafeUrl
+
+  public set youtubePlaylistId(playlistId: string) {
+    const youtubeIframeUrl = new URL(
+      'https://www.youtube-nocookie.com/embed?listType=playlist&&loop=true',
+    )
+    youtubeIframeUrl.searchParams.set('list', playlistId)
+    this.youtubeIframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      youtubeIframeUrl.toString(),
     )
   }
 
@@ -119,6 +136,7 @@ export class ProjectPageComponent {
     private projectLookbooksService: ProjectLookbooksService,
     private projectsImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
+    private sanitizer: DomSanitizer,
   ) {}
 }
 
