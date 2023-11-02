@@ -14,7 +14,6 @@
   .contents {
     display: flex;
     justify-content: space-around;
-    max-width: 900px;
     gap: margins.$m;
   }
 
@@ -25,12 +24,21 @@
 
   p {
     white-space: pre-wrap;
-    max-width: 55ch;
+    width: 55ch;
+
+    @include breakpoints.until-s {
+      min-width: unset;
+      width: unset;
+    }
   }
 
   img {
-    width: 33.33vw;
+    max-width: 20vw;
     object-fit: contain;
     object-position: top;
+
+    @include breakpoints.until-s {
+      max-width: 33.33vw;
+    }
   }
 }

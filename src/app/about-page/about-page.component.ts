@@ -13,9 +13,10 @@ export class AboutPageComponent {
   public readonly srcSet: string = this.imageResponsiveBreakpointsService
     .range(
       this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 3,
-      this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 3,
+      this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 5,
     )
     .toSrcSet()
+  public readonly sizes: string = 'calc(33.33vw - 16px), calc(20vw - 16px)'
 
   constructor(
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
