@@ -4,6 +4,7 @@ import { AboutPageComponent } from './about-page.component'
 import { NgOptimizedImage } from '@angular/common'
 import { MockComponents } from 'ng-mocks'
 import { SocialComponent } from './social/social.component'
+import { ResumeComponent } from './resume/resume.component'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
@@ -11,7 +12,10 @@ describe('AboutPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AboutPageComponent, MockComponents(SocialComponent)],
+      declarations: [
+        AboutPageComponent,
+        MockComponents(SocialComponent, ResumeComponent),
+      ],
       imports: [NgOptimizedImage],
     })
     fixture = TestBed.createComponent(AboutPageComponent)

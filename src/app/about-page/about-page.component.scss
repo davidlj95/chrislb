@@ -11,6 +11,14 @@
   gap: margins.$m;
   align-items: center;
 
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: margins.$m;
+    place-content: center;
+    align-items: center;
+  }
+
   .contents {
     display: flex;
     justify-content: space-around;

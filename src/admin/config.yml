@@ -230,3 +230,19 @@ collections:
           - label: 'Text'
             name: 'text'
             widget: 'text'
+          - label: 'Resume'
+            name: 'resume'
+            widget: 'list'
+            summary: '{{fields.displayName}}: {{fields.href}}'
+            fields:
+              - label: 'Display name'
+                name: 'displayName'
+                widget: 'string'
+                hint: 'Name to display with link to this CV file'
+              - label: 'File'
+                name: 'href'
+                widget: 'file'
+                media_library:
+                  allow_multiple: false
+                  config:
+                    multiple: false
