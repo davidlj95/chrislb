@@ -2,6 +2,7 @@ import { ImageAsset } from '../../common/images/types'
 
 export interface Project {
   readonly slug: string
+  readonly date: string
   readonly title: string
   readonly subtitle: string
   readonly quote?: string

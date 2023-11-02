@@ -11,7 +11,12 @@ export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 
   async getAll(): Promise<ReadonlyArray<ProjectListItem>> {
-    return this.jsonFetcher.fetch(getListFilename(PROJECTS_DIR))
+    const projects = await this.jsonFetcher.fetch<
+      ReadonlyArray<ProjectListItem>
+    >(getListFilename(PROJECTS_DIR))
+    return Array.from(projects).sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
   }
 
   async bySlug(slug: string): Promise<Project> {
