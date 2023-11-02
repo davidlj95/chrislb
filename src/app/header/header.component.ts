@@ -1,4 +1,6 @@
 import { Component } from '@angular/core'
+import projectPageMetadata from '../../data/pages/projects.json'
+import aboutPageMetadata from '../../data/pages/about.json'
 import { ABOUT_PATH } from '../routes'
 
 @Component({
@@ -7,5 +9,19 @@ import { ABOUT_PATH } from '../routes'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  protected readonly ABOUT_PATH = ABOUT_PATH
+  protected readonly items: ReadonlyArray<NavigationItem> = [
+    {
+      displayName: projectPageMetadata.title || projectPageMetadata.name,
+      path: '/',
+    },
+    {
+      displayName: aboutPageMetadata.title || aboutPageMetadata.name,
+      path: ABOUT_PATH,
+    },
+  ]
+}
+
+export interface NavigationItem {
+  readonly displayName: string
+  readonly path: string
 }

@@ -74,7 +74,7 @@ collections:
     summary: '{{name}}'
     fields:
       - <<: *name
-        hint: 'Identifies the page in the content manager. But nothing a visitor would see'
+        hint: 'Identifies the page in the content manager. Also appears in navigation menu in case title is empty'
       - <<: *slug
         hint: '⚠️ Avoid updating without notifying developer :) Sets the page path in the URL. And the filename containing this configuration'
       - <<: *title
