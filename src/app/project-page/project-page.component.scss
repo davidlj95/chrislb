@@ -61,4 +61,16 @@
       }
     }
   }
+
+  .concept-images {
+    display: flex;
+    flex-direction: column;
+    gap: margins.$m;
+    align-items: center;
+
+    //ℹ️ max-width set by component for big screens
+    > * {
+      width: 100%;
+    }
+  }
 }

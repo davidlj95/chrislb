@@ -18,6 +18,7 @@ import { ImageResponsiveBreakpointsService } from '../common/image-responsive-br
 import { ImageAsset } from '../common/images/types'
 import { ProjectImagesService } from './project-images.service'
 import {
+  CONCEPT_IMAGES_FILENAME,
   DESIGN_BOOK_IMAGES_FILENAME,
   TECH_MATERIAL_IMAGES_FILENAME,
 } from '../common/files'
@@ -66,6 +67,12 @@ export class ProjectPageComponent {
           map((designBookImages) => ({ ...this.lastData, designBookImages })),
           catchError(() => EMPTY),
         ),
+      this.projectsImagesService
+        .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
+        .pipe(
+          map((conceptImages) => ({ ...this.lastData, conceptImages })),
+          catchError(() => EMPTY),
+        ),
     ).pipe(
       tap((data) => {
         this.lastData = data
@@ -75,7 +82,8 @@ export class ProjectPageComponent {
           !this.youtubeIframeUrl &&
           !this.lastData?.lookbooks?.length &&
           !this.lastData?.techMaterialImages?.length &&
-          !this.lastData?.designBookImages?.length
+          !this.lastData?.designBookImages?.length &&
+          !this.lastData?.conceptImages?.length
         ) {
           displayNotFound(this.router).then(noop)
         }
@@ -97,7 +105,25 @@ export class ProjectPageComponent {
 
   public data$!: Observable<ViewModel>
   private lastData?: ViewModel
-  protected readonly MAX_LOOKBOOKS_PER_VIEWPORT = 2
+  protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
+  public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
+  public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
+  public readonly SWIPER_MAX_SLIDE_WIDTH_PX =
+    this.FULL_SCREEN_SWIPER_MAX_WIDTH / this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW
+  public readonly FULL_SCREEN_SWIPER = {
+    customSwiperOptions: {
+      slidesPerView: this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW,
+    },
+    srcSet: new ImageResponsiveBreakpoints(
+      this.imageResponsiveBreakpointsService
+        .range(
+          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
+          this.SWIPER_MAX_SLIDE_WIDTH_PX,
+        )
+        .pxValues.concat([this.SWIPER_MAX_SLIDE_WIDTH_PX]),
+    ).toSrcSet(),
+    sizes: `calc(50vw - 16px), ${this.SWIPER_MAX_SLIDE_WIDTH_PX}px`,
+  }
   public readonly HALF_SCREEN_SWIPER = {
     customSwiperOptions: {
       slidesPerView: 1,
@@ -109,24 +135,6 @@ export class ProjectPageComponent {
       )
       .toSrcSet(),
     sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
-  }
-  public readonly LOOKBOOK_MAX_WIDTH_PX = 850
-  public readonly LOOKBOOK_SLIDES_PER_VIEW = 2
-  public readonly LOOKBOOK_MAX_SLIDE_WIDTH_PX =
-    this.LOOKBOOK_MAX_WIDTH_PX / this.LOOKBOOK_SLIDES_PER_VIEW
-  public readonly LOOKBOOK_SWIPER = {
-    customSwiperOptions: {
-      slidesPerView: this.LOOKBOOK_SLIDES_PER_VIEW,
-    },
-    srcSet: new ImageResponsiveBreakpoints(
-      this.imageResponsiveBreakpointsService
-        .range(
-          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
-          this.LOOKBOOK_MAX_SLIDE_WIDTH_PX,
-        )
-        .pxValues.concat([this.LOOKBOOK_MAX_SLIDE_WIDTH_PX]),
-    ).toSrcSet(),
-    sizes: `calc(50vw - 16px), ${this.LOOKBOOK_MAX_SLIDE_WIDTH_PX}px`,
   }
 
   constructor(
@@ -144,4 +152,5 @@ interface ViewModel {
   readonly lookbooks?: ReadonlyArray<Lookbook>
   readonly techMaterialImages?: ReadonlyArray<ImageAsset>
   readonly designBookImages?: ReadonlyArray<ImageAsset>
+  readonly conceptImages?: ReadonlyArray<ImageAsset>
 }
