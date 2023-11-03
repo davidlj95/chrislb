@@ -60,10 +60,10 @@ field_definitions:
         ]
 collections:
   - name: 'pages'
-    label: 'Pages'
+    label: 'Pages metadata'
     # 👇 Apparently only used in commit messages / PR titles
     # So lowercase is better for those contexts
-    label_singular: 'page'
+    label_singular: 'page metadata'
     folder: 'src/data/pages'
     extension: 'json'
     create: false
@@ -139,6 +139,7 @@ collections:
         date_format: 'YYYY-MM-DD'
         time_format: false
         format: 'YYYY-MM-DD'
+        hint: 'Used to sort projects in list. Most recent first'
       - *title
       - label: 'Subtitle'
         name: 'subtitle'
