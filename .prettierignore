@@ -387,3 +387,5 @@ routes-file.txt
 # - Add generated JSON lists
 # - Add generated image lists
 # - Add generated route file
+src/data/**/*.json
+src/content/**/*.json
