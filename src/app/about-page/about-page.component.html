@@ -5,12 +5,12 @@
 </div>
 <div class="contents">
   <img
-    [ngSrc]="'/about/portrait.jpg?updatedAt=1698936154350'"
+    [ngSrc]="portraitImage.filePath"
     [ngSrcset]="srcSet"
     [sizes]="sizes"
-    height="4096"
-    width="3072"
-    alt="Portrait picture"
+    [height]="portraitImage.height"
+    [width]="portraitImage.width"
+    [alt]="portraitImage.alt"
     priority="true"
   />
   <p>{{ text }}</p>

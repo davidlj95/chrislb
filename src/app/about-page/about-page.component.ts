@@ -1,6 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, Inject } from '@angular/core'
 import aboutPageContents from '../../data/misc/about.json'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
+import { ImageAsset } from '../common/images/image-asset'
+import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
 
 @Component({
   selector: 'app-about-page',
@@ -17,8 +19,12 @@ export class AboutPageComponent {
     )
     .toSrcSet()
   public readonly sizes: string = 'calc(33.33vw - 16px), calc(20vw - 16px)'
+  public readonly portraitImage: ImageAsset
 
   constructor(
+    @Inject(MISC_IMAGES) miscImages: MiscImages,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
-  ) {}
+  ) {
+    this.portraitImage = miscImages.aboutPortrait
+  }
 }
