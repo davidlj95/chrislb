@@ -10,7 +10,7 @@ import { ImageCdnApi } from './image-cdn-api.mjs'
 import { ResourceCollectionListGenerator } from './resource-collection-list-generator.mjs'
 import { ProjectListItemExtraDataGenerator } from './project-list-item-extra-data-generator.mjs'
 import { Resource } from './resource.mjs'
-import { MiscImages } from '../../src/app/common/images/types.js'
+import { MiscImages } from '../../src/app/common/images/misc-images.js'
 
 const { DATA_DIR, CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
 
@@ -36,9 +36,9 @@ class Generators {
 
   public async all() {
     await this.miscImages()
-    await this.projectsImages()
-    await this.projectsList()
-    await this.authorsList()
+    //await this.projectsImages()
+    //await this.projectsList()
+    //await this.authorsList()
   }
 
   public async miscImages() {

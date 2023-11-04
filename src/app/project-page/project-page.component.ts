@@ -17,7 +17,7 @@ import {
 import { SeoService } from '@ngaox/seo'
 import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../routes'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
-import { ImageAsset } from '../common/images/types'
+import { ImageAsset } from '../common/images/image-asset'
 import { ProjectImagesService } from './project-images.service'
 import {
   CONCEPT_IMAGES_FILENAME,

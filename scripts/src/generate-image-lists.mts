@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
 import { mkdir } from 'fs/promises'
 import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
-import { ImageAsset, LogoImages } from '../../src/app/common/images/types.js'
+import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import path from 'path'
 import { isMain } from './is-main.mjs'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
@@ -57,7 +57,6 @@ class ImageListsGenerator {
   }
 
   public async all(): Promise<void> {
-    await this.misc()
     const projects = await this.projects()
     await this.projectsLookbooksImages(projects)
     await this.projectsDirectoryImageAssets({
@@ -84,43 +83,6 @@ class ImageListsGenerator {
       name: 'concept images',
       filename: CONCEPT_IMAGES_FILENAME,
     })
-  }
-
-  private async misc(): Promise<void> {
-    Log.group('Logo images')
-    const LOGOS_PATH = 'logos'
-    const logoFileObjects = await this.imageKit.listFiles({ path: LOGOS_PATH })
-    if (logoFileObjects.length === 0) {
-      Log.error("No logo files found within path '%s'", LOGOS_PATH)
-      process.exit(1)
-    }
-    Log.info('Found %d logo files', logoFileObjects.length)
-
-    const HORIZONTAL_LOGO_FILENAME = 'horizontal.png'
-    Log.info(
-      "Looking for horizontal logo image ('%s')",
-      HORIZONTAL_LOGO_FILENAME,
-    )
-    const horizontalLogoFileObject = logoFileObjects.find((fileObject) =>
-      fileObject.filePath.endsWith(HORIZONTAL_LOGO_FILENAME),
-    )
-    if (!horizontalLogoFileObject) {
-      Log.error(
-        "Horizontal logo file with name '%s' could not be found",
-        HORIZONTAL_LOGO_FILENAME,
-      )
-      process.exit(1)
-    }
-
-    Log.ok('Horizontal logo found')
-    const logoImages: LogoImages = {
-      horizontal: this.imageAssetFromFileObject(horizontalLogoFileObject),
-    }
-    await new JsonFile(path.join(this.IMAGES_DATA_DIR, 'logos.json')).write(
-      logoImages,
-    )
-    Log.ok('Done')
-    Log.groupEnd()
   }
 
   private async projects(): Promise<ReadonlyArray<FolderObject>> {

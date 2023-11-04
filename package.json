@@ -24,7 +24,7 @@
     "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
     "generate-content": "ts-node scripts/src/generate-content.mts",
     "cms-server": "npx decap-server",
-    "prebuild": "npm run generate-image-lists && npm run generate-content && npm run generate-routes-file",
+    "prebuild": "npm run generators && npm run generate-image-lists && npm run generate-content && npm run generate-routes-file",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
     "postbuild": "cp dist/chrislb/browser/404/index.html dist/chrislb/browser/content/404.html",
     "generate-routes-file": "ts-node scripts/src/generate-routes-file.mts",

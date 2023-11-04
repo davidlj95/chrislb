@@ -6,12 +6,3 @@ export type ImageAsset = Pick<
 > & {
   alt?: string
 }
-
-export interface LogoImages {
-  horizontal: ImageAsset
-}
-
-export interface MiscImages {
-  horizontalLogo: ImageAsset
-  aboutPortrait: ImageAsset
-}
