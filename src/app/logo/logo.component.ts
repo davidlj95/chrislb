@@ -1,8 +1,8 @@
-import { Component, Inject, InjectionToken } from '@angular/core'
-import { LogoImages } from '../common/images/types'
-import logoImages from '../../data/images/logos.json'
+import { Component, Inject } from '@angular/core'
 import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
 import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
+import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
+import { ImageAsset } from '../common/images/image-asset'
 
 @Component({
   selector: 'app-logo',
@@ -21,13 +21,12 @@ export class LogoComponent {
       )
       .pxValues.concat(this.LOGO_MAX_WIDTH_PX),
   ).toSrcSet()
+  protected readonly horizontalLogo: ImageAsset
 
   constructor(
-    @Inject(LOGO_IMAGES) public logoImages: LogoImages,
+    @Inject(MISC_IMAGES) miscImages: MiscImages,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
-  ) {}
+  ) {
+    this.horizontalLogo = miscImages.horizontalLogo
+  }
 }
-
-const LOGO_IMAGES = new InjectionToken<LogoImages>('Logo images', {
-  factory: () => logoImages,
-})

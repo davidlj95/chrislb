@@ -1,5 +1,5 @@
 import { Resource } from './resource.mjs'
-import { ImageAsset } from '../../src/app/common/images/types.js'
+import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ResourceImagesGenerator } from './resource-images-generator.mjs'
 import {
   ListItemExtraData,

@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import { Log } from './log.mjs'
 import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
 import { FileObject } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../src/app/common/images/types.js'
+import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ImageCdnApi } from './image-cdn-api.mjs'
 
 const { IMAGEKIT_URL } = imagesCdnConfigPkg
