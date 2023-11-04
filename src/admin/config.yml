@@ -156,6 +156,17 @@ collections:
         widget: 'string'
         required: false
         hint: 'In case you want to attach some videos, create a YouTube Playlist with those videos. Then, click on share button in the playlist. Copy and paste the link, and extract whatever comes as list ID (after the "list" parameter). For instance, a sample link could be "https://youtube.com/playlist?list=PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI&si=zjfX69n2iqzZeVN4". In there, the playlist ID is "PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI"'
+      - label: 'Lookbooks'
+        name: 'lookbookNamesAndSlugs'
+        widget: 'list'
+        summary: '{{fields.name}} ({{fields.slug}})'
+        hint: 'Allows to attach names to lookbooks and set their order when listing them all'
+        required: false
+        fields:
+          - <<: *slug
+            hint: 'Identifies the lookbook. MUST match the directory name in the images CDN. Otherwise the lookbook will appear without name and after the known lookbooks (the ones listed here)'
+          - <<: *name
+            hint: 'Name to display alongside lookbook images'
       - label: 'Credits'
         name: 'credits'
         widget: 'list'
@@ -251,18 +262,6 @@ collections:
           - <<: *url
             label: 'Canonical URL'
             name: 'canonicalUrl'
-      - label: 'Lookbook names by slug'
-        name: 'names-by-slug'
-        file: 'src/data/misc/lookbook-names-by-slug.json'
-        fields:
-          - label: 'Names by slug'
-            name: 'namesBySlug'
-            widget: 'list'
-            hint: 'Maps the slugs (directory names in the image CDN) to names to display in the website'
-            summary: '{{fields.slug}}: {{fields.name}}'
-            fields:
-              - *slug
-              - *name
       - label: 'About page'
         name: 'about'
         file: 'src/data/misc/about.json'

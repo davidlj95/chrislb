@@ -183,10 +183,19 @@ class ImageListsGenerator {
         if (lookbooksFileObjects.length < 1) {
           Log.warn("No images for lookbook '%s'", lookbookFolderObject.name)
         } else {
-          Log.item('Found %d images', lookbookFileObjects.length)
+          Log.info('Found %d images', lookbookFileObjects.length)
+        }
+        // Temporarily skip old directories
+        if (lookbookFolderObject.name.startsWith('0')) {
+          Log.warn(
+            'Omitting old lookbook with order prefix',
+            lookbookFolderObject.name,
+          )
+          Log.groupEnd()
+          continue
         }
         lookbooks.push({
-          slug: this.removeOrderPrefix(lookbookFolderObject.name),
+          slug: lookbookFolderObject.name,
           images: lookbookFileObjects.map(this.imageAssetFromFileObject),
         })
         Log.groupEnd()
@@ -216,7 +225,7 @@ class ImageListsGenerator {
   }): Promise<void> {
     Log.group('Projects %s assets', name)
     for (const projectFolderObject of projectFolderObjects) {
-      const project = this.removeOrderPrefix(projectFolderObject.name)
+      const project = projectFolderObject.name
       Log.info(
         "Finding %s of project '%s' ('%s')",
         name,
@@ -261,10 +270,6 @@ class ImageListsGenerator {
     const projectDirectory = path.join(this.PROJECTS_CONTENTS_DIR, slug)
     await mkdir(projectDirectory, { recursive: true })
     return projectDirectory
-  }
-
-  private removeOrderPrefix(name: string): string {
-    return name.replace(/^\d+-/, '')
   }
 }
 
