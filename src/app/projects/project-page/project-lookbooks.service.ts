@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Lookbook } from './lookbook'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
-import { PROJECTS_DIR } from '../common/directories'
-import { LOOKBOOKS_IMAGES_FILENAME } from '../common/files'
+import { JsonFetcher } from '../../common/json-fetcher/json-fetcher'
+import { PROJECTS_DIR } from '../../common/directories'
+import { LOOKBOOKS_IMAGES_FILENAME } from '../../common/files'
 import { from, map, Observable } from 'rxjs'
-import { LookbookNameAndSlug } from '../projects-page/project-item/project-item'
+import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
 
 @Injectable({
   providedIn: 'root',

@@ -9,7 +9,7 @@
   flex-wrap: wrap;
   gap: margins.$l;
 
-  app-project-item {
+  app-project-list-item {
     flex: 1;
 
     &.has-preview-images {

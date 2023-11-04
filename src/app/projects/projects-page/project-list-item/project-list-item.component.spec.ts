@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ProjectItemComponent } from './project-item.component'
+import { ProjectListItemComponent } from './project-list-item.component'
 import { MockComponents } from 'ng-mocks'
-import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
+import { ImagesSwiperComponent } from '../../../images-swiper/images-swiper.component'
 
-describe('ProjectItemComponent', () => {
-  let component: ProjectItemComponent
-  let fixture: ComponentFixture<ProjectItemComponent>
+describe('ProjectListItemComponent', () => {
+  let component: ProjectListItemComponent
+  let fixture: ComponentFixture<ProjectListItemComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ProjectItemComponent,
+        ProjectListItemComponent,
         MockComponents(ImagesSwiperComponent),
       ],
     })
-    fixture = TestBed.createComponent(ProjectItemComponent)
+    fixture = TestBed.createComponent(ProjectListItemComponent)
     component = fixture.componentInstance
     // TODO: proper tests
     //fixture.detectChanges();

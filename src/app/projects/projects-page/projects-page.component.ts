@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
-import { ProjectsService } from './projects.service'
-import { ProjectListItem } from './project-item/project-item'
+import { ProjectsService } from '../projects.service'
+import { ProjectListItem } from '../project-list-item'
 
 @Component({
   selector: 'app-projects-page',
@@ -12,6 +12,6 @@ export class ProjectsPageComponent {
   protected readonly MAX_PROJECTS_PER_PAGE = 2
 
   constructor(projectsService: ProjectsService) {
-    this.projects = projectsService.getAll()
+    this.projects = projectsService.getListItems()
   }
 }

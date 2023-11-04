@@ -1,11 +1,9 @@
 import { Resource } from './resource.mjs'
 import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ResourceImagesGenerator } from './resource-images-generator.mjs'
-import {
-  ListItemExtraData,
-  Project,
-} from '../../src/app/projects-page/project-item/project-item.js'
+import { ListItemExtraData } from '../../src/app/projects/project-list-item.js'
 import { Log } from './log.mjs'
+import { Project } from '../../src/app/projects/project.js'
 
 export class ProjectListItemExtraDataGenerator {
   private readonly PREVIEW_IMAGES_DIRECTORY = 'preview'

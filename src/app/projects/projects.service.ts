@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
 import { addJsonExtension, getListFilename } from '../common/files'
-import { Project, ProjectListItem } from './project-item/project-item'
+import { ProjectListItem } from './project-list-item'
 import { from, Observable } from 'rxjs'
+import { Project } from './project'
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { from, Observable } from 'rxjs'
 export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 
-  async getAll(): Promise<ReadonlyArray<ProjectListItem>> {
+  async getListItems(): Promise<ReadonlyArray<ProjectListItem>> {
     const projects = await this.jsonFetcher.fetch<
       ReadonlyArray<ProjectListItem>
     >(getListFilename(PROJECTS_DIR))

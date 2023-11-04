@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 
 import { ProjectImagesService } from './project-images.service'
 import { MockProviders } from 'ng-mocks'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
+import { JsonFetcher } from '../../common/json-fetcher/json-fetcher'
 
 describe('ProjectImagesService', () => {
   let service: ProjectImagesService
