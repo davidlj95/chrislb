@@ -185,15 +185,6 @@ class ImageListsGenerator {
         } else {
           Log.info('Found %d images', lookbookFileObjects.length)
         }
-        // Temporarily skip old directories
-        if (lookbookFolderObject.name.startsWith('0')) {
-          Log.warn(
-            'Omitting old lookbook with order prefix',
-            lookbookFolderObject.name,
-          )
-          Log.groupEnd()
-          continue
-        }
         lookbooks.push({
           slug: lookbookFolderObject.name,
           images: lookbookFileObjects.map(this.imageAssetFromFileObject),
