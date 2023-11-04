@@ -25,7 +25,6 @@ export class SocialService {
 
   public getMain(author: Author): Social | undefined {
     const socials = this.mapAll(author.social)
-    console.log(author)
     if (author.social?.mainName && this.isSocialName(author.social.mainName)) {
       const mainUsername = author.social[author.social.mainName]
       if (!!mainUsername && mainUsername.length > 0)

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core'
+import { Component, DestroyRef, Input } from '@angular/core'
 import { ProjectsService } from '../projects-page/projects.service'
 import { displayNotFound } from '../common/navigation'
 import { Router } from '@angular/router'
@@ -12,7 +12,6 @@ import {
   Observable,
   of,
   share,
-  Subscription,
   tap,
 } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
@@ -30,13 +29,14 @@ import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { YoutubePlaylist } from './youtube-playlist'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent implements OnDestroy {
+export class ProjectPageComponent {
   public viewModel$!: Observable<ViewModel>
   public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
   public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
@@ -69,7 +69,6 @@ export class ProjectPageComponent implements OnDestroy {
     sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
   }
   protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
-  private lastViewModelSubscription!: Subscription
 
   constructor(
     private projectsService: ProjectsService,
@@ -79,61 +78,56 @@ export class ProjectPageComponent implements OnDestroy {
     private projectsImagesService: ProjectImagesService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
     private sanitizer: DomSanitizer,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input({ required: true })
   public set slug(slug: string) {
-    this.viewModel$ = this.projectsService
-      .bySlug(slug)
-      .pipe(
-        tap({
-          next: (project) => {
-            this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
-            this.seo.setTitle(getTitle(project.title))
-            this.seo.setDescription(project.description)
-          },
-          error: () => {
-            displayNotFound(this.router).then(noop)
-          },
-        }),
-        concatMap((project) =>
-          combineLatest([
-            of(
-              project.youtubePlaylistId
-                ? this.sanitizer.bypassSecurityTrustResourceUrl(
-                    new YoutubePlaylist(
-                      project.youtubePlaylistId,
-                    ).iframeUrl.toString(),
-                  )
-                : undefined,
-            ),
-            this.projectLookbooksService
-              .bySlug(slug, project.lookbookNamesAndSlugs)
-              .pipe(catchError(() => of(undefined))),
-            this.projectsImagesService
-              .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
-              .pipe(catchError(() => of(undefined))),
-            this.projectsImagesService
-              .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
-              .pipe(catchError(() => of(undefined))),
-            this.projectsImagesService
-              .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
-              .pipe(catchError(() => of(undefined))),
-          ]).pipe(map((data) => new ViewModel(...data))),
-        ),
-      )
-      .pipe(share())
-    this.lastViewModelSubscription = this.viewModel$
-      .pipe(last())
+    this.viewModel$ = this.projectsService.bySlug(slug).pipe(
+      tap({
+        next: (project) => {
+          this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
+          this.seo.setTitle(getTitle(project.title))
+          this.seo.setDescription(project.description)
+        },
+        error: () => {
+          displayNotFound(this.router).then(noop)
+        },
+      }),
+      concatMap((project) =>
+        combineLatest([
+          of(
+            project.youtubePlaylistId
+              ? this.sanitizer.bypassSecurityTrustResourceUrl(
+                  new YoutubePlaylist(
+                    project.youtubePlaylistId,
+                  ).iframeUrl.toString(),
+                )
+              : undefined,
+          ),
+          this.projectLookbooksService
+            .bySlug(slug, project.lookbookNamesAndSlugs)
+            .pipe(catchError(() => of(undefined))),
+          this.projectsImagesService
+            .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
+            .pipe(catchError(() => of(undefined))),
+          this.projectsImagesService
+            .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
+            .pipe(catchError(() => of(undefined))),
+          this.projectsImagesService
+            .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
+            .pipe(catchError(() => of(undefined))),
+        ]).pipe(map((data) => new ViewModel(...data))),
+      ),
+      share(),
+    )
+    this.viewModel$
+      .pipe(last(), takeUntilDestroyed(this.destroyRef))
       .subscribe((lastViewModel) => {
         if (!lastViewModel.hasData) {
           displayNotFound(this.router).then(noop)
         }
       })
-  }
-
-  ngOnDestroy(): void {
-    this.lastViewModelSubscription.unsubscribe()
   }
 }
 
