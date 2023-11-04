@@ -10,3 +10,8 @@ export type ImageAsset = Pick<
 export interface LogoImages {
   horizontal: ImageAsset
 }
+
+export interface MiscImages {
+  horizontalLogo: ImageAsset
+  aboutPortrait: ImageAsset
+}
