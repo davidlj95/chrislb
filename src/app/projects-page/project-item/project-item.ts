@@ -19,10 +19,12 @@ export interface LookbookNameAndSlug {
   readonly name: string
 }
 
-export interface ProjectListItem extends Project {
+export interface ListItemExtraData {
   readonly previewImages?: ReadonlyArray<ImageAsset>
   readonly hasContent: boolean
 }
+
+export type ProjectListItem = Project & ListItemExtraData
 
 export interface Credit {
   readonly role: string

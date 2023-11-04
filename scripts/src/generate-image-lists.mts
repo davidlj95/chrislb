@@ -57,7 +57,7 @@ class ImageListsGenerator {
   }
 
   public async all(): Promise<void> {
-    await this.logos()
+    await this.misc()
     const projects = await this.projects()
     await this.projectsLookbooksImages(projects)
     await this.projectsDirectoryImageAssets({
@@ -86,7 +86,7 @@ class ImageListsGenerator {
     })
   }
 
-  private async logos(): Promise<void> {
+  private async misc(): Promise<void> {
     Log.group('Logo images')
     const LOGOS_PATH = 'logos'
     const logoFileObjects = await this.imageKit.listFiles({ path: LOGOS_PATH })

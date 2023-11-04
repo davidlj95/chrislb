@@ -381,6 +381,7 @@ src/content/**/*-images.json
 src/data/*.json
 src/data/**/*-images.json
 src/data/images/*.json
+src/content/**/images.json
 routes-file.txt
 # Manual edit
 # - Remove .idea from Angular. We want some IDE settings!
