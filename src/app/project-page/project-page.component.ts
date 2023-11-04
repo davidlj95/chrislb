@@ -1,6 +1,5 @@
 import { Component, DestroyRef, Input } from '@angular/core'
 import { ProjectsService } from '../projects-page/projects.service'
-import { displayNotFound } from '../common/navigation'
 import { Router } from '@angular/router'
 import {
   catchError,
@@ -8,7 +7,6 @@ import {
   concatMap,
   last,
   map,
-  noop,
   Observable,
   of,
   share,
@@ -30,6 +28,7 @@ import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoin
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { YoutubePlaylist } from './youtube-playlist'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { NavigatorService } from '../common/navigator.service'
 
 @Component({
   selector: 'app-project-page',
@@ -72,6 +71,7 @@ export class ProjectPageComponent {
 
   constructor(
     private projectsService: ProjectsService,
+    private navigatorService: NavigatorService,
     private router: Router,
     private seo: SeoService,
     private projectLookbooksService: ProjectLookbooksService,
@@ -91,7 +91,7 @@ export class ProjectPageComponent {
           this.seo.setDescription(project.description)
         },
         error: () => {
-          displayNotFound(this.router).then(noop)
+          this.navigatorService.displayNotFoundPage()
         },
       }),
       concatMap((project) =>
@@ -125,7 +125,7 @@ export class ProjectPageComponent {
       .pipe(last(), takeUntilDestroyed(this.destroyRef))
       .subscribe((lastViewModel) => {
         if (!lastViewModel.hasData) {
-          displayNotFound(this.router).then(noop)
+          this.navigatorService.displayNotFoundPage()
         }
       })
   }
