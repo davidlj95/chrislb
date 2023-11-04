@@ -21,8 +21,12 @@ describe('ProjectPageComponent', () => {
       ],
       providers: [
         MockProvider(ProjectsService, {
-          async bySlug(): Promise<Project> {
-            return { title: 'Title', description: 'Description' } as Project
+          bySlug() {
+            return of({
+              title: 'Title',
+              description: 'Description',
+              youtubePlaylistId: 'Playlist ID',
+            } as Project)
           },
         }),
         MockProvider(ProjectLookbooksService, {
@@ -39,6 +43,7 @@ describe('ProjectPageComponent', () => {
     })
     fixture = TestBed.createComponent(ProjectPageComponent)
     component = fixture.componentInstance
+    component.slug = 'foo'
     fixture.detectChanges()
   })
 

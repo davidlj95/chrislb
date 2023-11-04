@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnDestroy } from '@angular/core'
 import { ProjectsService } from '../projects-page/projects.service'
 import { displayNotFound } from '../common/navigation'
 import { Router } from '@angular/router'
 import {
   catchError,
-  EMPTY,
-  finalize,
+  combineLatest,
+  concatMap,
+  last,
   map,
-  merge,
   noop,
   Observable,
+  of,
+  share,
+  Subscription,
   tap,
 } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
@@ -25,87 +28,16 @@ import {
 import { Lookbook } from './lookbook'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
+import { YoutubePlaylist } from './youtube-playlist'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent {
-  @Input({ required: true })
-  public set slug(slug: string) {
-    this.projectsService.bySlug(slug).then((projectItem) => {
-      if (projectItem.youtubePlaylistId) {
-        this.youtubePlaylistId = projectItem.youtubePlaylistId
-      }
-      this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
-      if (!projectItem) {
-        displayNotFound(this.router).then(noop)
-        return
-      }
-      this.seo.setTitle(getTitle(projectItem.title))
-      this.seo.setDescription(projectItem.description)
-    })
-    this.data$ = merge(
-      this.projectLookbooksService.bySlug(slug).pipe(
-        map((lookbooks) => ({ ...this.lastData, lookbooks })),
-        catchError(() => EMPTY),
-      ),
-      this.projectsImagesService
-        .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
-        .pipe(
-          map((techMaterialImages) => ({
-            ...this.lastData,
-            techMaterialImages,
-          })),
-          catchError(() => EMPTY),
-        ),
-      this.projectsImagesService
-        .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
-        .pipe(
-          map((designBookImages) => ({ ...this.lastData, designBookImages })),
-          catchError(() => EMPTY),
-        ),
-      this.projectsImagesService
-        .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
-        .pipe(
-          map((conceptImages) => ({ ...this.lastData, conceptImages })),
-          catchError(() => EMPTY),
-        ),
-    ).pipe(
-      tap((data) => {
-        this.lastData = data
-      }),
-      finalize(() => {
-        if (
-          !this.youtubeIframeUrl &&
-          !this.lastData?.lookbooks?.length &&
-          !this.lastData?.techMaterialImages?.length &&
-          !this.lastData?.designBookImages?.length &&
-          !this.lastData?.conceptImages?.length
-        ) {
-          displayNotFound(this.router).then(noop)
-        }
-      }),
-    )
-  }
-
-  public youtubeIframeUrl?: SafeUrl
-
-  public set youtubePlaylistId(playlistId: string) {
-    const youtubeIframeUrl = new URL(
-      'https://www.youtube-nocookie.com/embed?listType=playlist&&loop=true',
-    )
-    youtubeIframeUrl.searchParams.set('list', playlistId)
-    this.youtubeIframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      youtubeIframeUrl.toString(),
-    )
-  }
-
-  public data$!: Observable<ViewModel>
-  private lastData?: ViewModel
-  protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
+export class ProjectPageComponent implements OnDestroy {
+  public viewModel$!: Observable<ViewModel>
   public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
   public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
   public readonly SWIPER_MAX_SLIDE_WIDTH_PX =
@@ -136,6 +68,8 @@ export class ProjectPageComponent {
       .toSrcSet(),
     sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
   }
+  protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
+  private lastViewModelSubscription!: Subscription
 
   constructor(
     private projectsService: ProjectsService,
@@ -146,11 +80,79 @@ export class ProjectPageComponent {
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
     private sanitizer: DomSanitizer,
   ) {}
+
+  @Input({ required: true })
+  public set slug(slug: string) {
+    this.viewModel$ = this.projectsService
+      .bySlug(slug)
+      .pipe(
+        tap({
+          next: (project) => {
+            this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
+            this.seo.setTitle(getTitle(project.title))
+            this.seo.setDescription(project.description)
+          },
+          error: () => {
+            displayNotFound(this.router).then(noop)
+          },
+        }),
+        concatMap((project) =>
+          combineLatest([
+            of(
+              project.youtubePlaylistId
+                ? this.sanitizer.bypassSecurityTrustResourceUrl(
+                    new YoutubePlaylist(
+                      project.youtubePlaylistId,
+                    ).iframeUrl.toString(),
+                  )
+                : undefined,
+            ),
+            this.projectLookbooksService
+              .bySlug(slug, project.lookbookNamesAndSlugs)
+              .pipe(catchError(() => of(undefined))),
+            this.projectsImagesService
+              .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
+              .pipe(catchError(() => of(undefined))),
+            this.projectsImagesService
+              .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
+              .pipe(catchError(() => of(undefined))),
+            this.projectsImagesService
+              .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
+              .pipe(catchError(() => of(undefined))),
+          ]).pipe(map((data) => new ViewModel(...data))),
+        ),
+      )
+      .pipe(share())
+    this.lastViewModelSubscription = this.viewModel$
+      .pipe(last())
+      .subscribe((lastViewModel) => {
+        if (!lastViewModel.hasData) {
+          displayNotFound(this.router).then(noop)
+        }
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.lastViewModelSubscription.unsubscribe()
+  }
 }
 
-interface ViewModel {
-  readonly lookbooks?: ReadonlyArray<Lookbook>
-  readonly techMaterialImages?: ReadonlyArray<ImageAsset>
-  readonly designBookImages?: ReadonlyArray<ImageAsset>
-  readonly conceptImages?: ReadonlyArray<ImageAsset>
+export class ViewModel {
+  constructor(
+    public readonly youtubeIframeUrl?: SafeResourceUrl,
+    public readonly lookbooks?: ReadonlyArray<Lookbook>,
+    public readonly techMaterialImages?: ReadonlyArray<ImageAsset>,
+    public readonly designBookImages?: ReadonlyArray<ImageAsset>,
+    public readonly conceptImages?: ReadonlyArray<ImageAsset>,
+  ) {}
+
+  public get hasData(): boolean {
+    return !!(
+      this.youtubeIframeUrl ||
+      this.lookbooks?.length ||
+      this.techMaterialImages?.length ||
+      this.designBookImages?.length ||
+      this.conceptImages?.length
+    )
+  }
 }

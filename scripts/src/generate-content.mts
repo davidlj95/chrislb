@@ -6,13 +6,10 @@ import path from 'path'
 import { Dirent } from 'fs'
 import directoriesPkg from '../../src/app/common/directories.js'
 import filesPkg from '../../src/app/common/files.js'
-import lookbookNamesAndSlugs from '../../src/data/misc/lookbook-names-by-slug.json' assert { type: 'json' }
-import { Lookbook } from '../../src/app/project-page/lookbook.js'
 import { JsonFile } from './json-file.mjs'
 
 const { CONTENTS_DIR, PROJECTS_DIR, DATA_DIR } = directoriesPkg
-const { getListFilename, LOOKBOOKS_IMAGES_FILENAME, PREVIEW_IMAGES_FILENAME } =
-  filesPkg
+const { getListFilename, PREVIEW_IMAGES_FILENAME } = filesPkg
 
 export class ContentsGenerator {
   readonly SRC_PATH = path.join(getRepositoryRootDir(), 'src')
@@ -30,7 +27,6 @@ export class ContentsGenerator {
       subContentFilename: PREVIEW_IMAGES_FILENAME,
     })
     await this.addHasContentToListFile(CONTENTS_DIR, PROJECTS_DIR)
-    await this.addNamesToLookbooks()
   }
 
   private async listFromDirectoryWithJsons(
@@ -143,43 +139,6 @@ export class ContentsGenerator {
       item['hasContent'] = hasContentBySlug.get(item.slug)
     })
     await this.writeListFile(directory, subdirectory, listJson)
-    Log.groupEnd()
-  }
-
-  private async addNamesToLookbooks() {
-    Log.group('Add names to lookbooks')
-    Log.info('Reading lookbook names file')
-    const lookbookNamesBySlug = new Map(
-      lookbookNamesAndSlugs.namesBySlug.map(({ slug, name }) => [slug, name]),
-    )
-    const directoryPath = path.join(this.SRC_PATH, CONTENTS_DIR, PROJECTS_DIR)
-    const contentFiles = await this.getFilesInDirectory(directoryPath)
-    Log.info("Adding lookbook names to each project's lookbooks")
-    await Promise.all(
-      contentFiles.map(async (contentFile) => {
-        Log.item(contentFile.name)
-        // noinspection UnnecessaryLocalVariableJS
-        const slug = path.basename(contentFile.name, this.CONTENTS_EXTENSION)
-        // noinspection UnnecessaryLocalVariableJS
-        const homonymDirectory = slug
-        const lookbookFilename = path.join(
-          directoryPath,
-          homonymDirectory,
-          LOOKBOOKS_IMAGES_FILENAME,
-        )
-        const lookbookJsonFile = new JsonFile(lookbookFilename)
-        const lookbookContents = await lookbookJsonFile.read()
-        if (!lookbookContents) {
-          return
-        }
-        const lookbookJson = lookbookContents as ReadonlyArray<Lookbook>
-        const lookbookJsonWithNames = lookbookJson.map((lookbook) => ({
-          ...lookbook,
-          name: lookbookNamesBySlug.get(lookbook.slug),
-        }))
-        await lookbookJsonFile.write(lookbookJsonWithNames)
-      }),
-    )
     Log.groupEnd()
   }
 
