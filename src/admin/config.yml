@@ -1,7 +1,6 @@
 #local_backend: true
 backend:
-  name: git-gateway
-  #name: github
+  name: github
   repo: davidlj95/chrislb
   branch: main
   # 👇 To be in sync with Cloudflare Pages deploy previews
