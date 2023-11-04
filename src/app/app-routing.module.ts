@@ -8,8 +8,8 @@ import {
   NOT_FOUND_PATH,
   PROJECTS_PATH,
 } from './routes'
-import { ProjectsPageComponent } from './projects-page/projects-page.component'
-import { ProjectPageComponent } from './project-page/project-page.component'
+import { ProjectsPageComponent } from './projects/projects-page/projects-page.component'
+import { ProjectPageComponent } from './projects/project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'

@@ -1,18 +1,19 @@
 import { Component, Input } from '@angular/core'
-import { Credit, ProjectListItem } from './project-item'
+import { ProjectListItem } from '../../project-list-item'
 import { SwiperOptions } from 'swiper/types'
-import { PROJECTS_PATH } from '../../routes'
-import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
-import { Author, AuthorsService } from '../../common/authors.service'
-import { Social } from '../../about-page/social/social'
-import { SocialService } from '../../about-page/social/social.service'
+import { PROJECTS_PATH } from '../../../routes'
+import { ImageResponsiveBreakpointsService } from '../../../common/image-responsive-breakpoints.service'
+import { Author, AuthorsService } from '../../../common/authors.service'
+import { Social } from '../../../about-page/social/social'
+import { SocialService } from '../../../about-page/social/social.service'
+import { Credit } from '../../credit'
 
 @Component({
-  selector: 'app-project-item',
-  templateUrl: './project-item.component.html',
-  styleUrls: ['./project-item.component.scss'],
+  selector: 'app-project-list-item',
+  templateUrl: './project-list-item.component.html',
+  styleUrls: ['./project-list-item.component.scss'],
 })
-export class ProjectItemComponent {
+export class ProjectListItemComponent {
   protected _item!: ProjectListItem
   @Input({ required: true })
   public set item(item: ProjectListItem) {

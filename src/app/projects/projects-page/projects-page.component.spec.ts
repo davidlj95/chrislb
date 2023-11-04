@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectsPageComponent } from './projects-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
-import { ProjectItemComponent } from './project-item/project-item.component'
-import { ProjectsService } from './projects.service'
+import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
+import { ProjectsService } from '../projects.service'
 
 describe('ProjectsPageComponent', () => {
   let component: ProjectsPageComponent
@@ -13,11 +13,11 @@ describe('ProjectsPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ProjectsPageComponent,
-        MockComponents(ProjectItemComponent),
+        MockComponents(ProjectListItemComponent),
       ],
       providers: [
         MockProvider(ProjectsService, {
-          async getAll() {
+          async getListItems() {
             return []
           },
         }),

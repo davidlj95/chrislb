@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectPageComponent } from './project-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
-import { ProjectsService } from '../projects-page/projects.service'
-import { Project } from '../projects-page/project-item/project-item'
-import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
+import { ProjectsService } from '../projects.service'
+import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ProjectImagesService } from './project-images.service'
 import { of } from 'rxjs'
+import { Project } from '../project'
 
 describe('ProjectPageComponent', () => {
   let component: ProjectPageComponent
