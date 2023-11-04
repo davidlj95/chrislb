@@ -1,5 +1,5 @@
 import { Component, DestroyRef, Input } from '@angular/core'
-import { ProjectsService } from '../projects-page/projects.service'
+import { ProjectsService } from '../projects.service'
 import { Router } from '@angular/router'
 import {
   catchError,
@@ -13,22 +13,22 @@ import {
   tap,
 } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
-import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../routes'
-import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
-import { ImageAsset } from '../common/images/image-asset'
+import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../../routes'
+import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
+import { ImageAsset } from '../../common/images/image-asset'
 import { ProjectImagesService } from './project-images.service'
 import {
   CONCEPT_IMAGES_FILENAME,
   DESIGN_BOOK_IMAGES_FILENAME,
   TECH_MATERIAL_IMAGES_FILENAME,
-} from '../common/files'
+} from '../../common/files'
 import { Lookbook } from './lookbook'
 import { ProjectLookbooksService } from './project-lookbooks.service'
-import { ImageResponsiveBreakpoints } from '../common/image-responsive-breakpoints'
+import { ImageResponsiveBreakpoints } from '../../common/image-responsive-breakpoints'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { YoutubePlaylist } from './youtube-playlist'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { NavigatorService } from '../common/navigator.service'
+import { NavigatorService } from '../../common/navigator.service'
 
 @Component({
   selector: 'app-project-page',

@@ -4,7 +4,7 @@ import { ResourceImagesGenerator } from './resource-images-generator.mjs'
 import {
   ListItemExtraData,
   Project,
-} from '../../src/app/projects-page/project-item/project-item.js'
+} from '../../src/app/projects/project-list-item'
 import { Log } from './log.mjs'
 
 export class ProjectListItemExtraDataGenerator {

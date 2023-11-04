@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { ProjectsPageComponent } from './projects-page/projects-page.component'
 import { HeaderComponent } from './header/header.component'
-import { ProjectItemComponent } from './projects-page/project-item/project-item.component'
 import {
   APP_BASE_HREF,
   NgOptimizedImage,
@@ -17,7 +15,9 @@ import { SwiperDirective } from './images-swiper/swiper.directive'
 import { IMAGEKIT_URL } from './common/images/cdn-config'
 import { SeoModule } from '@ngaox/seo'
 import defaultMetadata from '../data/misc/metadata.json'
-import { ProjectPageComponent } from './project-page/project-page.component'
+import { ProjectsPageComponent } from './projects/projects-page/projects-page.component'
+import { ProjectListItemComponent } from './projects/projects-page/project-list-item/project-list-item.component'
+import { ProjectPageComponent } from './projects/project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImagesSwiperComponent } from './images-swiper/images-swiper.component'
@@ -38,7 +38,7 @@ registerSwiper()
     AppComponent,
     ProjectsPageComponent,
     HeaderComponent,
-    ProjectItemComponent,
+    ProjectListItemComponent,
     LogoComponent,
     SwiperDirective,
     ProjectPageComponent,

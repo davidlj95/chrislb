@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { ImageAsset } from '../common/images/image-asset'
-import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
-import { PROJECTS_DIR } from '../common/directories'
+import { ImageAsset } from '../../common/images/image-asset'
+import { JsonFetcher } from '../../common/json-fetcher/json-fetcher'
+import { PROJECTS_DIR } from '../../common/directories'
 import { from, Observable } from 'rxjs'
 
 @Injectable({
