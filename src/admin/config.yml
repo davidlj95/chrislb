@@ -64,6 +64,7 @@ collections:
     # 👇 Apparently only used in commit messages / PR titles
     # So lowercase is better for those contexts
     label_singular: 'page metadata'
+    description: 'Metadata to use for each (static) page'
     folder: 'src/data/pages'
     extension: 'json'
     create: false
@@ -124,6 +125,7 @@ collections:
   - name: 'projects'
     label: 'Projects'
     label_singular: 'project'
+    description: 'Projects to show in the projects page and their data'
     folder: 'src/content/projects'
     extension: 'json'
     create: true
@@ -186,6 +188,7 @@ collections:
   - name: 'authors'
     label: 'Authors'
     label_singular: 'author'
+    description: 'People that have participated in projects, for their appearance in credits. Also contains data to reflect author of the website'
     folder: 'src/data/authors'
     extension: 'json'
     create: true
@@ -245,6 +248,31 @@ collections:
             name: 'tiktok'
             required: false
             hint: 'Used to link to TikTok profile (https://tiktok.com/@<username>). To change yours: https://support.tiktok.com/en/getting-started/setting-up-your-profile/changing-your-username'
+  - name: 'assets-collections'
+    label: 'Assets collections'
+    label_singular: 'assets collection'
+    description: 'Specifies assets collections configurations. Like the known image directories in the CDN, their display names, gallery sizes... To sort their appearance on screen, check the miscellaneous content collection'
+    folder: 'src/data/assets-collections'
+    extension: 'json'
+    create: true
+    slug: '{{fields.slug}}'
+    identifier_field: '{{fields.slug}}'
+    summary: '{{name}} ({{fields.slug}})'
+    fields:
+      - <<: *name
+        hint: 'Will be used when listing assets for a project'
+      - <<: *slug
+        label: 'Slug (directory name in image CDN)'
+        hint: 'If representing a collection of images, ‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed. 💡 Lookbook specific names are specified per project'
+      - label: 'Gallery size'
+        name: 'size'
+        hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width'
+        widget: 'select'
+        options:
+          - label: 'Full'
+            value: 'full'
+          - label: 'Half'
+            value: 'half'
   - name: 'misc'
     label: 'Miscellaneous'
     files:
@@ -267,9 +295,7 @@ collections:
         file: 'src/data/misc/about.json'
         preview_path: 'about'
         fields:
-          - label: 'Title'
-            name: 'title'
-            widget: 'string'
+          - *title
           - label: 'Text'
             name: 'text'
             widget: 'text'
@@ -289,3 +315,16 @@ collections:
                   allow_multiple: false
                   config:
                     multiple: false
+      - label: 'Assets collections order'
+        name: 'assets-collections-order'
+        file: 'src/data/misc/assets-collections-order.json'
+        fields:
+          - label: 'Assets collections order'
+            name: 'assetCollectionsOrder'
+            hint: 'Sort in which order you want assets collections to appear by default. The ones not specified here will appear at bottom'
+            widget: 'relation'
+            multiple: true
+            collection: 'assets-collections'
+            value_field: '{{fields.slug}}'
+            search_fields: ['name', 'slug']
+            display_fields: ['name']
