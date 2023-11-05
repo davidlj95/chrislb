@@ -4,10 +4,10 @@ import { VideoAssetsCollection } from './video-assets-collection'
 import { YoutubePlaylist } from './youtube-playlist'
 import { from, map, Observable } from 'rxjs'
 import { AnyAssetsCollection } from './any-asset-collection'
-import { AssetsCollection } from './assets-collection'
+import { AssetsCollectionData } from './assets-collection-data'
 import assetsCollectionsJson from '../../../data/assets-collections.json'
 import assetsCollectionsOrderJson from '../../../data/misc/assets-collections-order.json'
-import lookbookCollection from '../../../data/assets-collections/lookbooks.json'
+import lookbookCollectionJson from '../../../data/assets-collections/lookbooks.json'
 import videoCollectionJson from '../../../data/assets-collections/videos.json'
 import { ImageAssetsCollection } from './image-assets-collection'
 import { JsonFetcher } from '../../common/json-fetcher/json-fetcher'
@@ -15,25 +15,27 @@ import { PROJECTS_DIR } from '../../common/directories'
 import { ImageAsset } from '../../common/images/image-asset'
 import { ProjectImageAsset } from './project-image-asset'
 import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
+import { AssetsCollectionSize } from './assets-collection-size'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectAssetsCollectionsService {
-  private assetsCollections: ReadonlyArray<AssetsCollection>
-  private orderByCollectionSlug: Map<string, number>
+  private readonly assetsCollectionsData: ReadonlyArray<AssetsCollectionData>
+  private readonly orderByCollectionSlug: Map<string, number>
 
   constructor(
-    @Inject(ASSETS_COLLECTIONS)
-    unsortedAssetsCollections: ReadonlyArray<AssetsCollection>,
+    @Inject(ASSETS_COLLECTIONS_DATA)
+    unsortedAssetsCollections: ReadonlyArray<AssetsCollectionData>,
     @Inject(ASSETS_COLLECTIONS_ORDER)
     assetsCollectionsOrder: typeof assetsCollectionsOrderJson,
-    private jsonFetcher: JsonFetcher,
+    private readonly jsonFetcher: JsonFetcher,
     @Inject(VIDEO_ASSETS_COLLECTION)
-    private videoAssetsCollection: AssetsCollection,
-    @Inject(LOOKBOOK_COLLECTION_SLUG) private lookbookCollectionSlug: string,
+    private readonly videoAssetsCollection: AssetsCollectionData,
+    @Inject(LOOKBOOK_COLLECTION_SLUG)
+    private readonly lookbookCollectionSlug: string,
   ) {
-    const assetsCollections = []
+    const assetsCollectionsData = []
     const unsortedAssetsCollectionsBySlug = new Map(
       unsortedAssetsCollections.map((assetCollection) => [
         assetCollection.slug,
@@ -44,16 +46,16 @@ export class ProjectAssetsCollectionsService {
       const assetCollection =
         unsortedAssetsCollectionsBySlug.get(assetCollectionSlug)
       if (assetCollection) {
-        assetsCollections.push(assetCollection)
+        assetsCollectionsData.push(assetCollection)
         unsortedAssetsCollectionsBySlug.delete(assetCollection.slug)
       }
     }
-    this.assetsCollections = [
-      ...assetsCollections,
+    this.assetsCollectionsData = [
+      ...assetsCollectionsData,
       ...unsortedAssetsCollectionsBySlug.values(),
     ]
     this.orderByCollectionSlug = new Map(
-      this.assetsCollections.map((assetsCollection, index) => [
+      this.assetsCollectionsData.map((assetsCollection, index) => [
         assetsCollection.slug,
         index,
       ]),
@@ -74,10 +76,10 @@ export class ProjectAssetsCollectionsService {
       map((allCollections) =>
         allCollections.sort(
           (a, b) =>
-            (this.orderByCollectionSlug.get(a.slug) ??
-              this.assetsCollections.length) -
-            (this.orderByCollectionSlug.get(b.slug) ??
-              this.assetsCollections.length),
+            (this.orderByCollectionSlug.get(a.data.slug) ??
+              this.assetsCollectionsData.length) -
+            (this.orderByCollectionSlug.get(b.data.slug) ??
+              this.assetsCollectionsData.length),
         ),
       ),
     )
@@ -90,11 +92,10 @@ export class ProjectAssetsCollectionsService {
       return []
     }
     return [
-      {
-        ...this.videoAssetsCollection,
-        type: 'video',
-        youtubePlaylist: new YoutubePlaylist(project.youtubePlaylistId),
-      },
+      new VideoAssetsCollection(
+        this.videoAssetsCollection,
+        new YoutubePlaylist(project.youtubePlaylistId),
+      ),
     ]
   }
 
@@ -141,7 +142,7 @@ export class ProjectAssetsCollectionsService {
       ])
     }
     const assetCollections: ImageAssetsCollection[] = []
-    for (const assetCollection of this.assetsCollections) {
+    for (const assetCollection of this.assetsCollectionsData) {
       const projectImageAssets = projectImageAssetsByCollectionSlug.get(
         assetCollection.slug,
       )
@@ -171,12 +172,15 @@ export class ProjectAssetsCollectionsService {
               subcollectionImageAssets &&
               subcollectionImageAssets.length > 0
             ) {
-              lookbookCollections.push({
-                ...assetCollection,
-                type: 'image',
-                name: `${assetCollection.name} ${index} "${lookbookNameAndSlug.name}"`,
-                images: subcollectionImageAssets.map(({ asset }) => asset),
-              })
+              lookbookCollections.push(
+                new ImageAssetsCollection(
+                  {
+                    ...assetCollection,
+                    name: `${assetCollection.name} ${index} "${lookbookNameAndSlug.name}"`,
+                  },
+                  subcollectionImageAssets.map(({ asset }) => asset),
+                ),
+              )
               projectImageAssetsBySubcollectionSlug.delete(
                 lookbookNameAndSlug.slug,
               )
@@ -189,21 +193,25 @@ export class ProjectAssetsCollectionsService {
             .flat()
             .map(({ asset }) => asset)
           if (restOfLookbookImages.length > 0) {
-            lookbookCollections.push({
-              ...assetCollection,
-              type: 'image',
-              name: `${assetCollection.name} ${index}`,
-              images: restOfLookbookImages,
-            })
+            lookbookCollections.push(
+              new ImageAssetsCollection(
+                {
+                  ...assetCollection,
+                  name: `${assetCollection.name} ${index}`,
+                },
+                restOfLookbookImages,
+              ),
+            )
           }
           assetCollections.push(...lookbookCollections)
           projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
         } else {
-          assetCollections.push({
-            ...assetCollection,
-            type: 'image',
-            images: projectImageAssets.map(({ asset }) => asset),
-          })
+          assetCollections.push(
+            new ImageAssetsCollection(
+              assetCollection,
+              projectImageAssets.map(({ asset }) => asset),
+            ),
+          )
           projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
         }
       }
@@ -212,33 +220,37 @@ export class ProjectAssetsCollectionsService {
       .flat()
       .map(({ asset }) => asset)
     if (restOfImages.length > 0) {
-      assetCollections.push({
-        type: 'image',
-        name: 'Other images',
-        slug: 'other',
-        size: 'full',
-        images: restOfImages,
-      })
+      assetCollections.push(
+        new ImageAssetsCollection(
+          {
+            name: 'Other images',
+            slug: 'other',
+            size: AssetsCollectionSize.Full,
+          },
+          restOfImages,
+        ),
+      )
     }
     return assetCollections
   }
 }
 
-const ASSETS_COLLECTIONS = new InjectionToken<ReadonlyArray<AssetsCollection>>(
-  'Assets collections',
-  { factory: () => assetsCollectionsJson as ReadonlyArray<AssetsCollection> },
-)
+const ASSETS_COLLECTIONS_DATA = new InjectionToken<
+  ReadonlyArray<AssetsCollectionData>
+>('Assets collections', {
+  factory: () => assetsCollectionsJson as ReadonlyArray<AssetsCollectionData>,
+})
 
 const ASSETS_COLLECTIONS_ORDER = new InjectionToken<
   typeof assetsCollectionsOrderJson
 >('Assets collections order', { factory: () => assetsCollectionsOrderJson })
 
-const VIDEO_ASSETS_COLLECTION = new InjectionToken<AssetsCollection>(
+const VIDEO_ASSETS_COLLECTION = new InjectionToken<AssetsCollectionData>(
   'Video assets collection',
-  { factory: () => videoCollectionJson as AssetsCollection },
+  { factory: () => videoCollectionJson as AssetsCollectionData },
 )
 
 const LOOKBOOK_COLLECTION_SLUG = new InjectionToken<string>(
   'Lookbooks assets collections slug',
-  { factory: () => lookbookCollection.slug },
+  { factory: () => lookbookCollectionJson.slug },
 )

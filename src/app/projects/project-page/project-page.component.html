@@ -2,33 +2,31 @@
   <ng-container
     *ngFor="let assetsCollection of assetsCollections; index as index"
   >
-    <div class="assets" [class.half]="assetsCollection.size === 'half'">
-      <h2>{{ assetsCollection.name }}</h2>
+    <div
+      class="assets"
+      [class.half]="assetsCollection.data.size === AssetsCollectionSize.Half"
+    >
+      <h2>{{ assetsCollection.data.name }}</h2>
       <iframe
-        *ngIf="assetsCollection.type === 'video'"
+        *ngIf="assetsCollection.type === AssetsCollectionType.Video"
         width="560"
         height="315"
-        [attr.src]="assetsCollection.youtubePlaylist.iframeUrl"
+        [attr.src]="
+          assetsCollection.youtubePlaylist.iframeUrl | sanitizeResourceUrl
+        "
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
       ></iframe>
       <app-images-swiper
-        *ngIf="assetsCollection.type === 'image'"
+        *ngIf="assetsCollection.type === AssetsCollectionType.Image"
         [images]="assetsCollection.images"
-        [srcSet]="
-          IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetsCollection.size].srcSet
-        "
-        [sizes]="
-          IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetsCollection.size].sizes
-        "
+        [srcSet]="assetsCollection.imagesSwiperConfig.srcSet"
+        [sizes]="assetsCollection.imagesSwiperConfig.sizes"
         [customSwiperOptions]="
-          IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetsCollection.size]
-            .customSwiperOptions
+          assetsCollection.imagesSwiperConfig.customSwiperOptions
         "
-        [style.max-width.px]="
-          IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetsCollection.size].maxWidthPx
-        "
+        [style.max-width.px]="assetsCollection.imagesSwiperConfig.maxWidthPx"
         [priority]="index < MAX_SWIPERS_PER_VIEWPORT"
       ></app-images-swiper>
     </div>

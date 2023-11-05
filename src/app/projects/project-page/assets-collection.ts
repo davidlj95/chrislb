@@ -1,5 +1,7 @@
+import { AssetsCollectionType } from './assets-collection-type'
+import { AssetsCollectionData } from './assets-collection-data'
+
 export interface AssetsCollection {
-  readonly name: string
-  readonly slug: string
-  readonly size: 'full' | 'half'
+  readonly data: AssetsCollectionData
+  readonly type: AssetsCollectionType
 }

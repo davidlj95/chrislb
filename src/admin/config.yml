@@ -266,7 +266,7 @@ collections:
         hint: 'If representing a collection of images, ‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed. For videos, leave it to "videos" :) 💡 Lookbook specific names are specified per project'
       - label: 'Gallery size'
         name: 'size'
-        hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width'
+        hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width. Does not apply to videos (which have fixed size)'
         widget: 'select'
         options:
           - label: 'Full'

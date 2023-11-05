@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { ProjectsService } from '../projects.service'
-import { catchError, concatMap, Observable, of, tap } from 'rxjs'
+import { catchError, concatMap, map, Observable, of, tap } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
 import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../../routes'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
@@ -9,7 +9,9 @@ import { NavigatorService } from '../../common/navigator.service'
 import { AnyAssetsCollection } from './any-asset-collection'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
 import { SwiperOptions } from 'swiper/types'
-import { AssetsCollection } from './assets-collection'
+import { AssetsCollectionData } from './assets-collection-data'
+import { AssetsCollectionSize } from './assets-collection-size'
+import { AssetsCollectionType } from './assets-collection-type'
 
 @Component({
   selector: 'app-project-page',
@@ -17,14 +19,14 @@ import { AssetsCollection } from './assets-collection'
   styleUrls: ['./project-page.component.scss'],
 })
 export class ProjectPageComponent {
-  public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollection>>
+  public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>
   public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
   public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
   public readonly SWIPER_MAX_SLIDE_WIDTH_PX =
     this.FULL_SCREEN_SWIPER_MAX_WIDTH / this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW
   protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
   protected readonly IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME: {
-    [k in AssetsCollection['size']]: ImageAssetsSwiperConfig
+    [k in AssetsCollectionData['size']]: ImageAssetsSwiperConfig
   } = {
     half: {
       customSwiperOptions: {
@@ -54,6 +56,8 @@ export class ProjectPageComponent {
       maxWidthPx: this.FULL_SCREEN_SWIPER_MAX_WIDTH,
     },
   }
+  protected readonly AssetsCollectionSize = AssetsCollectionSize
+  protected readonly AssetsCollectionType = AssetsCollectionType
 
   constructor(
     private projectsService: ProjectsService,
@@ -83,6 +87,13 @@ export class ProjectPageComponent {
           .byProject(project)
           .pipe(catchError(() => of([]))),
       ),
+      map((assetsCollections) =>
+        assetsCollections.map((assetCollection) => ({
+          ...assetCollection,
+          imagesSwiperConfig:
+            this.IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetCollection.data.size],
+        })),
+      ),
       tap((assetsCollections) => {
         if (assetsCollections.length === 0) {
           this.navigatorService.displayNotFoundPage()
@@ -90,6 +101,10 @@ export class ProjectPageComponent {
       }),
     )
   }
+}
+
+type AnyAssetsCollectionItem = AnyAssetsCollection & {
+  readonly imagesSwiperConfig: ImageAssetsSwiperConfig
 }
 
 interface ImageAssetsSwiperConfig {
