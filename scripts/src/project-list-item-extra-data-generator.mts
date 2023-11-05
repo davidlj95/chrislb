@@ -5,6 +5,9 @@ import { ListItemExtraData } from '../../src/app/projects/project-list-item.js'
 import { Log } from './log.mjs'
 import { Project } from '../../src/app/projects/project.js'
 import previewJson from '../../src/data/assets-collections/preview.json' assert { type: 'json' }
+import projectImageAssetPkg from '../../src/app/projects/project-page/project-image-asset.js'
+
+const { ProjectImageAsset } = projectImageAssetPkg
 
 export class ProjectListItemExtraDataGenerator {
   private readonly PREVIEW_IMAGES_DIRECTORY = previewJson.slug
@@ -39,9 +42,7 @@ export class ProjectListItemExtraDataGenerator {
       const preview: ImageAsset[] = []
       const others: ImageAsset[] = []
       for (const image of images) {
-        this.isPreviewImage(image.filePath)
-          ? preview.push(image)
-          : others.push(image)
+        this.isPreviewImage(image) ? preview.push(image) : others.push(image)
       }
       this._imagesByGroups = {
         preview,
@@ -73,20 +74,9 @@ export class ProjectListItemExtraDataGenerator {
     return this._imagesResource
   }
 
-  private isPreviewImage(imageFilePath: string): boolean {
-    return this.getRelativeImageFilePath(imageFilePath).startsWith(
-      this.PREVIEW_IMAGES_DIRECTORY,
-    )
-  }
-
-  private getRelativeImageFilePath(imageFilePath: string): string {
-    const imageFilePathWithoutBaseSlash = imageFilePath.startsWith('/')
-      ? imageFilePath.substring(1)
-      : imageFilePath
-    return imageFilePathWithoutBaseSlash.substring(
-      // +1 to take into account the slash
-      this.resource.relativePath.length + 1,
-    )
+  private isPreviewImage(image: ImageAsset): boolean {
+    const projectImageAsset = new ProjectImageAsset(image, this.resource.slug)
+    return projectImageAsset.collection === this.PREVIEW_IMAGES_DIRECTORY
   }
 
   private async hasDetails(): Promise<boolean> {
