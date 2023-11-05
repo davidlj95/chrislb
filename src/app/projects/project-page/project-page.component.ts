@@ -1,33 +1,17 @@
-import { Component, DestroyRef, Input } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { ProjectsService } from '../projects.service'
-import {
-  catchError,
-  combineLatest,
-  concatMap,
-  last,
-  map,
-  Observable,
-  of,
-  share,
-  tap,
-} from 'rxjs'
+import { catchError, concatMap, map, Observable, of, tap } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
 import { getCanonicalUrlForPath, getTitle, PROJECTS_PATH } from '../../routes'
 import { ImageResponsiveBreakpointsService } from '../../common/image-responsive-breakpoints.service'
-import { ImageAsset } from '../../common/images/image-asset'
-import { ProjectImagesService } from './project-images.service'
-import {
-  CONCEPT_IMAGES_FILENAME,
-  DESIGN_BOOK_IMAGES_FILENAME,
-  TECH_MATERIAL_IMAGES_FILENAME,
-} from '../../common/files'
-import { Lookbook } from './lookbook'
-import { ProjectLookbooksService } from './project-lookbooks.service'
 import { ImageResponsiveBreakpoints } from '../../common/image-responsive-breakpoints'
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
-import { YoutubePlaylist } from './youtube-playlist'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { NavigatorService } from '../../common/navigator.service'
+import { AnyAssetsCollection } from './any-asset-collection'
+import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
+import { SwiperOptions } from 'swiper/types'
+import { AssetsCollectionData } from './assets-collection-data'
+import { AssetsCollectionSize } from './assets-collection-size'
+import { AssetsCollectionType } from './assets-collection-type'
 
 @Component({
   selector: 'app-project-page',
@@ -35,53 +19,57 @@ import { NavigatorService } from '../../common/navigator.service'
   styleUrls: ['./project-page.component.scss'],
 })
 export class ProjectPageComponent {
-  public viewModel$!: Observable<ViewModel>
+  public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>
   public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
   public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
   public readonly SWIPER_MAX_SLIDE_WIDTH_PX =
     this.FULL_SCREEN_SWIPER_MAX_WIDTH / this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW
-  public readonly FULL_SCREEN_SWIPER = {
-    customSwiperOptions: {
-      slidesPerView: this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW,
-    },
-    srcSet: new ImageResponsiveBreakpoints(
-      this.imageResponsiveBreakpointsService
-        .range(
-          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
-          this.SWIPER_MAX_SLIDE_WIDTH_PX,
-        )
-        .pxValues.concat([this.SWIPER_MAX_SLIDE_WIDTH_PX]),
-    ).toSrcSet(),
-    sizes: `calc(50vw - 16px), ${this.SWIPER_MAX_SLIDE_WIDTH_PX}px`,
-  }
-  public readonly HALF_SCREEN_SWIPER = {
-    customSwiperOptions: {
-      slidesPerView: 1,
-    },
-    srcSet: this.imageResponsiveBreakpointsService
-      .range(
-        this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
-        this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 2,
-      )
-      .toSrcSet(),
-    sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
-  }
   protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
+  protected readonly IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME: {
+    [k in AssetsCollectionData['size']]: ImageAssetsSwiperConfig
+  } = {
+    half: {
+      customSwiperOptions: {
+        slidesPerView: 1,
+      },
+      srcSet: this.imageResponsiveBreakpointsService
+        .range(
+          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
+          this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 2,
+        )
+        .toSrcSet(),
+      sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
+    },
+    full: {
+      customSwiperOptions: {
+        slidesPerView: this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW,
+      },
+      srcSet: new ImageResponsiveBreakpoints(
+        this.imageResponsiveBreakpointsService
+          .range(
+            this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
+            this.SWIPER_MAX_SLIDE_WIDTH_PX,
+          )
+          .pxValues.concat([this.SWIPER_MAX_SLIDE_WIDTH_PX]),
+      ).toSrcSet(),
+      sizes: `calc(50vw - 16px), ${this.SWIPER_MAX_SLIDE_WIDTH_PX}px`,
+      maxWidthPx: this.FULL_SCREEN_SWIPER_MAX_WIDTH,
+    },
+  }
+  protected readonly AssetsCollectionSize = AssetsCollectionSize
+  protected readonly AssetsCollectionType = AssetsCollectionType
 
   constructor(
     private projectsService: ProjectsService,
-    private navigatorService: NavigatorService,
     private seo: SeoService,
-    private projectLookbooksService: ProjectLookbooksService,
-    private projectsImagesService: ProjectImagesService,
+    private navigatorService: NavigatorService,
+    private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
-    private sanitizer: DomSanitizer,
-    private destroyRef: DestroyRef,
   ) {}
 
   @Input({ required: true })
   public set slug(slug: string) {
-    this.viewModel$ = this.projectsService.bySlug(slug).pipe(
+    const project$ = this.projectsService.bySlug(slug).pipe(
       tap({
         next: (project) => {
           this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
@@ -92,59 +80,36 @@ export class ProjectPageComponent {
           this.navigatorService.displayNotFoundPage()
         },
       }),
-      concatMap((project) =>
-        combineLatest([
-          of(
-            project.youtubePlaylistId
-              ? this.sanitizer.bypassSecurityTrustResourceUrl(
-                  new YoutubePlaylist(
-                    project.youtubePlaylistId,
-                  ).iframeUrl.toString(),
-                )
-              : undefined,
-          ),
-          this.projectLookbooksService
-            .bySlug(slug, project.lookbookNamesAndSlugs)
-            .pipe(catchError(() => of(undefined))),
-          this.projectsImagesService
-            .bySlugAndFilename(slug, TECH_MATERIAL_IMAGES_FILENAME)
-            .pipe(catchError(() => of(undefined))),
-          this.projectsImagesService
-            .bySlugAndFilename(slug, DESIGN_BOOK_IMAGES_FILENAME)
-            .pipe(catchError(() => of(undefined))),
-          this.projectsImagesService
-            .bySlugAndFilename(slug, CONCEPT_IMAGES_FILENAME)
-            .pipe(catchError(() => of(undefined))),
-        ]).pipe(map((data) => new ViewModel(...data))),
-      ),
-      share(),
     )
-    this.viewModel$
-      .pipe(last(), takeUntilDestroyed(this.destroyRef))
-      .subscribe((lastViewModel) => {
-        if (!lastViewModel.hasData) {
+    this.assetsCollections$ = project$.pipe(
+      concatMap((project) =>
+        this.projectAssetsCollectionsService
+          .byProject(project)
+          .pipe(catchError(() => of([]))),
+      ),
+      map((assetsCollections) =>
+        assetsCollections.map((assetCollection) => ({
+          ...assetCollection,
+          imagesSwiperConfig:
+            this.IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetCollection.data.size],
+        })),
+      ),
+      tap((assetsCollections) => {
+        if (assetsCollections.length === 0) {
           this.navigatorService.displayNotFoundPage()
         }
-      })
+      }),
+    )
   }
 }
 
-export class ViewModel {
-  constructor(
-    public readonly youtubeIframeUrl?: SafeResourceUrl,
-    public readonly lookbooks?: ReadonlyArray<Lookbook>,
-    public readonly techMaterialImages?: ReadonlyArray<ImageAsset>,
-    public readonly designBookImages?: ReadonlyArray<ImageAsset>,
-    public readonly conceptImages?: ReadonlyArray<ImageAsset>,
-  ) {}
+type AnyAssetsCollectionItem = AnyAssetsCollection & {
+  readonly imagesSwiperConfig: ImageAssetsSwiperConfig
+}
 
-  public get hasData(): boolean {
-    return !!(
-      this.youtubeIframeUrl ||
-      this.lookbooks?.length ||
-      this.techMaterialImages?.length ||
-      this.designBookImages?.length ||
-      this.conceptImages?.length
-    )
-  }
+interface ImageAssetsSwiperConfig {
+  readonly customSwiperOptions: SwiperOptions
+  readonly srcSet: string
+  readonly sizes: string
+  readonly maxWidthPx?: number
 }

@@ -17,18 +17,16 @@
     "format-check-all": "npm run format-check -- .",
     "format": "prettier --ignore-unknown --write",
     "format-all": "npm run format -- .",
-    "generate-image-lists": "ts-node scripts/src/generate-image-lists.mts",
     "create-env-from-sample": "cp .env.sample .env",
     "lint-staged": "lint-staged",
     "git-hooks": "husky install",
     "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
-    "generate-content": "ts-node scripts/src/generate-content.mts",
     "cms-server": "npx decap-server",
-    "prebuild": "npm run generators && npm run generate-image-lists && npm run generate-content && npm run generate-routes-file",
+    "prebuild": "npm run generate",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
     "postbuild": "cp dist/chrislb/browser/404/index.html dist/chrislb/browser/content/404.html",
-    "generate-routes-file": "ts-node scripts/src/generate-routes-file.mts",
-    "generators": "ts-node scripts/src/generators.mts"
+    "generate": "ts-node scripts/src/generators.mts",
+    "generate-routes-file": "ts-node scripts/src/routes-file-generator.mts"
   },
   "private": true,
   "dependencies": {

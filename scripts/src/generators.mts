@@ -11,6 +11,7 @@ import { ResourceCollectionListGenerator } from './resource-collection-list-gene
 import { ProjectListItemExtraDataGenerator } from './project-list-item-extra-data-generator.mjs'
 import { Resource } from './resource.mjs'
 import { MiscImages } from '../../src/app/common/images/misc-images.js'
+import { RoutesFileGenerator } from './routes-file-generator.mjs'
 
 const { DATA_DIR, CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
 
@@ -36,10 +37,11 @@ class Generators {
 
   public async all() {
     await this.miscImages()
-    //await this.projectsImages()
-    //await this.projectsList()
+    await this.projectsImages()
+    await this.projectsList()
     await this.authorsList()
     await this.assetsCollectionsList()
+    await this.routesFile()
   }
 
   public async miscImages() {
@@ -92,6 +94,10 @@ class Generators {
     return new ResourceCollectionListGenerator(
       new ResourceCollection(join(this.DATA_PATH, 'assets-collections')),
     ).generate()
+  }
+
+  public async routesFile(): Promise<void> {
+    return new RoutesFileGenerator().all()
   }
 }
 
