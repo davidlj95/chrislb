@@ -1,7 +1,21 @@
 import { Component, Input, OnChanges } from '@angular/core'
+import { register as registerSwiper } from 'swiper/element'
+
 import { DEFAULT_ALT } from '../../common/images/default-alt'
 import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../../common/images/image-asset'
+import {
+  A11y,
+  Autoplay,
+  Keyboard,
+  Mousewheel,
+  Navigation,
+  Pagination,
+} from 'swiper/modules'
+
+// There's no fancier way to install Web Components in Angular :P
+// https://stackoverflow.com/a/75353889/3263250
+registerSwiper()
 
 @Component({
   selector: 'app-images-swiper',
@@ -16,20 +30,28 @@ export class ImagesSwiperComponent implements OnChanges {
   @Input() public customSwiperOptions?: SwiperOptions
   protected readonly DEFAULT_IMAGE_ALT = DEFAULT_ALT
   protected readonly DEFAULT_SWIPER_OPTIONS: SwiperOptions = {
-    pagination: {
-      enabled: true,
-      clickable: true,
-      dynamicBullets: true,
-    },
-    navigation: {
-      enabled: true,
-    },
-    keyboard: {
-      enabled: true,
+    modules: [A11y, Autoplay, Keyboard, Mousewheel, Navigation, Pagination],
+    injectStylesUrls: ['/swiper.css'],
+    a11y: {
+      enabled: false,
     },
     autoplay: {
       disableOnInteraction: true,
       delay: 2500,
+    },
+    keyboard: {
+      enabled: true,
+    },
+    mousewheel: {
+      forceToAxis: true,
+    },
+    navigation: {
+      enabled: true,
+    },
+    pagination: {
+      enabled: true,
+      clickable: true,
+      dynamicBullets: true,
     },
   }
   protected _maxSlidesPerView: number | null = null
