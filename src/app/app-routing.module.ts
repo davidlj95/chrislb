@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { ProjectsPageComponent } from './projects/projects-page/projects-page.component'
-import { ProjectPageComponent } from './projects/project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
@@ -12,6 +11,7 @@ import {
   PROJECTS_PATH,
 } from './common/routing/paths'
 import { getMetadataFromJson } from './common/routing/get-metadata-from-json'
+import { PROJECTS_ROUTES } from './projects/projects-routes'
 
 @NgModule({
   imports: [
@@ -23,13 +23,10 @@ import { getMetadataFromJson } from './common/routing/get-metadata-from-json'
           data: makeRouteMetadadata(projectsPageMetadata),
           pathMatch: 'full',
         },
-        {
-          path: `${PROJECTS_PATH}/:slug`,
-          component: ProjectPageComponent,
-        },
+
         {
           path: PROJECTS_PATH,
-          redirectTo: '/',
+          children: PROJECTS_ROUTES,
         },
         {
           path: ABOUT_PATH,

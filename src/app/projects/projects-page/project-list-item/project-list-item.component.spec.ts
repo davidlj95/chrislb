@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectListItemComponent } from './project-list-item.component'
 import { MockComponents } from 'ng-mocks'
-import { ImagesSwiperComponent } from '../../../images-swiper/images-swiper.component'
+import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 
 describe('ProjectListItemComponent', () => {
   let component: ProjectListItemComponent
