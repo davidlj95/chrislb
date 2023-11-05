@@ -38,7 +38,7 @@ class Generators {
     await this.miscImages()
     //await this.projectsImages()
     //await this.projectsList()
-    //await this.authorsList()
+    await this.authorsList()
   }
 
   public async miscImages() {

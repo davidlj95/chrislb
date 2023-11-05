@@ -12,15 +12,14 @@ const { CONTENTS_DIR, PROJECTS_DIR, DATA_DIR } = directoriesPkg
 const { getListFilename, PREVIEW_IMAGES_FILENAME } = filesPkg
 
 export class ContentsGenerator {
-  readonly SRC_PATH = path.join(getRepositoryRootDir(), 'src')
-  readonly CONTENTS_EXTENSION = '.json'
   public static readonly PROJECTS_CONTENT_DETAIL_EXCEPTIONS = [
     PREVIEW_IMAGES_FILENAME,
   ]
+  readonly SRC_PATH = path.join(getRepositoryRootDir(), 'src')
+  readonly CONTENTS_EXTENSION = '.json'
 
   async all() {
     await this.listFromDirectoryWithJsons(CONTENTS_DIR, PROJECTS_DIR)
-    await this.listFromDirectoryWithJsons(DATA_DIR, 'authors')
     await this.addContentToListFile({
       directory: CONTENTS_DIR,
       subdirectory: PROJECTS_DIR,
