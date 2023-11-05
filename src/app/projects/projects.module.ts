@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router'
 import { SanitizeResourceUrlPipe } from './sanitize-resource-url.pipe'
 
 import { register as registerSwiper } from 'swiper/element/bundle'
+import { ProjectsService } from './projects.service'
+import { ProjectAssetsCollectionsService } from './project-page/project-assets-collections.service'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -30,5 +32,6 @@ registerSwiper()
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [ProjectsService, ProjectAssetsCollectionsService],
 })
 export class ProjectsModule {}
