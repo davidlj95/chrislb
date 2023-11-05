@@ -63,6 +63,8 @@ export class Imagekit implements ImageCdnApi {
           ...(await this.getAllImagesInPath(`${path}/${directoryName}`)),
         )
       }
+    } else {
+      Log.groupEnd()
     }
     return [...imageAssets, ...imagesFromDirectories]
   }

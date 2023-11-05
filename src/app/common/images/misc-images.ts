@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core'
-import miscImages from '../../../data/images/misc.json'
+import miscImages from '../../../data/misc/images.json'
 import { ImageAsset } from './image-asset'
 
 export const MISC_IMAGES = new InjectionToken<MiscImages>(
