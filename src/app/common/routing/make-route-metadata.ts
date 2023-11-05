@@ -1,6 +1,10 @@
 import { JsonMetadata } from './json-metadata'
-import { RouteData } from './route-data'
 import { getMetadataFromJson } from './get-metadata-from-json'
+import { IPageSeoData } from '@ngaox/seo'
+
+type RouteData = {
+  NgaoxSeo?: IPageSeoData
+}
 
 export function makeRouteMetadadata(
   jsonMetadata: JsonMetadata,
