@@ -8,7 +8,6 @@ import {
   A11y,
   Autoplay,
   Keyboard,
-  Mousewheel,
   Navigation,
   Pagination,
 } from 'swiper/modules'
@@ -30,7 +29,7 @@ export class ImagesSwiperComponent implements OnChanges {
   @Input() public customSwiperOptions?: SwiperOptions
   protected readonly DEFAULT_IMAGE_ALT = DEFAULT_ALT
   protected readonly DEFAULT_SWIPER_OPTIONS: SwiperOptions = {
-    modules: [A11y, Autoplay, Keyboard, Mousewheel, Navigation, Pagination],
+    modules: [A11y, Autoplay, Keyboard, Navigation, Pagination],
     injectStylesUrls: ['/swiper.css'],
     a11y: {
       enabled: false,
@@ -41,9 +40,6 @@ export class ImagesSwiperComponent implements OnChanges {
     },
     keyboard: {
       enabled: true,
-    },
-    mousewheel: {
-      forceToAxis: true,
     },
     navigation: {
       enabled: true,
