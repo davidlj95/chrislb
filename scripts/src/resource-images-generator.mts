@@ -1,5 +1,8 @@
 import { Resource } from './resource.mjs'
 import { ImageCdnApi } from './image-cdn-api.mjs'
+import filesPkg from '../../src/app/common/files.js'
+
+const { IMAGES_FILE_BASENAME } = filesPkg
 
 export class ResourceImagesGenerator {
   constructor(public readonly imageCdnApi: ImageCdnApi) {}
@@ -17,6 +20,6 @@ export class ResourceImagesGenerator {
   }
 
   public get basename() {
-    return 'images'
+    return IMAGES_FILE_BASENAME
   }
 }
