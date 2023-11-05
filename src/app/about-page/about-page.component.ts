@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core'
 import aboutPageContents from '../../data/misc/about.json'
-import { ImageResponsiveBreakpointsService } from '../common/image-responsive-breakpoints.service'
+import { ImageResponsiveBreakpointsService } from '../common/images/image-responsive-breakpoints.service'
 import { ImageAsset } from '../common/images/image-asset'
 import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
 

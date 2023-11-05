@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Social, SocialName } from './social'
-import { Author } from '../../common/authors.service'
+import { Author } from '../authors.service'
 import {
   faInstagram,
   faLinkedinIn,
