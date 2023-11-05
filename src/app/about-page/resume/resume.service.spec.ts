@@ -6,7 +6,7 @@ describe('ResumeService', () => {
   let service: ResumeService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
+    TestBed.configureTestingModule({ providers: [ResumeService] })
     service = TestBed.inject(ResumeService)
   })
 

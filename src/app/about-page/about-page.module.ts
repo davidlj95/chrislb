@@ -5,6 +5,7 @@ import { SocialComponent } from './social/social.component'
 import { ResumeComponent } from './resume/resume.component'
 import { AboutPageRoutingModule } from './about-page-routing.module'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { ResumeService } from './resume/resume.service'
 
 @NgModule({
   declarations: [AboutPageComponent, SocialComponent, ResumeComponent],
@@ -14,5 +15,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     FontAwesomeModule,
     NgOptimizedImage,
   ],
+  providers: [ResumeService],
 })
 export class AboutPageModule {}
