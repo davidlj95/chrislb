@@ -4,72 +4,40 @@
 
 :host {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   @include page.padding;
   gap: margins.$m;
-
-  .videos {
-    display: flex;
-    flex-direction: column;
-    gap: margins.$m;
-    place-content: center;
-    align-items: center;
-
-    iframe {
-      max-width: 100%;
-    }
-  }
+  justify-content: center;
 
   h2 {
     text-align: center;
   }
 
-  .lookbooks {
+  $assetsGap: margins.$m;
+
+  .assets {
     display: flex;
     flex-direction: column;
-    gap: margins.$m;
+    gap: $assetsGap;
+    align-items: center;
+    width: 100%;
 
-    .lookbook {
-      display: flex;
-      flex-direction: column;
-      gap: margins.$m;
-      align-items: center;
-
-      > * {
-        width: 100%;
-        //ℹ️ max-width set by component for big screens
-      }
+    > app-images-swiper {
+      width: 100%;
+      //ℹ️ max-width set by component for big screens
     }
   }
 
-  .material-and-book {
-    display: flex;
-    $margin: margins.$m;
-    gap: $margin;
-    max-width: 100%;
-    justify-content: center;
-
-    > * {
-      width: calc((100% - $margin) / 2);
+  .video {
+    iframe {
+      max-width: 100%;
     }
+  }
+
+  .half {
+    width: calc(50% - $assetsGap);
 
     @include breakpoints.until-s {
-      flex-direction: column;
-
-      > * {
-        width: 100%;
-      }
-    }
-  }
-
-  .concept-images {
-    display: flex;
-    flex-direction: column;
-    gap: margins.$m;
-    align-items: center;
-
-    //ℹ️ max-width set by component for big screens
-    > * {
       width: 100%;
     }
   }
