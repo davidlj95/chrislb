@@ -92,6 +92,7 @@ export class ProjectAssetsCollectionsService {
     return [
       {
         ...this.videoAssetsCollection,
+        type: 'video',
         youtubePlaylist: new YoutubePlaylist(project.youtubePlaylistId),
       },
     ]
@@ -151,10 +152,10 @@ export class ProjectAssetsCollectionsService {
             ReadonlyArray<ProjectImageAsset>
           >()
           for (const projectImageAsset of projectImageAssets) {
-            const subcollection = projectImageAsset.subCollection
+            const subCollection = projectImageAsset.subCollection
             const assetsInCollection =
-              projectImageAssetsBySubcollectionSlug.get(subcollection) ?? []
-            projectImageAssetsBySubcollectionSlug.set(subcollection, [
+              projectImageAssetsBySubcollectionSlug.get(subCollection) ?? []
+            projectImageAssetsBySubcollectionSlug.set(subCollection, [
               ...assetsInCollection,
               projectImageAsset,
             ])
@@ -172,6 +173,7 @@ export class ProjectAssetsCollectionsService {
             ) {
               lookbookCollections.push({
                 ...assetCollection,
+                type: 'image',
                 name: `${assetCollection.name} ${index} "${lookbookNameAndSlug.name}"`,
                 images: subcollectionImageAssets.map(({ asset }) => asset),
               })
@@ -189,6 +191,7 @@ export class ProjectAssetsCollectionsService {
           if (restOfLookbookImages.length > 0) {
             lookbookCollections.push({
               ...assetCollection,
+              type: 'image',
               name: `${assetCollection.name} ${index}`,
               images: restOfLookbookImages,
             })
@@ -198,6 +201,7 @@ export class ProjectAssetsCollectionsService {
         } else {
           assetCollections.push({
             ...assetCollection,
+            type: 'image',
             images: projectImageAssets.map(({ asset }) => asset),
           })
           projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
@@ -209,6 +213,7 @@ export class ProjectAssetsCollectionsService {
       .map(({ asset }) => asset)
     if (restOfImages.length > 0) {
       assetCollections.push({
+        type: 'image',
         name: 'Other images',
         slug: 'other',
         size: 'full',

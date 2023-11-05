@@ -4,7 +4,6 @@ import path from 'path'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { readdir, readFile, writeFile } from 'fs/promises'
 import directoriesPkg from '../../src/app/common/directories.js'
-import { ContentsGenerator } from './generate-content.mjs'
 
 const { CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
 
@@ -37,14 +36,7 @@ export class RoutesFileGenerator {
             path.join(this.PROJECTS_PATH, projectDir.name),
             { withFileTypes: true },
           )
-          const projectDirFilesWithContent = projectDirFiles.filter(
-            (dirent) =>
-              dirent.isFile() &&
-              !ContentsGenerator.PROJECTS_CONTENT_DETAIL_EXCEPTIONS.includes(
-                dirent.name,
-              ),
-          )
-          return projectDirFilesWithContent.length > 0 ? projectDir.name : ''
+          return projectDirFiles.length > 0 ? projectDir.name : ''
         }),
       )
     ).filter((projectDir) => projectDir.length)
