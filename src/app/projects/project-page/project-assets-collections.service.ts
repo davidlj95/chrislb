@@ -18,9 +18,7 @@ import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
 import { AssetsCollectionSize } from './assets-collection-size'
 import { IMAGES_FILENAME } from '../../common/files'
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProjectAssetsCollectionsService {
   private readonly assetsCollectionsData: ReadonlyArray<AssetsCollectionData>
   private readonly orderByCollectionSlug: Map<string, number>

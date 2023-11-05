@@ -8,7 +8,9 @@ describe('ProjectsService', () => {
   let service: ProjectsService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [MockProviders(JsonFetcher)] })
+    TestBed.configureTestingModule({
+      providers: [ProjectsService, MockProviders(JsonFetcher)],
+    })
     service = TestBed.inject(ProjectsService)
   })
 

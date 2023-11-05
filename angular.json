@@ -11,6 +11,9 @@
       },
       "pipe": {
         "module": "app"
+      },
+      "module": {
+        "module": "app"
       }
     }
   },

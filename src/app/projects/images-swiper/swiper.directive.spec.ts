@@ -15,7 +15,7 @@ import {
   PLATFORM_BROWSER_ID,
   PLATFORM_SERVER_ID,
   PlatformId,
-} from '../../test/platform-ids'
+} from '../../../test/platform-ids'
 import { MockProvider } from 'ng-mocks'
 
 describe('SwiperDirective', () => {

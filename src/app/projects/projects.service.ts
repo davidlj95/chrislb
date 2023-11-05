@@ -6,9 +6,7 @@ import { ProjectListItem } from './project-list-item'
 import { from, Observable } from 'rxjs'
 import { Project } from './project'
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 

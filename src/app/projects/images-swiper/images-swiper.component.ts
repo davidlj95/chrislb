@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core'
-import { DEFAULT_ALT } from '../common/images/default-alt'
+import { DEFAULT_ALT } from '../../common/images/default-alt'
 import { SwiperOptions } from 'swiper/types'
-import { ImageAsset } from '../common/images/image-asset'
+import { ImageAsset } from '../../common/images/image-asset'
 
 @Component({
   selector: 'app-images-swiper',
