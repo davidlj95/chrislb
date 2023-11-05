@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
-import { Social } from './social'
+import { Social } from '../../common/social/social'
 import { AuthorsService } from '../../common/authors.service'
-import { SocialService } from './social.service'
+import { SocialService } from '../../common/social/social.service'
 
 @Component({
   selector: 'app-social',
