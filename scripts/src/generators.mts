@@ -12,7 +12,9 @@ import { ProjectListItemExtraDataGenerator } from './project-list-item-extra-dat
 import { Resource } from './resource.mjs'
 import { MiscImages } from '../../src/app/common/images/misc-images.js'
 import { RoutesFileGenerator } from './routes-file-generator.mjs'
+import filesPkg from '../../src/app/common/files.js'
 
+const { IMAGES_FILE_BASENAME } = filesPkg
 const { DATA_DIR, CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
 
 class Generators {
@@ -63,7 +65,7 @@ class Generators {
       horizontalLogo,
       aboutPortrait,
     }
-    await this.misc.upsertResource('images', miscImages)
+    await this.misc.upsertResource(IMAGES_FILE_BASENAME, miscImages)
   }
 
   public async projectsImages() {

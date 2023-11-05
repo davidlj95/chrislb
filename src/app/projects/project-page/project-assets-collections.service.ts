@@ -16,6 +16,7 @@ import { ImageAsset } from '../../common/images/image-asset'
 import { ProjectImageAsset } from './project-image-asset'
 import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
 import { AssetsCollectionSize } from './assets-collection-size'
+import { IMAGES_FILENAME } from '../../common/files'
 
 @Injectable({
   providedIn: 'root',
@@ -107,7 +108,7 @@ export class ProjectAssetsCollectionsService {
       this.jsonFetcher.fetch<ReadonlyArray<ImageAsset>>(
         PROJECTS_DIR,
         slug,
-        'images.json',
+        IMAGES_FILENAME,
       ),
     ).pipe(
       map((imageAssets) =>

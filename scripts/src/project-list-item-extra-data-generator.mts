@@ -4,9 +4,10 @@ import { ResourceImagesGenerator } from './resource-images-generator.mjs'
 import { ListItemExtraData } from '../../src/app/projects/project-list-item.js'
 import { Log } from './log.mjs'
 import { Project } from '../../src/app/projects/project.js'
+import previewJson from '../../src/data/assets-collections/preview.json' assert { type: 'json' }
 
 export class ProjectListItemExtraDataGenerator {
-  private readonly PREVIEW_IMAGES_DIRECTORY = 'preview'
+  private readonly PREVIEW_IMAGES_DIRECTORY = previewJson.slug
   private _imagesResource?: Resource | null
   private _imagesByGroups?: ImagesByGroups
 
