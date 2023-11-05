@@ -19,7 +19,7 @@ class Generators {
   private readonly SRC_PATH = join(this.REPO_PATH, 'src')
   private readonly DATA_PATH = join(this.SRC_PATH, DATA_DIR)
   private readonly CONTENT_PATH = join(this.SRC_PATH, CONTENTS_DIR)
-  private readonly IMAGES_DIR = 'images'
+  private readonly MISC_DIR = 'misc'
   private readonly resourceImagesGenerator = new ResourceImagesGenerator(
     this.imageCdnApi,
   )
@@ -30,8 +30,8 @@ class Generators {
     return new ResourceCollection(join(this.CONTENT_PATH, PROJECTS_DIR))
   }
 
-  private get images(): ResourceCollection {
-    return new ResourceCollection(join(this.DATA_PATH, this.IMAGES_DIR))
+  private get misc(): ResourceCollection {
+    return new ResourceCollection(join(this.DATA_PATH, this.MISC_DIR))
   }
 
   public async all() {
@@ -43,23 +43,24 @@ class Generators {
 
   public async miscImages() {
     Log.info('Looking for misc images')
-    const miscPathAndFilename = 'misc'
-    const misc = await this.imageCdnApi.getAllImagesInPath(miscPathAndFilename)
-    const horizontalLogo = misc.find((image) =>
+    const images = await this.imageCdnApi.getAllImagesInPath('misc')
+    const horizontalLogo = images.find((image) =>
       image.name.includes('horizontal'),
     )
-    const aboutPortrait = misc.find((image) => image.name.includes('portrait'))
+    const aboutPortrait = images.find((image) =>
+      image.name.includes('portrait'),
+    )
     if (!horizontalLogo) {
       throw new Error('Unable to find horizontal logo')
     }
     if (!aboutPortrait) {
       throw new Error('Unable to find about portrait')
     }
-    const miscJson: MiscImages = {
+    const miscImages: MiscImages = {
       horizontalLogo,
       aboutPortrait,
     }
-    await this.images.upsertResource(miscPathAndFilename, miscJson)
+    await this.misc.upsertResource('images', miscImages)
   }
 
   public async projectsImages() {
