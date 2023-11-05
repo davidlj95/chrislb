@@ -1,6 +1,5 @@
 import { Component, DestroyRef, Input } from '@angular/core'
 import { ProjectsService } from '../projects.service'
-import { Router } from '@angular/router'
 import {
   catchError,
   combineLatest,
@@ -72,7 +71,6 @@ export class ProjectPageComponent {
   constructor(
     private projectsService: ProjectsService,
     private navigatorService: NavigatorService,
-    private router: Router,
     private seo: SeoService,
     private projectLookbooksService: ProjectLookbooksService,
     private projectsImagesService: ProjectImagesService,

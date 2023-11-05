@@ -60,7 +60,10 @@ export class Imagekit implements ImageCdnApi {
       Log.groupEnd()
       for (const directoryName of directoryNames) {
         imagesFromDirectories.push(
-          ...(await this.getAllImagesInPath(`${path}/${directoryName}`)),
+          ...(await this.getAllImagesInPath(
+            `${path}/${directoryName}`,
+            includeSubdirectories,
+          )),
         )
       }
     } else {
