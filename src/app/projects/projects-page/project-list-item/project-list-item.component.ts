@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core'
 import { ProjectListItem } from '../../project-list-item'
 import { SwiperOptions } from 'swiper/types'
-import { PROJECTS_PATH } from '../../../routes'
-import { ImageResponsiveBreakpointsService } from '../../../common/image-responsive-breakpoints.service'
+import { ImageResponsiveBreakpointsService } from '../../../common/images/image-responsive-breakpoints.service'
 import { Author, AuthorsService } from '../../../common/authors.service'
 import { Social } from '../../../about-page/social/social'
 import { SocialService } from '../../../about-page/social/social.service'
 import { Credit } from '../../credit'
+import { PROJECTS_PATH } from '../../../common/routing/paths'
 
 @Component({
   selector: 'app-project-list-item',
@@ -40,13 +40,14 @@ export class ProjectListItemComponent {
     )
     .toSrcSet()
   public credits?: ReadonlyArray<CreditItem>
-  protected readonly PROJECTS_PATH = PROJECTS_PATH
 
   constructor(
     private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
     private authorsService: AuthorsService,
     private socialService: SocialService,
   ) {}
+
+  protected readonly PROJECTS_PATH = PROJECTS_PATH
 }
 
 type CreditItem = Omit<Credit, 'authorSlug'> & {

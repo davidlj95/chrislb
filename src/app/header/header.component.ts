@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import projectPageMetadata from '../../data/pages/projects.json'
 import aboutPageMetadata from '../../data/pages/about.json'
-import { ABOUT_PATH } from '../routes'
+import { ABOUT_PATH } from '../common/routing/paths'
 
 @Component({
   selector: 'app-header',

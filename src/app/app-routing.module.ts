@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import {
-  ABOUT_PATH,
-  addOpenGraphProfileMetadataFromAuthor,
-  getMetadataFromJson,
-  makeRouteMetadadata,
-  NOT_FOUND_PATH,
-  PROJECTS_PATH,
-} from './routes'
 import { ProjectsPageComponent } from './projects/projects-page/projects-page.component'
 import { ProjectPageComponent } from './projects/project-page/project-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
-import { AboutPageComponent } from './about-page/about-page.component'
-import aboutPageMetadata from '../data/pages/about.json'
-import christianLazaro from '../data/authors/christian-lazaro.json'
+import { makeRouteMetadadata } from './common/routing/make-route-metadata'
+import {
+  ABOUT_PATH,
+  NOT_FOUND_PATH,
+  PROJECTS_PATH,
+} from './common/routing/paths'
+import { getMetadataFromJson } from './common/routing/get-metadata-from-json'
 
 @NgModule({
   imports: [
@@ -37,15 +33,10 @@ import christianLazaro from '../data/authors/christian-lazaro.json'
         },
         {
           path: ABOUT_PATH,
-          component: AboutPageComponent,
-          data: {
-            NgaoxSeo: {
-              ...addOpenGraphProfileMetadataFromAuthor(
-                getMetadataFromJson(aboutPageMetadata),
-                christianLazaro,
-              ),
-            },
-          },
+          loadChildren: () =>
+            import('./about-page/about-page.module').then(
+              (m) => m.AboutPageModule,
+            ),
         },
         {
           path: NOT_FOUND_PATH,

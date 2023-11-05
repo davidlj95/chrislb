@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core'
-import { DEFAULT_IMAGE_ALT } from '../common/default-image-alt'
+import { DEFAULT_ALT } from '../common/images/default-alt'
 import { SwiperOptions } from 'swiper/types'
 import { ImageAsset } from '../common/images/image-asset'
 
@@ -14,7 +14,7 @@ export class ImagesSwiperComponent implements OnChanges {
   @Input({ required: true }) public sizes!: string
   @Input() public priority?: boolean
   @Input() public customSwiperOptions?: SwiperOptions
-  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_IMAGE_ALT
+  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_ALT
   protected readonly DEFAULT_SWIPER_OPTIONS: SwiperOptions = {
     pagination: {
       enabled: true,
