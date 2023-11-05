@@ -24,7 +24,7 @@ There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. He
 
 ### Prebuild
 
-Some files required by the app need to be generated from the data managed by the [CMS] platform and the [images CDN].
+Some files required by the app need to be generated from the data managed by the [CMS] platform and the [image CDN].
 
 [Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
 
@@ -32,15 +32,18 @@ Some files required by the app need to be generated from the data managed by the
 npm run prebuild
 ```
 
-> If you run `npm run build`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
+> If you run `npm run build`, this script will run too because
+> of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you
+change any of the source files.
 
 ### Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng generate component component-name` to generate a new component. You can also
+use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ### Build
 
@@ -54,15 +57,18 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ### Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a
+package that implements end-to-end testing capabilities.
 
 ### Angular CLI help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help on the Angular CLI use `ng help` or go check out
+the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ### Git hooks
 
-In order to ensure all code is formatted before committing, you can use Git hooks to automatically run the formatter on staged files.
+In order to ensure all code is formatted before committing, you can use Git hooks to automatically run the formatter on
+staged files.
 
 To do so, install the hooks by running
 
@@ -70,19 +76,25 @@ To do so, install the hooks by running
 npm run git-hooks
 ```
 
-### Images CDN
+### Image CDN
 
-[images CDN]: #images-cdn
+[image CDN]: #images-cdn
 
-Image assets of the project are hosted in an image CDN for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options). [ImageKit.io] in this case.
+Image assets of the project are hosted in an image CDN
+for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options). [ImageKit.io]
+in this case.
 
 See [content management guide] for more information about managing and linking contents in there
 
 #### Image list files
 
-In order to avoid having to manually use the image URLs of the image CDN, a script exists to list existing images in the CDN. However, that script requires authentication. To provide the authentication, run the `create-env-from-sample` run script and fill the public and private keys in there.
+In order to avoid having to manually use the image URLs of the image CDN, a script exists to list existing images in the
+CDN. However, that script requires authentication. To provide the authentication, run the `create-env-from-sample` run
+script and fill the public and private keys in there.
 
-You can find them in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the restricted one, no write access is needed, just read only.
+You can find them
+in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the
+restricted one, no write access is needed, just read only.
 
 Once this is configured, run the `generate-image-lists` script to update the images list querying [ImageKit.io].
 

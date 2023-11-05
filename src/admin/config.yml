@@ -166,7 +166,7 @@ collections:
         required: false
         fields:
           - <<: *slug
-            hint: 'Identifies the lookbook. MUST match the directory name in the images CDN. Otherwise the lookbook will appear without name and after the known lookbooks (the ones listed here)'
+            hint: 'Identifies the lookbook. MUST match the directory name in the image CDN. Otherwise the lookbook will appear without name and after the known lookbooks (the ones listed here)'
           - <<: *name
             hint: 'Name to display alongside lookbook images'
       - label: 'Credits'
