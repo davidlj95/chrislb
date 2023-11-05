@@ -1,5 +1,5 @@
 <ng-container *ngIf="viewModel$ | async as viewModel">
-  <div class="videos" *ngIf="viewModel.youtubeIframeUrl">
+  <div class="assets video" *ngIf="viewModel.youtubeIframeUrl">
     <h2>Videos</h2>
     <iframe
       width="560"
@@ -10,9 +10,9 @@
       allowfullscreen
     ></iframe>
   </div>
-  <div class="lookbooks" *ngIf="viewModel.lookbooks?.length">
+  <ng-container *ngIf="viewModel.lookbooks?.length">
     <div
-      class="lookbook"
+      class="assets"
       *ngFor="let lookbook of viewModel.lookbooks; index as index"
     >
       <h2>
@@ -28,42 +28,33 @@
         [priority]="index < MAX_SWIPERS_PER_VIEWPORT"
       ></app-images-swiper>
     </div>
-  </div>
+  </ng-container>
   <div
-    class="material-and-book"
-    *ngIf="
-      viewModel.techMaterialImages?.length || viewModel.designBookImages?.length
-    "
+    class="assets half"
+    *ngIf="viewModel.techMaterialImages && viewModel.techMaterialImages.length"
   >
-    <div
-      class="tech-material"
-      *ngIf="
-        viewModel.techMaterialImages && viewModel.techMaterialImages.length
-      "
-    >
-      <h2>Tech material</h2>
-      <app-images-swiper
-        [images]="viewModel.techMaterialImages"
-        [srcSet]="HALF_SCREEN_SWIPER.srcSet"
-        [sizes]="HALF_SCREEN_SWIPER.sizes"
-        [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
-      ></app-images-swiper>
-    </div>
-    <div
-      class="design-book"
-      *ngIf="viewModel.designBookImages && viewModel.designBookImages.length"
-    >
-      <h2>Design book</h2>
-      <app-images-swiper
-        [images]="viewModel.designBookImages"
-        [srcSet]="HALF_SCREEN_SWIPER.srcSet"
-        [sizes]="HALF_SCREEN_SWIPER.sizes"
-        [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
-      ></app-images-swiper>
-    </div>
+    <h2>Tech material</h2>
+    <app-images-swiper
+      [images]="viewModel.techMaterialImages"
+      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+      [sizes]="HALF_SCREEN_SWIPER.sizes"
+      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+    ></app-images-swiper>
   </div>
   <div
-    class="concept-images"
+    class="assets half"
+    *ngIf="viewModel.designBookImages && viewModel.designBookImages.length"
+  >
+    <h2>Design book</h2>
+    <app-images-swiper
+      [images]="viewModel.designBookImages"
+      [srcSet]="HALF_SCREEN_SWIPER.srcSet"
+      [sizes]="HALF_SCREEN_SWIPER.sizes"
+      [customSwiperOptions]="HALF_SCREEN_SWIPER.customSwiperOptions"
+    ></app-images-swiper>
+  </div>
+  <div
+    class="assets"
     *ngIf="viewModel.conceptImages && viewModel.conceptImages.length"
   >
     <h2>Concept images</h2>
