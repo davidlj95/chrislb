@@ -39,6 +39,7 @@ class Generators {
     //await this.projectsImages()
     //await this.projectsList()
     await this.authorsList()
+    await this.assetsCollectionsList()
   }
 
   public async miscImages() {
@@ -84,6 +85,12 @@ class Generators {
       async (resource: Resource) => {
         return { slug: resource.slug }
       },
+    ).generate()
+  }
+
+  public async assetsCollectionsList(): Promise<void> {
+    return new ResourceCollectionListGenerator(
+      new ResourceCollection(join(this.DATA_PATH, 'assets-collections')),
     ).generate()
   }
 }

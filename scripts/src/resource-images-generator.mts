@@ -7,6 +7,7 @@ export class ResourceImagesGenerator {
   public async generate(resource: Resource): Promise<void> {
     const images = await this.imageCdnApi.getAllImagesInPath(
       this.getImageCdnPath(resource),
+      true,
     )
     await resource.childCollection.createResource(this.basename, images)
   }
