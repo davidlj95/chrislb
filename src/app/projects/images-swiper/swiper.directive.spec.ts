@@ -20,8 +20,6 @@ import { MockProvider } from 'ng-mocks'
 
 describe('SwiperDirective', () => {
   const options: SwiperOptions = {
-    autoplay: true,
-    loop: true,
     breakpoints: {
       640: {
         slidesPerView: 2,
@@ -111,7 +109,7 @@ function makeComponentWithDirective({
 
   @Component({
     template: ` <!--suppress AngularUndefinedBinding -->
-        <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
+    <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
   })
   class SwiperComponent implements OnInit {
     public readonly options = options

@@ -54,7 +54,14 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
             },
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              {
+                "input": "src/swiper.scss",
+                "inject": false,
+                "bundleName": "swiper"
+              }
+            ],
             "scripts": []
           },
           "configurations": {
@@ -123,7 +130,14 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
             },
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              {
+                "input": "src/swiper.scss",
+                "inject": false,
+                "bundleName": "swiper"
+              }
+            ],
             "scripts": []
           }
         },

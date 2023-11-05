@@ -17,7 +17,7 @@ export class SwiperDirective implements AfterViewInit {
   @Input('appSwiper')
   options?: SwiperOptions
 
-  public container: SwiperContainer
+  public readonly container: SwiperContainer
 
   constructor(
     private el: ElementRef<HTMLElement>,
