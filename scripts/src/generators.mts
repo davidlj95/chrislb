@@ -104,7 +104,7 @@ class Generators {
 }
 
 if (isMain(import.meta.url)) {
-  const imagekit = Imagekit.fromEnv()
+  const imagekit = Imagekit.fromEnv('unpublished')
   await new Generators(imagekit).all()
 
   Log.ok('All done')

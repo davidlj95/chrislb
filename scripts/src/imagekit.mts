@@ -3,24 +3,25 @@ import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { Log } from './log.mjs'
 import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
-import { FileObject } from 'imagekit/dist/libs/interfaces'
+import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ImageCdnApi } from './image-cdn-api.mjs'
 
 const { IMAGEKIT_URL } = imagesCdnConfigPkg
 
 export class Imagekit implements ImageCdnApi {
-  private sdk: ImagekitSdk
+  private readonly sdk: ImagekitSdk
 
-  constructor(url: URL, publicKey: string, privateKey: string) {
-    this.sdk = new ImageKit({
-      urlEndpoint: url.toString(),
-      publicKey,
-      privateKey,
-    })
+  constructor(
+    sdkOptions: ImageKitOptions,
+    public readonly unpublishedTag?: string,
+  ) {
+    this.sdk = new ImageKit(sdkOptions)
   }
 
-  public static fromEnv(): Imagekit {
+  public static fromEnv(
+    ...otherInitOptions: RemoveFirst<ConstructorParameters<typeof Imagekit>>
+  ): Imagekit {
     dotenv.config()
 
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
@@ -33,9 +34,12 @@ export class Imagekit implements ImageCdnApi {
     }
 
     return new this(
-      new URL(IMAGEKIT_URL),
-      IMAGEKIT_PUBLIC_KEY,
-      IMAGEKIT_PRIVATE_KEY,
+      {
+        urlEndpoint: new URL(IMAGEKIT_URL).toString(),
+        publicKey: IMAGEKIT_PUBLIC_KEY,
+        privateKey: IMAGEKIT_PRIVATE_KEY,
+      },
+      ...otherInitOptions,
     )
   }
 
@@ -75,7 +79,11 @@ export class Imagekit implements ImageCdnApi {
   private async listImageAssetsInPath(
     path: string,
   ): Promise<ReadonlyArray<ImageAsset>> {
+    const searchQuery = this.unpublishedTag
+      ? `tags NOT IN ${JSON.stringify([this.unpublishedTag])}`
+      : undefined
     const fileObjects = await this.sdk.listFiles({
+      searchQuery,
       path,
       fileType: 'image',
       includeFolder: false,
@@ -127,3 +135,5 @@ type FolderObject = Pick<
 type CustomMetadata = {
   alt?: string
 }
+
+type RemoveFirst<T extends unknown[]> = T extends [infer H, ...infer R] ? R : T
