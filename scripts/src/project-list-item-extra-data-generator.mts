@@ -81,8 +81,8 @@ export class ProjectListItemExtraDataGenerator {
 
   private async hasDetails(): Promise<boolean> {
     const conditions = await Promise.all([
-      this.hasOtherImagesApartFromPreview,
-      this.hasVideos,
+      this.hasOtherImagesApartFromPreview(),
+      this.hasVideos(),
     ])
     return conditions.some((condition) => condition)
   }
