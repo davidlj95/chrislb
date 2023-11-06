@@ -223,13 +223,13 @@ When you upload new images, those won't appear immediately, you'll need to chang
 fetched as part of the website build (see [side effects]). And then, new images will appear if they have been placed
 properly (see [linking images])
 
-### Uploading / overwriting existing images
+### Updating images
 
-If you upload an image with same name, it will override the existing image.
+If you upload an image with same name, the CDN [will add a new version for that image][asset-versioning]. However, the change will not immediately appear in the website, because when the website is built, images are pointed to a specific version. You'll need to generate a new website version for the new image version to appear (see [side effects]).
 
-⚠️ **Change will be published immediately to main website**
+To look for image versions in the CDN, [check their asset versioning documentation][asset-versioning]
 
-> ⚙️ **Work in progress** exists to remediate this behavior
+[asset-versioning]: https://docs.imagekit.io/media-library/overview/asset-versioning
 
 ### Removing images
 
