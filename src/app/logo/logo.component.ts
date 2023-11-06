@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core'
-import { ImageResponsiveBreakpointsService } from '../common/images/image-responsive-breakpoints.service'
-import { ImageResponsiveBreakpoints } from '../common/images/image-responsive-breakpoints'
 import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
-import { ImageAsset } from '../common/images/image-asset'
+import { ResponsiveImage } from '../common/images/responsive-image'
+import { ResponsiveImageAttributesService } from '../common/images/responsive-image-attributes.service'
 
 @Component({
   selector: 'app-logo',
@@ -10,23 +9,20 @@ import { ImageAsset } from '../common/images/image-asset'
   styleUrls: ['./logo.component.scss'],
 })
 export class LogoComponent {
-  // 👇 Those 2 obtained using https://ausi.github.io/respimagelint/
-  protected readonly LOGO_MAX_WIDTH_PX = 674
-  protected readonly sizes = `${this.LOGO_MAX_WIDTH_PX}px, 92.27vw`
-  protected readonly srcSet = new ImageResponsiveBreakpoints(
-    this.imageResponsiveBreakpointsService
-      .range(
-        this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
-        this.LOGO_MAX_WIDTH_PX,
-      )
-      .pxValues.concat(this.LOGO_MAX_WIDTH_PX),
-  ).toSrcSet()
-  protected readonly horizontalLogo: ImageAsset
+  protected readonly horizontalLogo: ResponsiveImage
+  // 👇 Keep in sync with SCSS for responsive sizing
+  protected readonly LOGO_MAX_HEIGHT_PX = 100
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
-    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
+    responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
-    this.horizontalLogo = miscImages.horizontalLogo
+    const horizontalLogoAsset = miscImages.horizontalLogo
+    const aspectRatio = horizontalLogoAsset.width / horizontalLogoAsset.height
+    const maxWidthPx = aspectRatio * this.LOGO_MAX_HEIGHT_PX
+    this.horizontalLogo = new ResponsiveImage(
+      miscImages.horizontalLogo,
+      responsiveImageAttributesService.constrained({ maxWidthPx }),
+    )
   }
 }

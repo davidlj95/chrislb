@@ -46,6 +46,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@ngaox/seo": "^5.0.0",
     "@nguniversal/express-engine": "^16.2.0",
+    "@unpic/core": "^0.0.35",
     "compression": "^1.7.4",
     "express": "^4.15.2",
     "gardevoir": "^1.0.0",
