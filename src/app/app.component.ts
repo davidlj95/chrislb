@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/animations'
+import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/style/animations'
 
 @Component({
   selector: 'app-root',

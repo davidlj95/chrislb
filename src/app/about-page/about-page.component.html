@@ -6,12 +6,12 @@
 <p class="link">{{ emailLocalPart }}@{{ domainName }}</p>
 <article>
   <img
-    [ngSrc]="portraitImage.filePath"
-    [ngSrcset]="srcSet"
-    [sizes]="sizes"
-    [height]="portraitImage.height"
-    [width]="portraitImage.width"
-    [alt]="portraitImage.alt"
+    [ngSrc]="portrait.asset.filePath"
+    [height]="portrait.asset.height"
+    [width]="portrait.asset.width"
+    [alt]="portrait.asset.alt"
+    [ngSrcset]="portrait.attributes.ngSrcSet.toString()"
+    [sizes]="portrait.attributes.sizes.toString()"
     priority="true"
   />
   <p>{{ text }}</p>

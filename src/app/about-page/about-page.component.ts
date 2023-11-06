@@ -1,9 +1,12 @@
 import { Component, Inject } from '@angular/core'
 import aboutPageContents from '../../data/misc/about.json'
-import { ImageResponsiveBreakpointsService } from '../common/images/image-responsive-breakpoints.service'
-import { ImageAsset } from '../common/images/image-asset'
 import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
 import defaultMetadata from '../../data/misc/metadata.json'
+import { ResponsiveImage } from '../common/images/responsive-image'
+import { ResponsiveImageAttributesService } from '../common/images/responsive-image-attributes.service'
+import { Vw } from '../common/css/unit/vw'
+import { CssMinMaxMediaQuery } from '../common/css/css-min-max-media-query'
+import { Breakpoint } from '../common/style/breakpoint'
 
 @Component({
   selector: 'app-about-page',
@@ -13,21 +16,29 @@ import defaultMetadata from '../../data/misc/metadata.json'
 export class AboutPageComponent {
   public readonly title: string = aboutPageContents.title
   public readonly text: string = aboutPageContents.text
-  public readonly srcSet: string = this.imageResponsiveBreakpointsService
-    .range(
-      this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 3,
-      this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 5,
-    )
-    .toSrcSet()
-  public readonly sizes: string = 'calc(33.33vw - 16px), calc(20vw - 16px)'
-  public readonly portraitImage: ImageAsset
+  public readonly portrait: ResponsiveImage
   public readonly emailLocalPart: string = 'contact'
   public readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
-    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
+    responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
-    this.portraitImage = miscImages.aboutPortrait
+    //👇 Keep in sync with SCSS
+    this.portrait = new ResponsiveImage(
+      miscImages.aboutPortrait,
+      responsiveImageAttributesService
+        .vw(Vw(35))
+        .with(
+          responsiveImageAttributesService.vw(
+            Vw(60),
+            CssMinMaxMediaQuery.minMax(Breakpoint.Xs.px, Breakpoint.S.almost),
+          ),
+          responsiveImageAttributesService.vw(
+            Vw(75),
+            CssMinMaxMediaQuery.max(Breakpoint.Xs.almost),
+          ),
+        ),
+    )
   }
 }

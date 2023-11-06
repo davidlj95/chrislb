@@ -24,6 +24,7 @@
     @include typographies.bold;
   }
 
+  /** 👇 Keep in sync with component responsive image breakpoints **/
   article {
     display: flex;
     flex-direction: column;
