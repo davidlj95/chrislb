@@ -6,6 +6,7 @@ import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
 import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ImageCdnApi } from './image-cdn-api.mjs'
+import { URLSearchParams } from 'url'
 
 const { IMAGEKIT_URL } = imagesCdnConfigPkg
 
@@ -110,13 +111,18 @@ export class Imagekit implements ImageCdnApi {
     if (!!alt && alt.length > 0) {
       altMetadata.alt = alt
     }
+    // Point to specific file version
+    const queryParams = new URLSearchParams()
+    queryParams.set(
+      'updatedAt',
+      new Date(fileObject.updatedAt).getTime().toString(),
+    )
     return {
       name: fileObject.name,
       //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
-      filePath: fileObject.filePath
-        .split('/')
-        .map(encodeURIComponent)
-        .join('/'),
+      filePath:
+        fileObject.filePath.split('/').map(encodeURIComponent).join('/') +
+        `?${queryParams.toString()}`,
       height: fileObject.height,
       width: fileObject.width,
       ...altMetadata,
