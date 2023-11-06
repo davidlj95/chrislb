@@ -31,13 +31,9 @@ export const AUTHORS_JSON = new InjectionToken<typeof authors>(
 )
 export type Author = {
   slug?: string
-  firstName: string
-  lastName: string
-  gender?: string
-  username?: string
+  name: string
   social?: {
-    mainName?: string | null
-    mainUsername?: string
+    preferred?: string | null
     instagram?: string
     linkedin?: string
     tiktok?: string

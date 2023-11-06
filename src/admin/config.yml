@@ -182,9 +182,9 @@ collections:
             name: 'authorSlug'
             widget: 'relation'
             collection: 'authors'
-            search_fields: ['name', 'social.instagram']
+            search_fields: ['name']
             value_field: '{{slug}}'
-            display_fields: ['{{name}} ({{social.instagram}})']
+            display_fields: ['{{name}}']
   - name: 'authors'
     label: 'Authors'
     label_singular: 'author'
@@ -194,31 +194,16 @@ collections:
     create: true
     slug: '{{slug}}'
     identifier_field: 'name'
-    summary: '{{firstName}} {{lastName}}'
+    summary: '{{name}}'
     fields:
-      - label: 'First name'
-        name: 'firstName'
-        widget: 'string'
-      - label: 'Last name'
-        name: 'lastName'
-        widget: 'string'
-      - label: 'Gender'
-        widget: 'select'
-        name: 'gender'
-        required: false
-        hint: 'Will only be used for main website author metadata. Unfortunately specification only accepts male or female 😬 . More info: https://ogp.me/#type_profile'
-        options:
-          - label: 'Male'
-            value: 'male'
-          - label: 'Female'
-            value: 'female'
+      - *name
       - label: 'Social'
         name: 'social'
         widget: 'object'
         fields:
-          - label: 'Main social network'
-            name: 'mainName'
-            hint: 'Will be used in credits. If unset, defaults to default social network preference (currently being first Instagram, then LinkedIn or finally TikTok)'
+          - label: 'Preferred social network'
+            name: 'preferred'
+            hint: 'Will be used in credits. If unset, defaults to default social network preference (see here: https://github.com/davidlj95/chrislb/blob/main/src/app/common/social/social.service.ts#L16-L18)'
             required: false
             widget: 'select'
             options:
@@ -228,11 +213,6 @@ collections:
                 value: 'linkedin'
               - label: 'TikTok'
                 value: 'tiktok'
-          - <<: *username
-            label: 'Main username'
-            name: 'mainUsername'
-            required: false
-            hint: 'Will only be used for main website author metadata. More info: https://ogp.me/#type_profile'
           - <<: *username
             label: 'Instagram'
             name: 'instagram'
@@ -299,6 +279,31 @@ collections:
           - label: 'Text'
             name: 'text'
             widget: 'text'
+          - label: 'Open Graph profile'
+            name: 'openGraphProfile'
+            widget: 'object'
+            hint: 'Will be used as metadata to describe this page represents this person on the Internet. More info: https://ogp.me/#type_profile'
+            fields:
+              - label: 'First name'
+                name: 'firstName'
+                widget: 'string'
+              - label: 'Last name'
+                name: 'lastName'
+                widget: 'string'
+              - label: 'Gender'
+                widget: 'select'
+                name: 'gender'
+                required: false
+                hint: 'Will only be used for main website author metadata. Unfortunately specification only accepts male or female 😬'
+                options:
+                  - label: 'Male'
+                    value: 'male'
+                  - label: 'Female'
+                    value: 'female'
+              - <<: *username
+                label: 'Main username'
+                name: 'username'
+                required: false
           - label: 'Resume'
             name: 'resume'
             widget: 'list'
