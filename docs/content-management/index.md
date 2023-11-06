@@ -233,18 +233,15 @@ If you upload an image with same name, it will override the existing image.
 
 ### Removing images
 
-If you remove images directly from the CDN, you'd see broken images in the website. Because image list files are
+If you remove image files directly from the CDN, you'd see broken images in the website. Because image list files are
 generated at build time (see [side effects]). In order to remove images safely, without displaying missing images in the
 website, do the following.
 
-1. **Move** the image(s) to remove to a separate folder. You can create a "trash" directory if you want
-2. **Change** some content and publish a new website version. To update image lists so that they no longer contain those
+1. **Tag** the image(s) to remove with the **`unpublished` tag**
+2. **Publish** a new website version (by changing some content). To update image lists so that they no longer contain those
    images (see [side effects])
-3. **Wait** for the images not to be on the main website\*\*
-4. **Remove** the image(s) when you want from that directory
-
-> ⚠️ This process can be a bit faulty anyway. Because once an image is deleted, users will hit a cache. If the cache
-> doesn't exist, the image will appear as not found. So be as fast as possible to generate a new site version.
+3. **Wait** for the images not to be on the main website
+4. **Remove** the image(s) when you want. You can use the search to filter images with that tag.
 
 ### Creating new directories
 
