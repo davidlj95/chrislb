@@ -5,6 +5,10 @@
 $height-header: header.$height;
 $height-logo: logo.$height;
 $height-page-padding: page.$padding-vertical;
-$height-before: calc($height-header + $height-logo + $height-page-padding * 2);
+$height-before-with-header: calc(
+  $height-header + $height-logo + $height-page-padding * 2
+);
+$height-before-without-header: calc($height-logo + $height-page-padding * 2);
 
-$available-height: calc(100vh - $height-before);
+$available-height-with-header: calc(100vh - $height-before-with-header);
+$available-height: calc(100vh - $height-before-without-header);
