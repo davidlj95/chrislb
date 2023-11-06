@@ -6,14 +6,16 @@
   // https://css-tricks.com/css-link-hover-effects/#aa-the-growing-background-link-hover-effect
   $color: inherit;
   $hover-color: theme.$accent;
-  a {
+  a,
+  .link {
     text-decoration: none;
     color: $color;
     @include typographies.bold;
     position: relative;
   }
 
-  a::before {
+  a::before,
+  .link::before {
     content: '';
     background-color: $hover-color;
     position: absolute;
@@ -26,7 +28,8 @@
     @include animations.standard;
   }
 
-  a:hover::before {
+  a:hover::before,
+  .link:hover::before {
     bottom: 0;
     height: 100%;
   }
