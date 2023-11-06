@@ -23,13 +23,12 @@
     flex-direction: column;
   }
 
-  $available-height: content.$available-height;
-
   app-images-swiper {
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $texts-width-big-screen);
     $extra-space: 48px;
-    max-height: calc($available-height - $extra-space);
+    $available-height: content.$available-height;
+    max-height: calc($available-height);
   }
 
   @include breakpoints.until-s {
@@ -47,12 +46,13 @@
       order: 1;
 
       $extra-space: 128px;
+      $available-height: content.$available-height-with-header;
       max-height: calc($available-height - $extra-space);
     }
   }
 
   .title {
-    @include typographies.size(9);
+    @include typographies.size(8);
     @include typographies.bold;
 
     margin-bottom: margins.$xxs;

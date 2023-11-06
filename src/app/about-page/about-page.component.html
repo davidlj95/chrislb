@@ -3,15 +3,13 @@
   <app-social></app-social>
   <app-resume></app-resume>
 </div>
-<div class="contents">
-  <img
-    [ngSrc]="portraitImage.filePath"
-    [ngSrcset]="srcSet"
-    [sizes]="sizes"
-    [height]="portraitImage.height"
-    [width]="portraitImage.width"
-    [alt]="portraitImage.alt"
-    priority="true"
-  />
-  <p>{{ text }}</p>
-</div>
+<img
+  [ngSrc]="portraitImage.filePath"
+  [ngSrcset]="srcSet"
+  [sizes]="sizes"
+  [height]="portraitImage.height"
+  [width]="portraitImage.width"
+  [alt]="portraitImage.alt"
+  priority="true"
+/>
+<p>{{ text }}</p>
