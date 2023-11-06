@@ -3,6 +3,7 @@ import aboutPageContents from '../../data/misc/about.json'
 import { ImageResponsiveBreakpointsService } from '../common/images/image-responsive-breakpoints.service'
 import { ImageAsset } from '../common/images/image-asset'
 import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
+import defaultMetadata from '../../data/misc/metadata.json'
 
 @Component({
   selector: 'app-about-page',
@@ -20,6 +21,8 @@ export class AboutPageComponent {
     .toSrcSet()
   public readonly sizes: string = 'calc(33.33vw - 16px), calc(20vw - 16px)'
   public readonly portraitImage: ImageAsset
+  public readonly emailLocalPart: string = 'contact'
+  public readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
