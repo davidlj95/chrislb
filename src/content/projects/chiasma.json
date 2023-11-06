@@ -29,12 +29,28 @@
   ],
   "credits": [
     {
-      "role": "Designer, Creative Director",
-      "authorSlug": "christian-lazaro"
-    },
-    {
       "role": "Photographer",
       "authorSlug": "alejandro-flama"
+    },
+    {
+      "authorSlug": "map-firstname-daniela-lastname-velazquez-social-map-mainname-instagram-mainusername-instagram-danielaev-b",
+      "role": "MUA"
+    },
+    {
+      "role": "Model",
+      "authorSlug": "map-firstname-karlo-lastname-vargas-social-map-mainname-instagram-instagram-karlovargas"
+    },
+    {
+      "authorSlug": "map-firstname-my-fucking-lastname-studio-social-map-mainname-instagram-instagram-myfuckingstudio-bcn",
+      "role": "Studio"
+    },
+    {
+      "authorSlug": "map-social-map-mainname-instagram-instagram-belenguts-firstname-belen-lastname-navas",
+      "role": "Assistant Director"
+    },
+    {
+      "role": "CD, Styling, process",
+      "authorSlug": "christian-lazaro"
     }
   ]
 }
