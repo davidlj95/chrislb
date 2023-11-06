@@ -25,10 +25,16 @@ export class SocialService {
 
   public getMain(author: Author): Social | undefined {
     const socials = this.mapAll(author.social)
-    if (author.social?.mainName && this.isSocialName(author.social.mainName)) {
-      const mainUsername = author.social[author.social.mainName]
-      if (!!mainUsername && mainUsername.length > 0)
-        return this.mapFromNameAndUsername(author.social.mainName, mainUsername)
+    if (
+      author.social?.preferred &&
+      this.isSocialName(author.social.preferred)
+    ) {
+      const mainUsername = author.social[author.social.preferred]
+      if (!!mainUsername && mainUsername.trim().length > 0)
+        return this.mapFromNameAndUsername(
+          author.social.preferred,
+          mainUsername,
+        )
     }
     const sortedSocials = Array.from(socials).sort(
       (a, b) =>

@@ -1,6 +1,12 @@
 {
   "title": "About me",
   "text": "I am Christian Lázaro, fashion designer living in Barcelona, Spain. I was raised in Spain, but I lived 6 years of my life in Peru, where I was born. My whole life I have lived between two different cultures, which have nurture and gave me a wider vision leading me to see things from different perspectives. \n\nThe creative world has always had a hold on me, I believe design and fashion can represent experiences, wishes and dreams uniquely. Through the last years, besides learning about fashion, I have developed special interest in editorial and fashion photography, styling, composition and storytelling to bring different concepts into fashion. Moreover, I have been part of the Spain team that develops colour tendencies at international level.",
+  "openGraphProfile": {
+    "firstName": "Christian",
+    "lastName": "Lázaro",
+    "gender": "male",
+    "username": "christian_labu"
+  },
   "resume": [
     {
       "displayName": "CV (spanish)",

@@ -1,34 +1,40 @@
 import { IPageSeoData } from '@ngaox/seo'
-import { Author } from '../common/authors.service'
 import { MetaDefinition } from '@angular/platform-browser'
 
-export function addOpenGraphProfileMetadataFromAuthor(
+interface OpenGraphProfileMetadata {
+  readonly firstName: string
+  readonly lastName: string
+  readonly gender?: string
+  readonly username?: string
+}
+
+export function addOpenGraphProfileMetadata(
   metadata: IPageSeoData,
-  author: Author,
+  openGraphProfileMetadata: OpenGraphProfileMetadata,
 ): IPageSeoData {
   const extras: MetaDefinition[] = []
-  if (author.firstName && author.firstName.length > 0) {
+  if (isNonEmptyString(openGraphProfileMetadata.firstName)) {
     extras.push({
       property: 'og:profile:first_name',
-      content: author.firstName,
+      content: openGraphProfileMetadata.firstName,
     })
   }
-  if (author.lastName && author.lastName.length > 0) {
+  if (isNonEmptyString(openGraphProfileMetadata.lastName)) {
     extras.push({
       property: 'og:profile:last_name',
-      content: author.lastName,
+      content: openGraphProfileMetadata.lastName,
     })
   }
-  if (author.gender && author.gender.length > 0) {
+  if (isNonEmptyString(openGraphProfileMetadata.gender)) {
     extras.push({
       property: 'og:profile:gender',
-      content: author.gender,
+      content: openGraphProfileMetadata.gender,
     })
   }
-  if (author.social?.mainUsername && author.social.mainUsername.length > 0) {
+  if (isNonEmptyString(openGraphProfileMetadata.username)) {
     extras.push({
       property: 'og:profile:username',
-      content: author.social.mainUsername,
+      content: openGraphProfileMetadata.username,
     })
   }
 
@@ -37,4 +43,8 @@ export function addOpenGraphProfileMetadataFromAuthor(
     type: 'profile',
     extra: [...(metadata.extra ?? []), ...extras],
   }
+}
+
+function isNonEmptyString(string: string | undefined): string is string {
+  return string !== undefined && string.trim().length > 0
 }
