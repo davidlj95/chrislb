@@ -23,6 +23,7 @@
     flex-direction: column;
   }
 
+  //👇 Keep in sync with component responsive images
   app-images-swiper {
     // 👇 Seems swiper needs size set to work fine
     width: calc(100% - $texts-width-big-screen);

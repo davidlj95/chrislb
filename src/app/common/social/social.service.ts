@@ -75,7 +75,7 @@ export class SocialService {
           username,
           displayName: 'Instagram',
           icon: faInstagram,
-          url: new URL(`https://instagram.com/_u/${username}`),
+          url: new URL(`https://instagram.com/_u/${username}`).toString(),
         }
       case SocialName.LinkedIn:
         return {
@@ -83,7 +83,7 @@ export class SocialService {
           username,
           displayName: 'LinkedIn',
           icon: faLinkedinIn,
-          url: new URL(`https://linkedin.com/in/${username}`),
+          url: new URL(`https://linkedin.com/in/${username}`).toString(),
         }
       case SocialName.TikTok:
         return {
@@ -91,7 +91,7 @@ export class SocialService {
           username,
           displayName: 'TikTok',
           icon: faTiktok,
-          url: new URL(`https://tiktok.com/@${username}`),
+          url: new URL(`https://tiktok.com/@${username}`).toString(),
         }
     }
   }
