@@ -24,20 +24,11 @@
     @include typographies.bold;
   }
 
-  p {
-    white-space: pre-wrap;
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: margins.$m;
     max-width: 35vw;
-
-    @include breakpoints.until-s {
-      min-width: unset;
-      width: unset;
-    }
-  }
-
-  img {
-    max-width: 35vw;
-    object-fit: contain;
-    object-position: top;
 
     @include breakpoints.s {
       max-width: 60vw;
@@ -46,5 +37,14 @@
     @include breakpoints.xs {
       max-width: 75vw;
     }
+  }
+
+  p {
+    white-space: pre-wrap;
+  }
+
+  img {
+    object-fit: contain;
+    object-position: top;
   }
 }
