@@ -21,12 +21,17 @@
       <app-images-swiper
         *ngIf="assetsCollection.type === AssetsCollectionType.Image"
         [images]="assetsCollection.images"
-        [srcSet]="assetsCollection.imagesSwiperConfig.srcSet"
-        [sizes]="assetsCollection.imagesSwiperConfig.sizes"
+        [srcSet]="
+          assetsCollection.imagesSwiperConfig.attributes.breakpoints.ngSrcSet
+            .asString
+        "
+        [sizes]="assetsCollection.imagesSwiperConfig.attributes.sizes.asString"
         [customSwiperOptions]="
           assetsCollection.imagesSwiperConfig.customSwiperOptions
         "
-        [style.max-width.px]="assetsCollection.imagesSwiperConfig.maxWidthPx"
+        [style.max-width.px]="
+          assetsCollection.imagesSwiperConfig.maxWidth?.value
+        "
         [priority]="index < MAX_SWIPERS_PER_VIEWPORT"
       ></app-images-swiper>
     </div>

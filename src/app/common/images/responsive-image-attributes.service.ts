@@ -4,8 +4,7 @@ import { DEFAULT_RESOLUTIONS, getBreakpoints } from '@unpic/core'
 import { CssVwUnit, Vw } from '../css/unit/vw'
 import { CssMinMaxMediaQuery } from '../css/css-min-max-media-query'
 import { HtmlImageSizesSingleAttribute } from '../html/html-image-sizes-single-attribute'
-import { CssPxUnit, Px } from '../css/unit/px'
-import { HtmlNgSrcSetAttribute } from '../html/html-ng-src-set-attribute'
+import { CssPxUnit } from '../css/unit/px'
 import { HtmlImageSizesAttribute } from '../html/html-image-sizes-attribute'
 import { ResponsiveImageBreakpoints } from './responsive-image-breakpoints'
 
@@ -14,12 +13,24 @@ import { ResponsiveImageBreakpoints } from './responsive-image-breakpoints'
 })
 export class ResponsiveImageAttributesService {
   private MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
-  private RESOLUTIONS = [
-    ...DEFAULT_RESOLUTIONS,
-    //👇 For Lighthouse, which tests it on a Moto G Power (412x823)
-    // Pretty old tbh 🤷
-    320,
+  //👇 For Lighthouse, as performs tests on a Moto G Power (412x823)
+  // Indeed it's quite common web resolution:
+  // https://gs.statcounter.com/screen-resolution-stats/mobile/worldwide
+  //
+  // Despite they are high density screens, so browsers will probably use
+  // bigger images
+  // Maybe if network allows only? So low density must be there too? 🤔
+  private MOBILE_RESOLUTIONS = [
+    // 414, // Too similar to ☝️
+    412,
+    // 393, // Too similar to ☝️
+    // 390, // Too similar to ☝️
+    360,
   ]
+  private MAX_MOBILE_RESOLUTION_WIDTH = Math.max(...this.MOBILE_RESOLUTIONS)
+  private RESOLUTIONS = Array.from(
+    new Set([...DEFAULT_RESOLUTIONS, ...this.MOBILE_RESOLUTIONS]),
+  ).sort((a, b) => a - b)
 
   /**
    * Returns responsive image attributes for an image constrained in size
@@ -33,9 +44,9 @@ export class ResponsiveImageAttributesService {
     const breakpoints = getBreakpoints({
       width: constrainedWidth.value,
       layout: 'constrained',
-    }).map((breakpoint) => Px(breakpoint))
+    })
     return new ResponsiveImageAttributes(
-      new HtmlNgSrcSetAttribute(ResponsiveImageBreakpoints.from(breakpoints)),
+      ResponsiveImageBreakpoints.from(breakpoints),
       new HtmlImageSizesAttribute([
         new HtmlImageSizesSingleAttribute(
           constrainedWidth,
@@ -46,9 +57,27 @@ export class ResponsiveImageAttributesService {
     )
   }
 
+  public fixedSinceWidth(
+    width: CssPxUnit,
+    { minWidth }: { minWidth?: CssPxUnit } = {},
+  ): ResponsiveImageAttributes {
+    return new ResponsiveImageAttributes(
+      ResponsiveImageBreakpoints.from(
+        this.getHighDensityBreakpoints(width.value),
+      ),
+      new HtmlImageSizesAttribute([
+        new HtmlImageSizesSingleAttribute(
+          width,
+          CssMinMaxMediaQuery.min(minWidth ?? width),
+        ),
+      ]),
+    )
+  }
+
   public vw(
     vw: CssVwUnit,
     minMaxMediaQuery?: CssMinMaxMediaQuery<CssPxUnit, CssPxUnit>,
+    { includeMediaQueryInSizes }: { includeMediaQueryInSizes?: boolean } = {},
   ) {
     const breakpointsAtFixedVw = this.RESOLUTIONS.filter(
       (resolutionWidth) =>
@@ -56,27 +85,40 @@ export class ResponsiveImageAttributesService {
         resolutionWidth <= (minMaxMediaQuery?.max?.value.value ?? Infinity),
     )
       .map((resolutionWidth) => {
-        const breakpointAtResolution = Px(
-          Math.ceil((resolutionWidth * vw.value) / 100),
+        const pxBreakpointAtResolution = Math.ceil(
+          (resolutionWidth * vw.value) / 100,
         )
-        const breakpointsAtResolution = [breakpointAtResolution]
-        const doubleBreakpointAtResolution = Px(
-          breakpointAtResolution.value * 2,
-        )
-        // Add double for high density screens if not bigger than max resolution width
-        if (doubleBreakpointAtResolution.value <= this.MAX_RESOLUTION_WIDTH) {
-          breakpointsAtResolution.push(doubleBreakpointAtResolution)
-        }
-        return breakpointsAtResolution
+        return this.getHighDensityBreakpoints(pxBreakpointAtResolution)
       })
       .flat()
     return new ResponsiveImageAttributes(
-      new HtmlNgSrcSetAttribute(
-        ResponsiveImageBreakpoints.from(breakpointsAtFixedVw),
-      ),
+      ResponsiveImageBreakpoints.from(breakpointsAtFixedVw),
       new HtmlImageSizesAttribute([
-        new HtmlImageSizesSingleAttribute(vw, minMaxMediaQuery),
+        new HtmlImageSizesSingleAttribute(
+          vw,
+          includeMediaQueryInSizes ? minMaxMediaQuery : undefined,
+        ),
       ]),
     )
+  }
+
+  private getHighDensityBreakpoints(pxWidth: number): ReadonlyArray<number> {
+    const widths: number[] = [pxWidth]
+    // Add double for high density screens if not bigger than max resolution width
+    const doubleWidth = pxWidth * 2
+    if (doubleWidth < this.MAX_RESOLUTION_WIDTH) {
+      widths.push(doubleWidth)
+    }
+    // Add triple for mobile screens
+    // Tested on Moto G Power (Lighthouse fav device) that dimensions are
+    // 412x823 whilst resolution is 1080, so 2.6 density
+    const tripleWidth = pxWidth * 3
+    if (
+      pxWidth < this.MAX_MOBILE_RESOLUTION_WIDTH &&
+      tripleWidth < this.MAX_RESOLUTION_WIDTH
+    ) {
+      widths.push(tripleWidth)
+    }
+    return widths
   }
 }

@@ -20,7 +20,7 @@
     *ngIf="_item.previewImages && _item.previewImages.length"
     [images]="_item.previewImages"
     [sizes]="responsiveImageAttributes.sizes.asString"
-    [srcSet]="responsiveImageAttributes.ngSrcSet.asString"
+    [srcSet]="responsiveImageAttributes.breakpoints.ngSrcSet.asString"
     [priority]="priority"
     [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
   ></app-images-swiper>

@@ -1,14 +1,22 @@
-import { CssPxUnit, Px } from '../css/unit/px'
-import { responsiveImageBreakpointsReducer } from './responsive-image-breakpoints-reducer'
+import { ResponsiveImageBreakpointsReducer } from './responsive-image-breakpoints-reducer'
+import { HtmlNgSrcSetAttribute } from '../html/html-ng-src-set-attribute'
 
 export class ResponsiveImageBreakpoints {
-  private constructor(public readonly list: ReadonlyArray<CssPxUnit>) {}
+  public readonly ngSrcSet = new HtmlNgSrcSetAttribute(this)
 
-  static from(list: ReadonlyArray<CssPxUnit>): ResponsiveImageBreakpoints {
-    return new this(
-      responsiveImageBreakpointsReducer(
-        list.map((breakpoint) => breakpoint.value),
-      ).map((breakpoint) => Px(breakpoint)),
+  private constructor(public readonly pxList: ReadonlyArray<number>) {}
+
+  static from(list: ReadonlyArray<number>): ResponsiveImageBreakpoints {
+    const uniqueBreakpointPxs = new Set(list)
+    const sortedUniqueBreakpointPxs = Array.from(uniqueBreakpointPxs).sort(
+      (a, b) => a - b,
+    )
+    return new this(sortedUniqueBreakpointPxs)
+  }
+
+  public reduce() {
+    return new ResponsiveImageBreakpoints(
+      ResponsiveImageBreakpointsReducer.default().reduce(this.pxList),
     )
   }
 
@@ -16,7 +24,7 @@ export class ResponsiveImageBreakpoints {
     ...others: ReadonlyArray<ResponsiveImageBreakpoints>
   ): ResponsiveImageBreakpoints {
     return ResponsiveImageBreakpoints.from(
-      [...this.list, ...others.map(({ list }) => list)].flat(),
+      [...this.pxList, ...others.map(({ pxList }) => pxList)].flat(),
     )
   }
 }
