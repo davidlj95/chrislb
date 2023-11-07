@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core'
 import { MISC_IMAGES, MiscImages } from '../common/images/misc-images'
 import { ResponsiveImage } from '../common/images/responsive-image'
 import { ResponsiveImageAttributesService } from '../common/images/responsive-image-attributes.service'
+import { Px } from '../common/css/unit/px'
 
 @Component({
   selector: 'app-logo',
@@ -22,7 +23,7 @@ export class LogoComponent {
     const maxWidthPx = aspectRatio * this.LOGO_MAX_HEIGHT_PX
     this.horizontalLogo = new ResponsiveImage(
       miscImages.horizontalLogo,
-      responsiveImageAttributesService.constrained({ maxWidthPx }),
+      responsiveImageAttributesService.constrained(Px(Math.ceil(maxWidthPx))),
     )
   }
 }

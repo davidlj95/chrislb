@@ -8,7 +8,7 @@ import {
   trigger,
 } from '@angular/animations' // https://m3.material.io/styles/motion
 
-// To keep in sync with SCSS
+// 👇 Keep in sync with SCSS
 // https://m3.material.io/styles/motion
 export const STANDARD_DURATION = '.3s'
 export const EMPHASIZED_DURATION = '.5s'
