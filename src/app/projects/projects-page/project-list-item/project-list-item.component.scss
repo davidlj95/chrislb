@@ -61,21 +61,19 @@
   .subtitle {
     @include typographies.size(4);
     @include typographies.bold;
+
+    margin-bottom: margins.$l;
   }
 
   .quote {
     @include typographies.size(1);
     @include typographies.regular;
 
-    margin: margins.$l 0;
+    margin-bottom: margins.$l;
   }
 
   .description {
     @include typographies.light;
-
-    display: flex;
-    flex-direction: column;
-    gap: margins.$s;
 
     // Keep line breaks
     white-space: pre-wrap;
