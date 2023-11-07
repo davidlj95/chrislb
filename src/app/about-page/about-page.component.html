@@ -4,13 +4,15 @@
   <app-resume></app-resume>
 </div>
 <p class="link">{{ emailLocalPart }}@{{ domainName }}</p>
-<img
-  [ngSrc]="portraitImage.filePath"
-  [ngSrcset]="srcSet"
-  [sizes]="sizes"
-  [height]="portraitImage.height"
-  [width]="portraitImage.width"
-  [alt]="portraitImage.alt"
-  priority="true"
-/>
-<p>{{ text }}</p>
+<article>
+  <img
+    [ngSrc]="portraitImage.filePath"
+    [ngSrcset]="srcSet"
+    [sizes]="sizes"
+    [height]="portraitImage.height"
+    [width]="portraitImage.width"
+    [alt]="portraitImage.alt"
+    priority="true"
+  />
+  <p>{{ text }}</p>
+</article>
