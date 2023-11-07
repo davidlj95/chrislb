@@ -255,6 +255,7 @@ collections:
             value: 'half'
   - name: 'misc'
     label: 'Miscellaneous'
+    label_singular: 'miscellaneous'
     files:
       - label: 'Default metadata'
         name: 'metadata'
