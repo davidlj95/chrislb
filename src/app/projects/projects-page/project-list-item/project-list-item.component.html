@@ -19,8 +19,8 @@
   <app-images-swiper
     *ngIf="_item.previewImages && _item.previewImages.length"
     [images]="_item.previewImages"
-    sizes="calc(50vw - 16px), 33.33vw"
-    [srcSet]="srcSet"
+    [sizes]="responsiveImageAttributes.sizes.asString"
+    [srcSet]="responsiveImageAttributes.ngSrcSet.asString"
     [priority]="priority"
     [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
   ></app-images-swiper>
@@ -30,7 +30,7 @@
     <span *ngIf="credit.author">
       {{ credit.role }}: {{ credit.author.name }}
       <span class="anchor" *ngIf="credit.social"
-        >(<a [href]="credit.social.url.toString()" target="_blank"
+        >(<a [href]="credit.social.url" target="_blank"
           >@{{ credit.social.username }}</a
         >)</span
       >

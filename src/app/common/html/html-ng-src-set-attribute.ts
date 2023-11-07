@@ -1,10 +1,10 @@
 import { ResponsiveImageBreakpoints } from '../images/responsive-image-breakpoints'
 
 export class HtmlNgSrcSetAttribute {
-  constructor(public readonly breakpoints: ResponsiveImageBreakpoints) {}
+  public readonly asString: string
 
-  public toString(): string {
-    return this.breakpoints.list
+  constructor(public readonly breakpoints: ResponsiveImageBreakpoints) {
+    this.asString = this.breakpoints.list
       .map((breakpoint) => `${breakpoint.value}w`)
       .join(', ')
   }

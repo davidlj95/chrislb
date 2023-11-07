@@ -3,7 +3,7 @@ import { IconDefinition } from '@fortawesome/free-brands-svg-icons'
 export interface Social {
   readonly name: SocialName
   readonly username: string
-  readonly url: URL
+  readonly url: string
   readonly icon: IconDefinition
   readonly displayName: string
 }

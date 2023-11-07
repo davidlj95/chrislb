@@ -14,6 +14,12 @@ import { ResponsiveImageBreakpoints } from './responsive-image-breakpoints'
 })
 export class ResponsiveImageAttributesService {
   private MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
+  private RESOLUTIONS = [
+    ...DEFAULT_RESOLUTIONS,
+    //👇 For Lighthouse, which tests it on a Moto G Power (412x823)
+    // Pretty old tbh 🤷
+    320,
+  ]
 
   /**
    * Returns responsive image attributes for an image constrained in size
@@ -44,7 +50,7 @@ export class ResponsiveImageAttributesService {
     vw: CssVwUnit,
     minMaxMediaQuery?: CssMinMaxMediaQuery<CssPxUnit, CssPxUnit>,
   ) {
-    const breakpointsAtFixedVw = DEFAULT_RESOLUTIONS.filter(
+    const breakpointsAtFixedVw = this.RESOLUTIONS.filter(
       (resolutionWidth) =>
         (minMaxMediaQuery?.min?.value.value ?? -Infinity) <= resolutionWidth &&
         resolutionWidth <= (minMaxMediaQuery?.max?.value.value ?? Infinity),
