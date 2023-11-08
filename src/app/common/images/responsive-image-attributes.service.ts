@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ResponsiveImageAttributes } from './responsive-image-attributes'
-import { DEFAULT_RESOLUTIONS, getBreakpoints } from '@unpic/core'
+import { DEFAULT_RESOLUTIONS } from '@unpic/core'
 import { CssVwUnit, Vw } from '../css/unit/vw'
 import { CssMinMaxMediaQuery } from '../css/css-min-max-media-query'
 import { HtmlImageSizesSingleAttribute } from '../html/html-image-sizes-single-attribute'
@@ -8,6 +8,17 @@ import { CssPxUnit } from '../css/unit/px'
 import { HtmlImageSizesAttribute } from '../html/html-image-sizes-attribute'
 import { ResponsiveImageBreakpoints } from './responsive-image-breakpoints'
 
+/**
+ * Creates responsive images attributes for use with Angular's optimized image
+ * directive: `ngSrcSet` and `sizes` attributes
+ *
+ * Inspired from `unpic-img` lib. Can't use that lib because:
+ *  - ImageKit CDN isn't supported
+ *  - Doesn't provide proper `srcSet` and `sizes` for advanced layouts
+ *
+ * @see https://github.com/ascorbic/unpic-img/blob/core-v0.0.36/packages/core/src/core.ts#L200-L227
+ * @see https://github.com/ascorbic/unpic-img/blob/core-v0.0.36/packages/core/src/core.ts#L315-L348
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -21,10 +32,10 @@ export class ResponsiveImageAttributesService {
   // bigger images
   // Maybe if network allows only? So low density must be there too? 🤔
   private MOBILE_RESOLUTIONS = [
-    // 414, // Too similar to ☝️
+    // 414, // Too similar
     412,
-    // 393, // Too similar to ☝️
-    // 390, // Too similar to ☝️
+    // 393, // Too similar
+    // 390, // Too similar
     360,
   ]
   private MAX_MOBILE_RESOLUTION_WIDTH = Math.max(...this.MOBILE_RESOLUTIONS)
@@ -33,27 +44,13 @@ export class ResponsiveImageAttributesService {
   ).sort((a, b) => a - b)
 
   /**
-   * Returns responsive image attributes for an image constrained in size
-   *
-   * Inspired from unpic lib. Can't use that lib because they don't support ImageKit
-   * It's noted to contribute when have some time!
-   *
-   * @see https://github.com/ascorbic/unpic-img/blob/core-v0.0.35/packages/core/src/core.ts#L315-L348
+   * Equivalent of `unpic`'s constrained layout
    */
-  public constrained(constrainedWidth: CssPxUnit): ResponsiveImageAttributes {
-    const breakpoints = getBreakpoints({
-      width: constrainedWidth.value,
-      layout: 'constrained',
-    })
-    return new ResponsiveImageAttributes(
-      ResponsiveImageBreakpoints.from(breakpoints),
-      new HtmlImageSizesAttribute([
-        new HtmlImageSizesSingleAttribute(
-          constrainedWidth,
-          CssMinMaxMediaQuery.min(constrainedWidth),
-        ),
-        new HtmlImageSizesSingleAttribute(Vw(100)),
-      ]),
+  public fullWidthUntil(
+    constrainedWidth: CssPxUnit,
+  ): ResponsiveImageAttributes {
+    return this.fixedSinceWidth(constrainedWidth).with(
+      this.vw(Vw(100), CssMinMaxMediaQuery.max(constrainedWidth)),
     )
   }
 
