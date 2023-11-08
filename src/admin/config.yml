@@ -55,7 +55,7 @@ field_definitions:
       widget: 'string'
       pattern:
         [
-          '^[^@]*+',
+          '^[^@].+$',
           'Must have at least 1 character. Must not start with @ (will be added automagically if needed 🪄)',
         ]
 collections:
