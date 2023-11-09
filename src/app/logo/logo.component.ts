@@ -12,7 +12,7 @@ import { Px } from '../common/css/unit/px'
 export class LogoComponent {
   protected readonly horizontalLogo: ResponsiveImage
   // 👇 Keep in sync with SCSS for responsive sizing
-  protected readonly LOGO_MAX_HEIGHT_PX = 100
+  protected readonly LOGO_MAX_HEIGHT_PX = 55
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
@@ -22,7 +22,7 @@ export class LogoComponent {
     const aspectRatio = horizontalLogoAsset.width / horizontalLogoAsset.height
     const maxWidthPx = aspectRatio * this.LOGO_MAX_HEIGHT_PX
     this.horizontalLogo = new ResponsiveImage(
-      miscImages.horizontalLogo,
+      horizontalLogoAsset,
       responsiveImageAttributesService.fullWidthUntil(
         Px(Math.ceil(maxWidthPx)),
       ),
