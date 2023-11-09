@@ -2,8 +2,6 @@ import { Component, Input } from '@angular/core'
 import { ProjectsService } from '../projects.service'
 import { catchError, concatMap, map, Observable, of, tap } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
-import { ImageResponsiveBreakpointsService } from '../../common/images/image-responsive-breakpoints.service'
-import { ImageResponsiveBreakpoints } from '../../common/images/image-responsive-breakpoints'
 import { NavigatorService } from '../../common/routing/navigator.service'
 import { AnyAssetsCollection } from './any-asset-collection'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
@@ -14,6 +12,12 @@ import { AssetsCollectionType } from './assets-collection-type'
 import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
 import { PROJECTS_PATH } from '../../common/routing/paths'
 import { getTitle } from '../../common/routing/get-title'
+import { ResponsiveImageAttributesService } from '../../common/images/responsive-image-attributes.service'
+import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
+import { CssPxUnit, Px } from '../../common/css/unit/px'
+import { Vw } from '../../common/css/unit/vw'
+import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
+import { Breakpoint } from '../../common/style/breakpoint'
 
 @Component({
   selector: 'app-project-page',
@@ -22,41 +26,19 @@ import { getTitle } from '../../common/routing/get-title'
 })
 export class ProjectPageComponent {
   public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>
-  public readonly FULL_SCREEN_SWIPER_MAX_WIDTH = 850
-  public readonly FULL_SCREEN_SWIPER_SLIDES_PER_VIEW = 2
-  public readonly SWIPER_MAX_SLIDE_WIDTH_PX =
-    this.FULL_SCREEN_SWIPER_MAX_WIDTH / this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW
+  public readonly fullScreenSwiper = {
+    slidesPerView: 2,
+    maxWidth: Px(850),
+    get maxSlideWidth() {
+      return Px(this.maxWidth.value / this.slidesPerView)
+    },
+  }
+  public readonly halfScreenSwiper = {
+    slidesPerView: 1,
+  }
   protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
-  protected readonly IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME: {
+  protected readonly imageAssetsSwiperConfigByName: {
     [k in AssetsCollectionData['size']]: ImageAssetsSwiperConfig
-  } = {
-    half: {
-      customSwiperOptions: {
-        slidesPerView: 1,
-      },
-      srcSet: this.imageResponsiveBreakpointsService
-        .range(
-          this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX,
-          this.imageResponsiveBreakpointsService.MAX_SCREEN_WIDTH_PX / 2,
-        )
-        .toSrcSet(),
-      sizes: 'calc(50vw - 16px), calc(100vw - 16px)',
-    },
-    full: {
-      customSwiperOptions: {
-        slidesPerView: this.FULL_SCREEN_SWIPER_SLIDES_PER_VIEW,
-      },
-      srcSet: new ImageResponsiveBreakpoints(
-        this.imageResponsiveBreakpointsService
-          .range(
-            this.imageResponsiveBreakpointsService.MIN_SCREEN_WIDTH_PX / 2,
-            this.SWIPER_MAX_SLIDE_WIDTH_PX,
-          )
-          .pxValues.concat([this.SWIPER_MAX_SLIDE_WIDTH_PX]),
-      ).toSrcSet(),
-      sizes: `calc(50vw - 16px), ${this.SWIPER_MAX_SLIDE_WIDTH_PX}px`,
-      maxWidthPx: this.FULL_SCREEN_SWIPER_MAX_WIDTH,
-    },
   }
   protected readonly AssetsCollectionSize = AssetsCollectionSize
   protected readonly AssetsCollectionType = AssetsCollectionType
@@ -66,8 +48,46 @@ export class ProjectPageComponent {
     private seo: SeoService,
     private navigatorService: NavigatorService,
     private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
-    private imageResponsiveBreakpointsService: ImageResponsiveBreakpointsService,
-  ) {}
+    responsiveImageAttributesService: ResponsiveImageAttributesService,
+  ) {
+    this.imageAssetsSwiperConfigByName = {
+      [AssetsCollectionSize.Full]: {
+        customSwiperOptions: {
+          slidesPerView: this.fullScreenSwiper.slidesPerView,
+        },
+        attributes: responsiveImageAttributesService
+          .fixedSinceWidth(this.fullScreenSwiper.maxSlideWidth, {
+            minWidth: this.fullScreenSwiper.maxWidth,
+          })
+          .with(
+            responsiveImageAttributesService.vw(
+              Vw(100 / this.fullScreenSwiper.slidesPerView),
+              CssMinMaxMediaQuery.max(this.fullScreenSwiper.maxWidth),
+              // ℹ️ Here the media query is included in previous attribute set
+            ),
+          )
+          .reduce(),
+        maxWidth: this.fullScreenSwiper.maxWidth,
+      },
+      [AssetsCollectionSize.Half]: {
+        customSwiperOptions: {
+          slidesPerView: this.halfScreenSwiper.slidesPerView,
+        },
+        attributes: responsiveImageAttributesService
+          .vw(
+            Vw(50 / this.halfScreenSwiper.slidesPerView),
+            CssMinMaxMediaQuery.min(Breakpoint.S.px),
+          )
+          .with(
+            responsiveImageAttributesService.vw(
+              Vw(100 / this.halfScreenSwiper.slidesPerView),
+              CssMinMaxMediaQuery.max(Breakpoint.S.almost),
+              { includeMediaQueryInSizes: true },
+            ),
+          ),
+      },
+    }
+  }
 
   @Input({ required: true })
   public set slug(slug: string) {
@@ -93,7 +113,7 @@ export class ProjectPageComponent {
         assetsCollections.map((assetCollection) => ({
           ...assetCollection,
           imagesSwiperConfig:
-            this.IMAGE_ASSETS_SWIPER_CONFIG_BY_NAME[assetCollection.data.size],
+            this.imageAssetsSwiperConfigByName[assetCollection.data.size],
         })),
       ),
       tap((assetsCollections) => {
@@ -111,7 +131,6 @@ type AnyAssetsCollectionItem = AnyAssetsCollection & {
 
 interface ImageAssetsSwiperConfig {
   readonly customSwiperOptions: SwiperOptions
-  readonly srcSet: string
-  readonly sizes: string
-  readonly maxWidthPx?: number
+  readonly attributes: ResponsiveImageAttributes
+  readonly maxWidth?: CssPxUnit
 }

@@ -4,8 +4,8 @@ export class HtmlNgSrcSetAttribute {
   public readonly asString: string
 
   constructor(public readonly breakpoints: ResponsiveImageBreakpoints) {
-    this.asString = this.breakpoints.list
-      .map((breakpoint) => `${breakpoint.value}w`)
+    this.asString = this.breakpoints.pxList
+      .map((breakpoint) => `${breakpoint}w`)
       .join(', ')
   }
 

@@ -28,15 +28,17 @@ export class AboutPageComponent {
     this.portrait = new ResponsiveImage(
       miscImages.aboutPortrait,
       responsiveImageAttributesService
-        .vw(Vw(35))
+        .vw(Vw(35), CssMinMaxMediaQuery.min(Breakpoint.S.px))
         .with(
           responsiveImageAttributesService.vw(
             Vw(60),
             CssMinMaxMediaQuery.minMax(Breakpoint.Xs.px, Breakpoint.S.almost),
+            { includeMediaQueryInSizes: true },
           ),
           responsiveImageAttributesService.vw(
             Vw(75),
             CssMinMaxMediaQuery.max(Breakpoint.Xs.almost),
+            { includeMediaQueryInSizes: true },
           ),
         ),
     )
