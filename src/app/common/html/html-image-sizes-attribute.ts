@@ -9,7 +9,7 @@ export class HtmlImageSizesAttribute {
     this.asString = this.sizes.join(', ')
   }
 
-  public with(...others: ReadonlyArray<HtmlImageSizesAttribute>) {
+  public concat(...others: ReadonlyArray<HtmlImageSizesAttribute>) {
     return new HtmlImageSizesAttribute([
       ...this.sizes,
       ...others.map(({ sizes }) => sizes).flat(),

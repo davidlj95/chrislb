@@ -9,9 +9,9 @@ export class HtmlNgSrcSetAttribute {
       .join(', ')
   }
 
-  public with(...others: ReadonlyArray<HtmlNgSrcSetAttribute>) {
+  public concat(...others: ReadonlyArray<HtmlNgSrcSetAttribute>) {
     return new HtmlNgSrcSetAttribute(
-      this.breakpoints.with(...others.map(({ breakpoints }) => breakpoints)),
+      this.breakpoints.concat(...others.map(({ breakpoints }) => breakpoints)),
     )
   }
 }

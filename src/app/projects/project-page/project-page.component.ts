@@ -59,7 +59,7 @@ export class ProjectPageComponent {
           .fixedSinceWidth(this.fullScreenSwiper.maxSlideWidth, {
             minWidth: this.fullScreenSwiper.maxWidth,
           })
-          .with(
+          .concat(
             responsiveImageAttributesService.vw(
               Vw(100 / this.fullScreenSwiper.slidesPerView),
               CssMinMaxMediaQuery.max(this.fullScreenSwiper.maxWidth),
@@ -78,7 +78,7 @@ export class ProjectPageComponent {
             Vw(50 / this.halfScreenSwiper.slidesPerView),
             CssMinMaxMediaQuery.min(Breakpoint.S.px),
           )
-          .with(
+          .concat(
             responsiveImageAttributesService.vw(
               Vw(100 / this.halfScreenSwiper.slidesPerView),
               CssMinMaxMediaQuery.max(Breakpoint.S.almost),
