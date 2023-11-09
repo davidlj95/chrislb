@@ -6,7 +6,7 @@ import { Log } from './log.mjs'
 import { Project } from '../../src/app/projects/project.js'
 import previewJson from '../../src/data/assets-collections/preview.json' assert { type: 'json' }
 import projectImageAssetPkg from '../../src/app/projects/project-page/project-image-asset.js'
-import { isEmpty, isUndefined } from 'lodash-es'
+import { groupBy, isEmpty, isUndefined } from 'lodash-es'
 
 const { ProjectImageAsset } = projectImageAssetPkg
 
@@ -40,14 +40,12 @@ export class ProjectListItemExtraDataGenerator {
   private async getImagesByGroups(): Promise<ImagesByGroups> {
     if (isUndefined(this._imagesByGroups)) {
       const images = await this.getImages()
-      const preview: ImageAsset[] = []
-      const others: ImageAsset[] = []
-      for (const image of images) {
-        this.isPreviewImage(image) ? preview.push(image) : others.push(image)
-      }
       this._imagesByGroups = {
-        preview,
-        others,
+        preview: [],
+        others: [],
+        ...groupBy(images, (image): keyof ImagesByGroups =>
+          this.isPreviewImage(image) ? 'preview' : 'others',
+        ),
       }
     }
     return this._imagesByGroups

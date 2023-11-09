@@ -17,7 +17,7 @@ import { ProjectImageAsset } from './project-image-asset'
 import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
 import { AssetsCollectionSize } from './assets-collection-size'
 import { IMAGES_FILENAME } from '../../common/files'
-import { isEmpty } from 'lodash-es'
+import { groupBy, isEmpty } from 'lodash-es'
 
 @Injectable()
 export class ProjectAssetsCollectionsService {
@@ -128,47 +128,25 @@ export class ProjectAssetsCollectionsService {
     const projectImageAssets = imageAssets.map(
       (imageAsset) => new ProjectImageAsset(imageAsset, slug),
     )
-    const projectImageAssetsByCollectionSlug = new Map<
-      string,
-      ReadonlyArray<ProjectImageAsset>
-    >()
-    for (const projectImageAsset of projectImageAssets) {
-      const collection = projectImageAsset.collection
-      const assetsInCollection =
-        projectImageAssetsByCollectionSlug.get(collection) ?? []
-      projectImageAssetsByCollectionSlug.set(collection, [
-        ...assetsInCollection,
-        projectImageAsset,
-      ])
-    }
+    const projectImageAssetsByCollectionSlug = groupBy(
+      projectImageAssets,
+      (projectImageAsset) => projectImageAsset.collection,
+    )
     const assetCollections: ImageAssetsCollection[] = []
     for (const assetCollection of this.assetsCollectionsData) {
-      const projectImageAssets = projectImageAssetsByCollectionSlug.get(
-        assetCollection.slug,
-      )
+      const projectImageAssets =
+        projectImageAssetsByCollectionSlug[assetCollection.slug]
       if (!isEmpty(projectImageAssets)) {
         if (assetCollection.slug === this.lookbookCollectionSlug) {
-          const projectImageAssetsBySubcollectionSlug = new Map<
-            string,
-            ReadonlyArray<ProjectImageAsset>
-          >()
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          for (const projectImageAsset of projectImageAssets!) {
-            const subCollection = projectImageAsset.subCollection
-            const assetsInCollection =
-              projectImageAssetsBySubcollectionSlug.get(subCollection) ?? []
-            projectImageAssetsBySubcollectionSlug.set(subCollection, [
-              ...assetsInCollection,
-              projectImageAsset,
-            ])
-          }
+          const projectImageAssetsBySubcollectionSlug = groupBy(
+            projectImageAssets,
+            (projectImageAsset) => projectImageAsset.subCollection,
+          )
           const lookbookCollections: ImageAssetsCollection[] = []
           let index = 1
           for (const lookbookNameAndSlug of lookbookNamesAndSlugs) {
             const subcollectionImageAssets =
-              projectImageAssetsBySubcollectionSlug.get(
-                lookbookNameAndSlug.slug,
-              )
+              projectImageAssetsBySubcollectionSlug[lookbookNameAndSlug.slug]
             if (!isEmpty(subcollectionImageAssets)) {
               lookbookCollections.push(
                 new ImageAssetsCollection(
@@ -180,14 +158,14 @@ export class ProjectAssetsCollectionsService {
                   subcollectionImageAssets!.map(({ asset }) => asset),
                 ),
               )
-              projectImageAssetsBySubcollectionSlug.delete(
-                lookbookNameAndSlug.slug,
-              )
+              delete projectImageAssetsBySubcollectionSlug[
+                lookbookNameAndSlug.slug
+              ]
               index++
             }
           }
           const restOfLookbookImages = Array.from(
-            projectImageAssetsBySubcollectionSlug.values(),
+            Object.values(projectImageAssetsBySubcollectionSlug),
           )
             .flat()
             .map(({ asset }) => asset)
@@ -203,7 +181,7 @@ export class ProjectAssetsCollectionsService {
             )
           }
           assetCollections.push(...lookbookCollections)
-          projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
+          delete projectImageAssetsByCollectionSlug[assetCollection.slug]
         } else {
           assetCollections.push(
             new ImageAssetsCollection(
@@ -212,11 +190,13 @@ export class ProjectAssetsCollectionsService {
               projectImageAssets!.map(({ asset }) => asset),
             ),
           )
-          projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
+          delete projectImageAssetsByCollectionSlug[assetCollection.slug]
         }
       }
     }
-    const restOfImages = Array.from(projectImageAssetsByCollectionSlug.values())
+    const restOfImages = Array.from(
+      Object.values(projectImageAssetsByCollectionSlug),
+    )
       .flat()
       .map(({ asset }) => asset)
     if (!isEmpty(restOfImages)) {
