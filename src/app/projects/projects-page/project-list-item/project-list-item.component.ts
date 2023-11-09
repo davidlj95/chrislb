@@ -33,7 +33,7 @@ export class ProjectListItemComponent {
   ) {
     this.responsiveImageAttributes = responsiveImageAttributesService
       .vw(Vw(33.33), CssMinMaxMediaQuery.min(Breakpoint.S.px))
-      .with(
+      .concat(
         responsiveImageAttributesService.vw(
           Vw(50),
           CssMinMaxMediaQuery.max(Breakpoint.S.almost),

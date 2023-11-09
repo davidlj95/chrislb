@@ -11,12 +11,12 @@ export class ResponsiveImageAttributes {
     return new ResponsiveImageAttributes(this.breakpoints.reduce(), this.sizes)
   }
 
-  public with(
+  public concat(
     ...others: ReadonlyArray<ResponsiveImageAttributes>
   ): ResponsiveImageAttributes {
     return new ResponsiveImageAttributes(
-      this.breakpoints.with(...others.map(({ breakpoints }) => breakpoints)),
-      this.sizes.with(...others.map(({ sizes }) => sizes)),
+      this.breakpoints.concat(...others.map(({ breakpoints }) => breakpoints)),
+      this.sizes.concat(...others.map(({ sizes }) => sizes)),
     )
   }
 }

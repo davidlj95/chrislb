@@ -29,7 +29,7 @@ export class AboutPageComponent {
       miscImages.aboutPortrait,
       responsiveImageAttributesService
         .vw(Vw(35), CssMinMaxMediaQuery.min(Breakpoint.S.px))
-        .with(
+        .concat(
           responsiveImageAttributesService.vw(
             Vw(60),
             CssMinMaxMediaQuery.minMax(Breakpoint.Xs.px, Breakpoint.S.almost),

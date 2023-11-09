@@ -49,7 +49,7 @@ export class ResponsiveImageAttributesService {
   public fullWidthUntil(
     constrainedWidth: CssPxUnit,
   ): ResponsiveImageAttributes {
-    return this.fixedSinceWidth(constrainedWidth).with(
+    return this.fixedSinceWidth(constrainedWidth).concat(
       this.vw(Vw(100), CssMinMaxMediaQuery.max(constrainedWidth)),
     )
   }

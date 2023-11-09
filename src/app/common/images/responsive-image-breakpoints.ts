@@ -20,7 +20,7 @@ export class ResponsiveImageBreakpoints {
     )
   }
 
-  public with(
+  public concat(
     ...others: ReadonlyArray<ResponsiveImageBreakpoints>
   ): ResponsiveImageBreakpoints {
     return ResponsiveImageBreakpoints.from(
