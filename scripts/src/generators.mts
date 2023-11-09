@@ -1,21 +1,22 @@
-import { isMain } from './is-main.mjs'
-import { Log } from './log.mjs'
-import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
+import { isMain } from './is-main.mts'
+import { Log } from './log.mts'
+import { getRepositoryRootDir } from './get-repository-root-dir.mts'
 import { join } from 'path'
-import directoriesPkg from '../../src/app/common/directories.js'
-import { Imagekit } from './imagekit.mjs'
-import { ResourceCollection } from './resource-collection.mjs'
-import { ResourceImagesGenerator } from './resource-images-generator.mjs'
-import { ImageCdnApi } from './image-cdn-api.mjs'
-import { ResourceCollectionListGenerator } from './resource-collection-list-generator.mjs'
-import { ProjectListItemExtraDataGenerator } from './project-list-item-extra-data-generator.mjs'
-import { Resource } from './resource.mjs'
-import { MiscImages } from '../../src/app/common/images/misc-images.js'
-import { RoutesFileGenerator } from './routes-file-generator.mjs'
-import filesPkg from '../../src/app/common/files.js'
-
-const { IMAGES_FILE_BASENAME } = filesPkg
-const { DATA_DIR, CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
+import { Imagekit } from './imagekit.mts'
+import { ResourceCollection } from './resource-collection.mts'
+import { ResourceImagesGenerator } from './resource-images-generator.mts'
+import { ImageCdnApi } from './image-cdn-api.mts'
+import { ResourceCollectionListGenerator } from './resource-collection-list-generator.mts'
+import { ProjectListItemExtraDataGenerator } from './project-list-item-extra-data-generator.mts'
+import { Resource } from './resource.mts'
+import { MiscImages } from '../../src/app/common/images/misc-images.ts'
+import { RoutesFileGenerator } from './routes-file-generator.mts'
+import {
+  CONTENTS_DIR,
+  DATA_DIR,
+  PROJECTS_DIR,
+} from '../../src/app/common/directories.ts'
+import { IMAGES_FILE_BASENAME } from '../../src/app/common/files.ts'
 
 class Generators {
   private readonly REPO_PATH = getRepositoryRootDir()
@@ -23,11 +24,11 @@ class Generators {
   private readonly DATA_PATH = join(this.SRC_PATH, DATA_DIR)
   private readonly CONTENT_PATH = join(this.SRC_PATH, CONTENTS_DIR)
   private readonly MISC_DIR = 'misc'
-  private readonly resourceImagesGenerator = new ResourceImagesGenerator(
-    this.imageCdnApi,
-  )
+  private readonly resourceImagesGenerator: ResourceImagesGenerator
 
-  constructor(private readonly imageCdnApi: ImageCdnApi) {}
+  constructor(private readonly imageCdnApi: ImageCdnApi) {
+    this.resourceImagesGenerator = new ResourceImagesGenerator(imageCdnApi)
+  }
 
   private get projects(): ResourceCollection {
     return new ResourceCollection(join(this.CONTENT_PATH, PROJECTS_DIR))

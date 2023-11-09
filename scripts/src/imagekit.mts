@@ -1,15 +1,13 @@
 import ImagekitSdk from 'imagekit'
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
-import { Log } from './log.mjs'
-import imagesCdnConfigPkg from '../../src/app/common/images/cdn-config.js'
+import { Log } from './log.mts'
 import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../src/app/common/images/image-asset.js'
-import { ImageCdnApi } from './image-cdn-api.mjs'
+import { ImageAsset } from '../../src/app/common/images/image-asset.ts'
+import { ImageCdnApi } from './image-cdn-api.mts'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
-
-const { IMAGEKIT_URL } = imagesCdnConfigPkg
+import { IMAGEKIT_URL } from '../../src/app/common/images/cdn-config.ts'
 
 export class Imagekit implements ImageCdnApi {
   private readonly sdk: ImagekitSdk

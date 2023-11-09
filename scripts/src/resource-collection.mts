@@ -1,8 +1,8 @@
-import { Resource } from './resource.mjs'
-import { mkdir, readdir } from 'fs/promises'
+import { Resource } from './resource.mts'
 import { basename, join } from 'path'
-import { DataType } from './data-type.mjs'
-import { JSON_DATA_TYPE } from './json-data-type.mjs'
+import { DataType } from './data-type.mts'
+import { JSON_DATA_TYPE } from './json-data-type.mts'
+import { mkdirSync, readdirSync } from 'fs'
 
 export class ResourceCollection {
   private _resources?: ReadonlyArray<Resource>
@@ -18,7 +18,7 @@ export class ResourceCollection {
 
   public async getResources(): Promise<ReadonlyArray<Resource>> {
     if (!this._resources) {
-      const directoryFiles = await readdir(this.path, {
+      const directoryFiles = readdirSync(this.path, {
         withFileTypes: true,
       })
       const resourceFiles = directoryFiles.filter(
@@ -51,6 +51,6 @@ export class ResourceCollection {
   }
 
   private async createDirectoryIfDoesNotExist(): Promise<void> {
-    await mkdir(this.path, { recursive: true })
+    mkdirSync(this.path, { recursive: true })
   }
 }

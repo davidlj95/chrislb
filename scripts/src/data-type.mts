@@ -1,5 +1,5 @@
-import { FileReader } from './file-reader.mjs'
-import { FileWriter } from './file-writer.mjs'
+import { FileReader } from './file-reader.mts'
+import { FileWriter } from './file-writer.mts'
 import { basename } from 'path'
 
 export class DataType {

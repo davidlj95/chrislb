@@ -1,4 +1,4 @@
-import { ImageAsset } from '../../src/app/common/images/image-asset.js'
+import { ImageAsset } from '../../src/app/common/images/image-asset.ts'
 
 export interface ImageCdnApi {
   getAllImagesInPath(

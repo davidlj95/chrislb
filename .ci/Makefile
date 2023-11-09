@@ -1,21 +1,22 @@
 .PHONY: *
 
-prebuild:
-	npm run prebuild
-
+# First so that running without command runs a build
 build: prebuild
-	npm run prerender
-	npm run postbuild
+	cd .. && bun run prerender
+	cd .. && bun run postbuild
+
+prebuild:
+	cd .. && bun run bun:prebuild
 
 install:
-  # So @ngaox/seo installs (declares peer dep of Angular 15)
-	npm ci --legacy-peer-deps
+	# https://bun.sh/docs/cli/install#production-mode
+	bun install --frozen-lockfile
 
 lint:
-	npm run lint -- --max-warnings 0
+	bun run lint -- --max-warnings 0
 
 test:
-	npm run test -- --browsers=ChromeHeadless --no-watch --no-progress --reporters progress --code-coverage
+	bun run test -- --browsers=ChromeHeadless --no-watch --no-progress --reporters progress --code-coverage
 
 run-main:
 	cd .. && act
@@ -24,7 +25,7 @@ reset:
 	docker ps -a --format '{{.Names}}' | grep -e '^act-' | xargs docker rm -f
 
 format-check:
-	cd .. && npm run format-check-all
+	cd .. && bun run bun:format-check-all
 
 lighthouse:
 	cd .. && npx --yes @lhci/cli@0.12.x autorun
