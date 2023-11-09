@@ -23,7 +23,9 @@ export class LogoComponent {
     const maxWidthPx = aspectRatio * this.LOGO_MAX_HEIGHT_PX
     this.horizontalLogo = new ResponsiveImage(
       miscImages.horizontalLogo,
-      responsiveImageAttributesService.constrained(Px(Math.ceil(maxWidthPx))),
+      responsiveImageAttributesService.fullWidthUntil(
+        Px(Math.ceil(maxWidthPx)),
+      ),
     )
   }
 }
