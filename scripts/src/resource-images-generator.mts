@@ -1,8 +1,6 @@
-import { Resource } from './resource.mjs'
-import { ImageCdnApi } from './image-cdn-api.mjs'
-import filesPkg from '../../src/app/common/files.js'
-
-const { IMAGES_FILE_BASENAME } = filesPkg
+import { Resource } from './resource.mts'
+import { ImageCdnApi } from './image-cdn-api.mts'
+import { IMAGES_FILE_BASENAME } from '../../src/app/common/files.ts'
 
 export class ResourceImagesGenerator {
   constructor(public readonly imageCdnApi: ImageCdnApi) {}

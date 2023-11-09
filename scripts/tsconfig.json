@@ -2,13 +2,25 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "outDir": "dist",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
   },
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "moduleTypes": {
+      // Can't set app files to be ESM in package.json given SSR tasks fail
+      // (bundling issues I don't wanna get deep into)
+      // That's the reason all scripts are actually with `.mts` extension
+      // (to force ESM) in there
+      //
+      // So to force ESM, we do this trick
+      // Otherwise, the feature to load CJS from ESM in Node.js requires
+      // importing from a non-existing default import. And both the IDE and Bun
+      // get lost if doing so.
+      "../src/**/*.ts": "esm"
+    }
   }
 }

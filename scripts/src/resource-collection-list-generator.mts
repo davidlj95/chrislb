@@ -1,7 +1,7 @@
-import { ResourceCollection } from './resource-collection.mjs'
+import { ResourceCollection } from './resource-collection.mts'
 import { join } from 'path'
-import { Resource } from './resource.mjs'
-import { Log } from './log.mjs'
+import { Resource } from './resource.mts'
+import { Log } from './log.mts'
 import { isEmpty } from 'lodash-es'
 
 export class ResourceCollectionListGenerator {
