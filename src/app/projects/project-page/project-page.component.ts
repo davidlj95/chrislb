@@ -84,7 +84,8 @@ export class ProjectPageComponent {
               CssMinMaxMediaQuery.max(Breakpoint.S.almost),
               { includeMediaQueryInSizes: true },
             ),
-          ),
+          )
+          .reduce(),
       },
     }
   }

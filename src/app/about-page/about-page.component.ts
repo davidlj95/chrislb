@@ -40,7 +40,8 @@ export class AboutPageComponent {
             CssMinMaxMediaQuery.max(Breakpoint.Xs.almost),
             { includeMediaQueryInSizes: true },
           ),
-        ),
+        )
+        .reduce(),
     )
   }
 }
