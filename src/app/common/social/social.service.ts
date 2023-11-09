@@ -6,6 +6,7 @@ import {
   faLinkedinIn,
   faTiktok,
 } from '@fortawesome/free-brands-svg-icons'
+import { isEmpty } from 'lodash-es'
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +31,11 @@ export class SocialService {
       this.isSocialName(author.social.preferred)
     ) {
       const mainUsername = author.social[author.social.preferred]
-      if (!!mainUsername && mainUsername.trim().length > 0)
+      if (!isEmpty(mainUsername?.trim()))
         return this.mapFromNameAndUsername(
           author.social.preferred,
-          mainUsername,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          mainUsername!,
         )
     }
     const sortedSocials = Array.from(socials).sort(
@@ -41,8 +43,8 @@ export class SocialService {
         (this.mainLinkPreferences.get(a.name) ?? 0) -
         (this.mainLinkPreferences.get(b.name) ?? 0),
     )
-    if (sortedSocials.length === 0) {
-      return undefined
+    if (isEmpty(sortedSocials)) {
+      return
     }
     return sortedSocials[0]
   }
@@ -56,8 +58,8 @@ export class SocialService {
     )
     return entries
       .filter(
-        ([name, username]) =>
-          !!name && name.length > 0 && !!username && username.length > 0,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ([_, username]) => !isEmpty(username?.trim()),
       )
       .map(([name, username]) =>
         this.mapFromNameAndUsername(name, username as string),

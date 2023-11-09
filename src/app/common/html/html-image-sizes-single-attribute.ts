@@ -1,6 +1,6 @@
 import { CssMediaQuery } from '../css/css-media-query'
 import { CssUnit } from '../css/unit/css-unit'
-import { isDefined } from '../is-defined'
+import { isUndefined } from 'lodash-es'
 
 export class HtmlImageSizesSingleAttribute {
   constructor(
@@ -9,7 +9,9 @@ export class HtmlImageSizesSingleAttribute {
   ) {}
 
   public toString(): string {
-    const parts = [this.mediaQuery, this.width].filter(isDefined)
-    return parts.map((part) => part.toString()).join(' ')
+    if (isUndefined(this.mediaQuery)) {
+      return this.width.toString()
+    }
+    return [this.mediaQuery, this.width].join(' ')
   }
 }

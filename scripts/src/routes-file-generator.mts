@@ -4,6 +4,7 @@ import path from 'path'
 import { getRepositoryRootDir } from './get-repository-root-dir.mjs'
 import { readdir, readFile, writeFile } from 'fs/promises'
 import directoriesPkg from '../../src/app/common/directories.js'
+import { isEmpty } from 'lodash-es'
 
 const { CONTENTS_DIR, PROJECTS_DIR } = directoriesPkg
 
@@ -36,7 +37,7 @@ export class RoutesFileGenerator {
             path.join(this.PROJECTS_PATH, projectDir.name),
             { withFileTypes: true },
           )
-          return projectDirFiles.length > 0 ? projectDir.name : ''
+          return !isEmpty(projectDirFiles) ? projectDir.name : ''
         }),
       )
     ).filter((projectDir) => projectDir.length)

@@ -11,7 +11,7 @@ export class JsonFile implements FileReader, FileWriter {
       return JSON.parse(await readFile(this.filepath, 'utf-8'))
     } catch (error) {
       Log.warn('Unable to read file %s', this.filepath)
-      return undefined
+      return
     }
   }
 

@@ -1,5 +1,6 @@
 import { IPageSeoData } from '@ngaox/seo'
 import { MetaDefinition } from '@angular/platform-browser'
+import { isEmpty } from 'lodash-es'
 
 interface OpenGraphProfileMetadata {
   readonly firstName: string
@@ -13,28 +14,30 @@ export function addOpenGraphProfileMetadata(
   openGraphProfileMetadata: OpenGraphProfileMetadata,
 ): IPageSeoData {
   const extras: MetaDefinition[] = []
-  if (isNonEmptyString(openGraphProfileMetadata.firstName)) {
+  if (!isEmpty(openGraphProfileMetadata.firstName)) {
     extras.push({
       property: 'og:profile:first_name',
       content: openGraphProfileMetadata.firstName,
     })
   }
-  if (isNonEmptyString(openGraphProfileMetadata.lastName)) {
+  if (!isEmpty(openGraphProfileMetadata.lastName.trim())) {
     extras.push({
       property: 'og:profile:last_name',
       content: openGraphProfileMetadata.lastName,
     })
   }
-  if (isNonEmptyString(openGraphProfileMetadata.gender)) {
+  if (!isEmpty(openGraphProfileMetadata.gender?.trim())) {
     extras.push({
       property: 'og:profile:gender',
-      content: openGraphProfileMetadata.gender,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      content: openGraphProfileMetadata.gender!,
     })
   }
-  if (isNonEmptyString(openGraphProfileMetadata.username)) {
+  if (!isEmpty(openGraphProfileMetadata.username?.trim())) {
     extras.push({
       property: 'og:profile:username',
-      content: openGraphProfileMetadata.username,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      content: openGraphProfileMetadata.username!,
     })
   }
 
@@ -43,8 +46,4 @@ export function addOpenGraphProfileMetadata(
     type: 'profile',
     extra: [...(metadata.extra ?? []), ...extras],
   }
-}
-
-function isNonEmptyString(string: string | undefined): string is string {
-  return string !== undefined && string.trim().length > 0
 }

@@ -11,9 +11,6 @@ export function getMetadataFromJson(
     ...jsonMetadata,
     url: getCanonicalUrlForPath(...pathSegments),
     title: getTitle(jsonMetadata.title),
-    keywords:
-      !!jsonMetadata.keywords && jsonMetadata.keywords.length
-        ? jsonMetadata.keywords.join(', ')
-        : undefined,
+    keywords: jsonMetadata.keywords?.join(', '),
   }
 }

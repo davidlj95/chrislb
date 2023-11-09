@@ -2,6 +2,7 @@ import { ResourceCollection } from './resource-collection.mjs'
 import { join } from 'path'
 import { Resource } from './resource.mjs'
 import { Log } from './log.mjs'
+import { isEmpty } from 'lodash-es'
 
 export class ResourceCollectionListGenerator {
   constructor(
@@ -40,7 +41,7 @@ export class ResourceCollectionListGenerator {
     if (this.listItemExtraDataGenerator) {
       Log.info('Generating and appending extra data')
       const listItemExtraData = await this.listItemExtraDataGenerator(resource)
-      if (!listItemExtraData || Object.keys(listItemExtraData).length === 0) {
+      if (isEmpty(listItemExtraData)) {
         Log.warn('No extra data generated')
       }
       // Small trick given I know resource data is JSON

@@ -2,6 +2,7 @@ import { CssMinWidthMediaFeature } from './css-min-width-media-feature'
 import { CssMaxWidthMediaFeature } from './css-max-width-media-feature'
 import { CssMediaQuery } from './css-media-query'
 import { CssUnit } from './unit/css-unit'
+import { isUndefined } from 'lodash-es'
 
 export class CssMinMaxMediaQuery<
   MinUnit extends CssUnit,
@@ -51,7 +52,7 @@ export class CssMinMaxMediaQuery<
 
   public toString(): string {
     const mediaFeatures = [this.min, this.max].filter(
-      (mediaFeature) => !!mediaFeature,
+      (mediaFeature) => !isUndefined(mediaFeature),
     )
     if (mediaFeatures.length === 1) {
       return mediaFeatures.join('')

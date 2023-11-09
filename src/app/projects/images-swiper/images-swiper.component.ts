@@ -12,6 +12,7 @@ import {
 } from 'swiper/modules'
 import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
 import { ImageAsset } from '../../common/images/image-asset'
+import { isEmpty, isNumber } from 'lodash-es'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -75,11 +76,8 @@ export class ImagesSwiperComponent implements OnChanges {
     const defaultSlidesPerView = swiperOptions.slidesPerView
     const allSlidesPerView = breakpointSlidesPerViews
       .concat([defaultSlidesPerView])
-      .filter(
-        (slidesPerView): slidesPerView is number =>
-          slidesPerView !== undefined && slidesPerView !== 'auto',
-      )
-    if (allSlidesPerView.length === 0) {
+      .filter(isNumber)
+    if (isEmpty(allSlidesPerView)) {
       return null
     }
     return Math.max(...allSlidesPerView)
@@ -89,14 +87,11 @@ export class ImagesSwiperComponent implements OnChanges {
     swiperOptions: SwiperOptions,
     maxSlidesPerView: number | null,
   ): SwiperOptions {
-    if (
-      swiperOptions.loop !== undefined ||
-      swiperOptions.rewind !== undefined
-    ) {
+    if (!isEmpty(swiperOptions.loop) || !isEmpty(swiperOptions.rewind)) {
       return swiperOptions
     }
     const loop =
-      !!this.images &&
+      !isEmpty(this.images) &&
       maxSlidesPerView !== null &&
       this.images.length > maxSlidesPerView * 2
     return {
