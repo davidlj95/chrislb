@@ -6,8 +6,8 @@
     >
       <img
         [ngSrc]="image.filePath"
-        [ngSrcset]="srcSet"
-        [sizes]="sizes"
+        [ngSrcset]="responsiveImageAttributes.breakpoints.ngSrcSet.asString"
+        [sizes]="responsiveImageAttributes.sizes.asString"
         [fill]="true"
         [priority]="priority && i < (_maxSlidesPerView ?? 0)"
         [alt]="image.alt || DEFAULT_IMAGE_ALT"

@@ -3,7 +3,6 @@ import { register as registerSwiper } from 'swiper/element'
 
 import { DEFAULT_ALT } from '../../common/images/default-alt'
 import { SwiperOptions } from 'swiper/types'
-import { ImageAsset } from '../../common/images/image-asset'
 import {
   A11y,
   Autoplay,
@@ -11,6 +10,8 @@ import {
   Navigation,
   Pagination,
 } from 'swiper/modules'
+import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
+import { ImageAsset } from '../../common/images/image-asset'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -22,9 +23,9 @@ registerSwiper()
   styleUrls: ['./images-swiper.component.scss'],
 })
 export class ImagesSwiperComponent implements OnChanges {
-  @Input({ required: true }) public images!: ReadonlyArray<ImageAsset> | null
-  @Input({ required: true }) public srcSet!: string
-  @Input({ required: true }) public sizes!: string
+  @Input({ required: true }) public images!: ReadonlyArray<ImageAsset>
+  @Input({ required: true })
+  public responsiveImageAttributes!: ResponsiveImageAttributes
   @Input() public priority?: boolean
   @Input() public customSwiperOptions?: SwiperOptions
   protected readonly DEFAULT_IMAGE_ALT = DEFAULT_ALT

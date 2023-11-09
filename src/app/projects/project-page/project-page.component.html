@@ -21,11 +21,9 @@
       <app-images-swiper
         *ngIf="assetsCollection.type === AssetsCollectionType.Image"
         [images]="assetsCollection.images"
-        [srcSet]="
-          assetsCollection.imagesSwiperConfig.attributes.breakpoints.ngSrcSet
-            .asString
+        [responsiveImageAttributes]="
+          assetsCollection.imagesSwiperConfig.attributes
         "
-        [sizes]="assetsCollection.imagesSwiperConfig.attributes.sizes.asString"
         [customSwiperOptions]="
           assetsCollection.imagesSwiperConfig.customSwiperOptions
         "
