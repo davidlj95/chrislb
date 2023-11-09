@@ -40,6 +40,7 @@ export class ProjectListItemComponent {
           { includeMediaQueryInSizes: true },
         ),
       )
+      .reduce()
   }
 
   protected _item!: ProjectListItem
