@@ -17,6 +17,7 @@ import { ProjectImageAsset } from './project-image-asset'
 import { LookbookNameAndSlug } from '../lookbook-name-and-slug'
 import { AssetsCollectionSize } from './assets-collection-size'
 import { IMAGES_FILENAME } from '../../common/files'
+import { isEmpty } from 'lodash-es'
 
 @Injectable()
 export class ProjectAssetsCollectionsService {
@@ -145,13 +146,14 @@ export class ProjectAssetsCollectionsService {
       const projectImageAssets = projectImageAssetsByCollectionSlug.get(
         assetCollection.slug,
       )
-      if (projectImageAssets && projectImageAssets.length > 0) {
+      if (!isEmpty(projectImageAssets)) {
         if (assetCollection.slug === this.lookbookCollectionSlug) {
           const projectImageAssetsBySubcollectionSlug = new Map<
             string,
             ReadonlyArray<ProjectImageAsset>
           >()
-          for (const projectImageAsset of projectImageAssets) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          for (const projectImageAsset of projectImageAssets!) {
             const subCollection = projectImageAsset.subCollection
             const assetsInCollection =
               projectImageAssetsBySubcollectionSlug.get(subCollection) ?? []
@@ -167,17 +169,15 @@ export class ProjectAssetsCollectionsService {
               projectImageAssetsBySubcollectionSlug.get(
                 lookbookNameAndSlug.slug,
               )
-            if (
-              subcollectionImageAssets &&
-              subcollectionImageAssets.length > 0
-            ) {
+            if (!isEmpty(subcollectionImageAssets)) {
               lookbookCollections.push(
                 new ImageAssetsCollection(
                   {
                     ...assetCollection,
                     name: `${assetCollection.name} ${index} "${lookbookNameAndSlug.name}"`,
                   },
-                  subcollectionImageAssets.map(({ asset }) => asset),
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  subcollectionImageAssets!.map(({ asset }) => asset),
                 ),
               )
               projectImageAssetsBySubcollectionSlug.delete(
@@ -191,7 +191,7 @@ export class ProjectAssetsCollectionsService {
           )
             .flat()
             .map(({ asset }) => asset)
-          if (restOfLookbookImages.length > 0) {
+          if (!isEmpty(restOfLookbookImages)) {
             lookbookCollections.push(
               new ImageAssetsCollection(
                 {
@@ -208,7 +208,8 @@ export class ProjectAssetsCollectionsService {
           assetCollections.push(
             new ImageAssetsCollection(
               assetCollection,
-              projectImageAssets.map(({ asset }) => asset),
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              projectImageAssets!.map(({ asset }) => asset),
             ),
           )
           projectImageAssetsByCollectionSlug.delete(assetCollection.slug)
@@ -218,7 +219,7 @@ export class ProjectAssetsCollectionsService {
     const restOfImages = Array.from(projectImageAssetsByCollectionSlug.values())
       .flat()
       .map(({ asset }) => asset)
-    if (restOfImages.length > 0) {
+    if (!isEmpty(restOfImages)) {
       assetCollections.push(
         new ImageAssetsCollection(
           {

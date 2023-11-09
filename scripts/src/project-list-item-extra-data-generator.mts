@@ -6,6 +6,7 @@ import { Log } from './log.mjs'
 import { Project } from '../../src/app/projects/project.js'
 import previewJson from '../../src/data/assets-collections/preview.json' assert { type: 'json' }
 import projectImageAssetPkg from '../../src/app/projects/project-page/project-image-asset.js'
+import { isEmpty, isUndefined } from 'lodash-es'
 
 const { ProjectImageAsset } = projectImageAssetPkg
 
@@ -37,7 +38,7 @@ export class ProjectListItemExtraDataGenerator {
   }
 
   private async getImagesByGroups(): Promise<ImagesByGroups> {
-    if (!this._imagesByGroups) {
+    if (isUndefined(this._imagesByGroups)) {
       const images = await this.getImages()
       const preview: ImageAsset[] = []
       const others: ImageAsset[] = []
@@ -61,7 +62,7 @@ export class ProjectListItemExtraDataGenerator {
   }
 
   private async getImagesResource(): Promise<Resource | null> {
-    if (this._imagesResource === undefined) {
+    if (isUndefined(this._imagesResource)) {
       const imagesResource =
         (await this.resource.childCollection.getResource(
           this.resourceImagesGenerator.basename,
@@ -88,12 +89,12 @@ export class ProjectListItemExtraDataGenerator {
   }
 
   private async hasOtherImagesApartFromPreview(): Promise<boolean> {
-    return (await this.getImagesByGroups()).others.length > 0
+    return !isEmpty((await this.getImagesByGroups()).others)
   }
 
   private async hasVideos(): Promise<boolean> {
     const project = (await this.resource.getData()) as Project
-    return !!project.youtubePlaylistId
+    return !isEmpty(project.youtubePlaylistId?.trim())
   }
 
   private async removePreviewImages(): Promise<void> {

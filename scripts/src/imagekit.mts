@@ -7,6 +7,7 @@ import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../src/app/common/images/image-asset.js'
 import { ImageCdnApi } from './image-cdn-api.mjs'
 import { URLSearchParams } from 'url'
+import { isEmpty } from 'lodash-es'
 
 const { IMAGEKIT_URL } = imagesCdnConfigPkg
 
@@ -50,17 +51,17 @@ export class Imagekit implements ImageCdnApi {
   ): Promise<ReadonlyArray<ImageAsset>> {
     Log.group('Searching for images inside "%s" path', path)
     const imageAssets = await this.listImageAssetsInPath(path)
-    imageAssets.length > 0
-      ? Log.info('Found %d images', imageAssets.length)
-      : Log.info('No images found')
+    isEmpty(imageAssets)
+      ? Log.info('No images found')
+      : Log.info('Found %d images', imageAssets.length)
     const imagesFromDirectories: ImageAsset[] = []
     if (includeSubdirectories) {
       const directoryNames = await this.listDirectoryNamesInPath(path)
-      if (directoryNames.length > 0) {
+      if (isEmpty(directoryNames)) {
+        Log.info('No directories found')
+      } else {
         Log.info('Found %d directories', directoryNames.length)
         Log.info('Scanning directories...')
-      } else {
-        Log.info('No directories found')
       }
       Log.groupEnd()
       for (const directoryName of directoryNames) {
@@ -108,7 +109,7 @@ export class Imagekit implements ImageCdnApi {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
     const altMetadata: Pick<ImageAsset, 'alt'> = {}
     // Avoid adding if empty string to save some space
-    if (!!alt && alt.length > 0) {
+    if (!isEmpty(alt?.trim())) {
       altMetadata.alt = alt
     }
     // Point to specific file version

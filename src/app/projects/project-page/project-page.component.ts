@@ -18,6 +18,7 @@ import { CssPxUnit, Px } from '../../common/css/unit/px'
 import { Vw } from '../../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
 import { Breakpoint } from '../../common/style/breakpoint'
+import { isEmpty } from 'lodash-es'
 
 @Component({
   selector: 'app-project-page',
@@ -118,7 +119,7 @@ export class ProjectPageComponent {
         })),
       ),
       tap((assetsCollections) => {
-        if (assetsCollections.length === 0) {
+        if (isEmpty(assetsCollections)) {
           this.navigatorService.displayNotFoundPage()
         }
       }),
