@@ -4,7 +4,7 @@ runs:
   using: 'composite'
   steps:
     - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
+      uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7 # v1
       with:
         bun-version: latest
     - name: Cache dependencies
