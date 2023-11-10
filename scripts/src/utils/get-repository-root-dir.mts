@@ -5,5 +5,5 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 export function getRepositoryRootDir() {
-  return resolve(__dirname, '..', '..')
+  return resolve(__dirname, '..', '..', '..')
 }

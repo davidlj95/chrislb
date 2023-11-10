@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Generate" type="js.build_tools.npm">
+  <configuration default="false" name="Generate images lists" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="bun:generate" />
+      <script value="bun:generate-images-lists" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

@@ -1,9 +1,12 @@
-import { isMain } from './is-main.mts'
-import { Log } from './log.mts'
-import { getRepositoryRootDir } from './get-repository-root-dir.mts'
+import { isMain } from '../utils/is-main.mts'
+import { Log } from '../utils/log.mts'
+import { getRepositoryRootDir } from '../utils/get-repository-root-dir.mts'
 import { isEmpty } from 'lodash-es'
 import { join } from 'path'
-import { CONTENTS_DIR, PROJECTS_DIR } from '../../src/app/common/directories.ts'
+import {
+  CONTENTS_DIR,
+  PROJECTS_DIR,
+} from '../../../src/app/common/directories.ts'
 import { readdirSync, readFileSync, writeFileSync } from 'fs'
 
 export class RoutesFileGenerator {

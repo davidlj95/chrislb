@@ -1,4 +1,4 @@
-import { Log } from './log.mts'
+import { Log } from '../utils/log.mts'
 import { FileWriter } from './file-writer.mts'
 import { FileReader } from './file-reader.mts'
 import { readFileSync, writeFileSync } from 'fs'

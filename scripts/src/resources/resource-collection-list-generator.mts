@@ -1,7 +1,7 @@
 import { ResourceCollection } from './resource-collection.mts'
 import { join } from 'path'
 import { Resource } from './resource.mts'
-import { Log } from './log.mts'
+import { Log } from '../utils/log.mts'
 import { isEmpty } from 'lodash-es'
 
 export class ResourceCollectionListGenerator {
@@ -11,7 +11,7 @@ export class ResourceCollectionListGenerator {
   ) {}
 
   public get filename(): string {
-    return this.resourceCollection.dataType.appendExtension(
+    return this.resourceCollection.fileType.appendExtension(
       this.resourceCollection.name,
     )
   }
@@ -29,7 +29,7 @@ export class ResourceCollectionListGenerator {
       resourcesData.push(await this.generateResourceData(resource))
     }
     Log.info('Writing list as %s', this.filename)
-    const writer = new this.resourceCollection.dataType.writer(this.filepath)
+    const writer = new this.resourceCollection.fileType.writer(this.filepath)
     await writer.write(resourcesData)
     Log.ok('Done')
     Log.groupEnd()
