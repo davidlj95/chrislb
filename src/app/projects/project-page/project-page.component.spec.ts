@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ProjectPageComponent } from './project-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
-import { ProjectsService } from '../projects.service'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { of } from 'rxjs'
-import { Project } from '../project'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
+import { ActivatedRoute } from '@angular/router'
+import { ProjectRouteData } from './projects-routes-data'
 
 describe('ProjectPageComponent', () => {
   let component: ProjectPageComponent
@@ -19,14 +19,14 @@ describe('ProjectPageComponent', () => {
         MockComponents(ImagesSwiperComponent),
       ],
       providers: [
-        MockProvider(ProjectsService, {
-          bySlug() {
-            return of({
+        MockProvider(ActivatedRoute, {
+          data: of({
+            project: {
               title: 'Title',
               description: 'Description',
               youtubePlaylistId: 'Playlist ID',
-            } as Project)
-          },
+            },
+          } as ProjectRouteData),
         }),
         MockProvider(ProjectAssetsCollectionsService, {
           byProject() {
@@ -37,7 +37,6 @@ describe('ProjectPageComponent', () => {
     })
     fixture = TestBed.createComponent(ProjectPageComponent)
     component = fixture.componentInstance
-    component.slug = 'foo'
     fixture.detectChanges()
   })
 

@@ -10,6 +10,7 @@ import { ProjectPageComponent } from './project-page/project-page.component'
 import { SanitizeResourceUrlPipe } from './sanitize-resource-url.pipe'
 import { ProjectsService } from './projects.service'
 import { ProjectAssetsCollectionsService } from './project-page/project-assets-collections.service'
+import { ProjectPageResolver } from './project-page/project-page.resolver'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,10 @@ import { ProjectAssetsCollectionsService } from './project-page/project-assets-c
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ProjectsService, ProjectAssetsCollectionsService],
+  providers: [
+    ProjectsService,
+    ProjectAssetsCollectionsService,
+    ProjectPageResolver,
+  ],
 })
 export class ProjectsModule {}
