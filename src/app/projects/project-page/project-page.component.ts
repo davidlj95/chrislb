@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core'
-import { ProjectsService } from '../projects.service'
+import { Component, OnInit } from '@angular/core'
 import { catchError, concatMap, map, Observable, of, tap } from 'rxjs'
 import { SeoService } from '@ngaox/seo'
 import { NavigatorService } from '../../common/routing/navigator.service'
@@ -19,13 +18,15 @@ import { Vw } from '../../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
 import { Breakpoint } from '../../common/style/breakpoint'
 import { isEmpty } from 'lodash-es'
+import { ActivatedRoute } from '@angular/router'
+import { ProjectRouteData } from './projects-routes-data'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent {
+export class ProjectPageComponent implements OnInit {
   public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>
   public readonly fullScreenSwiper = {
     slidesPerView: 2,
@@ -45,7 +46,7 @@ export class ProjectPageComponent {
   protected readonly AssetsCollectionType = AssetsCollectionType
 
   constructor(
-    private projectsService: ProjectsService,
+    private activatedRoute: ActivatedRoute,
     private seo: SeoService,
     private navigatorService: NavigatorService,
     private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
@@ -91,12 +92,12 @@ export class ProjectPageComponent {
     }
   }
 
-  @Input({ required: true })
-  public set slug(slug: string) {
-    const project$ = this.projectsService.bySlug(slug).pipe(
+  ngOnInit(): void {
+    const project$ = this.activatedRoute.data.pipe(
+      map((data) => (data as ProjectRouteData).project),
       tap({
         next: (project) => {
-          this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, slug))
+          this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, project.slug))
           this.seo.setTitle(getTitle(project.title))
           this.seo.setDescription(project.description)
         },
