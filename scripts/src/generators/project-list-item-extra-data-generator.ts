@@ -1,11 +1,11 @@
-import { Resource } from '../resources/resource.mts'
-import { ImageAsset } from '../../../src/app/common/images/image-asset.ts'
-import { ListItemExtraData } from '../../../src/app/projects/project-list-item.ts'
-import { Log } from '../utils/log.mts'
-import { Project } from '../../../src/app/projects/project.ts'
+import { Resource } from '../resources/resource'
+import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ListItemExtraData } from '../../../src/app/projects/project-list-item'
+import { Log } from '../utils/log'
+import { Project } from '../../../src/app/projects/project'
 import previewJson from '../../../src/data/assets-collections/preview.json' assert { type: 'json' }
 import { groupBy, isEmpty, isUndefined } from 'lodash-es'
-import { ProjectImageAsset } from '../../../src/app/projects/project-page/project-image-asset.ts'
+import { ProjectImageAsset } from '../../../src/app/projects/project-page/project-image-asset'
 
 export class ProjectListItemExtraDataGenerator {
   private readonly PREVIEW_IMAGES_DIRECTORY = previewJson.slug

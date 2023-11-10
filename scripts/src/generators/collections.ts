@@ -1,11 +1,11 @@
-import { ResourceCollection } from '../resources/resource-collection.mts'
+import { ResourceCollection } from '../resources/resource-collection'
 import { join } from 'path'
 import {
   CONTENTS_DIR,
   DATA_DIR,
   PROJECTS_DIR,
-} from '../../../src/app/common/directories.ts'
-import { getRepositoryRootDir } from '../utils/get-repository-root-dir.mts'
+} from '../../../src/app/common/directories'
+import { getRepositoryRootDir } from '../utils/get-repository-root-dir'
 
 export class Collections {
   private readonly REPO_PATH = getRepositoryRootDir()

@@ -1,7 +1,7 @@
-import { Resource } from './resource.mts'
+import { Resource } from './resource'
 import { basename, join } from 'path'
-import { FileType } from '../files/file-type.mts'
-import { JSON_FILE_TYPE } from '../files/json-file-type.mts'
+import { FileType } from '../files/file-type'
+import { JSON_FILE_TYPE } from '../files/json-file-type'
 import { mkdirSync, readdirSync } from 'fs'
 
 export class ResourceCollection {

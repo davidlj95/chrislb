@@ -1,13 +1,13 @@
 import ImagekitSdk from 'imagekit'
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
-import { Log } from '../utils/log.mts'
+import { Log } from '../utils/log'
 import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../../src/app/common/images/image-asset.ts'
-import { ImageCdnApi } from './image-cdn-api.mts'
+import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ImageCdnApi } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
-import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config.ts'
+import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
 
 export class Imagekit implements ImageCdnApi {
   private readonly sdk: ImagekitSdk
@@ -45,7 +45,7 @@ export class Imagekit implements ImageCdnApi {
 
   async getAllImagesInPath(
     path: string,
-    includeSubdirectories: boolean = false,
+    includeSubdirectories = false,
   ): Promise<ReadonlyArray<ImageAsset>> {
     Log.group('Searching for images inside "%s" path', path)
     const imageAssets = await this.listImageAssetsInPath(path)

@@ -1,6 +1,6 @@
-import { Resource } from '../resources/resource.mts'
-import { ImageCdnApi } from '../images/image-cdn-api.mts'
-import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files.ts'
+import { Resource } from '../resources/resource'
+import { ImageCdnApi } from '../images/image-cdn-api'
+import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 
 export class ResourceImagesGenerator {
   constructor(public readonly imageCdnApi: ImageCdnApi) {}

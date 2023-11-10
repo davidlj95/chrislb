@@ -1,11 +1,11 @@
-import { ResourceImagesGenerator } from './resource-images-generator.mts'
-import { ImageCdnApi } from '../images/image-cdn-api.mts'
-import { isMain } from '../utils/is-main.mts'
-import { Imagekit } from '../images/imagekit.mts'
-import { Log } from '../utils/log.mts'
-import { MiscImages } from '../../../src/app/common/images/misc-images.ts'
-import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files.ts'
-import { Collections } from './collections.mts'
+import { ResourceImagesGenerator } from './resource-images-generator'
+import { ImageCdnApi } from '../images/image-cdn-api'
+import { isMain } from '../utils/is-main'
+import { Imagekit } from '../images/imagekit'
+import { Log } from '../utils/log'
+import { MiscImages } from '../../../src/app/common/images/misc-images'
+import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
+import { Collections } from './collections'
 
 export class ImagesListsGenerators {
   private readonly resourceImagesGenerator: ResourceImagesGenerator

@@ -1,6 +1,6 @@
-import { Log } from '../utils/log.mts'
-import { FileWriter } from './file-writer.mts'
-import { FileReader } from './file-reader.mts'
+import { Log } from '../utils/log'
+import { FileWriter } from './file-writer'
+import { FileReader } from './file-reader'
 import { readFileSync, writeFileSync } from 'fs'
 
 export class JsonFile implements FileReader, FileWriter {
