@@ -16,11 +16,11 @@ export class Resource {
   }
 
   public get slug(): string {
-    return this.collection.dataType.removeExtension(this.filename)
+    return this.collection.fileType.removeExtension(this.filename)
   }
 
   public async getData(): Promise<unknown> {
-    return new this.collection.dataType.reader(this.path).read()
+    return new this.collection.fileType.reader(this.path).read()
   }
 
   public get childCollection(): ResourceCollection {

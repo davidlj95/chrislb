@@ -1,12 +1,11 @@
-import { Resource } from './resource.mts'
-import { ImageAsset } from '../../src/app/common/images/image-asset.ts'
-import { ListItemExtraData } from '../../src/app/projects/project-list-item.ts'
-import { Log } from './log.mts'
-import { Project } from '../../src/app/projects/project.ts'
-import previewJson from '../../src/data/assets-collections/preview.json' assert { type: 'json' }
+import { Resource } from '../resources/resource.mts'
+import { ImageAsset } from '../../../src/app/common/images/image-asset.ts'
+import { ListItemExtraData } from '../../../src/app/projects/project-list-item.ts'
+import { Log } from '../utils/log.mts'
+import { Project } from '../../../src/app/projects/project.ts'
+import previewJson from '../../../src/data/assets-collections/preview.json' assert { type: 'json' }
 import { groupBy, isEmpty, isUndefined } from 'lodash-es'
-import { ResourceImagesGenerator } from './resource-images-generator.mjs'
-import { ProjectImageAsset } from '../../src/app/projects/project-page/project-image-asset.ts'
+import { ProjectImageAsset } from '../../../src/app/projects/project-page/project-image-asset.ts'
 
 export class ProjectListItemExtraDataGenerator {
   private readonly PREVIEW_IMAGES_DIRECTORY = previewJson.slug
@@ -15,7 +14,7 @@ export class ProjectListItemExtraDataGenerator {
 
   constructor(
     public readonly resource: Resource,
-    public readonly resourceImagesGenerator: ResourceImagesGenerator,
+    public readonly imagesBasename: string,
   ) {}
 
   public async generate(): Promise<ListItemExtraData> {
@@ -61,7 +60,7 @@ export class ProjectListItemExtraDataGenerator {
     if (isUndefined(this._imagesResource)) {
       const imagesResource =
         (await this.resource.childCollection.getResource(
-          this.resourceImagesGenerator.basename,
+          this.imagesBasename,
         )) ?? null
       if (!imagesResource) {
         Log.warn('No image resource found')
@@ -101,7 +100,7 @@ export class ProjectListItemExtraDataGenerator {
     Log.info('Removing preview images from list')
     const imageGroups = await this.getImagesByGroups()
     await this.resource.childCollection.upsertResource(
-      this.resourceImagesGenerator.basename,
+      this.imagesBasename,
       imageGroups.others,
     )
   }
