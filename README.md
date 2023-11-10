@@ -10,15 +10,23 @@ Check the [content management guide] to edit website's contents
 
 ## Developing
 
+### Tooling
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
 
-### Install
+[Bun][bun] is used as package manager and runtime to run content generation scripts. But you can keep using `npm` / `node` anyway if you want. All scripts that can be run with [bun] are prefixed with `bun:`. To run with `npm` / `node`, remove the prefix :)
 
-To install run
+[bun]: https://bun.sh/
+
+### Install with npm
+
+If using `npm` to install packages, run
 
 ```shell
 npm i --legacy-peer-deps
 ```
+
+to install or add new libraries
 
 There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. Here it's using 16
 
@@ -29,11 +37,10 @@ Some files required by the app need to be generated from the data managed by the
 [Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
 
 ```shell
-npm run prebuild
+bun run bun:prebuild
 ```
 
-> If you run `npm run build`, this script will run too because
-> of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
+> If you run `npm run build` with `npm`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
 
 ### Development server
 
@@ -49,7 +56,7 @@ use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-Run `npm run prerender` to build and prerender static HTMLs for known routes.
+Run `prerender` script to build and prerender static HTMLs for known routes.
 
 ### Running unit tests
 
@@ -89,14 +96,13 @@ See [content management guide] for more information about managing and linking c
 #### Image list files
 
 In order to avoid having to manually use the image URLs of the image CDN, a script exists to list existing images in the
-CDN. However, that script requires authentication. To provide the authentication, run the `create-env-from-sample` run
-script and fill the public and private keys in there.
+CDN. However, that script requires authentication. To provide the authentication, run the create env run script and fill the public and private keys in there.
 
 You can find them
 in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the
 restricted one, no write access is needed, just read only.
 
-Once this is configured, run the `generate-image-lists` script to update the images list querying [ImageKit.io].
+Once this is configured, run the generator script to update the images list querying [ImageKit.io].
 
 [ImageKit.io]: https://imagekit.io
 

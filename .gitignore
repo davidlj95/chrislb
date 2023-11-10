@@ -381,6 +381,7 @@ src/data/*.json
 src/content/**/images.json
 src/data/misc/images.json
 routes-file.txt
+package-lock.json
 # Manual edit
 # - Remove .idea from Angular. We want some IDE settings!
 # - Add generated JSON lists
