@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Set deploy status
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v6
+      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
       env:
         # 👇 To be in sync with Decap CMS config
         STATUS_CONTEXT: 'deploy/preview'
