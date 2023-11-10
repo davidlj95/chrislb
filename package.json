@@ -28,14 +28,14 @@
     "bun:prebuild": "bun run bun:generate-all",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
     "postbuild": "cp dist/chrislb/browser/404/index.html dist/chrislb/browser/content/404.html",
-    "bun:generate-all": "bun run scripts/src/generators/all-generators.mts",
-    "bun:generate-images-lists": "bun run scripts/src/generators/images-lists-generators.mts",
-    "bun:generate-contents": "bun run scripts/src/generators/content-generators.mts",
-    "bun:generate-routes-file": "bun run scripts/src/routes-file-generator.mts.mts",
-    "generate-all": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/all-generators.mts",
-    "generate-images-lists": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/images-lists-generators.mts",
-    "generate-contents": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/content-generators.mts",
-    "generate-routes-file": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/routes-file-generator.mts"
+    "bun:generate-all": "bun run scripts/src/generators/all-generators.ts",
+    "bun:generate-images-lists": "bun run scripts/src/generators/images-lists-generators.ts",
+    "bun:generate-contents": "bun run scripts/src/generators/content-generators.ts",
+    "bun:generate-routes-file": "bun run scripts/src/generators/routes-file-generator.ts",
+    "generate-all": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/all-generators.ts",
+    "generate-images-lists": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/images-lists-generators.ts",
+    "generate-contents": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/content-generators.ts",
+    "generate-routes-file": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/routes-file-generator.ts"
   },
   "private": true,
   "dependencies": {

@@ -1,4 +1,4 @@
-import { ResourceCollection } from './resource-collection.mts'
+import { ResourceCollection } from './resource-collection'
 import { join } from 'path'
 
 export class Resource {

@@ -3,23 +3,27 @@
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    //👇 So we can use "bundler" resolution
+    "module": "esnext",
+    //👇 So we can use imports without extension with ESM
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowImportingTsExtensions": true
+    //👇 Required for "tsc" to work without extensions in imports
+    "noEmit": true
   },
   "ts-node": {
     "esm": true,
     "moduleTypes": {
       // Can't set app files to be ESM in package.json given SSR tasks fail
       // (bundling issues I don't wanna get deep into)
-      // That's the reason all scripts are actually with `.mts` extension
-      // (to force ESM) in there
+      // Also, having *.mts extension for script files is a PIA (for instance,
+      // if using those, cannot use imports without extension :( )
       //
       // So to force ESM, we do this trick
       // Otherwise, the feature to load CJS from ESM in Node.js requires
       // importing from a non-existing default import. And both the IDE and Bun
       // get lost if doing so.
+      "./src/**/*.ts": "esm",
       "../src/**/*.ts": "esm"
     }
   }

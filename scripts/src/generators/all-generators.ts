@@ -1,8 +1,8 @@
-import { isMain } from '../utils/is-main.mts'
-import { Log } from '../utils/log.mts'
-import { ImagesListsGenerators } from './images-lists-generators.mts'
-import { ContentGenerators } from './content-generators.mts'
-import { RoutesFileGenerator } from './routes-file-generator.mts'
+import { isMain } from '../utils/is-main'
+import { Log } from '../utils/log'
+import { ImagesListsGenerators } from './images-lists-generators'
+import { ContentGenerators } from './content-generators'
+import { RoutesFileGenerator } from './routes-file-generator'
 
 export class AllGenerators {
   constructor(

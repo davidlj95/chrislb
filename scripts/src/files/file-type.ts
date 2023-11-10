@@ -1,5 +1,5 @@
-import { FileReader } from './file-reader.mts'
-import { FileWriter } from './file-writer.mts'
+import { FileReader } from './file-reader'
+import { FileWriter } from './file-writer'
 import { basename } from 'path'
 
 export class FileType {
