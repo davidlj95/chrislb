@@ -35,7 +35,8 @@
     "generate-all": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/all-generators.ts",
     "generate-images-lists": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/images-lists-generators.ts",
     "generate-contents": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/content-generators.ts",
-    "generate-routes-file": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/routes-file-generator.ts"
+    "generate-routes-file": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/routes-file-generator.ts",
+    "validate-renovate-config": "npx -p renovate renovate-config-validator"
   },
   "private": true,
   "dependencies": {
