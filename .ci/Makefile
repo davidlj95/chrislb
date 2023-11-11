@@ -28,4 +28,4 @@ format-check:
 	cd .. && bun run bun:format-check-all
 
 lighthouse:
-	cd .. && npx --yes @lhci/cli@0.12.x autorun
+	cd .. && npm run lighthouse

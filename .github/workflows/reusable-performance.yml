@@ -31,6 +31,8 @@ jobs:
           ref: ${{ inputs.ref }}
         # No setup step needed: latest stable Node.js & npm comes included with GitHub runners
         # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Download built app
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:

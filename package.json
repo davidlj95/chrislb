@@ -36,7 +36,8 @@
     "generate-images-lists": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/images-lists-generators.ts",
     "generate-contents": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/content-generators.ts",
     "generate-routes-file": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node scripts/src/generators/routes-file-generator.ts",
-    "validate-renovate-config": "npx -p renovate renovate-config-validator"
+    "validate-renovate-config": "npx -p renovate renovate-config-validator",
+    "lighthouse": "npx @lhci/cli autorun"
   },
   "private": true,
   "dependencies": {
@@ -76,6 +77,7 @@
     "@angular-eslint/template-parser": "16.3.1",
     "@angular/cli": "16.2.10",
     "@angular/compiler-cli": "16.2.12",
+    "@lhci/cli": "0.12.0",
     "@nguniversal/builders": "16.2.0",
     "@types/compression": "1.7.5",
     "@types/express": "4.17.21",
