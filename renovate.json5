@@ -54,7 +54,7 @@
     // https://angular.io/guide/versions
     {
       matchPackageNames: ['typescript'],
-      allowedVersions: '>=4.9.3 <5.2.0',
+      allowedVersions: '>=4.9.3 <5.3.0',
     },
   ],
 }
