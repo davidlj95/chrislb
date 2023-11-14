@@ -1,4 +1,3 @@
-import { IPageSeoData } from '@ngaox/seo'
 import { MetaDefinition } from '@angular/platform-browser'
 import { isEmpty } from 'lodash-es'
 
@@ -10,9 +9,9 @@ interface OpenGraphProfileMetadata {
 }
 
 export function addOpenGraphProfileMetadata(
-  metadata: IPageSeoData,
+  metadata: object,
   openGraphProfileMetadata: OpenGraphProfileMetadata,
-): IPageSeoData {
+): object {
   const extras: MetaDefinition[] = []
   if (!isEmpty(openGraphProfileMetadata.firstName)) {
     extras.push({
@@ -44,6 +43,6 @@ export function addOpenGraphProfileMetadata(
   return {
     ...metadata,
     type: 'profile',
-    extra: [...(metadata.extra ?? []), ...extras],
+    //extra: [...(metadata.extra ?? []), ...extras],
   }
 }
