@@ -5,6 +5,7 @@ import { NgOptimizedImage } from '@angular/common'
 import { MockComponents } from 'ng-mocks'
 import { SocialComponent } from './social/social.component'
 import { ResumeComponent } from './resume/resume.component'
+import { getDummyOptimizedImageProviders } from '../../test/optimized-image'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
@@ -17,6 +18,7 @@ describe('AboutPageComponent', () => {
         MockComponents(SocialComponent, ResumeComponent),
       ],
       imports: [NgOptimizedImage],
+      providers: [...getDummyOptimizedImageProviders()],
     })
     fixture = TestBed.createComponent(AboutPageComponent)
     component = fixture.componentInstance
