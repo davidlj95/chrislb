@@ -2,7 +2,11 @@
   <nav>
     <ul>
       <li *ngFor="let item of items">
-        <a [routerLink]="item.path">
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           {{ item.displayName }}
         </a>
       </li>
