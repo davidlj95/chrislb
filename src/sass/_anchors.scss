@@ -29,7 +29,9 @@
   }
 
   a:hover::before,
-  .link:hover::before {
+  .link:hover::before,
+  a.active::before,
+  .link.active::before {
     bottom: 0;
     height: 100%;
   }
