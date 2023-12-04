@@ -62,5 +62,19 @@
       matchPackageNames: ['node'],
       allowedVersions: '18.x',
     },
+    // Compatibility with Angular v16
+    // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
+    {
+      matchPackageNames: ['@fortawesome/angular-fontawesome'],
+      allowedVersions: '0.14.x',
+    },
+    {
+      matchPackageNames: [
+        '@fortawesome/fontawesome-svg-core',
+        '@fortawesome/free-brands-svg-icons',
+        '@fortawesome/free-solid-svg-icons',
+      ],
+      allowedVersions: '5.x || 6.x',
+    },
   ],
 }
