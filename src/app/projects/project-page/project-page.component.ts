@@ -16,7 +16,7 @@ import { Breakpoint } from '../../common/style/breakpoint'
 import { isEmpty } from 'lodash-es'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
-import { MetadataService } from '@davidlj95/ngx-meta/core'
+import { GlobalMetadata, MetadataService } from '@davidlj95/ngx-meta/core'
 import { PROJECTS_PATH } from '../../common/routing/paths'
 import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
 import { getTitle } from '../../common/routing/get-title'
@@ -104,7 +104,7 @@ export class ProjectPageComponent implements OnInit {
               project.description.length > 200
                 ? project.description.substring(0, 197) + '...'
                 : project.description,
-          })
+          } satisfies GlobalMetadata)
         },
         error: () => {
           this.navigatorService.displayNotFoundPage()
