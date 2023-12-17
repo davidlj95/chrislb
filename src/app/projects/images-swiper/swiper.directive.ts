@@ -4,6 +4,7 @@ import {
   ElementRef,
   Inject,
   Input,
+  NgZone,
   PLATFORM_ID,
 } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
@@ -22,6 +23,7 @@ export class SwiperDirective implements AfterViewInit {
   constructor(
     private el: ElementRef<HTMLElement>,
     @Inject(PLATFORM_ID) private platformId: object,
+    private readonly ngZone: NgZone,
   ) {
     this.container = this.el.nativeElement as SwiperContainer
   }
@@ -33,7 +35,7 @@ export class SwiperDirective implements AfterViewInit {
 
     if (typeof this.container.initialize === 'function') {
       Object.assign(this.container, this.options)
-      this.container.initialize()
+      this.ngZone.runOutsideAngular(() => this.container.initialize())
     } else {
       throw new NoInitializeMethodError()
     }
