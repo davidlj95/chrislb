@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { AboutPageComponent } from './about-page.component'
+import { makeRouteMetadata } from '../common/routing/make-route-metadata'
 import aboutPageMetadata from '../../data/pages/about.json'
-import aboutPageContent from '../../data/misc/about.json'
-import { getMetadataFromJson } from '../common/routing/get-metadata-from-json'
-import { addOpenGraphProfileMetadata } from './add-open-graph-profile-metadata-from-author'
+import aboutPageContents from '../../data/misc/about.json'
+import { ABOUT_PATH } from '../common/routing/paths'
+import { OpenGraphType } from '@davidlj95/ngx-meta/open-graph'
 
 @NgModule({
   declarations: [],
@@ -13,14 +14,14 @@ import { addOpenGraphProfileMetadata } from './add-open-graph-profile-metadata-f
       {
         path: '',
         component: AboutPageComponent,
-        data: {
-          NgaoxSeo: {
-            ...addOpenGraphProfileMetadata(
-              getMetadataFromJson(aboutPageMetadata),
-              aboutPageContent.openGraphProfile,
-            ),
+        data: makeRouteMetadata(
+          {
+            ...aboutPageMetadata,
+            openGraphType: OpenGraphType.Profile,
+            openGraphProfile: aboutPageContents.openGraphProfile,
           },
-        },
+          [ABOUT_PATH],
+        ),
       },
     ]),
   ],

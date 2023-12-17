@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { catchError, concatMap, map, Observable, of, tap } from 'rxjs'
-import { SeoService } from '@ngaox/seo'
 import { NavigatorService } from '../../common/routing/navigator.service'
 import { AnyAssetsCollection } from './any-asset-collection'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
@@ -8,9 +7,6 @@ import { SwiperOptions } from 'swiper/types'
 import { AssetsCollectionData } from './assets-collection-data'
 import { AssetsCollectionSize } from './assets-collection-size'
 import { AssetsCollectionType } from './assets-collection-type'
-import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
-import { PROJECTS_PATH } from '../../common/routing/paths'
-import { getTitle } from '../../common/routing/get-title'
 import { ResponsiveImageAttributesService } from '../../common/images/responsive-image-attributes.service'
 import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
 import { CssPxUnit, Px } from '../../common/css/unit/px'
@@ -20,6 +16,10 @@ import { Breakpoint } from '../../common/style/breakpoint'
 import { isEmpty } from 'lodash-es'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
+import { MetadataService } from '@davidlj95/ngx-meta/core'
+import { PROJECTS_PATH } from '../../common/routing/paths'
+import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
+import { getTitle } from '../../common/routing/get-title'
 
 @Component({
   selector: 'app-project-page',
@@ -47,7 +47,7 @@ export class ProjectPageComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private seo: SeoService,
+    private metadataService: MetadataService,
     private navigatorService: NavigatorService,
     private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
@@ -97,9 +97,14 @@ export class ProjectPageComponent implements OnInit {
       map((data) => (data as ProjectRouteData).project),
       tap({
         next: (project) => {
-          this.seo.setUrl(getCanonicalUrlForPath(PROJECTS_PATH, project.slug))
-          this.seo.setTitle(getTitle(project.title))
-          this.seo.setDescription(project.description)
+          this.metadataService.set({
+            canonicalUrl: getCanonicalUrlForPath(PROJECTS_PATH, project.slug),
+            title: getTitle(project.title),
+            description:
+              project.description.length > 200
+                ? project.description.substring(0, 197) + '...'
+                : project.description,
+          })
         },
         error: () => {
           this.navigatorService.displayNotFoundPage()

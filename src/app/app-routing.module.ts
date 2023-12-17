@@ -4,13 +4,12 @@ import { ProjectsPageComponent } from './projects/projects-page/projects-page.co
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
-import { makeRouteMetadadata } from './common/routing/make-route-metadata'
+import { makeRouteMetadata } from './common/routing/make-route-metadata'
 import {
   ABOUT_PATH,
   NOT_FOUND_PATH,
   PROJECTS_PATH,
 } from './common/routing/paths'
-import { getMetadataFromJson } from './common/routing/get-metadata-from-json'
 import { PROJECTS_ROUTES } from './projects/projects-routes'
 
 @NgModule({
@@ -20,7 +19,7 @@ import { PROJECTS_ROUTES } from './projects/projects-routes'
         {
           path: '',
           component: ProjectsPageComponent,
-          data: makeRouteMetadadata(projectsPageMetadata),
+          data: makeRouteMetadata(projectsPageMetadata, []),
           pathMatch: 'full',
         },
 
@@ -38,17 +37,12 @@ import { PROJECTS_ROUTES } from './projects/projects-routes'
         {
           path: NOT_FOUND_PATH,
           component: NotFoundPageComponent,
-          data: makeRouteMetadadata(notFoundPageMetadata, NOT_FOUND_PATH),
+          data: makeRouteMetadata(notFoundPageMetadata, [NOT_FOUND_PATH]),
         },
         {
           path: '**',
           component: NotFoundPageComponent,
-          data: {
-            NgaoxSeo: {
-              ...getMetadataFromJson(notFoundPageMetadata),
-              url: undefined,
-            },
-          },
+          data: makeRouteMetadata(notFoundPageMetadata),
         },
       ],
       {
