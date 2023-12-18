@@ -50,7 +50,7 @@
     "@angular/platform-browser-dynamic": "16.2.12",
     "@angular/platform-server": "16.2.12",
     "@angular/router": "16.2.12",
-    "@davidlj95/ngx-meta": "^1.0.0-alpha.10",
+    "@davidlj95/ngx-meta": "1.0.0-alpha.13",
     "@fontsource/fira-sans": "5.0.18",
     "@fortawesome/angular-fontawesome": "0.14.0",
     "@fortawesome/fontawesome-svg-core": "6.5.1",
