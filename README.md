@@ -14,9 +14,7 @@ Check the [content management guide] to edit website's contents
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
 
-[Bun][bun] is used as package manager and runtime to run content generation scripts. But you can keep using `npm` / `node` anyway if you want. All scripts that can be run with [bun] are prefixed with `bun:`. To run with `npm` / `node`, remove the prefix :)
-
-[bun]: https://bun.sh/
+`pnpm` is used as package manager.
 
 ### Install with npm
 
@@ -37,7 +35,7 @@ Some files required by the app need to be generated from the data managed by the
 [Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
 
 ```shell
-bun run bun:prebuild
+pnpm run prebuild
 ```
 
 > If you run `npm run build` with `npm`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)

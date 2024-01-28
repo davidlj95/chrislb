@@ -3,7 +3,7 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="bun:generate-all" />
+      <script value="generate-all" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
