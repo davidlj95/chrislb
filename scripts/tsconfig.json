@@ -19,21 +19,5 @@
     "resolveJsonModule": true,
     //👇 Required for "tsc" to work without extensions in imports
     "noEmit": true
-  },
-  "ts-node": {
-    "esm": true,
-    "moduleTypes": {
-      // Can't set app files to be ESM in package.json given SSR tasks fail
-      // (bundling issues I don't wanna get deep into)
-      // Also, having *.mts extension for script files is a PIA (for instance,
-      // if using those, cannot use imports without extension :( )
-      //
-      // So to force ESM, we do this trick
-      // Otherwise, the feature to load CJS from ESM in Node.js requires
-      // importing from a non-existing default import. And both the IDE and Bun
-      // get lost if doing so.
-      "./src/**/*.ts": "esm",
-      "../src/**/*.ts": "esm"
-    }
   }
 }

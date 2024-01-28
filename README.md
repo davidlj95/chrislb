@@ -14,21 +14,13 @@ Check the [content management guide] to edit website's contents
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
 
-[Bun][bun] is used as package manager and runtime to run content generation scripts. But you can keep using `npm` / `node` anyway if you want. All scripts that can be run with [bun] are prefixed with `bun:`. To run with `npm` / `node`, remove the prefix :)
+### Install
 
-[bun]: https://bun.sh/
-
-### Install with npm
-
-If using `npm` to install packages, run
+First install deps with package manager `pnpm`
 
 ```shell
-npm i --legacy-peer-deps
+pnpm i
 ```
-
-to install or add new libraries
-
-There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. Here it's using 16
 
 ### Prebuild
 
@@ -37,10 +29,8 @@ Some files required by the app need to be generated from the data managed by the
 [Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
 
 ```shell
-bun run bun:prebuild
+pnpm run prebuild
 ```
-
-> If you run `npm run build` with `npm`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
 
 ### Development server
 
@@ -80,7 +70,7 @@ staged files.
 To do so, install the hooks by running
 
 ```shell
-npm run git-hooks
+pnpm run git-hooks
 ```
 
 ### Image CDN
@@ -121,7 +111,7 @@ To work locally with the CMS, uncomment the `local_backend: true` line in the co
 Then, run the local server (if not, you'll be prompted to use the real backend):
 
 ```
-npm run cms-server
+pnpm run cms-server
 ```
 
 > ⚠️👁️ Do not commit the local backend configuration to main branch

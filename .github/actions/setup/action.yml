@@ -3,19 +3,13 @@ description: Checks out the repository and installs tooling
 runs:
   using: 'composite'
   steps:
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@a1800f471a0bc25cddac36bb13e6f436ddf341d7 # v1
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4
       with:
-        bun-version: latest
-    - name: Cache dependencies
-      uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
-      env:
-        cache-name: bun-cache
-      with:
-        # Default as per docs 👇
-        # https://bun.sh/docs/runtime/bunfig#install-cache
-        path: ~/.bun/install/cache
-        key: ${{ env.cache-name }}-${{ hashFiles('**/bun.lockb') }}
+        cache: 'pnpm'
+        node-version-file: '.node-version'
     - name: Install dependencies
       shell: bash
       run: cd .ci && make install

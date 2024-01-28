@@ -2,21 +2,23 @@
 
 # First so that running without command runs a build
 build: prebuild
-	cd .. && bun run prerender
-	cd .. && bun run postbuild
+	cd .. && pnpm run prerender
+	cd .. && pnpm run postbuild
 
 prebuild:
-	cd .. && bun run bun:prebuild
+	cd .. && pnpm run prebuild
 
 install:
-	# https://bun.sh/docs/cli/install#production-mode
-	bun install --frozen-lockfile
+	# Despite it's enabled by default on CI. This allows to mock CI locally
+	# https://pnpm.io/cli/install#--frozen-lockfile
+	pnpm install --frozen-lockfile
 
 lint:
-	bun run lint -- --max-warnings 0
+	pnpm run lint --max-warnings 0
 
 test:
-	bun run test -- --browsers=ChromeHeadless --no-watch --no-progress --reporters progress --code-coverage
+	pnpm run test --browsers=ChromeHeadless \
+		--no-watch --no-progress --reporters progress --code-coverage
 
 run-main:
 	cd .. && act
@@ -25,7 +27,7 @@ reset:
 	docker ps -a --format '{{.Names}}' | grep -e '^act-' | xargs docker rm -f
 
 format-check:
-	cd .. && bun run bun:format-check-all
+	cd .. && pnpm run format-check-all
 
 lighthouse:
-	cd .. && npm run lighthouse
+	cd .. && pnpm run lighthouse
