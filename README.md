@@ -38,8 +38,6 @@ Some files required by the app need to be generated from the data managed by the
 pnpm run prebuild
 ```
 
-> If you run `npm run build` with `npm`, this script will run too because of [npm's pre/post scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts#pre--post-scripts)
-
 ### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you
@@ -78,7 +76,7 @@ staged files.
 To do so, install the hooks by running
 
 ```shell
-npm run git-hooks
+pnpm run git-hooks
 ```
 
 ### Image CDN
@@ -119,7 +117,7 @@ To work locally with the CMS, uncomment the `local_backend: true` line in the co
 Then, run the local server (if not, you'll be prompted to use the real backend):
 
 ```
-npm run cms-server
+pnpm run cms-server
 ```
 
 > ⚠️👁️ Do not commit the local backend configuration to main branch
