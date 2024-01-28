@@ -20,7 +20,6 @@
     "create-env-from-sample": "cp .env.sample .env",
     "lint-staged": "lint-staged",
     "git-hooks": "husky install",
-    "generate-prettierignore": "cp .gitignore .prettierignore && cat .part.prettierignore >> .prettierignore",
     "cms-server": "npx decap-server",
     "prebuild": "pnpm run generate-all",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
