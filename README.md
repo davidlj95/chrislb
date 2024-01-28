@@ -14,19 +14,13 @@ Check the [content management guide] to edit website's contents
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
 
-`pnpm` is used as package manager.
+### Install
 
-### Install with npm
-
-If using `npm` to install packages, run
+First install deps with package manager `pnpm`
 
 ```shell
-npm i --legacy-peer-deps
+pnpm i
 ```
-
-to install or add new libraries
-
-There's a package (`@ngaox/seo`) that has Angular version peer dep set to 15. Here it's using 16
 
 ### Prebuild
 
