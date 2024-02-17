@@ -81,7 +81,7 @@
     "dotenv": "16.3.1",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "imagekit": "4.1.4",
     "jasmine-core": "5.1.2",
     "karma": "6.4.2",
