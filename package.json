@@ -19,7 +19,7 @@
     "format-all": "pnpm run format -- .",
     "create-env-from-sample": "cp .env.sample .env",
     "lint-staged": "lint-staged",
-    "git-hooks": "husky install",
+    "git-hooks": "husky",
     "cms-server": "npx decap-server",
     "prebuild": "pnpm run generate-all",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
