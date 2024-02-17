@@ -57,8 +57,8 @@ dependencies:
     specifier: 4.17.12
     version: 4.17.12
   '@unpic/core':
-    specifier: 0.0.42
-    version: 0.0.42
+    specifier: 0.0.46
+    version: 0.0.46
   compression:
     specifier: 1.7.4
     version: 1.7.4
@@ -3287,10 +3287,10 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@unpic/core@0.0.42:
-    resolution: {integrity: sha512-K5Di+P8Bijl7doGDBGU+5VqX44e2iXMEm7G/AVla+9Hgxb5rOm/OXZoOjCUNjx5BOnjsVyegP6vlgsTfBtymkQ==}
+  /@unpic/core@0.0.46:
+    resolution: {integrity: sha512-geX6d87O4YKmr/JMeSqZjPEwhevhDLojef3R6mzy8hxUWMOP+IhaK+hKxFPGsaLEE/uvlw71MVAfW6EkAEqNxg==}
     dependencies:
-      unpic: 3.16.0
+      unpic: 3.17.0
     dev: false
 
   /@vitejs/plugin-basic-ssl@1.0.1(vite@4.5.2):
@@ -9790,8 +9790,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unpic@3.16.0:
-    resolution: {integrity: sha512-XXvQGL+fvzwEX3aPXggTCrzySFPqvpC8r1LKy5ft9573AoX8CrszmA0uOzi6xgylCvvqFg46IDOudJKzM2lQ5A==}
+  /unpic@3.17.0:
+    resolution: {integrity: sha512-1b0ACPDLWqDE4MJ+IW5e48pGVSA5zKU2nF05EDxl/vvHq610MnfHNczIm6RBNPKuAA+G1tQ2ef1mgxj5J7+plw==}
     dev: false
 
   /unpipe@1.0.0:
