@@ -79,7 +79,7 @@
     "@typescript-eslint/eslint-plugin": "7.0.2",
     "@typescript-eslint/parser": "7.0.2",
     "dotenv": "16.4.5",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "husky": "9.0.11",
     "imagekit": "5.0.0",
