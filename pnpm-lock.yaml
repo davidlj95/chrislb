@@ -33,8 +33,8 @@ dependencies:
     specifier: 16.2.12
     version: 16.2.12(@angular/common@16.2.12)(@angular/core@16.2.12)(@angular/platform-browser@16.2.12)(rxjs@7.8.1)
   '@davidlj95/ngx-meta':
-    specifier: 1.0.0-alpha.13
-    version: 1.0.0-alpha.13(@angular/common@16.2.12)(@angular/core@16.2.12)
+    specifier: 1.0.0-alpha.40
+    version: 1.0.0-alpha.40(@angular/common@16.2.12)(@angular/core@16.2.12)(@angular/router@16.2.12)
   '@fontsource/fira-sans':
     specifier: 5.0.18
     version: 5.0.18
@@ -1968,14 +1968,19 @@ packages:
     engines: {node: '>=0.1.90'}
     dev: true
 
-  /@davidlj95/ngx-meta@1.0.0-alpha.13(@angular/common@16.2.12)(@angular/core@16.2.12):
-    resolution: {integrity: sha512-iOH9ZXxhQt18UaFC7tNqm3LWY5CHK27w2v5x1+FmOP6ZFIIh0row38gvuytUGfNcPUuvttRZMDNWvfSkbPrHXQ==}
+  /@davidlj95/ngx-meta@1.0.0-alpha.40(@angular/common@16.2.12)(@angular/core@16.2.12)(@angular/router@16.2.12):
+    resolution: {integrity: sha512-K+NsF0d+0C1FD1YSbZ9H/HnrXQh4WEaNRi+WAdHzDHvhFDA7fIdDYLMP+IQCmhEcnLDFRO+/BXZxEVLnsWJaTw==}
     peerDependencies:
       '@angular/common': ^17 || ^16 || ^15
       '@angular/core': ^17 || ^16 || ^15
+      '@angular/router': ^17 || ^16 || ^15
+    peerDependenciesMeta:
+      '@angular/router':
+        optional: true
     dependencies:
       '@angular/common': 16.2.12(@angular/core@16.2.12)(rxjs@7.8.1)
       '@angular/core': 16.2.12(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/router': 16.2.12(@angular/common@16.2.12)(@angular/core@16.2.12)(@angular/platform-browser@16.2.12)(rxjs@7.8.1)
       tslib: 2.6.2
     dev: false
 
