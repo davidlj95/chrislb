@@ -44,7 +44,7 @@
     "@angular/platform-server": "16.2.12",
     "@angular/router": "16.2.12",
     "@davidlj95/ngx-meta": "1.0.0-alpha.13",
-    "@fontsource/fira-sans": "5.0.18",
+    "@fontsource/fira-sans": "5.0.19",
     "@fortawesome/angular-fontawesome": "0.13.0",
     "@fortawesome/fontawesome-svg-core": "6.5.1",
     "@fortawesome/free-brands-svg-icons": "6.5.1",
