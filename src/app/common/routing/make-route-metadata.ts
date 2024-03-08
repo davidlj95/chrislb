@@ -1,21 +1,19 @@
 import { JsonMetadata } from './json-metadata'
-import { MetadataRouteData } from '@davidlj95/ngx-meta/routing'
+import { NgxMetaRouteData } from '@davidlj95/ngx-meta/routing'
 import { getCanonicalUrlForPath } from './get-canonical-url-for-path'
-import { OpenGraphMetadataRouteData } from '@davidlj95/ngx-meta/open-graph'
 import { getTitle } from './get-title'
-import { OpenGraphProfileMetadataRouteData } from '@davidlj95/ngx-meta/open-graph-profile'
+import { GlobalMetadata } from '@davidlj95/ngx-meta/core'
+import { OpenGraphMetadata } from '@davidlj95/ngx-meta/open-graph'
+import { StandardMetadata } from '@davidlj95/ngx-meta/standard'
 
 export function makeRouteMetadata(
   jsonMetadata: JsonMetadata,
   pathSegments?: string[],
-): MetadataRouteData &
-  OpenGraphMetadataRouteData &
-  OpenGraphProfileMetadataRouteData {
+): NgxMetaRouteData<GlobalMetadata & StandardMetadata & OpenGraphMetadata> {
   return {
     meta: {
       title: getTitle(jsonMetadata.title),
       description: jsonMetadata.description,
-      keywords: jsonMetadata.keywords,
       canonicalUrl: pathSegments
         ? getCanonicalUrlForPath(...pathSegments)
         : null,
@@ -28,6 +26,9 @@ export function makeRouteMetadata(
               alt: jsonMetadata.image.alt,
             }
           : undefined,
+      standard: {
+        keywords: jsonMetadata.keywords,
+      },
       openGraph: {
         image: {
           type: jsonMetadata.image?.mimeType,

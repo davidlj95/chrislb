@@ -19,13 +19,15 @@ import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { ProjectsModule } from './projects/projects.module'
 import { NgxMetaRoutingModule } from '@davidlj95/ngx-meta/routing'
-import { NgxMetaStandardModule } from '@davidlj95/ngx-meta/standard'
+import {
+  NgxMetaStandardModule,
+  StandardMetadata,
+} from '@davidlj95/ngx-meta/standard'
 import { GlobalMetadata, NgxMetaCoreModule } from '@davidlj95/ngx-meta/core'
-import { StandardMetadata } from '@davidlj95/ngx-meta/standard/src/standard-metadata'
 import {
   NgxMetaOpenGraphModule,
+  OPEN_GRAPH_TYPE_WEBSITE,
   OpenGraphMetadata,
-  OpenGraphType,
 } from '@davidlj95/ngx-meta/open-graph'
 
 @NgModule({
@@ -42,19 +44,18 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     ProjectsModule,
-    NgxMetaCoreModule.withDefaults({
-      locale: 'en',
-      standard: {
-        author: defaultMetadata.author,
-        generator: true,
-      },
-      openGraph: {
-        siteName: defaultMetadata.siteName,
-        type: OpenGraphType.Website,
-      },
-    } satisfies GlobalMetadata & {
-      standard: StandardMetadata
-      openGraph: OpenGraphMetadata
+    NgxMetaCoreModule.forRoot({
+      defaults: {
+        locale: 'en',
+        standard: {
+          author: defaultMetadata.author,
+          generator: true,
+        },
+        openGraph: {
+          siteName: defaultMetadata.siteName,
+          type: OPEN_GRAPH_TYPE_WEBSITE,
+        },
+      } satisfies GlobalMetadata & StandardMetadata & OpenGraphMetadata,
     }),
     NgxMetaRoutingModule.forRoot(),
     NgxMetaStandardModule,

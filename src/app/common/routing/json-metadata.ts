@@ -1,5 +1,4 @@
-import { OpenGraphType } from '@davidlj95/ngx-meta/open-graph'
-import { OpenGraphProfileMetadata } from '@davidlj95/ngx-meta/open-graph-profile'
+import { OpenGraphProfile, OpenGraphType } from '@davidlj95/ngx-meta/open-graph'
 
 export interface JsonMetadata {
   readonly name: string
@@ -16,5 +15,5 @@ export interface JsonMetadata {
       }
     | undefined
   readonly openGraphType?: OpenGraphType
-  readonly openGraphProfile?: OpenGraphProfileMetadata
+  readonly openGraphProfile?: OpenGraphProfile
 }
