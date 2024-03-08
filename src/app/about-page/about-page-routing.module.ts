@@ -5,7 +5,7 @@ import { makeRouteMetadata } from '../common/routing/make-route-metadata'
 import aboutPageMetadata from '../../data/pages/about.json'
 import aboutPageContents from '../../data/misc/about.json'
 import { ABOUT_PATH } from '../common/routing/paths'
-import { OpenGraphType } from '@davidlj95/ngx-meta/open-graph'
+import { OPEN_GRAPH_TYPE_PROFILE } from '@davidlj95/ngx-meta/open-graph'
 
 @NgModule({
   declarations: [],
@@ -17,7 +17,7 @@ import { OpenGraphType } from '@davidlj95/ngx-meta/open-graph'
         data: makeRouteMetadata(
           {
             ...aboutPageMetadata,
-            openGraphType: OpenGraphType.Profile,
+            openGraphType: OPEN_GRAPH_TYPE_PROFILE,
             openGraphProfile: aboutPageContents.openGraphProfile,
           },
           [ABOUT_PATH],

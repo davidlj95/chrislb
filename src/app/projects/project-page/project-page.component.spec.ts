@@ -7,7 +7,7 @@ import { of } from 'rxjs'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
-import { MetadataService } from '@davidlj95/ngx-meta/core'
+import { NgxMetaService } from '@davidlj95/ngx-meta/core'
 
 describe('ProjectPageComponent', () => {
   let component: ProjectPageComponent
@@ -34,7 +34,7 @@ describe('ProjectPageComponent', () => {
             return of([])
           },
         }),
-        MockProvider(MetadataService),
+        MockProvider(NgxMetaService),
       ],
     })
     fixture = TestBed.createComponent(ProjectPageComponent)

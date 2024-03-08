@@ -16,7 +16,7 @@ import { Breakpoint } from '../../common/style/breakpoint'
 import { isEmpty } from 'lodash-es'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
-import { GlobalMetadata, MetadataService } from '@davidlj95/ngx-meta/core'
+import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { PROJECTS_PATH } from '../../common/routing/paths'
 import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
 import { getTitle } from '../../common/routing/get-title'
@@ -47,7 +47,7 @@ export class ProjectPageComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private metadataService: MetadataService,
+    private ngxMetaService: NgxMetaService,
     private navigatorService: NavigatorService,
     private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
@@ -97,7 +97,7 @@ export class ProjectPageComponent implements OnInit {
       map((data) => (data as ProjectRouteData).project),
       tap({
         next: (project) => {
-          this.metadataService.set({
+          this.ngxMetaService.set({
             canonicalUrl: getCanonicalUrlForPath(PROJECTS_PATH, project.slug),
             title: getTitle(project.title),
             description:

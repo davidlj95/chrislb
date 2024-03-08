@@ -6,7 +6,8 @@ import { ResumeComponent } from './resume/resume.component'
 import { AboutPageRoutingModule } from './about-page-routing.module'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { ResumeService } from './resume/resume.service'
-import { NgxMetaOpenGraphProfileModule } from '@davidlj95/ngx-meta/open-graph-profile'
+import { NgxMetaOpenGraphProfileModule } from '@davidlj95/ngx-meta/open-graph'
+import { NgxMetaMetadataLoaderModule } from '@davidlj95/ngx-meta/core'
 
 @NgModule({
   declarations: [AboutPageComponent, SocialComponent, ResumeComponent],
@@ -16,6 +17,7 @@ import { NgxMetaOpenGraphProfileModule } from '@davidlj95/ngx-meta/open-graph-pr
     FontAwesomeModule,
     NgOptimizedImage,
     NgxMetaOpenGraphProfileModule,
+    NgxMetaMetadataLoaderModule,
   ],
   providers: [ResumeService],
 })
