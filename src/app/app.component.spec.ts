@@ -8,9 +8,9 @@ import { LogoComponent } from './logo/logo.component'
 describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [
+      imports: [
         AppComponent,
+        RouterTestingModule,
         MockComponents(HeaderComponent, LogoComponent),
       ],
     }),

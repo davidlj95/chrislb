@@ -11,17 +11,21 @@ describe('ProjectsPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         ProjectsPageComponent,
         MockComponents(ProjectListItemComponent),
       ],
-      providers: [
-        MockProvider(ProjectsService, {
-          async getListItems() {
-            return []
-          },
-        }),
-      ],
+    })
+    TestBed.overrideComponent(ProjectsPageComponent, {
+      set: {
+        providers: [
+          MockProvider(ProjectsService, {
+            async getListItems() {
+              return []
+            },
+          }),
+        ],
+      },
     })
     fixture = TestBed.createComponent(ProjectsPageComponent)
     component = fixture.componentInstance

@@ -110,6 +110,8 @@ function makeComponentWithDirective({
   @Component({
     template: ` <!--suppress AngularUndefinedBinding -->
     <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
+    imports: [SwiperDirective],
+    standalone: true,
   })
   class SwiperComponent implements OnInit {
     public readonly options = options
@@ -132,7 +134,6 @@ function makeSut<T>({
   platformId: PlatformId
 }): [ComponentFixture<T>, T] {
   TestBed.configureTestingModule({
-    declarations: [componentClass, SwiperDirective],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [MockProvider(PLATFORM_ID, platformId)],
   })

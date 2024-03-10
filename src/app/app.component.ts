@@ -1,5 +1,8 @@
 import { Component } from '@angular/core'
 import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/style/animations'
+import { RouterOutlet } from '@angular/router'
+import { LogoComponent } from './logo/logo.component'
+import { HeaderComponent } from './header/header.component'
 
 @Component({
   selector: 'app-root',
@@ -9,5 +12,7 @@ import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/style/animations'
     ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS.children('routeAnimations'),
     ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS.element('enterLeave'),
   ],
+  standalone: true,
+  imports: [HeaderComponent, LogoComponent, RouterOutlet],
 })
 export class AppComponent {}

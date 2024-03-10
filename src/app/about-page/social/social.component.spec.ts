@@ -10,7 +10,7 @@ describe('SocialComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SocialComponent, MockComponents(FaIconComponent)],
+      imports: [SocialComponent, MockComponents(FaIconComponent)],
     })
     fixture = TestBed.createComponent(SocialComponent)
     component = fixture.componentInstance

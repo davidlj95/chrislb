@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router'
 import { EMPTY, tap } from 'rxjs'
 import { Project } from '../project'
 import { ProjectsService } from '../projects.service'
-import { SLUG_PARAM } from '../projects-routes-params'
+import { SLUG_PARAM } from '../projects.routes-params'
 import { NavigatorService } from '../../common/routing/navigator.service'
 import { Injectable } from '@angular/core'
 

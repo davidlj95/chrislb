@@ -9,7 +9,6 @@ describe('HeaderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
       imports: [RouterTestingModule],
     })
     fixture = TestBed.createComponent(HeaderComponent)

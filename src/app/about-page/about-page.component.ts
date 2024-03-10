@@ -7,11 +7,16 @@ import { ResponsiveImageAttributesService } from '../common/images/responsive-im
 import { Vw } from '../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../common/css/css-min-max-media-query'
 import { Breakpoint } from '../common/style/breakpoint'
+import { NgOptimizedImage } from '@angular/common'
+import { ResumeComponent } from './resume/resume.component'
+import { SocialComponent } from './social/social.component'
 
 @Component({
   selector: 'app-about-page',
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.scss'],
+  standalone: true,
+  imports: [SocialComponent, ResumeComponent, NgOptimizedImage],
 })
 export class AboutPageComponent {
   public readonly title: string = aboutPageContents.title

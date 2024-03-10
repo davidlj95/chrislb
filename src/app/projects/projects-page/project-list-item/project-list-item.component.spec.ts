@@ -10,7 +10,7 @@ describe('ProjectListItemComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         ProjectListItemComponent,
         MockComponents(ImagesSwiperComponent),
       ],

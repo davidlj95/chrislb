@@ -15,10 +15,7 @@ describe('ProjectPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ProjectPageComponent,
-        MockComponents(ImagesSwiperComponent),
-      ],
+      imports: [ProjectPageComponent, MockComponents(ImagesSwiperComponent)],
       providers: [
         MockProvider(ActivatedRoute, {
           data: of({
@@ -29,13 +26,19 @@ describe('ProjectPageComponent', () => {
             },
           } as ProjectRouteData),
         }),
-        MockProvider(ProjectAssetsCollectionsService, {
-          byProject() {
-            return of([])
-          },
-        }),
         MockProvider(NgxMetaService),
       ],
+    })
+    TestBed.overrideComponent(ProjectPageComponent, {
+      set: {
+        providers: [
+          MockProvider(ProjectAssetsCollectionsService, {
+            byProject() {
+              return of([])
+            },
+          }),
+        ],
+      },
     })
     fixture = TestBed.createComponent(ProjectPageComponent)
     component = fixture.componentInstance
