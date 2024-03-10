@@ -8,7 +8,14 @@ import {
   provideImageKitLoader,
 } from '@angular/common'
 
-import { AppRoutingModule } from './app-routing.module'
+import {
+  provideRouter,
+  RouterOutlet,
+  withComponentInputBinding,
+  withEnabledBlockingInitialNavigation,
+  withInMemoryScrolling,
+} from '@angular/router'
+import { routes } from './app.routes'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
 import { LogoComponent } from './logo/logo.component'
@@ -33,7 +40,6 @@ import {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     NgOptimizedImage,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -56,8 +62,15 @@ import {
     HeaderComponent,
     LogoComponent,
     NotFoundPageComponent,
+    RouterOutlet,
   ],
   providers: [
+    provideRouter(
+      routes,
+      withEnabledBlockingInitialNavigation(),
+      withComponentInputBinding(),
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+    ),
     provideImageKitLoader(IMAGEKIT_URL),
     { provide: JsonFetcher, useClass: HttpJsonFetcherService },
     { provide: APP_BASE_HREF, useValue: '/' },
