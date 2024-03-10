@@ -7,9 +7,7 @@ describe('NotFoundPageComponent', () => {
   let fixture: ComponentFixture<NotFoundPageComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NotFoundPageComponent],
-    })
+    TestBed.configureTestingModule({})
     fixture = TestBed.createComponent(NotFoundPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

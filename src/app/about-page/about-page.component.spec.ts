@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AboutPageComponent } from './about-page.component'
-import { NgOptimizedImage } from '@angular/common'
 import { MockComponents } from 'ng-mocks'
 import { SocialComponent } from './social/social.component'
 import { ResumeComponent } from './resume/resume.component'
@@ -14,7 +13,6 @@ describe('AboutPageComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgOptimizedImage,
         AboutPageComponent,
         MockComponents(SocialComponent, ResumeComponent),
       ],
