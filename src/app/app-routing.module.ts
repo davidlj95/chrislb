@@ -30,8 +30,8 @@ import { PROJECTS_ROUTES } from './projects/projects-routes'
         {
           path: ABOUT_PATH,
           loadChildren: () =>
-            import('./about-page/about-page.module').then(
-              (m) => m.AboutPageModule,
+            import('./about-page/about-page.routes').then(
+              (m) => m.ABOUT_ROUTES,
             ),
         },
         {

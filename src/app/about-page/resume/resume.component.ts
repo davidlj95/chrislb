@@ -11,6 +11,7 @@ import { NgFor } from '@angular/common'
   styleUrls: ['./resume.component.scss'],
   standalone: true,
   imports: [NgFor, FaIconComponent],
+  providers: [ResumeService],
 })
 export class ResumeComponent {
   public readonly resumes: ReadonlyArray<Resume>
