@@ -1,4 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core'
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Input,
+  OnChanges,
+} from '@angular/core'
 import { register as registerSwiper } from 'swiper/element'
 
 import { DEFAULT_ALT } from '../../common/images/default-alt'
@@ -14,7 +19,7 @@ import { ResponsiveImageAttributes } from '../../common/images/responsive-image-
 import { ImageAsset } from '../../common/images/image-asset'
 import { isEmpty, isNumber } from 'lodash-es'
 import { SwiperDirective } from './swiper.directive'
-import { NgIf, NgFor, NgOptimizedImage } from '@angular/common'
+import { NgFor, NgIf, NgOptimizedImage } from '@angular/common'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -26,6 +31,10 @@ registerSwiper()
   styleUrls: ['./images-swiper.component.scss'],
   standalone: true,
   imports: [NgIf, SwiperDirective, NgFor, NgOptimizedImage],
+  // Use swiper web components
+  // A better approach would be to declare those but there's no easy way
+  // https://stackoverflow.com/a/43012920/3263250
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ImagesSwiperComponent implements OnChanges {
   @Input({ required: true }) public images!: ReadonlyArray<ImageAsset>

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { RouterModule } from '@angular/router'
 
@@ -25,10 +25,6 @@ import { ProjectPageResolver } from './project-page/project-page.resolver'
     SanitizeResourceUrlPipe,
   ],
   exports: [ProjectsPageComponent, ProjectPageComponent],
-  // Use swiper web components
-  // A better approach would be to declare those but there's no easy way
-  // https://stackoverflow.com/a/43012920/3263250
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ProjectsService,
     ProjectAssetsCollectionsService,

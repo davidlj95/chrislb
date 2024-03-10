@@ -1,17 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ImagesSwiperComponent } from './images-swiper.component'
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 describe('ImagesSwiperComponent', () => {
   let component: ImagesSwiperComponent
   let fixture: ComponentFixture<ImagesSwiperComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      //👇 To use swiper-[container|slide] HTML element
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    TestBed.configureTestingModule({})
     fixture = TestBed.createComponent(ImagesSwiperComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
