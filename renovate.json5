@@ -49,7 +49,7 @@
       matchDepTypes: ['devDependencies'],
       automerge: true,
     },
-    // Angular v17.0.x compatibilities
+    // Angular v17.1.x compatibilities
     // https://angular.io/guide/versions
     // https://update.angular.io/?v=16.0-17.0 (zone.js)
     {
@@ -64,7 +64,7 @@
     },
     {
       matchPackageNames: ['typescript'],
-      allowedVersions: '>=4.9.3 <5.3.0',
+      allowedVersions: '>=4.9.3 <5.4.0',
     },
     {
       matchPackageNames: ['rxjs'],
