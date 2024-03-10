@@ -10,7 +10,7 @@ import {
   NOT_FOUND_PATH,
   PROJECTS_PATH,
 } from './common/routing/paths'
-import { PROJECTS_ROUTES } from './projects/projects-routes'
+import { PROJECTS_ROUTES } from './projects/projects.routes'
 
 @NgModule({
   imports: [

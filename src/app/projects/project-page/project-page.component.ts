@@ -22,7 +22,7 @@ import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-f
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
-import { NgIf, NgFor, AsyncPipe } from '@angular/common'
+import { AsyncPipe, NgFor, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-project-page',
@@ -36,6 +36,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common'
     AsyncPipe,
     SanitizeResourceUrlPipe,
   ],
+  providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectPageComponent implements OnInit {
   public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>

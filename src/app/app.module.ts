@@ -17,7 +17,6 @@ import defaultMetadata from '../data/misc/metadata.json'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
-import { ProjectsModule } from './projects/projects.module'
 import { NgxMetaRoutingModule } from '@davidlj95/ngx-meta/routing'
 import {
   NgxMetaStandardModule,
@@ -38,7 +37,6 @@ import {
     NgOptimizedImage,
     BrowserAnimationsModule,
     HttpClientModule,
-    ProjectsModule,
     NgxMetaCoreModule.forRoot({
       defaults: {
         locale: 'en',
