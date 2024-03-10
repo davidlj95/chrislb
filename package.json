@@ -46,7 +46,7 @@
     "@angular/ssr": "^17.2.3",
     "@davidlj95/ngx-meta": "1.0.0-alpha.47",
     "@fontsource/fira-sans": "5.0.19",
-    "@fortawesome/angular-fontawesome": "0.13.0",
+    "@fortawesome/angular-fontawesome": "0.14.1",
     "@fortawesome/fontawesome-svg-core": "6.5.1",
     "@fortawesome/free-brands-svg-icons": "6.5.1",
     "@fortawesome/free-solid-svg-icons": "6.5.1",
