@@ -3,6 +3,7 @@ import 'zone.js/node'
 import { APP_BASE_HREF } from '@angular/common'
 import { CommonEngine } from '@angular/ssr'
 import * as express from 'express'
+import compression from 'compression'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { AppServerModule } from './src/main.server'
@@ -10,6 +11,8 @@ import { AppServerModule } from './src/main.server'
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express()
+  // Manually added so Lighthouse doesn't complain about adding text compression
+  server.use(compression())
   const distFolder = join(process.cwd(), 'dist/chrislb/browser')
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? join(distFolder, 'index.original.html')
