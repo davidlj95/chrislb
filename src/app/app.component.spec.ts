@@ -9,10 +9,10 @@ describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [
+        AppComponent,
         RouterTestingModule,
         MockComponents(HeaderComponent, LogoComponent),
       ],
-      declarations: [AppComponent],
     }),
   )
 
