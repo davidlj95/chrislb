@@ -1,16 +1,20 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core'
 import { APP_BASE_HREF, provideImageKitLoader } from '@angular/common'
-import { GlobalMetadata, NgxMetaCoreModule } from '@davidlj95/ngx-meta/core'
 import {
-  NgxMetaOpenGraphModule,
+  GlobalMetadata,
+  provideNgxMetaCore,
+  withNgxMetaDefaults,
+} from '@davidlj95/ngx-meta/core'
+import {
   OPEN_GRAPH_TYPE_WEBSITE,
   OpenGraphMetadata,
+  provideNgxMetaOpenGraph,
 } from '@davidlj95/ngx-meta/open-graph'
 import {
-  NgxMetaStandardModule,
+  provideNgxMetaStandard,
   StandardMetadata,
 } from '@davidlj95/ngx-meta/standard'
-import { NgxMetaRoutingModule } from '@davidlj95/ngx-meta/routing'
+import { provideNgxMetaRouting } from '@davidlj95/ngx-meta/routing'
 import {
   provideRouter,
   withComponentInputBinding,
@@ -27,24 +31,7 @@ import defaultMetadata from '../data/misc/metadata.json'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(
-      NgxMetaCoreModule.forRoot({
-        defaults: {
-          locale: 'en',
-          standard: {
-            author: defaultMetadata.author,
-            generator: true,
-          },
-          openGraph: {
-            siteName: defaultMetadata.siteName,
-            type: OPEN_GRAPH_TYPE_WEBSITE,
-          },
-        } satisfies GlobalMetadata & StandardMetadata & OpenGraphMetadata,
-      }),
-      NgxMetaRoutingModule.forRoot(),
-      NgxMetaStandardModule,
-      NgxMetaOpenGraphModule,
-    ),
+    importProvidersFrom(),
     provideRouter(
       routes,
       withEnabledBlockingInitialNavigation(),
@@ -54,6 +41,22 @@ export const appConfig: ApplicationConfig = {
     provideImageKitLoader(IMAGEKIT_URL),
     { provide: JsonFetcher, useClass: HttpJsonFetcherService },
     { provide: APP_BASE_HREF, useValue: '/' },
+    provideNgxMetaCore(
+      withNgxMetaDefaults({
+        locale: 'en',
+        standard: {
+          author: defaultMetadata.author,
+          generator: true,
+        },
+        openGraph: {
+          siteName: defaultMetadata.siteName,
+          type: OPEN_GRAPH_TYPE_WEBSITE,
+        },
+      } satisfies GlobalMetadata & StandardMetadata & OpenGraphMetadata),
+    ),
+    provideNgxMetaRouting(),
+    provideNgxMetaStandard(),
+    provideNgxMetaOpenGraph(),
     provideAnimations(),
     provideHttpClient(),
   ],
