@@ -13,7 +13,10 @@ import { ProjectAssetsCollectionsService } from './project-page/project-assets-c
 import { ProjectPageResolver } from './project-page/project-page.resolver'
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgOptimizedImage,
     ProjectsPageComponent,
     ProjectListItemComponent,
     ProjectPageComponent,
@@ -21,7 +24,6 @@ import { ProjectPageResolver } from './project-page/project-page.resolver'
     SwiperDirective,
     SanitizeResourceUrlPipe,
   ],
-  imports: [CommonModule, RouterModule, NgOptimizedImage],
   exports: [ProjectsPageComponent, ProjectPageComponent],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way

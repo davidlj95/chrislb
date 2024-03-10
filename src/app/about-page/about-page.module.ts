@@ -10,7 +10,6 @@ import { NgxMetaOpenGraphProfileModule } from '@davidlj95/ngx-meta/open-graph'
 import { NgxMetaMetadataLoaderModule } from '@davidlj95/ngx-meta/core'
 
 @NgModule({
-  declarations: [AboutPageComponent, SocialComponent, ResumeComponent],
   imports: [
     CommonModule,
     AboutPageRoutingModule,
@@ -18,6 +17,9 @@ import { NgxMetaMetadataLoaderModule } from '@davidlj95/ngx-meta/core'
     NgOptimizedImage,
     NgxMetaOpenGraphProfileModule,
     NgxMetaMetadataLoaderModule,
+    AboutPageComponent,
+    SocialComponent,
+    ResumeComponent,
   ],
   providers: [ResumeService],
 })

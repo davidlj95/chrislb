@@ -20,11 +20,22 @@ import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { PROJECTS_PATH } from '../../common/routing/paths'
 import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
 import { getTitle } from '../../common/routing/get-title'
+import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
+import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
+import { NgIf, NgFor, AsyncPipe } from '@angular/common'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    ImagesSwiperComponent,
+    AsyncPipe,
+    SanitizeResourceUrlPipe,
+  ],
 })
 export class ProjectPageComponent implements OnInit {
   public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>

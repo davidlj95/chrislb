@@ -9,7 +9,7 @@ describe('ImagesSwiperComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ImagesSwiperComponent],
+      imports: [ImagesSwiperComponent],
       //👇 To use swiper-[container|slide] HTML element
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })

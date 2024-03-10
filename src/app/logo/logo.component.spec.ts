@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LogoComponent } from './logo.component'
-import { NgOptimizedImage } from '@angular/common'
 import { getDummyOptimizedImageProviders } from '../../test/optimized-image'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('LogoComponent', () => {
   let component: LogoComponent
@@ -9,8 +9,7 @@ describe('LogoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LogoComponent],
-      imports: [NgOptimizedImage],
+      imports: [RouterTestingModule],
       providers: [...getDummyOptimizedImageProviders()],
     })
     fixture = TestBed.createComponent(LogoComponent)

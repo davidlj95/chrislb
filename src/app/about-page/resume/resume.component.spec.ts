@@ -11,7 +11,7 @@ describe('ResumeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ResumeComponent, MockComponents(FaIconComponent)],
+      imports: [ResumeComponent, MockComponents(FaIconComponent)],
       providers: [MockProvider(ResumeService)],
     })
     fixture = TestBed.createComponent(ResumeComponent)

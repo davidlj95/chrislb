@@ -15,10 +15,7 @@ describe('ProjectPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ProjectPageComponent,
-        MockComponents(ImagesSwiperComponent),
-      ],
+      imports: [ProjectPageComponent, MockComponents(ImagesSwiperComponent)],
       providers: [
         MockProvider(ActivatedRoute, {
           data: of({

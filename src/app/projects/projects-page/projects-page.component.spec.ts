@@ -11,7 +11,7 @@ describe('ProjectsPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         ProjectsPageComponent,
         MockComponents(ProjectListItemComponent),
       ],

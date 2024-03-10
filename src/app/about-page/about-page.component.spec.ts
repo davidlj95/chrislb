@@ -13,11 +13,11 @@ describe('AboutPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
+        NgOptimizedImage,
         AboutPageComponent,
         MockComponents(SocialComponent, ResumeComponent),
       ],
-      imports: [NgOptimizedImage],
       providers: [...getDummyOptimizedImageProviders()],
     })
     fixture = TestBed.createComponent(AboutPageComponent)

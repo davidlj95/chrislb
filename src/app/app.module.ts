@@ -31,12 +31,7 @@ import {
 } from '@davidlj95/ngx-meta/open-graph'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    LogoComponent,
-    NotFoundPageComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -60,6 +55,9 @@ import {
     NgxMetaRoutingModule.forRoot(),
     NgxMetaStandardModule,
     NgxMetaOpenGraphModule,
+    HeaderComponent,
+    LogoComponent,
+    NotFoundPageComponent,
   ],
   providers: [
     provideImageKitLoader(IMAGEKIT_URL),
