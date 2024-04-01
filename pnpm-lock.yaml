@@ -36,8 +36,8 @@ dependencies:
     specifier: 17.3.2
     version: 17.3.2(@angular/common@17.3.2)(@angular/core@17.3.2)
   '@davidlj95/ngx-meta':
-    specifier: 1.0.0-beta.1
-    version: 1.0.0-beta.1(@angular/common@17.3.2)(@angular/core@17.3.2)(@angular/router@17.3.2)
+    specifier: 1.0.0-beta.2
+    version: 1.0.0-beta.2(@angular/common@17.3.2)(@angular/core@17.3.2)(@angular/router@17.3.2)
   '@fontsource/fira-sans':
     specifier: 5.0.19
     version: 5.0.19
@@ -1909,8 +1909,8 @@ packages:
     engines: {node: '>=0.1.90'}
     dev: true
 
-  /@davidlj95/ngx-meta@1.0.0-beta.1(@angular/common@17.3.2)(@angular/core@17.3.2)(@angular/router@17.3.2):
-    resolution: {integrity: sha512-ExuM5U1OAIHTGjjo0qWeVvJc+jzoBZ4ifWRsKDo+K6ZFsgPwdkRaXbu6s++2ovys8lCIa0BiSLea5ytUNBqpYQ==}
+  /@davidlj95/ngx-meta@1.0.0-beta.2(@angular/common@17.3.2)(@angular/core@17.3.2)(@angular/router@17.3.2):
+    resolution: {integrity: sha512-B4GF/0gio+J9przbxX4O1yyTNfo0TBwam4SOD/3gM7GoV3GMx66tEQkRZ2nQvw+JleM3Mo45y2Jhs8BgNSL5MA==}
     peerDependencies:
       '@angular/common': ^17 || ^16 || ^15
       '@angular/core': ^17 || ^16 || ^15
