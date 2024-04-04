@@ -146,8 +146,8 @@ devDependencies:
     specifier: 9.0.11
     version: 9.0.11
   imagekit:
-    specifier: 5.0.0
-    version: 5.0.0
+    specifier: 5.0.1
+    version: 5.0.1
   jasmine-core:
     specifier: 5.1.2
     version: 5.1.2
@@ -6251,8 +6251,8 @@ packages:
     resolution: {integrity: sha512-W7+sO6/yhxy83L0G7xR8YAc5Z5QFtYEXXRV6EaE8tuYBZJnA3gVgp3q7X7muhLZVodeb9UfvjSbwt9VJwjIYAg==}
     dev: true
 
-  /imagekit@5.0.0:
-    resolution: {integrity: sha512-BrWk2/16xcL1/p9SuphsDPlIV5U8165ZnhaVL87ze00dIf+1lyKXAFCImGYqSjtgjn2gQnrNmFaCSyWNaHvmhQ==}
+  /imagekit@5.0.1:
+    resolution: {integrity: sha512-TKi2k61KcB2q7yp+MAC1IXfrrC/434oZN5AJ7IJjGxrwOSieSTpXMK0GLbA9hwNv1oODjVAWolBX9gKjtmfHrw==}
     engines: {node: '>=12.0.0'}
     dependencies:
       axios: 1.6.7

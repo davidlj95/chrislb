@@ -82,7 +82,7 @@
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "husky": "9.0.11",
-    "imagekit": "5.0.0",
+    "imagekit": "5.0.1",
     "jasmine-core": "5.1.2",
     "karma": "6.4.3",
     "karma-chrome-launcher": "3.2.0",
