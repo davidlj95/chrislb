@@ -39,8 +39,8 @@ dependencies:
     specifier: 1.0.0-beta.2
     version: 1.0.0-beta.2(@angular/common@17.3.3)(@angular/core@17.3.3)(@angular/router@17.3.3)
   '@fontsource/fira-sans':
-    specifier: 5.0.19
-    version: 5.0.19
+    specifier: 5.0.20
+    version: 5.0.20
   '@fortawesome/angular-fontawesome':
     specifier: 0.14.1
     version: 0.14.1(@angular/core@17.3.3)(@fortawesome/fontawesome-svg-core@6.5.2)
@@ -2399,8 +2399,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fontsource/fira-sans@5.0.19:
-    resolution: {integrity: sha512-6hTOV2mgGx2OCyuXwjCPSfvQra4aw4t6rDCvembo8VHIVALOwEH6rmHrITDAVhxjP6p+51I0+9j+x6JD155G5w==}
+  /@fontsource/fira-sans@5.0.20:
+    resolution: {integrity: sha512-inmUjoKPrgnO4uUaZTAgP0b6YdhDfA52axHXvdTwgLvwd2kn3ZgK52UZoxD0VnrvTOjLA/iE4oC0tNtz4nyb5g==}
     dev: false
 
   /@fortawesome/angular-fontawesome@0.14.1(@angular/core@17.3.3)(@fortawesome/fontawesome-svg-core@6.5.2):
