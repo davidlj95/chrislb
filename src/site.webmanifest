@@ -49,6 +49,7 @@
     },
     {
       "src": "assets/favicons/maskable-icon.png",
+      "sizes": "any",
       "type": "image/png",
       "purpose": "any maskable monochrome"
     }
