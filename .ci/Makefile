@@ -28,6 +28,3 @@ reset:
 
 format-check:
 	cd .. && pnpm run format-check-all
-
-lighthouse:
-	cd .. && pnpm run lighthouse
