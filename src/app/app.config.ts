@@ -28,6 +28,7 @@ import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '../data/misc/metadata.json'
+import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +39,7 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
+    provideTrailingSlashUrlSerializer(),
     provideImageKitLoader(IMAGEKIT_URL),
     { provide: JsonFetcher, useClass: HttpJsonFetcherService },
     { provide: APP_BASE_HREF, useValue: '/' },
