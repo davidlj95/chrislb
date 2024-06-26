@@ -19,9 +19,3 @@ lint:
 test:
 	pnpm run test --browsers=ChromeHeadless \
 		--no-watch --no-progress --reporters progress --code-coverage
-
-run-main:
-	cd .. && act
-
-reset:
-	docker ps -a --format '{{.Names}}' | grep -e '^act-' | xargs docker rm -f
