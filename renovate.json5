@@ -54,6 +54,12 @@
       matchDepTypes: ['devDependencies'],
       automerge: true,
     },
+    // Keep in Angular v18 til manually upgrading
+    {
+      // 👇 Includes devkit & eslint
+      matchPackagePrefixes: ['@angular'],
+      allowedVersions: '^18',
+    },
     // Font Awesome & Angular v18
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
