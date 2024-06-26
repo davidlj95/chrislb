@@ -22,14 +22,14 @@ First install deps with package manager `pnpm`
 pnpm i
 ```
 
-### Prebuild
+### Generated files
 
-Some files required by the app need to be generated from the data managed by the [CMS] platform and the [image CDN].
+Some files required by the app are generated from the data managed by the [CMS] platform and the [image CDN].
 
-[Set the image CDN configuration](#images-cdn) and run the prebuild script before building or serving the app
+[Set the image CDN configuration][image CDN] and run the data generation script before building or serving the app
 
 ```shell
-pnpm run prebuild
+pnpm run generate
 ```
 
 ### Development server
@@ -73,7 +73,7 @@ pnpm run git-hooks
 
 ### Image CDN
 
-[image CDN]: #images-cdn
+[image CDN]: #image-cdn
 
 Image assets of the project are hosted in an image CDN
 for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options). [ImageKit.io]
