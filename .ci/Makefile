@@ -5,7 +5,7 @@ build: prebuild
 	cd .. && pnpm run build
 
 prebuild:
-	cd .. && pnpm run generate-all
+	cd .. && pnpm run generate
 
 install:
 	# Despite it's enabled by default on CI. This allows to mock CI locally
