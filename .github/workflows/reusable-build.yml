@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    name: Build and prerender app
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -45,7 +45,7 @@ jobs:
           key: ${{ env.cache-name }}-${{ inputs.ref != '' && inputs.ref || github.ref }}
           restore-keys: |
             ${{ env.cache-name }}
-      - name: Build and prerender app
+      - name: Build
         env:
           IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}

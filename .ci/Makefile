@@ -2,11 +2,10 @@
 
 # First so that running without command runs a build
 build: prebuild
-	cd .. && pnpm run prerender
-	cd .. && pnpm run postbuild
+	cd .. && pnpm run build
 
 prebuild:
-	cd .. && pnpm run prebuild
+	cd .. && pnpm run generate-all
 
 install:
 	# Despite it's enabled by default on CI. This allows to mock CI locally
