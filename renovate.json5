@@ -1,7 +1,12 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   // 👇 Defined in https://github.com/renovatebot/renovate/blob/37.0.2/lib/config/presets/internal/config.ts
-  extends: ['config:recommended', 'config:best-practices', 'config:js-app'],
+  extends: [
+    'config:recommended',
+    'config:best-practices',
+    'config:js-app',
+    'github>davidlj95/renovate-config:angular/v18-lts',
+  ],
   prHourlyLimit: 0,
   prConcurrentLimit: 5,
   schedule: [
@@ -49,36 +54,17 @@
       matchDepTypes: ['devDependencies'],
       automerge: true,
     },
-    // Angular v17.3.x compatibilities
-    // https://angular.io/guide/versions
-    // https://update.angular.io/?v=16.0-17.0 (zone.js)
+    // Keep in Angular v18 til manually upgrading
     {
       // 👇 Includes devkit & eslint
       matchPackagePrefixes: ['@angular'],
-      allowedVersions: '^17',
+      allowedVersions: '^18',
     },
-    //👇 N/A. Just to have this info somewhere near
-    {
-      matchPackageNames: ['node', '@types/node'],
-      allowedVersions: '^18.13.0 || ^20.9.0',
-    },
-    {
-      matchPackageNames: ['typescript'],
-      allowedVersions: '>=5.2.0 <5.5.0',
-    },
-    {
-      matchPackageNames: ['rxjs'],
-      allowedVersions: '^6.5.3 || ^7.4.0',
-    },
-    {
-      matchPackageNames: ['zone.js'],
-      allowedVersions: '0.14.x',
-    },
-    // Font Awesome & Angular v17
+    // Font Awesome & Angular v18
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
       matchPackageNames: ['@fortawesome/angular-fontawesome'],
-      allowedVersions: '0.14.x',
+      allowedVersions: '0.15.x',
     },
     {
       matchPackageNames: [
