@@ -57,17 +57,17 @@
     // Keep in Angular v18 til manually upgrading
     {
       // 👇 Includes devkit & eslint
-      matchPackagePrefixes: ['@angular'],
+      matchDepNames: ['@angular{/,}**'],
       allowedVersions: '^18',
     },
     // Font Awesome & Angular v18
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
-      matchPackageNames: ['@fortawesome/angular-fontawesome'],
+      matchDepNames: ['@fortawesome/angular-fontawesome'],
       allowedVersions: '0.15.x',
     },
     {
-      matchPackageNames: [
+      matchDepNames: [
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-brands-svg-icons',
         '@fortawesome/free-solid-svg-icons',
