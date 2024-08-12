@@ -148,8 +148,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1
       imagekit:
-        specifier: 5.0.1
-        version: 5.0.1
+        specifier: 5.1.0
+        version: 5.1.0
       jasmine-core:
         specifier: 5.1.2
         version: 5.1.2
@@ -3589,8 +3589,8 @@ packages:
   image-ssim@0.2.0:
     resolution: {integrity: sha512-W7+sO6/yhxy83L0G7xR8YAc5Z5QFtYEXXRV6EaE8tuYBZJnA3gVgp3q7X7muhLZVodeb9UfvjSbwt9VJwjIYAg==}
 
-  imagekit@5.0.1:
-    resolution: {integrity: sha512-TKi2k61KcB2q7yp+MAC1IXfrrC/434oZN5AJ7IJjGxrwOSieSTpXMK0GLbA9hwNv1oODjVAWolBX9gKjtmfHrw==}
+  imagekit@5.1.0:
+    resolution: {integrity: sha512-mxyYHwbrMl8lH3Os/gx6IsNP9dkWOV32KeDiGggN30e5gUC8OJ6T9GjWdfeOMl4VPM6QkwslXzHhSLykjUwdrQ==}
     engines: {node: '>=12.0.0'}
 
   immutable@3.8.2:
@@ -9725,7 +9725,7 @@ snapshots:
 
   image-ssim@0.2.0: {}
 
-  imagekit@5.0.1:
+  imagekit@5.1.0:
     dependencies:
       axios: 1.6.7
       form-data: 4.0.0
