@@ -40,7 +40,7 @@
     "@angular/platform-server": "18.2.1",
     "@angular/router": "18.2.1",
     "@angular/ssr": "18.2.1",
-    "@davidlj95/ngx-meta": "1.0.0-beta.4",
+    "@davidlj95/ngx-meta": "1.0.0-beta.11",
     "@fontsource/fira-sans": "5.0.21",
     "@fortawesome/angular-fontawesome": "0.15.0",
     "@fortawesome/fontawesome-svg-core": "6.6.0",
