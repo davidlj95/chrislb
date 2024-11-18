@@ -13,7 +13,7 @@ import { NgFor } from '@angular/common'
   imports: [NgFor, FaIconComponent],
 })
 export class SocialComponent {
-  public readonly items: ReadonlyArray<Social>
+  public readonly items: readonly Social[]
 
   constructor(authorsService: AuthorsService, socialService: SocialService) {
     this.items = socialService.getAll(authorsService.website)

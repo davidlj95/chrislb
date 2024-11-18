@@ -13,7 +13,7 @@ import { NgFor } from '@angular/common'
   imports: [NgFor, RouterLinkActive, RouterLink],
 })
 export class HeaderComponent {
-  protected readonly items: ReadonlyArray<NavigationItem> = [
+  protected readonly items: readonly NavigationItem[] = [
     {
       displayName: projectPageMetadata.title || projectPageMetadata.name,
       path: '/',

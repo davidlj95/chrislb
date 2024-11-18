@@ -28,7 +28,7 @@ export class ProjectListItemComponent {
     slidesPerView: 2,
   }
   public readonly responsiveImageAttributes: ResponsiveImageAttributes
-  public credits?: ReadonlyArray<CreditItem>
+  public credits?: readonly CreditItem[]
   protected readonly PROJECTS_PATH = PROJECTS_PATH
 
   constructor(

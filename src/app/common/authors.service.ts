@@ -29,7 +29,7 @@ export const AUTHORS_JSON = new InjectionToken<typeof authors>(
     factory: () => authors,
   },
 )
-export type Author = {
+export interface Author {
   slug?: string
   name: string
   social?: {

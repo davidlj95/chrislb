@@ -3,13 +3,11 @@ import { HtmlImageSizesSingleAttribute } from './html-image-sizes-single-attribu
 export class HtmlImageSizesAttribute {
   public readonly asString: string
 
-  constructor(
-    public readonly sizes: ReadonlyArray<HtmlImageSizesSingleAttribute>,
-  ) {
+  constructor(public readonly sizes: readonly HtmlImageSizesSingleAttribute[]) {
     this.asString = this.sizes.join(', ')
   }
 
-  public concat(...others: ReadonlyArray<HtmlImageSizesAttribute>) {
+  public concat(...others: readonly HtmlImageSizesAttribute[]) {
     return new HtmlImageSizesAttribute([
       ...this.sizes,
       ...others.map(({ sizes }) => sizes).flat(),

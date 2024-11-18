@@ -4,7 +4,7 @@ import { Resume } from './resume'
 
 @Injectable()
 export class ResumeService {
-  public getAll(): ReadonlyArray<Resume> {
+  public getAll(): readonly Resume[] {
     return aboutPage.resume
   }
 }

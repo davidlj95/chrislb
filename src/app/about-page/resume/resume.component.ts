@@ -14,7 +14,7 @@ import { NgFor } from '@angular/common'
   providers: [ResumeService],
 })
 export class ResumeComponent {
-  public readonly resumes: ReadonlyArray<Resume>
+  public readonly resumes: readonly Resume[]
 
   constructor(resumeService: ResumeService) {
     this.resumes = resumeService.getAll()
