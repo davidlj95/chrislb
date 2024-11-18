@@ -13,7 +13,7 @@ import { AsyncPipe, NgFor } from '@angular/common'
   providers: [ProjectsService],
 })
 export class ProjectsPageComponent {
-  public readonly projects: Promise<ReadonlyArray<ProjectListItem>>
+  public readonly projects: Promise<readonly ProjectListItem[]>
   protected readonly MAX_PROJECTS_PER_PAGE = 2
 
   constructor(projectsService: ProjectsService) {

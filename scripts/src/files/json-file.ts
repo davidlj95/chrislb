@@ -9,7 +9,7 @@ export class JsonFile implements FileReader, FileWriter {
   public async read(): Promise<unknown> {
     try {
       return JSON.parse(readFileSync(this.filepath, 'utf-8'))
-    } catch (error) {
+    } catch {
       Log.warn('Unable to read file %s', this.filepath)
       return
     }

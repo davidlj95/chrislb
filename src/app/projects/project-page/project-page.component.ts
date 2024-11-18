@@ -39,7 +39,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common'
   providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectPageComponent implements OnInit {
-  public assetsCollections$!: Observable<ReadonlyArray<AnyAssetsCollectionItem>>
+  public assetsCollections$!: Observable<readonly AnyAssetsCollectionItem[]>
   public readonly fullScreenSwiper = {
     slidesPerView: 2,
     maxWidth: Px(850),

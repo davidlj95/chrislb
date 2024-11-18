@@ -12,7 +12,7 @@ import { isEmpty } from 'lodash-es'
   providedIn: 'root',
 })
 export class SocialService {
-  protected readonly mainLinkPreferences: Map<SocialName, number> = new Map(
+  protected readonly mainLinkPreferences = new Map<SocialName, number>(
     Object.entries([
       SocialName.Instagram,
       SocialName.LinkedIn,
@@ -20,7 +20,7 @@ export class SocialService {
     ]).map(([indexString, socialName]) => [socialName, parseInt(indexString)]),
   )
 
-  public getAll(author: Author): ReadonlyArray<Social> {
+  public getAll(author: Author): readonly Social[] {
     return this.mapAll(author.social)
   }
 
@@ -34,7 +34,7 @@ export class SocialService {
       if (!isEmpty(mainUsername?.trim()))
         return this.mapFromNameAndUsername(
           author.social.preferred,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
           mainUsername!,
         )
     }
@@ -49,7 +49,7 @@ export class SocialService {
     return sortedSocials[0]
   }
 
-  private mapAll(authorSocial: Author['social']): ReadonlyArray<Social> {
+  private mapAll(authorSocial: Author['social']): readonly Social[] {
     if (!authorSocial) {
       return []
     }

@@ -4,5 +4,5 @@ export interface ImageCdnApi {
   getAllImagesInPath(
     path: string,
     includeSubdirectories?: boolean,
-  ): Promise<ReadonlyArray<ImageAsset>>
+  ): Promise<readonly ImageAsset[]>
 }

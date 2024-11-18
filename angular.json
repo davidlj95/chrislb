@@ -149,7 +149,8 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": ["."],
+            "maxWarnings": 0
           }
         }
       }
@@ -158,6 +159,9 @@
   "cli": {
     "analytics": false,
     "packageManager": "pnpm",
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": [
+      "@angular-eslint/schematics",
+      "@angular-eslint/schematics"
+    ]
   }
 }

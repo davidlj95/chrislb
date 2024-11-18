@@ -31,7 +31,7 @@ export class ResponsiveImageBreakpointsReducer {
     return new this(MAX_PX_BETWEEN_BREAKPOINTS)
   }
 
-  public reduce(breakpoints: ReadonlyArray<number>): number[] {
+  public reduce(breakpoints: readonly number[]): number[] {
     if (!isSorted(breakpoints)) {
       throw new Error('Breakpoints must be sorted before reducing them')
     }

@@ -10,10 +10,10 @@ import { Project } from './project'
 export class ProjectsService {
   constructor(private jsonFetcher: JsonFetcher) {}
 
-  async getListItems(): Promise<ReadonlyArray<ProjectListItem>> {
-    const projects = await this.jsonFetcher.fetch<
-      ReadonlyArray<ProjectListItem>
-    >(getListFilename(PROJECTS_DIR))
+  async getListItems(): Promise<readonly ProjectListItem[]> {
+    const projects = await this.jsonFetcher.fetch<readonly ProjectListItem[]>(
+      getListFilename(PROJECTS_DIR),
+    )
     return Array.from(projects).sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )

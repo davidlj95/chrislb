@@ -8,6 +8,6 @@ export class ImageAssetsCollection implements AssetsCollection {
 
   constructor(
     public readonly data: AssetsCollectionData,
-    public readonly images: ReadonlyArray<ImageAsset>,
+    public readonly images: readonly ImageAsset[],
   ) {}
 }

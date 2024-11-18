@@ -9,7 +9,7 @@ export class HtmlNgSrcSetAttribute {
       .join(', ')
   }
 
-  public concat(...others: ReadonlyArray<HtmlNgSrcSetAttribute>) {
+  public concat(...others: readonly HtmlNgSrcSetAttribute[]) {
     return new HtmlNgSrcSetAttribute(
       this.breakpoints.concat(...others.map(({ breakpoints }) => breakpoints)),
     )

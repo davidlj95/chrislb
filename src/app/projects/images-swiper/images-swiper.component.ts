@@ -37,7 +37,7 @@ registerSwiper()
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ImagesSwiperComponent implements OnChanges {
-  @Input({ required: true }) public images!: ReadonlyArray<ImageAsset>
+  @Input({ required: true }) public images!: readonly ImageAsset[]
   @Input({ required: true })
   public responsiveImageAttributes!: ResponsiveImageAttributes
   @Input() public priority?: boolean

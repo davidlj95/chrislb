@@ -21,12 +21,12 @@ import { groupBy, isEmpty } from 'lodash-es'
 
 @Injectable()
 export class ProjectAssetsCollectionsService {
-  private readonly assetsCollectionsData: ReadonlyArray<AssetsCollectionData>
+  private readonly assetsCollectionsData: readonly AssetsCollectionData[]
   private readonly orderByCollectionSlug: Map<string, number>
 
   constructor(
     @Inject(ASSETS_COLLECTIONS_DATA)
-    unsortedAssetsCollections: ReadonlyArray<AssetsCollectionData>,
+    unsortedAssetsCollections: readonly AssetsCollectionData[],
     @Inject(ASSETS_COLLECTIONS_ORDER)
     assetsCollectionsOrder: typeof assetsCollectionsOrderJson,
     private readonly jsonFetcher: JsonFetcher,
@@ -62,7 +62,7 @@ export class ProjectAssetsCollectionsService {
     )
   }
 
-  byProject(project: Project): Observable<ReadonlyArray<AnyAssetsCollection>> {
+  byProject(project: Project): Observable<readonly AnyAssetsCollection[]> {
     const videoAssetsCollections = this.getVideoAssetsCollections(project)
     const imageAssetsCollections = this.getImageAssetsCollections(
       project.slug,
@@ -87,7 +87,7 @@ export class ProjectAssetsCollectionsService {
 
   private getVideoAssetsCollections(
     project: Project,
-  ): ReadonlyArray<VideoAssetsCollection> {
+  ): readonly VideoAssetsCollection[] {
     if (!project.youtubePlaylistId) {
       return []
     }
@@ -101,10 +101,10 @@ export class ProjectAssetsCollectionsService {
 
   private getImageAssetsCollections(
     slug: string,
-    lookbookNamesAndSlugs: ReadonlyArray<LookbookNameAndSlug>,
-  ): Observable<ReadonlyArray<ImageAssetsCollection>> {
+    lookbookNamesAndSlugs: readonly LookbookNameAndSlug[],
+  ): Observable<readonly ImageAssetsCollection[]> {
     return from(
-      this.jsonFetcher.fetch<ReadonlyArray<ImageAsset>>(
+      this.jsonFetcher.fetch<readonly ImageAsset[]>(
         PROJECTS_DIR,
         slug,
         IMAGES_FILENAME,
@@ -121,10 +121,10 @@ export class ProjectAssetsCollectionsService {
   }
 
   private mapImageAssetsToCollections(
-    imageAssets: ReadonlyArray<ImageAsset>,
+    imageAssets: readonly ImageAsset[],
     slug: string,
-    lookbookNamesAndSlugs: ReadonlyArray<LookbookNameAndSlug>,
-  ): ReadonlyArray<ImageAssetsCollection> {
+    lookbookNamesAndSlugs: readonly LookbookNameAndSlug[],
+  ): readonly ImageAssetsCollection[] {
     const projectImageAssets = imageAssets.map(
       (imageAsset) => new ProjectImageAsset(imageAsset, slug),
     )
@@ -154,7 +154,7 @@ export class ProjectAssetsCollectionsService {
                     ...assetCollection,
                     name: `${assetCollection.name} ${index} "${lookbookNameAndSlug.name}"`,
                   },
-                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                   subcollectionImageAssets!.map(({ asset }) => asset),
                 ),
               )
@@ -186,7 +186,7 @@ export class ProjectAssetsCollectionsService {
           assetCollections.push(
             new ImageAssetsCollection(
               assetCollection,
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
               projectImageAssets!.map(({ asset }) => asset),
             ),
           )
@@ -216,9 +216,9 @@ export class ProjectAssetsCollectionsService {
 }
 
 const ASSETS_COLLECTIONS_DATA = new InjectionToken<
-  ReadonlyArray<AssetsCollectionData>
+  readonly AssetsCollectionData[]
 >('Assets collections', {
-  factory: () => assetsCollectionsJson as ReadonlyArray<AssetsCollectionData>,
+  factory: () => assetsCollectionsJson as readonly AssetsCollectionData[],
 })
 
 const ASSETS_COLLECTIONS_ORDER = new InjectionToken<

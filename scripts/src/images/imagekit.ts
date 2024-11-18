@@ -46,12 +46,14 @@ export class Imagekit implements ImageCdnApi {
   async getAllImagesInPath(
     path: string,
     includeSubdirectories = false,
-  ): Promise<ReadonlyArray<ImageAsset>> {
+  ): Promise<readonly ImageAsset[]> {
     Log.group('Searching for images inside "%s" path', path)
     const imageAssets = await this.listImageAssetsInPath(path)
-    isEmpty(imageAssets)
-      ? Log.info('No images found')
-      : Log.info('Found %d images', imageAssets.length)
+    if (isEmpty(imageAssets)) {
+      Log.info('No images found')
+    } else {
+      Log.info('Found %d images', imageAssets.length)
+    }
     const imagesFromDirectories: ImageAsset[] = []
     if (includeSubdirectories) {
       const directoryNames = await this.listDirectoryNamesInPath(path)
@@ -78,7 +80,7 @@ export class Imagekit implements ImageCdnApi {
 
   private async listImageAssetsInPath(
     path: string,
-  ): Promise<ReadonlyArray<ImageAsset>> {
+  ): Promise<readonly ImageAsset[]> {
     const searchQuery = this.unpublishedTag
       ? `tags NOT IN ${JSON.stringify([this.unpublishedTag])}`
       : undefined
@@ -94,12 +96,12 @@ export class Imagekit implements ImageCdnApi {
 
   private async listDirectoryNamesInPath(
     path: string,
-  ): Promise<ReadonlyArray<string>> {
+  ): Promise<readonly string[]> {
     const response = await this.sdk.listFiles({
       path,
       type: 'folder',
     })
-    const folderObjects = response as unknown as ReadonlyArray<FolderObject>
+    const folderObjects = response as unknown as readonly FolderObject[]
     return folderObjects.map((folderObject) => folderObject.name)
   }
 
@@ -137,8 +139,8 @@ type FolderObject = Pick<
   folderPath: string
 }
 
-type CustomMetadata = {
+interface CustomMetadata {
   alt?: string
 }
 
-type RemoveFirst<T extends unknown[]> = T extends [infer H, ...infer R] ? R : T
+type RemoveFirst<T extends unknown[]> = T extends [unknown, ...infer R] ? R : T

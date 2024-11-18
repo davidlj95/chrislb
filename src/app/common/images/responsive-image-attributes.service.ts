@@ -99,7 +99,7 @@ export class ResponsiveImageAttributesService {
     )
   }
 
-  private getHighDensityBreakpoints(pxWidth: number): ReadonlyArray<number> {
+  private getHighDensityBreakpoints(pxWidth: number): readonly number[] {
     const widths: number[] = [pxWidth]
     // Add double for high density screens if not bigger than max resolution width
     const doubleWidth = pxWidth * 2

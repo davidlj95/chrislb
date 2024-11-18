@@ -52,7 +52,7 @@ export class RoutesFileGenerator {
     )
   }
 
-  private async getBaseRoutes(): Promise<ReadonlyArray<string>> {
+  private async getBaseRoutes(): Promise<readonly string[]> {
     const baseRoutesFile = readFileSync(
       join(this.ROOT_PATH, this.BASE_ROUTES_FILENAME),
       'utf-8',

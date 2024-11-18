@@ -5,9 +5,9 @@ import { uniq } from 'lodash-es'
 export class ResponsiveImageBreakpoints {
   public readonly ngSrcSet = new HtmlNgSrcSetAttribute(this)
 
-  private constructor(public readonly pxList: ReadonlyArray<number>) {}
+  private constructor(public readonly pxList: readonly number[]) {}
 
-  static from(list: ReadonlyArray<number>): ResponsiveImageBreakpoints {
+  static from(list: readonly number[]): ResponsiveImageBreakpoints {
     const sortedUniqueBreakpointPxs = uniq(list).sort((a, b) => a - b)
     return new this(sortedUniqueBreakpointPxs)
   }
@@ -19,7 +19,7 @@ export class ResponsiveImageBreakpoints {
   }
 
   public concat(
-    ...others: ReadonlyArray<ResponsiveImageBreakpoints>
+    ...others: readonly ResponsiveImageBreakpoints[]
   ): ResponsiveImageBreakpoints {
     return ResponsiveImageBreakpoints.from(
       [...this.pxList, ...others.map(({ pxList }) => pxList)].flat(),

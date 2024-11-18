@@ -12,7 +12,7 @@ export class ResponsiveImageAttributes {
   }
 
   public concat(
-    ...others: ReadonlyArray<ResponsiveImageAttributes>
+    ...others: readonly ResponsiveImageAttributes[]
   ): ResponsiveImageAttributes {
     return new ResponsiveImageAttributes(
       this.breakpoints.concat(...others.map(({ breakpoints }) => breakpoints)),

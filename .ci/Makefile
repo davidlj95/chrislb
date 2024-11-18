@@ -12,9 +12,6 @@ install:
 	# https://pnpm.io/cli/install#--frozen-lockfile
 	pnpm install --frozen-lockfile
 
-lint:
-	pnpm run lint --max-warnings 0
-
 test:
 	pnpm run test --browsers=ChromeHeadless \
 		--no-watch --no-progress --reporters progress --code-coverage
