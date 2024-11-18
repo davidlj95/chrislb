@@ -49,9 +49,11 @@ export class Imagekit implements ImageCdnApi {
   ): Promise<readonly ImageAsset[]> {
     Log.group('Searching for images inside "%s" path', path)
     const imageAssets = await this.listImageAssetsInPath(path)
-    isEmpty(imageAssets)
-      ? Log.info('No images found')
-      : Log.info('Found %d images', imageAssets.length)
+    if (isEmpty(imageAssets)) {
+      Log.info('No images found')
+    } else {
+      Log.info('Found %d images', imageAssets.length)
+    }
     const imagesFromDirectories: ImageAsset[] = []
     if (includeSubdirectories) {
       const directoryNames = await this.listDirectoryNamesInPath(path)
@@ -141,4 +143,4 @@ interface CustomMetadata {
   alt?: string
 }
 
-type RemoveFirst<T extends unknown[]> = T extends [infer H, ...infer R] ? R : T
+type RemoveFirst<T extends unknown[]> = T extends [unknown, ...infer R] ? R : T
