@@ -1,15 +1,16 @@
 // @ts-check
-const eslint = require('@eslint/js')
-const tseslint = require('typescript-eslint')
-const angular = require('angular-eslint')
+// noinspection NpmUsedModulesInstalled
+import eslint from '@eslint/js'
+import tsEslint from 'typescript-eslint'
+import angular from 'angular-eslint'
 
-module.exports = tseslint.config(
+export default tsEslint.config(
   {
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
+      ...tsEslint.configs.recommended,
+      ...tsEslint.configs.stylistic,
     ],
   },
   {
