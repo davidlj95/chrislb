@@ -48,12 +48,12 @@ export class ProjectListItemExtraDataGenerator {
     return this._imagesByGroups
   }
 
-  private async getImages(): Promise<ReadonlyArray<ImageAsset>> {
+  private async getImages(): Promise<readonly ImageAsset[]> {
     const imagesResource = await this.getImagesResource()
     if (!imagesResource) {
       return []
     }
-    return (await imagesResource.getData()) as ReadonlyArray<ImageAsset>
+    return (await imagesResource.getData()) as readonly ImageAsset[]
   }
 
   private async getImagesResource(): Promise<Resource | null> {
@@ -107,6 +107,6 @@ export class ProjectListItemExtraDataGenerator {
 }
 
 interface ImagesByGroups {
-  readonly preview: ReadonlyArray<ImageAsset>
-  readonly others: ReadonlyArray<ImageAsset>
+  readonly preview: readonly ImageAsset[]
+  readonly others: readonly ImageAsset[]
 }

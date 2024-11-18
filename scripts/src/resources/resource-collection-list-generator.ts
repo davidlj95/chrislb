@@ -24,7 +24,7 @@ export class ResourceCollectionListGenerator {
     Log.group('Generating list for %s collection', this.resourceCollection.name)
     const resources = await this.resourceCollection.getResources()
     Log.info('Found %d resources to include in list', resources.length)
-    const resourcesData: Array<unknown> = []
+    const resourcesData: unknown[] = []
     for (const resource of resources) {
       resourcesData.push(await this.generateResourceData(resource))
     }

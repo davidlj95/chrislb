@@ -5,7 +5,7 @@ import { JSON_FILE_TYPE } from '../files/json-file-type'
 import { mkdirSync, readdirSync } from 'fs'
 
 export class ResourceCollection {
-  private _resources?: ReadonlyArray<Resource>
+  private _resources?: readonly Resource[]
 
   constructor(
     public readonly path: string,
@@ -16,7 +16,7 @@ export class ResourceCollection {
     return basename(this.path)
   }
 
-  public async getResources(): Promise<ReadonlyArray<Resource>> {
+  public async getResources(): Promise<readonly Resource[]> {
     if (!this._resources) {
       const directoryFiles = readdirSync(this.path, {
         withFileTypes: true,
