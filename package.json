@@ -66,8 +66,10 @@
     "@types/jasmine": "5.1.4",
     "@types/lodash-es": "4.17.12",
     "@types/node": "20.16.5",
+    "angular-eslint": "18.4.0",
     "browser-sync": "3.0.2",
     "dotenv": "16.4.5",
+    "eslint": "^9.13.0",
     "eslint-config-prettier": "9.1.0",
     "husky": "9.1.6",
     "imagekit": "5.2.0",
@@ -81,6 +83,7 @@
     "ng-mocks": "14.13.1",
     "prettier": "3.3.3",
     "tsm": "2.3.0",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.10.0"
   }
 }
