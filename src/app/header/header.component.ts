@@ -9,6 +9,7 @@ import { NgFor } from '@angular/common'
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: true,
   imports: [NgFor, RouterLinkActive, RouterLink],
 })
 export class HeaderComponent {

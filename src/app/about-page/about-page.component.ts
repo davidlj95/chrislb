@@ -15,6 +15,7 @@ import { SocialComponent } from './social/social.component'
   selector: 'app-about-page',
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.scss'],
+  standalone: true,
   imports: [SocialComponent, ResumeComponent, NgOptimizedImage],
 })
 export class AboutPageComponent {

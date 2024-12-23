@@ -111,6 +111,7 @@ function makeComponentWithDirective({
     template: ` <!--suppress AngularUndefinedBinding -->
     <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
     imports: [SwiperDirective],
+    standalone: true,
   })
   class SwiperComponent implements OnInit {
     public readonly options = options

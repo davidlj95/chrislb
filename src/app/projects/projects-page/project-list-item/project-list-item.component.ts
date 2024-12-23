@@ -19,6 +19,7 @@ import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common'
   selector: 'app-project-list-item',
   templateUrl: './project-list-item.component.html',
   styleUrls: ['./project-list-item.component.scss'],
+  standalone: true,
   imports: [NgIf, RouterLink, NgTemplateOutlet, ImagesSwiperComponent, NgFor],
 })
 export class ProjectListItemComponent {
