@@ -10,7 +10,6 @@ import { RouterLink } from '@angular/router'
   selector: 'app-logo',
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss'],
-  standalone: true,
   imports: [RouterLink, NgOptimizedImage],
 })
 export class LogoComponent {

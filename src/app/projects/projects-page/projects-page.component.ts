@@ -8,7 +8,6 @@ import { AsyncPipe, NgFor } from '@angular/common'
   selector: 'app-projects-page',
   templateUrl: './projects-page.component.html',
   styleUrls: ['./projects-page.component.scss'],
-  standalone: true,
   imports: [NgFor, ProjectListItemComponent, AsyncPipe],
   providers: [ProjectsService],
 })
