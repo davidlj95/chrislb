@@ -1,7 +1,9 @@
 <ul>
-  <li *ngFor="let item of items">
-    <a [href]="item.url" target="_blank">
-      <fa-icon [icon]="item.icon" [title]="item.displayName"></fa-icon>
-    </a>
-  </li>
+  @for (item of items; track item) {
+    <li>
+      <a [href]="item.url" target="_blank">
+        <fa-icon [icon]="item.icon" [title]="item.displayName"></fa-icon>
+      </a>
+    </li>
+  }
 </ul>

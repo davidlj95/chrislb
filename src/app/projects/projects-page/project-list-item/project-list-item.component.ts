@@ -13,14 +13,14 @@ import { CssMinMaxMediaQuery } from '../../../common/css/css-min-max-media-query
 import { Breakpoint } from '../../../common/style/breakpoint'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
-import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common'
+import { NgTemplateOutlet } from '@angular/common'
 
 @Component({
   selector: 'app-project-list-item',
   templateUrl: './project-list-item.component.html',
   styleUrls: ['./project-list-item.component.scss'],
   standalone: true,
-  imports: [NgIf, RouterLink, NgTemplateOutlet, ImagesSwiperComponent, NgFor],
+  imports: [RouterLink, NgTemplateOutlet, ImagesSwiperComponent],
 })
 export class ProjectListItemComponent {
   @Input() public priority?: boolean

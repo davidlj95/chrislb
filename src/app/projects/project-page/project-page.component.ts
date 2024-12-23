@@ -22,20 +22,14 @@ import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-f
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
-import { AsyncPipe, NgFor, NgIf } from '@angular/common'
+import { AsyncPipe } from '@angular/common'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    ImagesSwiperComponent,
-    AsyncPipe,
-    SanitizeResourceUrlPipe,
-  ],
+  imports: [ImagesSwiperComponent, AsyncPipe, SanitizeResourceUrlPipe],
   providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectPageComponent implements OnInit {
