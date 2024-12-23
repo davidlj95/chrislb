@@ -3,13 +3,12 @@ import { Resume } from './resume'
 import { ResumeService } from './resume.service'
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
-import { NgFor } from '@angular/common'
 
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss'],
-  imports: [NgFor, FaIconComponent],
+  imports: [FaIconComponent],
   providers: [ResumeService],
 })
 export class ResumeComponent {

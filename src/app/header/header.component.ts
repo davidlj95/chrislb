@@ -2,14 +2,13 @@ import { Component } from '@angular/core'
 import projectPageMetadata from '../../data/pages/projects.json'
 import aboutPageMetadata from '../../data/pages/about.json'
 import { ABOUT_PATH } from '../common/routing/paths'
-import { RouterLinkActive, RouterLink } from '@angular/router'
-import { NgFor } from '@angular/common'
+import { RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [NgFor, RouterLinkActive, RouterLink],
+  imports: [RouterLinkActive, RouterLink],
 })
 export class HeaderComponent {
   protected readonly items: readonly NavigationItem[] = [

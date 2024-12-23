@@ -1,8 +1,10 @@
 <ul>
-  <li *ngFor="let resume of resumes">
-    <a [href]="resume.href" target="_blank">
-      <fa-icon [icon]="faFilePdf"></fa-icon>
-      {{ resume.displayName }}
-    </a>
-  </li>
+  @for (resume of resumes; track resume) {
+    <li>
+      <a [href]="resume.href" target="_blank">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+        {{ resume.displayName }}
+      </a>
+    </li>
+  }
 </ul>

@@ -19,7 +19,7 @@ import { ResponsiveImageAttributes } from '../../common/images/responsive-image-
 import { ImageAsset } from '../../common/images/image-asset'
 import { isEmpty, isNumber } from 'lodash-es'
 import { SwiperDirective } from './swiper.directive'
-import { NgFor, NgIf, NgOptimizedImage } from '@angular/common'
+import { NgOptimizedImage } from '@angular/common'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -29,7 +29,7 @@ registerSwiper()
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
-  imports: [NgIf, SwiperDirective, NgFor, NgOptimizedImage],
+  imports: [SwiperDirective, NgOptimizedImage],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250

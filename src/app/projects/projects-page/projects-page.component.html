@@ -1,6 +1,7 @@
-<app-project-list-item
-  *ngFor="let item of projects | async; index as index"
-  [item]="item"
-  [priority]="index < MAX_PROJECTS_PER_PAGE"
-  [class.has-preview-images]="item.previewImages && item.previewImages.length"
-></app-project-list-item>
+@for (item of projects | async; track item; let index = $index) {
+  <app-project-list-item
+    [item]="item"
+    [priority]="index < MAX_PROJECTS_PER_PAGE"
+    [class.has-preview-images]="item.previewImages && item.previewImages.length"
+  ></app-project-list-item>
+}

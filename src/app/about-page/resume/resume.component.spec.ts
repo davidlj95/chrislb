@@ -4,7 +4,6 @@ import { ResumeComponent } from './resume.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import { ResumeService } from './resume.service'
-import { NgForOf } from '@angular/common'
 
 describe('ResumeComponent', () => {
   let component: ResumeComponent
@@ -15,7 +14,7 @@ describe('ResumeComponent', () => {
       providers: [MockProvider(ResumeService)],
     })
     TestBed.overrideComponent(ResumeComponent, {
-      set: { imports: [NgForOf, MockComponents(FaIconComponent)] },
+      set: { imports: [MockComponents(FaIconComponent)] },
     })
     fixture = TestBed.createComponent(ResumeComponent)
     component = fixture.componentInstance

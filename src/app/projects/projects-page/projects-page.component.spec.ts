@@ -4,7 +4,7 @@ import { ProjectsPageComponent } from './projects-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { ProjectsService } from '../projects.service'
-import { AsyncPipe, NgForOf } from '@angular/common'
+import { AsyncPipe } from '@angular/common'
 
 describe('ProjectsPageComponent', () => {
   let component: ProjectsPageComponent
@@ -14,7 +14,7 @@ describe('ProjectsPageComponent', () => {
     TestBed.configureTestingModule({})
     TestBed.overrideComponent(ProjectsPageComponent, {
       set: {
-        imports: [AsyncPipe, NgForOf, MockComponents(ProjectListItemComponent)],
+        imports: [AsyncPipe, MockComponents(ProjectListItemComponent)],
         providers: [
           MockProvider(ProjectsService, {
             async getListItems() {
