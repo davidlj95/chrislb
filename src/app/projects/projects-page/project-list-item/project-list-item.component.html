@@ -1,11 +1,13 @@
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      <a
-        *ngIf="_item.hasContent; else title"
-        [routerLink]="[PROJECTS_PATH, _item.slug]"
-        ><ng-container [ngTemplateOutlet]="title"></ng-container
-      ></a>
+      @if (_item.hasContent) {
+        <a [routerLink]="[PROJECTS_PATH, _item.slug]"
+          ><ng-container [ngTemplateOutlet]="title"></ng-container
+        ></a>
+      } @else {
+        {{ _item.title }}
+      }
       <ng-template #title>
         {{ _item.title }}
       </ng-template>
@@ -13,26 +15,35 @@
     <span class="subtitle">
       {{ _item.subtitle }}
     </span>
-    <span class="quote" *ngIf="_item.quote"> "{{ _item.quote }}" </span>
+    @if (_item.quote) {
+      <span class="quote"> "{{ _item.quote }}" </span>
+    }
     <div class="description" [innerHtml]="_item.description"></div>
   </div>
-  <app-images-swiper
-    *ngIf="_item.previewImages && _item.previewImages.length"
-    [images]="_item.previewImages"
-    [responsiveImageAttributes]="responsiveImageAttributes"
-    [priority]="priority"
-    [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
-  ></app-images-swiper>
+  @if (_item.previewImages && _item.previewImages.length) {
+    <app-images-swiper
+      [images]="_item.previewImages"
+      [responsiveImageAttributes]="responsiveImageAttributes"
+      [priority]="priority"
+      [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
+    ></app-images-swiper>
+  }
 </div>
-<div class="credits" *ngIf="credits && credits.length">
-  <ng-container *ngFor="let credit of credits">
-    <span *ngIf="credit.author">
-      {{ credit.role }}: {{ credit.author.name }}
-      <span class="anchor" *ngIf="credit.social"
-        >(<a [href]="credit.social.url" target="_blank"
-          >&#64;{{ credit.social.username }}</a
-        >)</span
-      >
-    </span>
-  </ng-container>
-</div>
+@if (credits && credits.length) {
+  <div class="credits">
+    @for (credit of credits; track credit) {
+      @if (credit.author) {
+        <span>
+          {{ credit.role }}: {{ credit.author.name }}
+          @if (credit.social) {
+            <span class="anchor"
+              >(<a [href]="credit.social.url" target="_blank"
+                >&#64;{{ credit.social.username }}</a
+              >)</span
+            >
+          }
+        </span>
+      }
+    }
+  </div>
+}
