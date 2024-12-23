@@ -13,7 +13,6 @@ import { isPlatformBrowser } from '@angular/common'
 
 @Directive({
   selector: '[appSwiper]',
-  standalone: true,
 })
 export class SwiperDirective implements AfterViewInit {
   @Input('appSwiper')

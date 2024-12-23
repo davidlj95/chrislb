@@ -9,13 +9,17 @@ describe('ProjectListItemComponent', () => {
   let fixture: ComponentFixture<ProjectListItemComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ProjectListItemComponent,
-        MockComponents(ImagesSwiperComponent),
-      ],
+    TestBed.configureTestingModule({})
+    TestBed.overrideComponent(ProjectListItemComponent, {
+      set: {
+        imports: [
+          ProjectListItemComponent,
+          MockComponents(ImagesSwiperComponent),
+        ],
+      },
     })
     fixture = TestBed.createComponent(ProjectListItemComponent)
+
     component = fixture.componentInstance
     // TODO: proper tests
     //fixture.detectChanges();

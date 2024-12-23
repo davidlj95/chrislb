@@ -9,7 +9,6 @@ import { NgFor } from '@angular/common'
   selector: 'app-social',
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.scss'],
-  standalone: true,
   imports: [NgFor, FaIconComponent],
 })
 export class SocialComponent {

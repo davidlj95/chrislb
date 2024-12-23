@@ -28,7 +28,6 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common'
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
-  standalone: true,
   imports: [
     NgIf,
     NgFor,

@@ -9,7 +9,6 @@ import { NgFor } from '@angular/common'
   selector: 'app-resume',
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss'],
-  standalone: true,
   imports: [NgFor, FaIconComponent],
   providers: [ResumeService],
 })

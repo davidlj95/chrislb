@@ -29,7 +29,6 @@ registerSwiper()
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
-  standalone: true,
   imports: [NgIf, SwiperDirective, NgFor, NgOptimizedImage],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
