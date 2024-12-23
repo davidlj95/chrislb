@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:public": "ng serve --host 0.0.0.0 --disable-host-check",
+    "start": "pnpm dlx http-server dist/chrislb/website/browser -a localhost",
+    "start:dev": "ng serve",
+    "start:dev:public": "pnpm run start:dev --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
     "postbuild": "cp dist/chrislb/browser/404/index.html dist/chrislb/browser/content/404.html",
     "watch": "ng build --watch --configuration development",
