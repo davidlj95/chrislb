@@ -1,44 +1,25 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Inject,
-  input,
-  NgZone,
-  PLATFORM_ID,
-} from '@angular/core'
+import { Directive, effect, ElementRef, input, NgZone } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-import { SwiperContainer } from 'swiper/swiper-element'
-import { isPlatformBrowser } from '@angular/common'
+import { type SwiperContainer } from 'swiper/swiper-element'
 
 @Directive({
   selector: '[appSwiper]',
   standalone: true,
 })
-export class SwiperDirective implements AfterViewInit {
+export class SwiperDirective {
   readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
-  public readonly container: SwiperContainer
 
   constructor(
-    private el: ElementRef<HTMLElement>,
-    @Inject(PLATFORM_ID) private platformId: object,
-    private readonly ngZone: NgZone,
+    elRef: ElementRef<Element & Partial<SwiperContainer>>,
+    _ngZone: NgZone,
   ) {
-    this.container = this.el.nativeElement as SwiperContainer
-  }
-
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return
-    }
-
-    if (typeof this.container.initialize === 'function') {
-      Object.assign(this.container, this.options())
-      this.ngZone.runOutsideAngular(() => this.container.initialize())
-    } else {
-      throw new NoInitializeMethodError()
-    }
+    effect(() => {
+      const element = elRef.nativeElement
+      const initializer = element.initialize
+      if (initializer) {
+        Object.assign(element, this.options())
+        _ngZone.runOutsideAngular(initializer.bind(element))
+      }
+    })
   }
 }
-
-export class NoInitializeMethodError extends Error {}
