@@ -4,19 +4,13 @@ import {
   DebugElement,
   ElementRef,
   OnInit,
-  PLATFORM_ID,
   Type,
 } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NoInitializeMethodError, SwiperDirective } from './swiper.directive'
+import { SwiperDirective } from './swiper.directive'
 import { By } from '@angular/platform-browser'
-import {
-  PLATFORM_BROWSER_ID,
-  PLATFORM_SERVER_ID,
-  PlatformId,
-} from '../../../test/platform-ids'
-import { MockProvider } from 'ng-mocks'
+import { SwiperContainer } from 'swiper/swiper-element'
 
 describe('SwiperDirective', () => {
   const options: SwiperOptions = {
@@ -32,65 +26,34 @@ describe('SwiperDirective', () => {
     },
   }
 
-  describe('when not rendering on browser', () => {
-    const platformId = PLATFORM_SERVER_ID
-
-    it('should do nothing', () => {
-      const initialize = jasmine.createSpy('initialize')
-      const componentClass = makeComponentWithDirective({
-        options,
-        initialize,
-      })
-      const [fixture] = makeSut({ componentClass, platformId })
-
-      fixture.detectChanges()
-
-      expect(initialize).not.toHaveBeenCalledOnceWith()
-      expect(getSwiperElement(fixture)).not.toContain(
-        jasmine.objectContaining(options),
-      )
+  it('should not call initializer method if does not exist', () => {
+    const component = makeComponentWithDirective({
+      options,
+      initialize: undefined,
     })
+    const [fixture] = makeSut({ component })
+    fixture.detectChanges()
+
+    expect(getSwiperElement(fixture).nativeElement).not.toEqual(
+      jasmine.objectContaining(options),
+    )
   })
-  describe('when rendering on browser', () => {
-    const platformId = PLATFORM_BROWSER_ID
-    describe('when initialize is not a method', () => {
-      it('should not call it and throw error', () => {
-        const componentClass = makeComponentWithDirective({
-          options,
-          initialize: 0 as unknown as () => void,
-        })
-        const [fixture] = makeSut({ componentClass, platformId })
 
-        expect(() => fixture.detectChanges()).toThrowError(
-          NoInitializeMethodError,
-        )
-        expect(getSwiperElement(fixture).nativeElement).not.toEqual(
-          jasmine.objectContaining(options),
-        )
-      })
+  it('should call initializer method to set all swiper options', () => {
+    const initialize = jasmine
+      .createSpy<SwiperContainer['initialize']>('initializer')
+      .and.callThrough()
+    const component = makeComponentWithDirective({
+      options,
+      initialize,
     })
-    describe('when initialize method exists', () => {
-      it('should call it when all options are set', () => {
-        let swiperElement: DebugElement | undefined
-        const initialize = jasmine
-          .createSpy('initialize', () => {
-            swiperElement = getSwiperElement(fixture)
-          })
-          .and.callThrough()
-        const componentClass = makeComponentWithDirective({
-          options,
-          initialize,
-        })
-        const [fixture] = makeSut({ componentClass, platformId })
+    const [fixture] = makeSut({ component })
+    fixture.detectChanges()
 
-        fixture.detectChanges()
-
-        expect(initialize).toHaveBeenCalledOnceWith()
-        expect(swiperElement?.nativeElement).toEqual(
-          jasmine.objectContaining(options),
-        )
-      })
-    })
+    expect(initialize).toHaveBeenCalledOnceWith()
+    expect(getSwiperElement(fixture)?.nativeElement).toEqual(
+      jasmine.objectContaining(options),
+    )
   })
 })
 
@@ -100,26 +63,22 @@ function makeComponentWithDirective({
   options,
   initialize,
 }: {
-  options?: SwiperOptions
-  initialize?: () => void
+  options: SwiperOptions
+  initialize: (() => void) | undefined
 }): Type<unknown> {
-  const noOp = () => {
-    return
-  }
-
   @Component({
-    template: ` <!--suppress AngularUndefinedBinding -->
-    <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
+    template: `
+      <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
     imports: [SwiperDirective],
     standalone: true,
   })
   class SwiperComponent implements OnInit {
-    public readonly options = options
+    readonly options = options
 
     constructor(private el: ElementRef) {}
 
     ngOnInit() {
-      this.el.nativeElement.children[0].initialize = initialize ?? noOp
+      this.el.nativeElement.children[0].initialize = initialize
     }
   }
 
@@ -127,17 +86,14 @@ function makeComponentWithDirective({
 }
 
 function makeSut<T>({
-  componentClass,
-  platformId,
+  component,
 }: {
-  componentClass: Type<T>
-  platformId: PlatformId
+  component: Type<T>
 }): [ComponentFixture<T>, T] {
   TestBed.configureTestingModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    providers: [MockProvider(PLATFORM_ID, platformId)],
   })
-  const fixture = TestBed.createComponent(componentClass)
+  const fixture = TestBed.createComponent(component)
   return [fixture, fixture.componentInstance]
 }
 
