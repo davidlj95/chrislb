@@ -1,12 +1,10 @@
 import {
   Component,
+  computed,
   CUSTOM_ELEMENTS_SCHEMA,
-  Input,
-  OnChanges,
+  input,
 } from '@angular/core'
 import { register as registerSwiper } from 'swiper/element'
-
-import { DEFAULT_ALT } from '../../common/images/default-alt'
 import { SwiperOptions } from 'swiper/types'
 import {
   A11y,
@@ -17,7 +15,6 @@ import {
 } from 'swiper/modules'
 import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
 import { ImageAsset } from '../../common/images/image-asset'
-import { isEmpty, isNumber } from 'lodash-es'
 import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
 
@@ -36,81 +33,80 @@ registerSwiper()
   // https://stackoverflow.com/a/43012920/3263250
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ImagesSwiperComponent implements OnChanges {
-  @Input({ required: true }) public images!: readonly ImageAsset[]
-  @Input({ required: true })
-  public responsiveImageAttributes!: ResponsiveImageAttributes
-  @Input() public priority?: boolean
-  @Input() public customSwiperOptions?: SwiperOptions
-  protected readonly DEFAULT_IMAGE_ALT = DEFAULT_ALT
-  protected readonly DEFAULT_SWIPER_OPTIONS: SwiperOptions = {
-    modules: [A11y, Autoplay, Keyboard, Navigation, Pagination],
-    injectStylesUrls: ['/swiper.css'],
-    a11y: {
-      enabled: false,
-    },
-    autoplay: {
-      disableOnInteraction: true,
-      delay: 2500,
-    },
-    keyboard: {
-      enabled: true,
-    },
-    navigation: {
-      enabled: true,
-    },
-    pagination: {
-      enabled: true,
-      clickable: true,
-      dynamicBullets: true,
-    },
-  }
-  protected _maxSlidesPerView: number | null = null
-  protected _swiperOptions: SwiperOptions = this.DEFAULT_SWIPER_OPTIONS
+export class ImagesSwiperComponent {
+  readonly images = input.required<readonly ImageAsset[]>()
+  readonly responsiveImageAttributes =
+    input.required<ResponsiveImageAttributes>()
+  readonly priority = input(false)
+  readonly customSwiperOptions = input<SwiperOptions>()
+  protected readonly _swiperOptions = computed<SwiperOptions>(() => ({
+    ...DEFAULT_SWIPER_OPTIONS,
+    ...this.customSwiperOptions(),
+  }))
+  protected readonly _effectiveSwiperOptions = computed<SwiperOptions>(
+    (): SwiperOptions =>
+      autoLoopOrRewindSwiperOptions(
+        this._swiperOptions(),
+        this._maxSlidesPerView(),
+        this.images().length,
+      ),
+  )
+  protected readonly _maxSlidesPerView = computed<number | undefined>(() =>
+    getMaxSlidesPerView(this._swiperOptions()),
+  )
+}
 
-  ngOnChanges(): void {
-    const swiperOptions: SwiperOptions = {
-      ...this.DEFAULT_SWIPER_OPTIONS,
-      ...this.customSwiperOptions,
-    }
-    this._maxSlidesPerView = this.getMaxSlidesPerView(swiperOptions)
-    this._swiperOptions = this.updateSwiperOptionsWithLoopOrRewind(
-      swiperOptions,
-      this._maxSlidesPerView,
-    )
-  }
+const DEFAULT_SWIPER_OPTIONS = {
+  modules: [A11y, Autoplay, Keyboard, Navigation, Pagination],
+  injectStylesUrls: ['/swiper.css'],
+  a11y: {
+    enabled: false,
+  },
+  autoplay: {
+    disableOnInteraction: true,
+    delay: 2500,
+  },
+  keyboard: {
+    enabled: true,
+  },
+  navigation: {
+    enabled: true,
+  },
+  pagination: {
+    enabled: true,
+    clickable: true,
+    dynamicBullets: true,
+  },
+} satisfies SwiperOptions
 
-  public getMaxSlidesPerView(swiperOptions: SwiperOptions): number | null {
-    const breakpointSlidesPerViews = swiperOptions.breakpoints
-      ? Object.values(swiperOptions.breakpoints).map(
-          (options) => options.slidesPerView,
-        )
-      : []
-    const defaultSlidesPerView = swiperOptions.slidesPerView
-    const allSlidesPerView = breakpointSlidesPerViews
-      .concat([defaultSlidesPerView])
-      .filter(isNumber)
-    if (isEmpty(allSlidesPerView)) {
-      return null
-    }
-    return Math.max(...allSlidesPerView)
+const autoLoopOrRewindSwiperOptions = (
+  swiperOptions: SwiperOptions,
+  maxSlidesPerView: number | undefined,
+  imagesCount: number,
+): SwiperOptions => {
+  if (!swiperOptions.loop || !swiperOptions.rewind) {
+    return swiperOptions
   }
+  const loop =
+    maxSlidesPerView !== undefined && imagesCount > maxSlidesPerView * 2
+  return {
+    ...swiperOptions,
+    loop,
+    rewind: !loop,
+  }
+}
 
-  private updateSwiperOptionsWithLoopOrRewind(
-    swiperOptions: SwiperOptions,
-    maxSlidesPerView: number | null,
-  ): SwiperOptions {
-    if (!isEmpty(swiperOptions.loop) || !isEmpty(swiperOptions.rewind)) {
-      return swiperOptions
-    }
-    const loop =
-      !isEmpty(this.images) &&
-      maxSlidesPerView !== null &&
-      this.images.length > maxSlidesPerView * 2
-    return {
-      ...swiperOptions,
-      loop,
-      rewind: !loop,
-    }
+const getMaxSlidesPerView = (swiperOptions: SwiperOptions) => {
+  const breakpointSlidesPerViews = Object.values(
+    swiperOptions.breakpoints ?? {},
+  ).map((options) => options.slidesPerView)
+  const defaultSlidesPerView = swiperOptions.slidesPerView
+  const allSlidesPerView = [
+    ...breakpointSlidesPerViews,
+    defaultSlidesPerView,
+  ].filter(Number.isInteger as (x: unknown) => x is number)
+  if (!allSlidesPerView.length) {
+    return
   }
+  return Math.max(...allSlidesPerView)
 }
