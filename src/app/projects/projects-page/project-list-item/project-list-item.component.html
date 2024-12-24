@@ -1,37 +1,38 @@
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      @if (_item.hasContent) {
-        <a [routerLink]="[PROJECTS_PATH, _item.slug]"
+      @if (item().hasContent) {
+        <a [routerLink]="[PROJECTS_PATH, item().slug]"
           ><ng-container [ngTemplateOutlet]="title"></ng-container
         ></a>
       } @else {
-        {{ _item.title }}
+        {{ item().title }}
       }
       <ng-template #title>
-        {{ _item.title }}
+        {{ item().title }}
       </ng-template>
     </span>
     <span class="subtitle">
-      {{ _item.subtitle }}
+      {{ item().subtitle }}
     </span>
-    @if (_item.quote) {
-      <span class="quote"> "{{ _item.quote }}" </span>
+    @if (item().quote) {
+      <span class="quote"> "{{ item().quote }}" </span>
     }
-    <div class="description" [innerHtml]="_item.description"></div>
+    <div class="description" [innerHtml]="item().description"></div>
   </div>
-  @if (_item.previewImages && _item.previewImages.length) {
+  @let previewImages = item().previewImages;
+  @if (previewImages && previewImages.length) {
     <app-images-swiper
-      [images]="_item.previewImages"
+      [images]="previewImages"
       [responsiveImageAttributes]="responsiveImageAttributes"
-      [priority]="priority"
+      [priority]="priority()"
       [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
     ></app-images-swiper>
   }
 </div>
-@if (credits && credits.length) {
+@if (credits().length) {
   <div class="credits">
-    @for (credit of credits; track credit) {
+    @for (credit of credits(); track credit) {
       @if (credit.author) {
         <span>
           {{ credit.role }}: {{ credit.author.name }}

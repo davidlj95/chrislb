@@ -3,7 +3,7 @@ import {
   Directive,
   ElementRef,
   Inject,
-  Input,
+  input,
   NgZone,
   PLATFORM_ID,
 } from '@angular/core'
@@ -16,9 +16,7 @@ import { isPlatformBrowser } from '@angular/common'
   standalone: true,
 })
 export class SwiperDirective implements AfterViewInit {
-  @Input('appSwiper')
-  options?: SwiperOptions
-
+  readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
   public readonly container: SwiperContainer
 
   constructor(
@@ -35,7 +33,7 @@ export class SwiperDirective implements AfterViewInit {
     }
 
     if (typeof this.container.initialize === 'function') {
-      Object.assign(this.container, this.options)
+      Object.assign(this.container, this.options())
       this.ngZone.runOutsideAngular(() => this.container.initialize())
     } else {
       throw new NoInitializeMethodError()

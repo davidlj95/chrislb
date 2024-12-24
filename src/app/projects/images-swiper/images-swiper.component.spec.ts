@@ -9,6 +9,7 @@ describe('ImagesSwiperComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({})
     fixture = TestBed.createComponent(ImagesSwiperComponent)
+    fixture.componentRef.setInput('images', [])
     component = fixture.componentInstance
     fixture.detectChanges()
   })
