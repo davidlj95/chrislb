@@ -21,19 +21,19 @@ import { groupBy, isEmpty } from 'lodash-es'
 
 @Injectable()
 export class ProjectAssetsCollectionsService {
-  private readonly assetsCollectionsData: readonly AssetsCollectionData[]
-  private readonly orderByCollectionSlug: Map<string, number>
+  private readonly _assetsCollectionsData: readonly AssetsCollectionData[]
+  private readonly _orderByCollectionSlug: Map<string, number>
 
   constructor(
     @Inject(ASSETS_COLLECTIONS_DATA)
     unsortedAssetsCollections: readonly AssetsCollectionData[],
     @Inject(ASSETS_COLLECTIONS_ORDER)
     assetsCollectionsOrder: typeof assetsCollectionsOrderJson,
-    private readonly jsonFetcher: JsonFetcher,
+    private readonly _jsonFetcher: JsonFetcher,
     @Inject(VIDEO_ASSETS_COLLECTION)
-    private readonly videoAssetsCollection: AssetsCollectionData,
+    private readonly _videoAssetsCollection: AssetsCollectionData,
     @Inject(LOOKBOOK_COLLECTION_SLUG)
-    private readonly lookbookCollectionSlug: string,
+    private readonly _lookbookCollectionSlug: string,
   ) {
     const assetsCollectionsData = []
     const unsortedAssetsCollectionsBySlug = new Map(
@@ -50,12 +50,12 @@ export class ProjectAssetsCollectionsService {
         unsortedAssetsCollectionsBySlug.delete(assetCollection.slug)
       }
     }
-    this.assetsCollectionsData = [
+    this._assetsCollectionsData = [
       ...assetsCollectionsData,
       ...unsortedAssetsCollectionsBySlug.values(),
     ]
-    this.orderByCollectionSlug = new Map(
-      this.assetsCollectionsData.map((assetsCollection, index) => [
+    this._orderByCollectionSlug = new Map(
+      this._assetsCollectionsData.map((assetsCollection, index) => [
         assetsCollection.slug,
         index,
       ]),
@@ -63,8 +63,8 @@ export class ProjectAssetsCollectionsService {
   }
 
   byProject(project: Project): Observable<readonly AnyAssetsCollection[]> {
-    const videoAssetsCollections = this.getVideoAssetsCollections(project)
-    const imageAssetsCollections = this.getImageAssetsCollections(
+    const videoAssetsCollections = this._getVideoAssetsCollections(project)
+    const imageAssetsCollections = this._getImageAssetsCollections(
       project.slug,
       project.lookbookNamesAndSlugs ?? [],
     )
@@ -76,16 +76,16 @@ export class ProjectAssetsCollectionsService {
       map((allCollections) =>
         allCollections.sort(
           (a, b) =>
-            (this.orderByCollectionSlug.get(a.data.slug) ??
-              this.assetsCollectionsData.length) -
-            (this.orderByCollectionSlug.get(b.data.slug) ??
-              this.assetsCollectionsData.length),
+            (this._orderByCollectionSlug.get(a.data.slug) ??
+              this._assetsCollectionsData.length) -
+            (this._orderByCollectionSlug.get(b.data.slug) ??
+              this._assetsCollectionsData.length),
         ),
       ),
     )
   }
 
-  private getVideoAssetsCollections(
+  private _getVideoAssetsCollections(
     project: Project,
   ): readonly VideoAssetsCollection[] {
     if (!project.youtubePlaylistId) {
@@ -93,25 +93,25 @@ export class ProjectAssetsCollectionsService {
     }
     return [
       new VideoAssetsCollection(
-        this.videoAssetsCollection,
+        this._videoAssetsCollection,
         new YoutubePlaylist(project.youtubePlaylistId),
       ),
     ]
   }
 
-  private getImageAssetsCollections(
+  private _getImageAssetsCollections(
     slug: string,
     lookbookNamesAndSlugs: readonly LookbookNameAndSlug[],
   ): Observable<readonly ImageAssetsCollection[]> {
     return from(
-      this.jsonFetcher.fetch<readonly ImageAsset[]>(
+      this._jsonFetcher.fetch<readonly ImageAsset[]>(
         PROJECTS_DIR,
         slug,
         IMAGES_FILENAME,
       ),
     ).pipe(
       map((imageAssets) =>
-        this.mapImageAssetsToCollections(
+        this._mapImageAssetsToCollections(
           imageAssets,
           slug,
           lookbookNamesAndSlugs,
@@ -120,7 +120,7 @@ export class ProjectAssetsCollectionsService {
     )
   }
 
-  private mapImageAssetsToCollections(
+  private _mapImageAssetsToCollections(
     imageAssets: readonly ImageAsset[],
     slug: string,
     lookbookNamesAndSlugs: readonly LookbookNameAndSlug[],
@@ -133,11 +133,11 @@ export class ProjectAssetsCollectionsService {
       (projectImageAsset) => projectImageAsset.collection,
     )
     const assetCollections: ImageAssetsCollection[] = []
-    for (const assetCollection of this.assetsCollectionsData) {
+    for (const assetCollection of this._assetsCollectionsData) {
       const projectImageAssets =
         projectImageAssetsByCollectionSlug[assetCollection.slug]
       if (!isEmpty(projectImageAssets)) {
-        if (assetCollection.slug === this.lookbookCollectionSlug) {
+        if (assetCollection.slug === this._lookbookCollectionSlug) {
           const projectImageAssetsBySubcollectionSlug = groupBy(
             projectImageAssets,
             (projectImageAsset) => projectImageAsset.subCollection,

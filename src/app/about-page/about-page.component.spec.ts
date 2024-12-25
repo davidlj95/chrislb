@@ -4,7 +4,8 @@ import { AboutPageComponent } from './about-page.component'
 import { MockComponents } from 'ng-mocks'
 import { SocialComponent } from './social/social.component'
 import { ResumeComponent } from './resume/resume.component'
-import { getDummyOptimizedImageProviders } from '../../test/optimized-image'
+import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-image'
+import { NgOptimizedImage } from '@angular/common'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
@@ -12,11 +13,15 @@ describe('AboutPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AboutPageComponent,
-        MockComponents(SocialComponent, ResumeComponent),
-      ],
-      providers: [...getDummyOptimizedImageProviders()],
+      providers: [provideDummyOptimizedImage()],
+    })
+    TestBed.overrideComponent(AboutPageComponent, {
+      set: {
+        imports: [
+          NgOptimizedImage,
+          MockComponents(SocialComponent, ResumeComponent),
+        ],
+      },
     })
     fixture = TestBed.createComponent(AboutPageComponent)
     component = fixture.componentInstance

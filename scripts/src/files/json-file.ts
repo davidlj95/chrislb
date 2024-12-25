@@ -4,9 +4,9 @@ import { FileReader } from './file-reader'
 import { readFileSync, writeFileSync } from 'fs'
 
 export class JsonFile implements FileReader, FileWriter {
-  constructor(public filepath: string) {}
+  constructor(readonly filepath: string) {}
 
-  public async read(): Promise<unknown> {
+  async read(): Promise<unknown> {
     try {
       return JSON.parse(readFileSync(this.filepath, 'utf-8'))
     } catch {
@@ -15,7 +15,7 @@ export class JsonFile implements FileReader, FileWriter {
     }
   }
 
-  public async write(json: unknown): Promise<void> {
+  async write(json: unknown): Promise<void> {
     return writeFileSync(this.filepath, JSON.stringify(json, null, 2))
   }
 }

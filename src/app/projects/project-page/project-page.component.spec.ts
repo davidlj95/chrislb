@@ -8,6 +8,7 @@ import { ProjectAssetsCollectionsService } from './project-assets-collections.se
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
 import { NgxMetaService } from '@davidlj95/ngx-meta/core'
+import { AsyncPipe } from '@angular/common'
 
 describe('ProjectPageComponent', () => {
   let component: ProjectPageComponent
@@ -15,7 +16,6 @@ describe('ProjectPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ProjectPageComponent, MockComponents(ImagesSwiperComponent)],
       providers: [
         MockProvider(ActivatedRoute, {
           data: of({
@@ -31,6 +31,7 @@ describe('ProjectPageComponent', () => {
     })
     TestBed.overrideComponent(ProjectPageComponent, {
       set: {
+        imports: [AsyncPipe, MockComponents(ImagesSwiperComponent)],
         providers: [
           MockProvider(ProjectAssetsCollectionsService, {
             byProject() {

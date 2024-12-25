@@ -6,27 +6,27 @@ import { isEmpty } from 'lodash-es'
 
 export class ResourceCollectionListGenerator {
   constructor(
-    public readonly resourceCollection: ResourceCollection,
-    public readonly listItemExtraDataGenerator?: ListItemExtraDataGenerator,
+    readonly resourceCollection: ResourceCollection,
+    readonly listItemExtraDataGenerator?: ListItemExtraDataGenerator,
   ) {}
 
-  public get filename(): string {
+  get filename(): string {
     return this.resourceCollection.fileType.appendExtension(
       this.resourceCollection.name,
     )
   }
 
-  public get filepath(): string {
+  get filepath(): string {
     return join(this.resourceCollection.path, '..', this.filename)
   }
 
-  public async generate(): Promise<void> {
+  async generate(): Promise<void> {
     Log.group('Generating list for %s collection', this.resourceCollection.name)
     const resources = await this.resourceCollection.getResources()
     Log.info('Found %d resources to include in list', resources.length)
     const resourcesData: unknown[] = []
     for (const resource of resources) {
-      resourcesData.push(await this.generateResourceData(resource))
+      resourcesData.push(await this._generateResourceData(resource))
     }
     Log.info('Writing list as %s', this.filename)
     const writer = new this.resourceCollection.fileType.writer(this.filepath)
@@ -35,7 +35,7 @@ export class ResourceCollectionListGenerator {
     Log.groupEnd()
   }
 
-  private async generateResourceData(resource: Resource): Promise<unknown> {
+  async _generateResourceData(resource: Resource): Promise<unknown> {
     Log.group('Reading resource %s', resource.slug)
     const resourceData = await resource.getData()
     if (this.listItemExtraDataGenerator) {

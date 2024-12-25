@@ -7,15 +7,15 @@ import { APP_BASE_HREF } from '@angular/common'
 @Injectable({ providedIn: 'root' })
 export class HttpJsonFetcherService implements JsonFetcher {
   constructor(
-    private httpClient: HttpClient,
-    @Inject(APP_BASE_HREF) private baseHref: string,
-    @Inject(JSON_DATA_DIR) private jsonDataDir: string,
+    private readonly _httpClient: HttpClient,
+    @Inject(APP_BASE_HREF) private readonly _baseHref: string,
+    @Inject(JSON_DATA_DIR) private readonly _jsonDataDir: string,
   ) {}
 
   async fetch<T>(...pathSegments: string[]): Promise<T> {
     return firstValueFrom(
-      this.httpClient.get<T>(
-        [this.baseHref, this.jsonDataDir, ...pathSegments]
+      this._httpClient.get<T>(
+        [this._baseHref, this._jsonDataDir, ...pathSegments]
           .join('/')
           .replace(/^\//, ''),
       ),

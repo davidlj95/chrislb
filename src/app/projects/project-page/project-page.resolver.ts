@@ -9,22 +9,20 @@ import { Injectable } from '@angular/core'
 @Injectable()
 export class ProjectPageResolver {
   constructor(
-    private projectsService: ProjectsService,
-    private navigatorService: NavigatorService,
+    private readonly _projectsService: ProjectsService,
+    private readonly _navigatorService: NavigatorService,
   ) {}
 
-  public project(
-    route: ActivatedRouteSnapshot,
-  ): ReturnType<ResolveFn<Project>> {
+  project(route: ActivatedRouteSnapshot): ReturnType<ResolveFn<Project>> {
     const slug = route.paramMap.get(SLUG_PARAM)
     if (!slug) {
-      this.navigatorService.displayNotFoundPage()
+      this._navigatorService.displayNotFoundPage()
       return EMPTY
     }
-    return this.projectsService.bySlug(slug).pipe(
+    return this._projectsService.bySlug(slug).pipe(
       tap({
         error: () => {
-          this.navigatorService.displayNotFoundPage()
+          this._navigatorService.displayNotFoundPage()
         },
       }),
     )

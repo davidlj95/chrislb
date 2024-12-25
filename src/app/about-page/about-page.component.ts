@@ -19,11 +19,11 @@ import { SocialComponent } from './social/social.component'
   imports: [SocialComponent, ResumeComponent, NgOptimizedImage],
 })
 export class AboutPageComponent {
-  public readonly title: string = aboutPageContents.title
-  public readonly text: string = aboutPageContents.text
-  public readonly portrait: ResponsiveImage
-  public readonly emailLocalPart: string = 'contact'
-  public readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
+  readonly title: string = aboutPageContents.title
+  readonly text: string = aboutPageContents.text
+  readonly portrait: ResponsiveImage
+  readonly emailLocalPart: string = 'contact'
+  readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,

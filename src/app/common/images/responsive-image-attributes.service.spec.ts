@@ -6,7 +6,6 @@ describe('ResponsiveImageService', () => {
   let service: ResponsiveImageAttributesService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
     service = TestBed.inject(ResponsiveImageAttributesService)
   })
 

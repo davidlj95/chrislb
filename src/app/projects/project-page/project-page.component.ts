@@ -33,15 +33,15 @@ import { AsyncPipe } from '@angular/common'
   providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectPageComponent implements OnInit {
-  public assetsCollections$!: Observable<readonly AnyAssetsCollectionItem[]>
-  public readonly fullScreenSwiper = {
+  assetsCollections$!: Observable<readonly AnyAssetsCollectionItem[]>
+  readonly fullScreenSwiper = {
     slidesPerView: 2,
     maxWidth: Px(850),
     get maxSlideWidth() {
       return Px(this.maxWidth.value / this.slidesPerView)
     },
   }
-  public readonly halfScreenSwiper = {
+  readonly halfScreenSwiper = {
     slidesPerView: 1,
   }
   protected readonly MAX_SWIPERS_PER_VIEWPORT = 2
@@ -52,10 +52,10 @@ export class ProjectPageComponent implements OnInit {
   protected readonly AssetsCollectionType = AssetsCollectionType
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private ngxMetaService: NgxMetaService,
-    private navigatorService: NavigatorService,
-    private projectAssetsCollectionsService: ProjectAssetsCollectionsService,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _ngxMetaService: NgxMetaService,
+    private readonly _navigatorService: NavigatorService,
+    private readonly _projectAssetsCollectionsService: ProjectAssetsCollectionsService,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
     this.imageAssetsSwiperConfigByName = {
@@ -99,11 +99,11 @@ export class ProjectPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const project$ = this.activatedRoute.data.pipe(
+    const project$ = this._activatedRoute.data.pipe(
       map((data) => (data as ProjectRouteData).project),
       tap({
         next: (project) => {
-          this.ngxMetaService.set({
+          this._ngxMetaService.set({
             canonicalUrl: getCanonicalUrlForPath(PROJECTS_PATH, project.slug),
             title: getTitle(project.title),
             description:
@@ -113,13 +113,13 @@ export class ProjectPageComponent implements OnInit {
           } satisfies GlobalMetadata)
         },
         error: () => {
-          this.navigatorService.displayNotFoundPage()
+          this._navigatorService.displayNotFoundPage()
         },
       }),
     )
     this.assetsCollections$ = project$.pipe(
       concatMap((project) =>
-        this.projectAssetsCollectionsService
+        this._projectAssetsCollectionsService
           .byProject(project)
           .pipe(catchError(() => of([]))),
       ),
@@ -132,7 +132,7 @@ export class ProjectPageComponent implements OnInit {
       ),
       tap((assetsCollections) => {
         if (isEmpty(assetsCollections)) {
-          this.navigatorService.displayNotFoundPage()
+          this._navigatorService.displayNotFoundPage()
         }
       }),
     )

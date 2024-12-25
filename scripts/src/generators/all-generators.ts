@@ -6,12 +6,12 @@ import { RoutesFileGenerator } from './routes-file-generator'
 
 export class AllGenerators {
   constructor(
-    private readonly imagesListsGenerators: ImagesListsGenerators,
-    private readonly contentGenerators: ContentGenerators,
-    private readonly routesFileGenerator: RoutesFileGenerator,
+    private readonly _imagesListsGenerators: ImagesListsGenerators,
+    private readonly _contentGenerators: ContentGenerators,
+    private readonly _routesFileGenerator: RoutesFileGenerator,
   ) {}
 
-  public static fromEnv() {
+  static fromEnv() {
     return new this(
       ImagesListsGenerators.fromEnv(),
       new ContentGenerators(),
@@ -19,10 +19,10 @@ export class AllGenerators {
     )
   }
 
-  public async generate(): Promise<void> {
-    await this.imagesListsGenerators.all()
-    await this.contentGenerators.all()
-    await this.routesFileGenerator.all()
+  async generate(): Promise<void> {
+    await this._imagesListsGenerators.all()
+    await this._contentGenerators.all()
+    await this._routesFileGenerator.all()
   }
 }
 

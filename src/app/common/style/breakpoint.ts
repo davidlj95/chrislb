@@ -1,9 +1,9 @@
 import { CssPxUnit, Px } from '../css/unit/px'
 
 export class Breakpoint {
-  private constructor(public readonly px: CssPxUnit) {}
+  private constructor(readonly px: CssPxUnit) {}
 
-  public get almost(): CssPxUnit {
+  get almost(): CssPxUnit {
     return Px(this.px.value - 0.02)
   }
 

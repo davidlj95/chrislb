@@ -5,11 +5,11 @@ export class ProjectImageAsset {
   private _relativeFilePath?: string
 
   constructor(
-    public readonly asset: ImageAsset,
-    private readonly projectSlug: string,
+    readonly asset: ImageAsset,
+    readonly projectSlug: string,
   ) {}
 
-  public get collection(): string {
+  get collection(): string {
     const relativeFilePathParts = this.relativeFilePath.split('/')
     if (relativeFilePathParts.length < 2) {
       return ''
@@ -17,7 +17,7 @@ export class ProjectImageAsset {
     return relativeFilePathParts[0]
   }
 
-  public get subCollection(): string {
+  get subCollection(): string {
     const relativeFilePathParts = this.relativeFilePath.split('/')
     if (relativeFilePathParts.length < 3) {
       return ''
@@ -25,7 +25,7 @@ export class ProjectImageAsset {
     return relativeFilePathParts[1]
   }
 
-  public get relativeFilePath() {
+  get relativeFilePath() {
     if (!this._relativeFilePath) {
       this._relativeFilePath = this.asset.filePath
         .replace(/^\//, '')

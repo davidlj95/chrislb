@@ -8,55 +8,54 @@ import { groupBy, isEmpty, isUndefined } from 'lodash-es'
 import { ProjectImageAsset } from '../../../src/app/projects/project-page/project-image-asset'
 
 export class ProjectListItemExtraDataGenerator {
-  private readonly PREVIEW_IMAGES_DIRECTORY = previewJson.slug
   private _imagesResource?: Resource | null
   private _imagesByGroups?: ImagesByGroups
 
   constructor(
-    public readonly resource: Resource,
-    public readonly imagesBasename: string,
+    readonly resource: Resource,
+    readonly imagesBasename: string,
   ) {}
 
-  public async generate(): Promise<ListItemExtraData> {
-    const imageGroups = await this.getImagesByGroups()
+  async generate(): Promise<ListItemExtraData> {
+    const imageGroups = await this._getImagesByGroups()
     Log.info(
       'Found %d preview images and %d other images',
       imageGroups.preview.length,
       imageGroups.others.length,
     )
-    const hasDetails = await this.hasDetails()
+    const hasDetails = await this._hasDetails()
     Log.info('Setting has detail view to %s', hasDetails)
     const listItemExtraData: ListItemExtraData = {
       previewImages: imageGroups.preview,
       hasContent: hasDetails,
     }
-    await this.removePreviewImages()
+    await this._removePreviewImages()
     return listItemExtraData
   }
 
-  private async getImagesByGroups(): Promise<ImagesByGroups> {
+  private async _getImagesByGroups(): Promise<ImagesByGroups> {
     if (isUndefined(this._imagesByGroups)) {
-      const images = await this.getImages()
+      const images = await this._getImages()
       this._imagesByGroups = {
         preview: [],
         others: [],
         ...groupBy(images, (image): keyof ImagesByGroups =>
-          this.isPreviewImage(image) ? 'preview' : 'others',
+          this._isPreviewImage(image) ? 'preview' : 'others',
         ),
       }
     }
     return this._imagesByGroups
   }
 
-  private async getImages(): Promise<readonly ImageAsset[]> {
-    const imagesResource = await this.getImagesResource()
+  private async _getImages(): Promise<readonly ImageAsset[]> {
+    const imagesResource = await this._getImagesResource()
     if (!imagesResource) {
       return []
     }
     return (await imagesResource.getData()) as readonly ImageAsset[]
   }
 
-  private async getImagesResource(): Promise<Resource | null> {
+  private async _getImagesResource(): Promise<Resource | null> {
     if (isUndefined(this._imagesResource)) {
       const imagesResource =
         (await this.resource.childCollection.getResource(
@@ -70,35 +69,35 @@ export class ProjectListItemExtraDataGenerator {
     return this._imagesResource
   }
 
-  private isPreviewImage(image: ImageAsset): boolean {
+  private _isPreviewImage(image: ImageAsset): boolean {
     const projectImageAsset = new ProjectImageAsset(image, this.resource.slug)
-    return projectImageAsset.collection === this.PREVIEW_IMAGES_DIRECTORY
+    return projectImageAsset.collection === PREVIEW_IMAGES_DIRECTORY
   }
 
-  private async hasDetails(): Promise<boolean> {
+  private async _hasDetails(): Promise<boolean> {
     const conditions = await Promise.all([
-      this.hasOtherImagesApartFromPreview(),
-      this.hasVideos(),
+      this._hasOtherImagesApartFromPreview(),
+      this._hasVideos(),
     ])
     return conditions.some((condition) => condition)
   }
 
-  private async hasOtherImagesApartFromPreview(): Promise<boolean> {
-    return !isEmpty((await this.getImagesByGroups()).others)
+  private async _hasOtherImagesApartFromPreview(): Promise<boolean> {
+    return !isEmpty((await this._getImagesByGroups()).others)
   }
 
-  private async hasVideos(): Promise<boolean> {
+  private async _hasVideos(): Promise<boolean> {
     const project = (await this.resource.getData()) as Project
     return !isEmpty(project.youtubePlaylistId?.trim())
   }
 
-  private async removePreviewImages(): Promise<void> {
-    const imagesResource = await this.getImagesResource()
+  private async _removePreviewImages(): Promise<void> {
+    const imagesResource = await this._getImagesResource()
     if (!imagesResource) {
       return
     }
     Log.info('Removing preview images from list')
-    const imageGroups = await this.getImagesByGroups()
+    const imageGroups = await this._getImagesByGroups()
     await this.resource.childCollection.upsertResource(
       this.imagesBasename,
       imageGroups.others,
@@ -110,3 +109,5 @@ interface ImagesByGroups {
   readonly preview: readonly ImageAsset[]
   readonly others: readonly ImageAsset[]
 }
+
+const PREVIEW_IMAGES_DIRECTORY = previewJson.slug

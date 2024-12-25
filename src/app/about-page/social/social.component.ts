@@ -12,7 +12,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome'
   imports: [FaIconComponent],
 })
 export class SocialComponent {
-  public readonly items: readonly Social[]
+  readonly items: readonly Social[]
 
   constructor(authorsService: AuthorsService, socialService: SocialService) {
     this.items = socialService.getAll(authorsService.website)

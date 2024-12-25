@@ -1,6 +1,5 @@
 import { Component, computed, input } from '@angular/core'
 import { ProjectListItem } from '../../project-list-item'
-import { SwiperOptions } from 'swiper/types'
 import { Author, AuthorsService } from '../../../common/authors.service'
 import { Social } from '../../../common/social/social'
 import { SocialService } from '../../../common/social/social.service'
@@ -28,8 +27,8 @@ export class ProjectListItemComponent {
   readonly credits = computed<readonly CreditItem[]>(
     () =>
       this.item().credits?.map((credit) => {
-        const author = this.authorsService.bySlug(credit.authorSlug)
-        const social = author ? this.socialService.getMain(author) : undefined
+        const author = this._authorsService.bySlug(credit.authorSlug)
+        const social = author ? this._socialService.getMain(author) : undefined
         return {
           ...credit,
           author,
@@ -38,15 +37,12 @@ export class ProjectListItemComponent {
       }) ?? [],
   )
 
-  public readonly CUSTOM_SWIPER_OPTIONS: SwiperOptions = {
-    slidesPerView: 2,
-  }
-  public readonly responsiveImageAttributes: ResponsiveImageAttributes
-  protected readonly PROJECTS_PATH = PROJECTS_PATH
+  readonly responsiveImageAttributes: ResponsiveImageAttributes
+  protected readonly _PROJECTS_PATH = PROJECTS_PATH
 
   constructor(
-    private authorsService: AuthorsService,
-    private socialService: SocialService,
+    private readonly _authorsService: AuthorsService,
+    private readonly _socialService: SocialService,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
     this.responsiveImageAttributes = responsiveImageAttributesService

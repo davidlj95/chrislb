@@ -4,7 +4,7 @@ import { basename } from 'path'
 
 export class FileType {
   constructor(
-    public readonly extension: string,
+    readonly extension: string,
     readonly reader: new (filepath: string) => FileReader,
     readonly writer: new (filepath: string) => FileWriter,
   ) {

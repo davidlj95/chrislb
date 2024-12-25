@@ -1,10 +1,10 @@
 import { CssMediaQuery } from './css-media-query'
 
 export abstract class CssMediaFeature<T> implements CssMediaQuery {
-  public abstract readonly name: string
-  public abstract readonly value: T
+  abstract readonly name: string
+  abstract readonly value: T
 
-  public toString(): string {
+  toString(): string {
     return `(${this.name}: ${this.value})`
   }
 }

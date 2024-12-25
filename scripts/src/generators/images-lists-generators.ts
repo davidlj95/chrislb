@@ -8,27 +8,27 @@ import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 import { Collections } from './collections'
 
 export class ImagesListsGenerators {
-  private readonly resourceImagesGenerator: ResourceImagesGenerator
-  private readonly collections: Collections
+  private readonly _resourceImagesGenerator: ResourceImagesGenerator
+  private readonly _collections: Collections
 
-  constructor(private readonly imageCdnApi: ImageCdnApi) {
-    this.resourceImagesGenerator = new ResourceImagesGenerator(imageCdnApi)
-    this.collections = new Collections()
+  constructor(private readonly _imageCdnApi: ImageCdnApi) {
+    this._resourceImagesGenerator = new ResourceImagesGenerator(_imageCdnApi)
+    this._collections = new Collections()
   }
 
-  public static fromEnv() {
+  static fromEnv() {
     const imagekit = Imagekit.fromEnv('unpublished')
     return new this(imagekit)
   }
 
-  public async all(): Promise<void> {
+  async all(): Promise<void> {
     await this.miscImages()
     await this.projectsImages()
   }
 
-  public async miscImages() {
+  async miscImages() {
     Log.info('Looking for misc images')
-    const images = await this.imageCdnApi.getAllImagesInPath('misc')
+    const images = await this._imageCdnApi.getAllImagesInPath('misc')
     const horizontalLogo = images.find((image) =>
       image.name.includes('horizontal'),
     )
@@ -45,13 +45,16 @@ export class ImagesListsGenerators {
       horizontalLogo,
       aboutPortrait,
     }
-    await this.collections.misc.upsertResource(IMAGES_FILE_BASENAME, miscImages)
+    await this._collections.misc.upsertResource(
+      IMAGES_FILE_BASENAME,
+      miscImages,
+    )
   }
 
-  public async projectsImages() {
+  async projectsImages() {
     Log.info('Looking for project images')
-    for (const project of await this.collections.projects.getResources()) {
-      await this.resourceImagesGenerator.generate(project)
+    for (const project of await this._collections.projects.getResources()) {
+      await this._resourceImagesGenerator.generate(project)
     }
   }
 }

@@ -1,7 +1,7 @@
 export class YoutubePlaylist {
-  constructor(public readonly id: string) {}
+  constructor(readonly id: string) {}
 
-  public get iframeUrl(): URL {
+  get iframeUrl(): URL {
     const iframeUrl = new URL('https://www.youtube-nocookie.com/embed')
     iframeUrl.searchParams.set('listType', 'playlist')
     iframeUrl.searchParams.set('loop', true.toString())

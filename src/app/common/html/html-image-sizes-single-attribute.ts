@@ -4,11 +4,11 @@ import { isUndefined } from 'lodash-es'
 
 export class HtmlImageSizesSingleAttribute {
   constructor(
-    public readonly width: CssUnit,
-    public readonly mediaQuery?: CssMediaQuery,
+    readonly width: CssUnit,
+    readonly mediaQuery?: CssMediaQuery,
   ) {}
 
-  public toString(): string {
+  toString(): string {
     if (isUndefined(this.mediaQuery)) {
       return this.width.toString()
     }

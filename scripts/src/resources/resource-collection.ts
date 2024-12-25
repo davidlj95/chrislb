@@ -8,15 +8,15 @@ export class ResourceCollection {
   private _resources?: readonly Resource[]
 
   constructor(
-    public readonly path: string,
-    public readonly fileType: FileType = JSON_FILE_TYPE,
+    readonly path: string,
+    readonly fileType: FileType = JSON_FILE_TYPE,
   ) {}
 
-  public get name(): string {
+  get name(): string {
     return basename(this.path)
   }
 
-  public async getResources(): Promise<readonly Resource[]> {
+  async getResources(): Promise<readonly Resource[]> {
     if (!this._resources) {
       const directoryFiles = readdirSync(this.path, {
         withFileTypes: true,
@@ -32,25 +32,25 @@ export class ResourceCollection {
     return this._resources
   }
 
-  public async getResource(slug: string): Promise<Resource | undefined> {
+  async getResource(slug: string): Promise<Resource | undefined> {
     const resources = await this.getResources()
     return resources.find((resource) => resource.slug === slug)
   }
 
-  public async createResource(name: string, data: unknown): Promise<Resource> {
-    await this.createDirectoryIfDoesNotExist()
+  async createResource(name: string, data: unknown): Promise<Resource> {
+    await this._createDirectoryIfDoesNotExist()
     const filename = this.fileType.appendExtension(name)
     await new this.fileType.writer(join(this.path, filename)).write(data)
     return new Resource(this, filename)
   }
 
-  public async upsertResource(name: string, data: unknown): Promise<Resource> {
+  async upsertResource(name: string, data: unknown): Promise<Resource> {
     const filename = this.fileType.appendExtension(name)
     await new this.fileType.writer(join(this.path, filename)).write(data)
     return new Resource(this, filename)
   }
 
-  private async createDirectoryIfDoesNotExist(): Promise<void> {
+  private async _createDirectoryIfDoesNotExist(): Promise<void> {
     mkdirSync(this.path, { recursive: true })
   }
 }

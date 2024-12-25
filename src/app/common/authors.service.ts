@@ -6,19 +6,19 @@ import christianLazaro from '../../data/authors/christian-lazaro.json'
   providedIn: 'root',
 })
 export class AuthorsService {
-  private authorBySlug: Map<string, Author>
+  private _authorBySlug: Map<string, Author>
 
   constructor(@Inject(AUTHORS_JSON) authorsJson: typeof authors) {
-    this.authorBySlug = new Map(
+    this._authorBySlug = new Map(
       authorsJson.map((author) => [author.slug, author]),
     )
   }
 
-  public bySlug(slug: string): Author | undefined {
-    return this.authorBySlug.get(slug)
+  bySlug(slug: string): Author | undefined {
+    return this._authorBySlug.get(slug)
   }
 
-  public get website(): Author {
+  get website(): Author {
     return christianLazaro
   }
 }
@@ -29,6 +29,7 @@ export const AUTHORS_JSON = new InjectionToken<typeof authors>(
     factory: () => authors,
   },
 )
+
 export interface Author {
   slug?: string
   name: string

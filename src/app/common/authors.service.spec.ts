@@ -6,7 +6,6 @@ describe('AuthorsService', () => {
   let service: AuthorsService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
     service = TestBed.inject(AuthorsService)
   })
 

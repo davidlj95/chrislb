@@ -8,10 +8,10 @@ import { Project } from './project'
 
 @Injectable()
 export class ProjectsService {
-  constructor(private jsonFetcher: JsonFetcher) {}
+  constructor(private readonly _jsonFetcher: JsonFetcher) {}
 
   async getListItems(): Promise<readonly ProjectListItem[]> {
-    const projects = await this.jsonFetcher.fetch<readonly ProjectListItem[]>(
+    const projects = await this._jsonFetcher.fetch<readonly ProjectListItem[]>(
       getListFilename(PROJECTS_DIR),
     )
     return Array.from(projects).sort(
@@ -21,7 +21,7 @@ export class ProjectsService {
 
   bySlug(slug: string): Observable<Project> {
     return from(
-      this.jsonFetcher.fetch<Project>(PROJECTS_DIR, addJsonExtension(slug)),
+      this._jsonFetcher.fetch<Project>(PROJECTS_DIR, addJsonExtension(slug)),
     )
   }
 }

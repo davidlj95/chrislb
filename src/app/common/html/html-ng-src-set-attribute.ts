@@ -1,15 +1,15 @@
 import { ResponsiveImageBreakpoints } from '../images/responsive-image-breakpoints'
 
 export class HtmlNgSrcSetAttribute {
-  public readonly asString: string
+  readonly asString: string
 
-  constructor(public readonly breakpoints: ResponsiveImageBreakpoints) {
+  constructor(readonly breakpoints: ResponsiveImageBreakpoints) {
     this.asString = this.breakpoints.pxList
       .map((breakpoint) => `${breakpoint}w`)
       .join(', ')
   }
 
-  public concat(...others: readonly HtmlNgSrcSetAttribute[]) {
+  concat(...others: readonly HtmlNgSrcSetAttribute[]) {
     return new HtmlNgSrcSetAttribute(
       this.breakpoints.concat(...others.map(({ breakpoints }) => breakpoints)),
     )

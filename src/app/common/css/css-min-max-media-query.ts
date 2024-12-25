@@ -9,8 +9,8 @@ export class CssMinMaxMediaQuery<
   MaxUnit extends CssUnit,
 > implements CssMediaQuery
 {
-  public readonly min?: CssMinWidthMediaFeature<MinUnit>
-  public readonly max?: CssMaxWidthMediaFeature<MaxUnit>
+  readonly min?: CssMinWidthMediaFeature<MinUnit>
+  readonly max?: CssMaxWidthMediaFeature<MaxUnit>
 
   private constructor({
     min,
@@ -32,15 +32,15 @@ export class CssMinMaxMediaQuery<
     this.max = max
   }
 
-  public static min<U extends CssUnit>(minWidth: U) {
+  static min<U extends CssUnit>(minWidth: U) {
     return new this<U, U>({ min: CssMinWidthMediaFeature.from(minWidth) })
   }
 
-  public static max<U extends CssUnit>(maxWidth: U) {
+  static max<U extends CssUnit>(maxWidth: U) {
     return new this<U, U>({ max: CssMaxWidthMediaFeature.from(maxWidth) })
   }
 
-  public static minMax<MinUnit extends CssUnit, MaxUnit extends CssUnit>(
+  static minMax<MinUnit extends CssUnit, MaxUnit extends CssUnit>(
     minWidth: MinUnit,
     maxWidth: MaxUnit,
   ) {
@@ -50,7 +50,7 @@ export class CssMinMaxMediaQuery<
     })
   }
 
-  public toString(): string {
+  toString(): string {
     const mediaFeatures = [this.min, this.max].filter(
       (mediaFeature) => !isUndefined(mediaFeature),
     )

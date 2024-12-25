@@ -6,13 +6,13 @@ import { cwd } from 'process'
 
 @Injectable({ providedIn: 'root' })
 export class LocalJsonFetcherService implements JsonFetcher {
-  constructor(@Inject(JSON_DATA_DIR) private jsonDataDir: string) {}
+  constructor(@Inject(JSON_DATA_DIR) private readonly _jsonDataDir: string) {}
 
   async fetch<T>(...pathSegments: string[]): Promise<T> {
     //👇 __dirname no longer exists when using ESBuild
     //   import.meta.url returns an invalid path created by Angular CLI
     //   https://github.com/angular/angular-cli/blob/18.0.5/packages/angular/build/src/utils/server-rendering/esm-in-memory-loader/loader-hooks.ts#L40-L44
-    const jsonFile = resolve(cwd(), 'src', this.jsonDataDir, ...pathSegments)
+    const jsonFile = resolve(cwd(), 'src', this._jsonDataDir, ...pathSegments)
     //👇 Promises would be out of zone.js, so using sync. Could be improved
     const contents = readFileSync(jsonFile)
     return JSON.parse(contents.toString())

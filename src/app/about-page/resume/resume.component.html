@@ -1,5 +1,5 @@
 <ul>
-  @for (resume of resumes; track resume) {
+  @for (resume of resumeLinks; track resume) {
     <li>
       <a [href]="resume.href" target="_blank">
         <fa-icon [icon]="faFilePdf"></fa-icon>
