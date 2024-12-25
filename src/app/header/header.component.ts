@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import projectPageMetadata from '../../data/pages/projects.json'
 import aboutPageMetadata from '../../data/pages/about.json'
 import { ABOUT_PATH } from '../common/routing/paths'
-import { RouterLinkActive, RouterLink } from '@angular/router'
+import { RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,7 @@ import { RouterLinkActive, RouterLink } from '@angular/router'
   imports: [RouterLinkActive, RouterLink],
 })
 export class HeaderComponent {
-  protected readonly items: readonly NavigationItem[] = [
+  readonly items: readonly NavigationItem[] = [
     {
       displayName: projectPageMetadata.title || projectPageMetadata.name,
       path: '/',
@@ -24,7 +24,7 @@ export class HeaderComponent {
   ]
 }
 
-export interface NavigationItem {
+interface NavigationItem {
   readonly displayName: string
   readonly path: string
 }

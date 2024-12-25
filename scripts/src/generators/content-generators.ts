@@ -7,19 +7,19 @@ import { Collections } from './collections'
 import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 
 export class ContentGenerators {
-  public readonly collections: Collections
+  readonly collections: Collections
 
   constructor() {
     this.collections = new Collections()
   }
 
-  public async all() {
+  async all() {
     await this.projectsList()
     await this.authorsList()
     await this.assetsCollectionsList()
   }
 
-  public async projectsList(): Promise<void> {
+  async projectsList(): Promise<void> {
     return new ResourceCollectionListGenerator(
       this.collections.projects,
       (resource) =>
@@ -30,7 +30,7 @@ export class ContentGenerators {
     ).generate()
   }
 
-  public async authorsList(): Promise<void> {
+  async authorsList(): Promise<void> {
     return new ResourceCollectionListGenerator(
       this.collections.authors,
       async (resource: Resource) => {
@@ -39,7 +39,7 @@ export class ContentGenerators {
     ).generate()
   }
 
-  public async assetsCollectionsList(): Promise<void> {
+  async assetsCollectionsList(): Promise<void> {
     return new ResourceCollectionListGenerator(
       this.collections.assetsCollections,
     ).generate()

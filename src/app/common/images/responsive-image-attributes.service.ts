@@ -23,45 +23,21 @@ import { ResponsiveImageBreakpoints } from './responsive-image-breakpoints'
   providedIn: 'root',
 })
 export class ResponsiveImageAttributesService {
-  private MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
-  //👇 For Lighthouse, as performs tests on a Moto G Power (412x823)
-  // Indeed it's quite common web resolution:
-  // https://gs.statcounter.com/screen-resolution-stats/mobile/worldwide
-  //
-  // Despite they are high density screens, so browsers will probably use
-  // bigger images
-  // Maybe if network allows only? So low density must be there too? 🤔
-  private MOBILE_RESOLUTIONS = [
-    // 414, // Too similar
-    412,
-    // 393, // Too similar
-    // 390, // Too similar
-    360,
-  ]
-  private MAX_MOBILE_RESOLUTION_WIDTH = Math.max(...this.MOBILE_RESOLUTIONS)
-  private RESOLUTIONS = Array.from(
-    new Set([...DEFAULT_RESOLUTIONS, ...this.MOBILE_RESOLUTIONS]),
-  ).sort((a, b) => a - b)
-
   /**
    * Equivalent of `unpic`'s constrained layout
    */
-  public fullWidthUntil(
-    constrainedWidth: CssPxUnit,
-  ): ResponsiveImageAttributes {
+  fullWidthUntil(constrainedWidth: CssPxUnit): ResponsiveImageAttributes {
     return this.fixedSinceWidth(constrainedWidth).concat(
       this.vw(Vw(100), CssMinMaxMediaQuery.max(constrainedWidth)),
     )
   }
 
-  public fixedSinceWidth(
+  fixedSinceWidth(
     width: CssPxUnit,
     { minWidth }: { minWidth?: CssPxUnit } = {},
   ): ResponsiveImageAttributes {
     return new ResponsiveImageAttributes(
-      ResponsiveImageBreakpoints.from(
-        this.getHighDensityBreakpoints(width.value),
-      ),
+      ResponsiveImageBreakpoints.from(getHighDensityBreakpoints(width.value)),
       new HtmlImageSizesAttribute([
         new HtmlImageSizesSingleAttribute(
           width,
@@ -71,12 +47,12 @@ export class ResponsiveImageAttributesService {
     )
   }
 
-  public vw(
+  vw(
     vw: CssVwUnit,
     minMaxMediaQuery?: CssMinMaxMediaQuery<CssPxUnit, CssPxUnit>,
     { includeMediaQueryInSizes }: { includeMediaQueryInSizes?: boolean } = {},
   ) {
-    const breakpointsAtFixedVw = this.RESOLUTIONS.filter(
+    const breakpointsAtFixedVw = RESOLUTIONS.filter(
       (resolutionWidth) =>
         (minMaxMediaQuery?.min?.value.value ?? -Infinity) <= resolutionWidth &&
         resolutionWidth <= (minMaxMediaQuery?.max?.value.value ?? Infinity),
@@ -85,7 +61,7 @@ export class ResponsiveImageAttributesService {
         const pxBreakpointAtResolution = Math.ceil(
           (resolutionWidth * vw.value) / 100,
         )
-        return this.getHighDensityBreakpoints(pxBreakpointAtResolution)
+        return getHighDensityBreakpoints(pxBreakpointAtResolution)
       })
       .flat()
     return new ResponsiveImageAttributes(
@@ -98,24 +74,44 @@ export class ResponsiveImageAttributesService {
       ]),
     )
   }
+}
 
-  private getHighDensityBreakpoints(pxWidth: number): readonly number[] {
-    const widths: number[] = [pxWidth]
-    // Add double for high density screens if not bigger than max resolution width
-    const doubleWidth = pxWidth * 2
-    if (doubleWidth < this.MAX_RESOLUTION_WIDTH) {
-      widths.push(doubleWidth)
-    }
-    // Add triple for mobile screens
-    // Tested on Moto G Power (Lighthouse fav device) that dimensions are
-    // 412x823 whilst resolution is 1080, so 2.6 density
-    const tripleWidth = pxWidth * 3
-    if (
-      pxWidth < this.MAX_MOBILE_RESOLUTION_WIDTH &&
-      tripleWidth < this.MAX_RESOLUTION_WIDTH
-    ) {
-      widths.push(tripleWidth)
-    }
-    return widths
+const MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
+//👇 For Lighthouse, as performs tests on a Moto G Power (412x823)
+// Indeed it's quite common web resolution:
+// https://gs.statcounter.com/screen-resolution-stats/mobile/worldwide
+//
+// Despite they are high density screens, so browsers will probably use
+// bigger images
+// Maybe if network allows only? So low density must be there too? 🤔
+const MOBILE_RESOLUTIONS = [
+  // 414, // Too similar
+  412,
+  // 393, // Too similar
+  // 390, // Too similar
+  360,
+]
+const MAX_MOBILE_RESOLUTION_WIDTH = Math.max(...MOBILE_RESOLUTIONS)
+const RESOLUTIONS = Array.from(
+  new Set([...DEFAULT_RESOLUTIONS, ...MOBILE_RESOLUTIONS]),
+).sort((a, b) => a - b)
+
+const getHighDensityBreakpoints = (pxWidth: number): readonly number[] => {
+  const widths: number[] = [pxWidth]
+  // Add double for high density screens if not bigger than max resolution width
+  const doubleWidth = pxWidth * 2
+  if (doubleWidth < MAX_RESOLUTION_WIDTH) {
+    widths.push(doubleWidth)
   }
+  // Add triple for mobile screens
+  // Tested on Moto G Power (Lighthouse fav device) that dimensions are
+  // 412x823 whilst resolution is 1080, so 2.6 density
+  const tripleWidth = pxWidth * 3
+  if (
+    pxWidth < MAX_MOBILE_RESOLUTION_WIDTH &&
+    tripleWidth < MAX_RESOLUTION_WIDTH
+  ) {
+    widths.push(tripleWidth)
+  }
+  return widths
 }

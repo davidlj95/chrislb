@@ -7,10 +7,10 @@ import { NOT_FOUND_PATH } from './paths'
   providedIn: 'root',
 })
 export class NavigatorService {
-  constructor(private router: Router) {}
+  constructor(private readonly _router: Router) {}
 
   displayNotFoundPage() {
-    this.router
+    this._router
       .navigate([NOT_FOUND_PATH], { skipLocationChange: true })
       .then(noop)
   }

@@ -14,9 +14,9 @@ import { RouterLink } from '@angular/router'
   imports: [RouterLink, NgOptimizedImage],
 })
 export class LogoComponent {
-  protected readonly horizontalLogo: ResponsiveImage
+  protected readonly _horizontalLogo: ResponsiveImage
   // 👇 Keep in sync with SCSS for responsive sizing
-  protected readonly LOGO_MAX_HEIGHT_PX = 55
+  protected readonly _LOGO_MAX_HEIGHT_PX = 55
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
@@ -24,8 +24,8 @@ export class LogoComponent {
   ) {
     const horizontalLogoAsset = miscImages.horizontalLogo
     const aspectRatio = horizontalLogoAsset.width / horizontalLogoAsset.height
-    const maxWidthPx = aspectRatio * this.LOGO_MAX_HEIGHT_PX
-    this.horizontalLogo = new ResponsiveImage(
+    const maxWidthPx = aspectRatio * this._LOGO_MAX_HEIGHT_PX
+    this._horizontalLogo = new ResponsiveImage(
       horizontalLogoAsset,
       responsiveImageAttributesService
         .fullWidthUntil(Px(Math.ceil(maxWidthPx)))

@@ -6,7 +6,6 @@ describe('SocialService', () => {
   let service: SocialService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
     service = TestBed.inject(SocialService)
   })
 

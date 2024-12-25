@@ -4,11 +4,9 @@ import { isSorted } from '../is-sorted'
  * Reduces the amount of responsive image breakpoints for a `srcSet` in a list
  * by grouping those that are very close together, and choosing the maximum
  * breakpoint of the group
- *
-
  */
 export class ResponsiveImageBreakpointsReducer {
-  constructor(public readonly maxPxBetweenBreakpoints: number) {}
+  constructor(readonly maxPxBetweenBreakpoints: number) {}
 
   /**
    * Creates a new reducer with the maximum allows distance between breakpoints
@@ -31,7 +29,7 @@ export class ResponsiveImageBreakpointsReducer {
     return new this(MAX_PX_BETWEEN_BREAKPOINTS)
   }
 
-  public reduce(breakpoints: readonly number[]): number[] {
+  reduce(breakpoints: readonly number[]): number[] {
     if (!isSorted(breakpoints)) {
       throw new Error('Breakpoints must be sorted before reducing them')
     }

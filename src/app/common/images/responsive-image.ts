@@ -3,7 +3,7 @@ import { ResponsiveImageAttributes } from './responsive-image-attributes'
 
 export class ResponsiveImage {
   constructor(
-    public readonly asset: ImageAsset,
-    public readonly attributes: ResponsiveImageAttributes,
+    readonly asset: ImageAsset,
+    readonly attributes: ResponsiveImageAttributes,
   ) {}
 }

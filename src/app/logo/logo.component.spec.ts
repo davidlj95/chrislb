@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LogoComponent } from './logo.component'
-import { getDummyOptimizedImageProviders } from '../../test/optimized-image'
-import { RouterTestingModule } from '@angular/router/testing'
+import { provideRouter } from '@angular/router'
+import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-image'
 
 describe('LogoComponent', () => {
   let component: LogoComponent
@@ -9,8 +9,7 @@ describe('LogoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      providers: [...getDummyOptimizedImageProviders()],
+      providers: [provideRouter([]), provideDummyOptimizedImage()],
     })
     fixture = TestBed.createComponent(LogoComponent)
     component = fixture.componentInstance

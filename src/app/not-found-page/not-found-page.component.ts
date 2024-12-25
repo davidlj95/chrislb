@@ -8,5 +8,5 @@ import notFoundPageMetadata from '../../data/pages/404.json'
   standalone: true,
 })
 export class NotFoundPageComponent {
-  public readonly description: string = notFoundPageMetadata.description
+  readonly description: string = notFoundPageMetadata.description
 }

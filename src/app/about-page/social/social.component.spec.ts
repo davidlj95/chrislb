@@ -9,8 +9,10 @@ describe('SocialComponent', () => {
   let fixture: ComponentFixture<SocialComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SocialComponent, MockComponents(FaIconComponent)],
+    TestBed.overrideComponent(SocialComponent, {
+      set: {
+        imports: [MockComponents(FaIconComponent)],
+      },
     })
     fixture = TestBed.createComponent(SocialComponent)
     component = fixture.componentInstance

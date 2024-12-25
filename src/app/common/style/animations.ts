@@ -39,7 +39,7 @@ class EnterLeaveFadeInOutAnimations {
    *
    * @param triggerName
    */
-  public children(triggerName: string): AnimationTriggerMetadata {
+  children(triggerName: string): AnimationTriggerMetadata {
     return trigger(triggerName, [
       transition(DEFAULT_TRANSITION, [
         style({ position: 'relative' }),
@@ -62,7 +62,7 @@ class EnterLeaveFadeInOutAnimations {
    * Creates a fade in / fade out animation when the element enters and leaves
    * @param triggerName
    */
-  public element(triggerName: string) {
+  element(triggerName: string) {
     return trigger(triggerName, [
       transition(ENTER_TRANSITION, [this.minOpacity, this.animateToMax]),
       transition(LEAVE_TRANSITION, [this.maxOpacity, this.animateToMin]),

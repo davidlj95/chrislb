@@ -8,19 +8,15 @@ import {
 import { getRepositoryRootDir } from '../utils/get-repository-root-dir'
 
 export class Collections {
-  private readonly REPO_PATH = getRepositoryRootDir()
-  private readonly SRC_PATH = join(this.REPO_PATH, 'src')
-  private readonly DATA_PATH = join(this.SRC_PATH, DATA_DIR)
-  private readonly CONTENT_PATH = join(this.SRC_PATH, CONTENTS_DIR)
-
-  public readonly authors = new ResourceCollection(
-    join(this.DATA_PATH, 'authors'),
+  readonly authors = new ResourceCollection(join(DATA_PATH, 'authors'))
+  readonly assetsCollections = new ResourceCollection(
+    join(DATA_PATH, 'assets-collections'),
   )
-  public readonly assetsCollections = new ResourceCollection(
-    join(this.DATA_PATH, 'assets-collections'),
-  )
-  public readonly projects = new ResourceCollection(
-    join(this.CONTENT_PATH, PROJECTS_DIR),
-  )
-  public readonly misc = new ResourceCollection(join(this.DATA_PATH, 'misc'))
+  readonly projects = new ResourceCollection(join(CONTENT_PATH, PROJECTS_DIR))
+  readonly misc = new ResourceCollection(join(DATA_PATH, 'misc'))
 }
+
+const REPO_PATH = getRepositoryRootDir()
+const SRC_PATH = join(REPO_PATH, 'src')
+const DATA_PATH = join(SRC_PATH, DATA_DIR)
+const CONTENT_PATH = join(SRC_PATH, CONTENTS_DIR)

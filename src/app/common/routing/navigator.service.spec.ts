@@ -6,7 +6,6 @@ describe('NavigatorService', () => {
   let service: NavigatorService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
     service = TestBed.inject(NavigatorService)
   })
 

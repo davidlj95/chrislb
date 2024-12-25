@@ -2,7 +2,7 @@
   <div class="texts">
     <span class="title">
       @if (item().hasContent) {
-        <a [routerLink]="[PROJECTS_PATH, item().slug]"
+        <a [routerLink]="[_PROJECTS_PATH, item().slug]"
           ><ng-container [ngTemplateOutlet]="title"></ng-container
         ></a>
       } @else {
@@ -26,7 +26,7 @@
       [images]="previewImages"
       [responsiveImageAttributes]="responsiveImageAttributes"
       [priority]="priority()"
-      [customSwiperOptions]="CUSTOM_SWIPER_OPTIONS"
+      [customSwiperOptions]="{ slidesPerView: 2 }"
     ></app-images-swiper>
   }
 </div>

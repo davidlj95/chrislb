@@ -75,10 +75,10 @@ function makeComponentWithDirective({
   class SwiperComponent implements OnInit {
     readonly options = options
 
-    constructor(private el: ElementRef) {}
+    constructor(private readonly _el: ElementRef) {}
 
     ngOnInit() {
-      this.el.nativeElement.children[0].initialize = initialize
+      this._el.nativeElement.children[0].initialize = initialize
     }
   }
 

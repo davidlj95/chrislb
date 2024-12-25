@@ -6,9 +6,9 @@ import { DomSanitizer } from '@angular/platform-browser'
   standalone: true,
 })
 export class SanitizeResourceUrlPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private readonly _sanitizer: DomSanitizer) {}
 
   transform(value: string | URL): unknown {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(value.toString())
+    return this._sanitizer.bypassSecurityTrustResourceUrl(value.toString())
   }
 }

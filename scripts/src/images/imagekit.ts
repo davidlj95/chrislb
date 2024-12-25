@@ -10,16 +10,16 @@ import { isEmpty } from 'lodash-es'
 import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
 
 export class Imagekit implements ImageCdnApi {
-  private readonly sdk: ImagekitSdk
+  private readonly _sdk: ImagekitSdk
 
   constructor(
     sdkOptions: ImageKitOptions,
-    public readonly unpublishedTag?: string,
+    readonly unpublishedTag?: string,
   ) {
-    this.sdk = new ImageKit(sdkOptions)
+    this._sdk = new ImageKit(sdkOptions)
   }
 
-  public static fromEnv(
+  static fromEnv(
     ...otherInitOptions: RemoveFirst<ConstructorParameters<typeof Imagekit>>
   ): Imagekit {
     dotenv.config()
@@ -48,7 +48,7 @@ export class Imagekit implements ImageCdnApi {
     includeSubdirectories = false,
   ): Promise<readonly ImageAsset[]> {
     Log.group('Searching for images inside "%s" path', path)
-    const imageAssets = await this.listImageAssetsInPath(path)
+    const imageAssets = await this._listImageAssetsInPath(path)
     if (isEmpty(imageAssets)) {
       Log.info('No images found')
     } else {
@@ -56,7 +56,7 @@ export class Imagekit implements ImageCdnApi {
     }
     const imagesFromDirectories: ImageAsset[] = []
     if (includeSubdirectories) {
-      const directoryNames = await this.listDirectoryNamesInPath(path)
+      const directoryNames = await this._listDirectoryNamesInPath(path)
       if (isEmpty(directoryNames)) {
         Log.info('No directories found')
       } else {
@@ -78,26 +78,26 @@ export class Imagekit implements ImageCdnApi {
     return [...imageAssets, ...imagesFromDirectories]
   }
 
-  private async listImageAssetsInPath(
+  private async _listImageAssetsInPath(
     path: string,
   ): Promise<readonly ImageAsset[]> {
     const searchQuery = this.unpublishedTag
       ? `tags NOT IN ${JSON.stringify([this.unpublishedTag])}`
       : undefined
-    const fileObjects = await this.sdk.listFiles({
+    const fileObjects = await this._sdk.listFiles({
       searchQuery,
       path,
       fileType: 'image',
       includeFolder: false,
       sort: 'ASC_NAME',
     })
-    return fileObjects.map(this.imageAssetFromFileObject)
+    return fileObjects.map(this._imageAssetFromFileObject)
   }
 
-  private async listDirectoryNamesInPath(
+  private async _listDirectoryNamesInPath(
     path: string,
   ): Promise<readonly string[]> {
-    const response = await this.sdk.listFiles({
+    const response = await this._sdk.listFiles({
       path,
       type: 'folder',
     })
@@ -105,7 +105,7 @@ export class Imagekit implements ImageCdnApi {
     return folderObjects.map((folderObject) => folderObject.name)
   }
 
-  private imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
+  private _imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
     const altMetadata: Pick<ImageAsset, 'alt'> = {}
     // Avoid adding if empty string to save some space

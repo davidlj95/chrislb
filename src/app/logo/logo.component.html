@@ -1,11 +1,11 @@
 <a routerLink="/">
   <img
-    [ngSrc]="horizontalLogo.asset.filePath"
-    [alt]="horizontalLogo.asset.alt"
-    [width]="horizontalLogo.asset.width"
-    [height]="horizontalLogo.asset.height"
+    [ngSrc]="_horizontalLogo.asset.filePath"
+    [alt]="_horizontalLogo.asset.alt"
+    [width]="_horizontalLogo.asset.width"
+    [height]="_horizontalLogo.asset.height"
     [priority]="true"
-    [ngSrcset]="horizontalLogo.attributes.breakpoints.ngSrcSet.asString"
-    [sizes]="horizontalLogo.attributes.sizes.asString"
+    [ngSrcset]="_horizontalLogo.attributes.breakpoints.ngSrcSet.asString"
+    [sizes]="_horizontalLogo.attributes.sizes.asString"
   />
 </a>
