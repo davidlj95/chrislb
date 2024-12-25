@@ -1,6 +1,6 @@
-@if (assetsCollections$ | async; as assetsCollections) {
+@if (assetsCollections()) {
   @for (
-    assetsCollection of assetsCollections;
+    assetsCollection of assetsCollections();
     track assetsCollection;
     let index = $index
   ) {
@@ -24,16 +24,12 @@
       @if (assetsCollection.type === AssetsCollectionType.Image) {
         <app-images-swiper
           [images]="assetsCollection.images"
-          [responsiveImageAttributes]="
-            assetsCollection.imagesSwiperConfig.attributes
-          "
+          [responsiveImageAttributes]="assetsCollection.swiperConfig.attributes"
           [customSwiperOptions]="
-            assetsCollection.imagesSwiperConfig.customSwiperOptions
+            assetsCollection.swiperConfig.customSwiperOptions
           "
-          [style.max-width.px]="
-            assetsCollection.imagesSwiperConfig.maxWidth?.value
-          "
-          [priority]="index < MAX_SWIPERS_PER_VIEWPORT"
+          [style.max-width.px]="assetsCollection.swiperConfig.maxWidth?.value"
+          [priority]="index < _maxSwipersPerViewport"
         ></app-images-swiper>
       }
     </div>
