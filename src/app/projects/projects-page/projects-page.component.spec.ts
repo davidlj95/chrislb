@@ -4,7 +4,6 @@ import { ProjectsPageComponent } from './projects-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { ProjectsService } from '../projects.service'
-import { AsyncPipe } from '@angular/common'
 
 describe('ProjectsPageComponent', () => {
   let component: ProjectsPageComponent
@@ -13,7 +12,7 @@ describe('ProjectsPageComponent', () => {
   beforeEach(() => {
     TestBed.overrideComponent(ProjectsPageComponent, {
       set: {
-        imports: [AsyncPipe, MockComponents(ProjectListItemComponent)],
+        imports: [MockComponents(ProjectListItemComponent)],
         providers: [
           MockProvider(ProjectsService, {
             async getListItems() {

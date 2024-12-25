@@ -1,4 +1,4 @@
-@for (item of projects | async; track item; let index = $index) {
+@for (item of projects(); track item; let index = $index) {
   <app-project-list-item
     [item]="item"
     [priority]="index < _maxProjectsPerPage"
