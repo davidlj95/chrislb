@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core'
+import { ApplicationConfig } from '@angular/core'
 import { APP_BASE_HREF, provideImageKitLoader } from '@angular/common'
 import {
   GlobalMetadata,
@@ -25,14 +25,13 @@ import { routes } from './app.routes'
 import { IMAGEKIT_URL } from './common/images/cdn-config'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
-import { provideAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '../data/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(),
     provideRouter(
       routes,
       withEnabledBlockingInitialNavigation(),
@@ -59,7 +58,7 @@ export const appConfig: ApplicationConfig = {
     provideNgxMetaRouting(),
     provideNgxMetaStandard(),
     provideNgxMetaOpenGraph(),
-    provideAnimations(),
+    provideAnimationsAsync(),
     provideHttpClient(),
   ],
 }
