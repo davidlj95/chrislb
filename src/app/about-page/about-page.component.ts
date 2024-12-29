@@ -21,9 +21,9 @@ import { SocialComponent } from './social/social.component'
 export class AboutPageComponent {
   readonly title: string = aboutPageContents.title
   readonly text: string = aboutPageContents.text
-  readonly portrait: ResponsiveImage
   readonly emailLocalPart: string = 'contact'
   readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
+  readonly portrait: ResponsiveImage
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,

@@ -1,8 +1,7 @@
 import { JsonMetadata } from './json-metadata'
 import { NgxMetaRouteData } from '@davidlj95/ngx-meta/routing'
-import { getCanonicalUrlForPath } from './get-canonical-url-for-path'
 import { getTitle } from './get-title'
-import { GlobalMetadata } from '@davidlj95/ngx-meta/core'
+import { ANGULAR_ROUTER_URL, GlobalMetadata } from '@davidlj95/ngx-meta/core'
 import { OpenGraphMetadata } from '@davidlj95/ngx-meta/open-graph'
 import { StandardMetadata } from '@davidlj95/ngx-meta/standard'
 
@@ -14,9 +13,7 @@ export function makeRouteMetadata(
     meta: {
       title: getTitle(jsonMetadata.title),
       description: jsonMetadata.description,
-      canonicalUrl: pathSegments
-        ? getCanonicalUrlForPath(...pathSegments)
-        : null,
+      canonicalUrl: pathSegments ? pathSegments.join('/') : ANGULAR_ROUTER_URL,
       image:
         !!jsonMetadata.image &&
         !!jsonMetadata.image.url &&

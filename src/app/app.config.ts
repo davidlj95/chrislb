@@ -1,8 +1,10 @@
 import { ApplicationConfig } from '@angular/core'
 import { APP_BASE_HREF, provideImageKitLoader } from '@angular/common'
 import {
+  ANGULAR_ROUTER_URL,
   GlobalMetadata,
   provideNgxMetaCore,
+  withNgxMetaBaseUrl,
   withNgxMetaDefaults,
 } from '@davidlj95/ngx-meta/core'
 import {
@@ -44,6 +46,7 @@ export const appConfig: ApplicationConfig = {
     { provide: APP_BASE_HREF, useValue: '/' },
     provideNgxMetaCore(
       withNgxMetaDefaults({
+        canonicalUrl: ANGULAR_ROUTER_URL,
         locale: 'en',
         standard: {
           author: defaultMetadata.author,
@@ -54,6 +57,7 @@ export const appConfig: ApplicationConfig = {
           type: OPEN_GRAPH_TYPE_WEBSITE,
         },
       } satisfies GlobalMetadata & StandardMetadata & OpenGraphMetadata),
+      withNgxMetaBaseUrl(defaultMetadata.canonicalUrl),
     ),
     provideNgxMetaRouting(),
     provideNgxMetaStandard(),
