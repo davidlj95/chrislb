@@ -15,8 +15,6 @@ import { Breakpoint } from '../../common/style/breakpoint'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
-import { PROJECTS_PATH } from '../../common/routing/paths'
-import { getCanonicalUrlForPath } from '../../common/routing/get-canonical-url-for-path'
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
@@ -98,7 +96,6 @@ export class ProjectPageComponent {
         return
       }
       ngxMetaService.set({
-        canonicalUrl: getCanonicalUrlForPath(PROJECTS_PATH, project.slug),
         title: getTitle(project.title),
         description:
           project.description.length > 200

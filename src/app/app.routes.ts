@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     component: ProjectsPageComponent,
-    data: makeRouteMetadata(projectsPageMetadata, []),
+    data: makeRouteMetadata(projectsPageMetadata),
     pathMatch: 'full',
   },
 
@@ -31,11 +31,11 @@ export const routes: Routes = [
   {
     path: NOT_FOUND_PATH,
     component: NotFoundPageComponent,
-    data: makeRouteMetadata(notFoundPageMetadata, [NOT_FOUND_PATH]),
+    data: makeRouteMetadata(notFoundPageMetadata),
   },
   {
     path: '**',
     component: NotFoundPageComponent,
-    data: makeRouteMetadata(notFoundPageMetadata),
+    data: makeRouteMetadata(notFoundPageMetadata, [NOT_FOUND_PATH]),
   },
 ]
