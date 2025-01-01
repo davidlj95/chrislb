@@ -37,7 +37,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Cache Angular build
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         env:
           cache-name: angular-cache
         with:
