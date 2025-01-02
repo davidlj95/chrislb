@@ -136,8 +136,8 @@ importers:
         specifier: 5.2.0
         version: 5.2.0
       jasmine-core:
-        specifier: 5.2.0
-        version: 5.2.0
+        specifier: 5.5.0
+        version: 5.5.0
       karma:
         specifier: 6.4.4
         version: 6.4.4
@@ -152,7 +152,7 @@ importers:
         version: 5.1.0(karma@6.4.4)
       karma-jasmine-html-reporter:
         specifier: 2.1.0
-        version: 2.1.0(jasmine-core@5.2.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
+        version: 2.1.0(jasmine-core@5.5.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
       lint-staged:
         specifier: 15.2.11
         version: 15.2.11
@@ -3879,8 +3879,8 @@ packages:
   jasmine-core@4.6.0:
     resolution: {integrity: sha512-O236+gd0ZXS8YAjFx8xKaJ94/erqUliEkJTDedyE7iHvv4ZVqi+q+8acJxu05/WJDKm512EUNn809In37nWlAQ==}
 
-  jasmine-core@5.2.0:
-    resolution: {integrity: sha512-tSAtdrvWybZkQmmaIoDgnvHG8ORUNw5kEVlO5CvrXj02Jjr9TZrmjFq7FUiOUzJiOP2wLGYT6PgrQgQF4R1xiw==}
+  jasmine-core@5.5.0:
+    resolution: {integrity: sha512-NHOvoPO6o9gVR6pwqEACTEpbgcH+JJ6QDypyymGbSUIFIFsMMbBJ/xsFNud8MSClfnWclXd7RQlAZBz7yVo5TQ==}
 
   jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
@@ -10015,7 +10015,7 @@ snapshots:
 
   jasmine-core@4.6.0: {}
 
-  jasmine-core@5.2.0: {}
+  jasmine-core@5.5.0: {}
 
   jest-worker@27.5.1:
     dependencies:
@@ -10093,9 +10093,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  karma-jasmine-html-reporter@2.1.0(jasmine-core@5.2.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4):
+  karma-jasmine-html-reporter@2.1.0(jasmine-core@5.5.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4):
     dependencies:
-      jasmine-core: 5.2.0
+      jasmine-core: 5.5.0
       karma: 6.4.4
       karma-jasmine: 5.1.0(karma@6.4.4)
 
