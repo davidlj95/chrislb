@@ -48,7 +48,7 @@
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@unpic/core": "0.1.0",
-    "compression": "1.7.4",
+    "compression": "1.7.5",
     "express": "4.21.0",
     "gardevoir": "1.0.0",
     "lodash-es": "4.17.21",
