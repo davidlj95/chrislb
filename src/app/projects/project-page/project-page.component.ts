@@ -40,9 +40,10 @@ export class ProjectPageComponent {
   >([])
 
   protected readonly _maxSwipersPerViewport = 2
-  private readonly _imageAssetsSwiperConfigByName: {
-    [k in AssetsCollectionData['size']]: ImageAssetsSwiperConfig
-  } = {
+  private readonly _imageAssetsSwiperConfigByName: Record<
+    AssetsCollectionData['size'],
+    ImageAssetsSwiperConfig
+  > = {
     [AssetsCollectionSize.Full]: {
       customSwiperOptions: {
         slidesPerView: FULL_SCREEN_SWIPER.slidesPerView,
