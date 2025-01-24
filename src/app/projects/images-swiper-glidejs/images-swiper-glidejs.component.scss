@@ -1,0 +1,52 @@
+@use 'sass:color';
+@use 'theme';
+@import '@glidejs/glide/src/assets/sass/glide.core';
+@import '@glidejs/glide/src/assets/sass/glide.theme';
+
+.glide,
+.glide__slides,
+.glide__slide,
+.glide__track {
+  height: 100%;
+}
+
+.glide__slide {
+  //👇 NgOptimizedImage's `fill` sets position to absolute
+  position: relative;
+
+  img {
+    object-fit: contain;
+  }
+}
+
+//👇 Style from Swiper.js
+//   https://github.com/nolimits4web/swiper/blob/v11.2.1/src/modules/navigation/navigation.scss
+$arrow-height: 44px;
+$arrow-width: 27px;
+$arrow-gap: 10px;
+
+.glide__arrow {
+  // 👇 Override default styles
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+
+  height: $arrow-height;
+  width: $arrow-width;
+  color: theme.$accent;
+}
+
+.glide__arrow--left {
+  left: $arrow-gap;
+}
+
+.glide__arrow--left {
+  right: $arrow-gap;
+}
+
+.glide__arrow svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

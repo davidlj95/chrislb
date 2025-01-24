@@ -53,7 +53,7 @@
               "src/site.webmanifest"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/sass"]
+              "includePaths": ["src/sass", "node_modules"]
             },
             "styles": [
               "src/styles.scss",
@@ -133,7 +133,7 @@
               "src/site.webmanifest"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/sass"]
+              "includePaths": ["src/sass", "node_modules"]
             },
             "styles": [
               "src/styles.scss",

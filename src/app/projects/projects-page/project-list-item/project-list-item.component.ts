@@ -10,20 +10,20 @@ import { ResponsiveImageAttributesService } from '../../../common/images/respons
 import { Vw } from '../../../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../../../common/css/css-min-max-media-query'
 import { Breakpoint } from '../../../common/style/breakpoint'
-import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
+import { ImagesSwiperGlidejsComponent } from '../../images-swiper-glidejs/images-swiper-glidejs.component'
 
 @Component({
   selector: 'app-project-list-item',
   templateUrl: './project-list-item.component.html',
   styleUrls: ['./project-list-item.component.scss'],
   standalone: true,
-  imports: [RouterLink, NgTemplateOutlet, ImagesSwiperComponent],
+  imports: [RouterLink, NgTemplateOutlet, ImagesSwiperGlidejsComponent],
 })
 export class ProjectListItemComponent {
-  readonly priority = input(false)
   readonly item = input.required<ProjectListItem>()
+  readonly priority = input(false)
   readonly credits = computed<readonly CreditItem[]>(
     () =>
       this.item().credits?.map((credit) => {

@@ -20,15 +20,17 @@
     }
     <div class="description" [innerHtml]="item().description"></div>
   </div>
-  @let previewImages = item().previewImages;
-  @if (previewImages && previewImages.length) {
-    <app-images-swiper
-      [images]="previewImages"
-      [responsiveImageAttributes]="responsiveImageAttributes"
-      [priority]="priority()"
-      [customSwiperOptions]="{ slidesPerView: 2 }"
-    ></app-images-swiper>
-  }
+  <div class="images">
+    @let previewImages = item().previewImages;
+    @if (previewImages && previewImages.length) {
+      <app-images-swiper-glidejs
+        [images]="previewImages"
+        [responsiveImageAttributes]="responsiveImageAttributes"
+        [priority]="priority()"
+      >
+      </app-images-swiper-glidejs>
+    }
+  </div>
 </div>
 @if (credits().length) {
   <div class="credits">

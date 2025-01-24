@@ -47,6 +47,8 @@
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
+    "@glidejs/glide": "^3.7.1",
+    "@types/glidejs__glide": "3.6.5",
     "@unpic/core": "1.0.0",
     "compression": "1.7.5",
     "express": "4.21.2",
