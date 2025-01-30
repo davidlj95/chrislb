@@ -19,7 +19,7 @@
     "lint-staged": "lint-staged",
     "git-hooks": "husky",
     "cms-server": "npx decap-server",
-    "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
+    "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main*.js",
     "generate": "tsm scripts/src/generators/all-generators.ts",
     "generate:images-lists": "tsm scripts/src/generators/images-lists-generators.ts",
     "generate:contents": "tsm scripts/src/generators/content-generators.ts",
