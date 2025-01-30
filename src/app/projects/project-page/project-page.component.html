@@ -22,15 +22,13 @@
         ></iframe>
       }
       @if (assetsCollection.type === AssetsCollectionType.Image) {
-        <app-images-swiper
+        <app-images-swiper-glidejs
           [images]="assetsCollection.images"
           [responsiveImageAttributes]="assetsCollection.swiperConfig.attributes"
-          [customSwiperOptions]="
-            assetsCollection.swiperConfig.customSwiperOptions
-          "
+          [options]="assetsCollection.swiperConfig.customOptions"
           [style.max-width.px]="assetsCollection.swiperConfig.maxWidth?.value"
           [priority]="index < _maxSwipersPerViewport"
-        ></app-images-swiper>
+        ></app-images-swiper-glidejs>
       }
     </div>
   }

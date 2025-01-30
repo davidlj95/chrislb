@@ -25,6 +25,7 @@
     @if (previewImages && previewImages.length) {
       <app-images-swiper-glidejs
         [images]="previewImages"
+        [options]="{ slidesPerView: 2 }"
         [responsiveImageAttributes]="responsiveImageAttributes"
         [priority]="priority()"
       >

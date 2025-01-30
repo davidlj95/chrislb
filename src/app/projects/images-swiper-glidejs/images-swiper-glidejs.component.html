@@ -13,7 +13,7 @@
               responsiveImageAttributes().breakpoints.ngSrcSet.asString
             "
             [sizes]="responsiveImageAttributes().sizes.asString"
-            [priority]="priority() && $index < maxSlidesPerView"
+            [priority]="priority() && $index < options().slidesPerView"
             [attr.alt]="image.alt"
             fill
           />

@@ -20,10 +20,10 @@ import { ResponsiveImageAttributes } from '../../common/images/responsive-image-
 })
 export class ImagesSwiperGlidejsComponent {
   readonly images = input.required<readonly ImageAsset[]>()
+  readonly options = input.required<ImagesSwiperOptions>()
   readonly responsiveImageAttributes =
     input.required<ResponsiveImageAttributes>()
   readonly priority = input(false)
-  readonly maxSlidesPerView = 2
 
   constructor(elRef: ElementRef<HTMLElement>, injector: Injector) {
     // TODO: Replace by afterRenderEffect. This is now a mix of
@@ -36,7 +36,7 @@ export class ImagesSwiperGlidejsComponent {
             if (this.images().length) {
               new Glide(elRef.nativeElement, {
                 type: 'carousel',
-                perView: this.maxSlidesPerView,
+                perView: this.options().slidesPerView,
                 gap: 0,
                 peek: 0,
                 autoplay: 2500,
@@ -49,4 +49,8 @@ export class ImagesSwiperGlidejsComponent {
       },
     })
   }
+}
+
+export interface ImagesSwiperOptions {
+  slidesPerView: number
 }
