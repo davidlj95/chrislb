@@ -24,6 +24,8 @@ module.exports = {
         // Just happens on project detail page tho, when many swipers there
         // Maybe a grid would solve it
         'non-composited-animations': 'warn',
+        // 👇 Most images don't have an alt text
+        'image-alt': 'off',
         'bf-cache': 'warn',
         'csp-xss': 'warn',
         'unused-javascript': 'warn',
