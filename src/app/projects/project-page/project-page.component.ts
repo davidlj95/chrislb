@@ -2,7 +2,6 @@ import { Component, effect, signal } from '@angular/core'
 import { catchError, map, of } from 'rxjs'
 import { NavigatorService } from '../../common/routing/navigator.service'
 import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
-import { SwiperOptions } from 'swiper/types'
 import { AssetsCollectionData } from './assets-collection-data'
 import { AssetsCollectionSize } from './assets-collection-size'
 import { AssetsCollectionType } from './assets-collection-type'
@@ -17,16 +16,19 @@ import { ProjectRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
-import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { AnyAssetsCollection } from './any-asset-collection'
+import {
+  ImagesSwiperGlidejsComponent,
+  ImagesSwiperOptions,
+} from '../images-swiper-glidejs/images-swiper-glidejs.component'
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss'],
   standalone: true,
-  imports: [ImagesSwiperComponent, SanitizeResourceUrlPipe],
+  imports: [SanitizeResourceUrlPipe, ImagesSwiperGlidejsComponent],
   providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectPageComponent {
@@ -45,7 +47,7 @@ export class ProjectPageComponent {
     ImageAssetsSwiperConfig
   > = {
     [AssetsCollectionSize.Full]: {
-      customSwiperOptions: {
+      customOptions: {
         slidesPerView: FULL_SCREEN_SWIPER.slidesPerView,
       },
       attributes: this._responsiveImageAttributesService
@@ -63,7 +65,7 @@ export class ProjectPageComponent {
       maxWidth: FULL_SCREEN_SWIPER.maxWidth,
     },
     [AssetsCollectionSize.Half]: {
-      customSwiperOptions: {
+      customOptions: {
         slidesPerView: HALF_SCREEN_SWIPER.slidesPerView,
       },
       attributes: this._responsiveImageAttributesService
@@ -128,7 +130,7 @@ export class ProjectPageComponent {
 }
 
 interface ImageAssetsSwiperConfig {
-  readonly customSwiperOptions: SwiperOptions
+  readonly customOptions: ImagesSwiperOptions
   readonly attributes: ResponsiveImageAttributes
   readonly maxWidth?: CssPxUnit
 }

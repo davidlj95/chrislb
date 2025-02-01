@@ -56,6 +56,12 @@ importers:
       '@fortawesome/free-solid-svg-icons':
         specifier: 6.7.2
         version: 6.7.2
+      '@glidejs/glide':
+        specifier: ^3.7.1
+        version: 3.7.1
+      '@types/glidejs__glide':
+        specifier: 3.6.5
+        version: 3.6.5
       '@unpic/core':
         specifier: 1.0.0
         version: 1.0.0
@@ -1460,6 +1466,9 @@ packages:
     resolution: {integrity: sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA==}
     engines: {node: '>=6'}
 
+  '@glidejs/glide@3.7.1':
+    resolution: {integrity: sha512-8he0pZpLSqTesSFYiuWdhBmtdlYSPWxfPUCKtkkiX6ZmT8UdMdmoFPtJaOwLBXv4p2JiGxqbuPdiRGGo2e/htQ==}
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -1996,6 +2005,9 @@ packages:
 
   '@types/express@5.0.0':
     resolution: {integrity: sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==}
+
+  '@types/glidejs__glide@3.6.5':
+    resolution: {integrity: sha512-OUjzveIu+tiK5VvyPh6jTBJ/vH6+vC+XWzC2KJzpgUW8uancMJBa7R+BlXuvtSPdLw/pQForVasy0fm1D7JWOQ==}
 
   '@types/http-errors@2.0.4':
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
@@ -7339,6 +7351,8 @@ snapshots:
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.7.2
 
+  '@glidejs/glide@3.7.1': {}
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -7923,6 +7937,8 @@ snapshots:
       '@types/express-serve-static-core': 5.0.3
       '@types/qs': 6.9.12
       '@types/serve-static': 1.15.5
+
+  '@types/glidejs__glide@3.6.5': {}
 
   '@types/http-errors@2.0.4': {}
 
