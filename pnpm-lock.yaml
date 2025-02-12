@@ -60,8 +60,8 @@ importers:
         specifier: 1.0.1
         version: 1.0.1
       compression:
-        specifier: 1.7.5
-        version: 1.7.5
+        specifier: 1.8.0
+        version: 1.8.0
       express:
         specifier: 4.21.2
         version: 4.21.2
@@ -2662,8 +2662,8 @@ packages:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
     engines: {node: '>= 0.6'}
 
-  compression@1.7.5:
-    resolution: {integrity: sha512-bQJ0YRck5ak3LgtnpKkiabX5pNF7tMUh1BSy2ZBOTh0Dim0BUu6aPPwByIns6/A5Prh8PufSPerMDUklpzes2Q==}
+  compression@1.8.0:
+    resolution: {integrity: sha512-k6WLKfunuqCYD3t6AsuPGvQWaKwuLLh2/xHNcX4qE+vIfDNXpSqnrhwA7O53R7WVQUnt8dVAIW+YHr7xTgOgGA==}
     engines: {node: '>= 0.8.0'}
 
   concat-map@0.0.1:
@@ -7512,7 +7512,7 @@ snapshots:
     dependencies:
       '@lhci/utils': 0.14.0(encoding@0.1.13)
       chrome-launcher: 0.13.4
-      compression: 1.7.5
+      compression: 1.8.0
       debug: 4.3.4
       express: 4.21.2
       inquirer: 6.5.2
@@ -8764,7 +8764,7 @@ snapshots:
     dependencies:
       mime-db: 1.52.0
 
-  compression@1.7.5:
+  compression@1.8.0:
     dependencies:
       bytes: 3.1.2
       compressible: 2.0.18
@@ -11944,7 +11944,7 @@ snapshots:
       bonjour-service: 1.2.1
       chokidar: 3.6.0
       colorette: 2.0.20
-      compression: 1.7.5
+      compression: 1.8.0
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
       express: 4.21.2
