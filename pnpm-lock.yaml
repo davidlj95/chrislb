@@ -75,8 +75,8 @@ importers:
         specifier: 7.8.1
         version: 7.8.1
       swiper:
-        specifier: 11.2.2
-        version: 11.2.2
+        specifier: 11.2.5
+        version: 11.2.5
       tslib:
         specifier: 2.8.1
         version: 2.8.1
@@ -5314,8 +5314,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  swiper@11.2.2:
-    resolution: {integrity: sha512-FmAN6zACpVUbd/1prO9xQ9gKo9cc6RE2UKU/z4oXtS8fNyX4sdOW/HHT/e444WucLJs0jeMId6WjdWM2Lrs8zA==}
+  swiper@11.2.5:
+    resolution: {integrity: sha512-nG0kbIyBfeE2BPFt9nPUX03qUBF75o6+enzjIT/DfCmbh8ORlwhc4eZz1+4H/yseAgb3H+OoEYzmb64i0tYNnQ==}
     engines: {node: '>= 4.7.0'}
 
   symbol-observable@4.0.0:
@@ -11668,7 +11668,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  swiper@11.2.2: {}
+  swiper@11.2.5: {}
 
   symbol-observable@4.0.0: {}
 
