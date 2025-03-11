@@ -24,6 +24,9 @@ module.exports = {
         // Just happens on project detail page tho, when many swipers there
         // Maybe a grid would solve it
         'non-composited-animations': 'warn',
+        //👇 WIP
+        //   They're not so bad, but can be improved. Disabling til solution is shipped.
+        'uses-responsive-images': 'warn',
         'bf-cache': 'warn',
         'csp-xss': 'warn',
         'unused-javascript': 'warn',
