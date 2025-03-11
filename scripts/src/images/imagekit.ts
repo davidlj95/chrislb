@@ -2,7 +2,11 @@ import ImagekitSdk from 'imagekit'
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
 import { Log } from '../utils/log'
-import { FileObject, ImageKitOptions } from 'imagekit/dist/libs/interfaces'
+import {
+  FileObject,
+  FolderObject,
+  ImageKitOptions,
+} from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
 import { ImageCdnApi } from './image-cdn-api'
 import { URLSearchParams } from 'url'
@@ -91,7 +95,7 @@ export class Imagekit implements ImageCdnApi {
       includeFolder: false,
       sort: 'ASC_NAME',
     })
-    return fileObjects.map(this._imageAssetFromFileObject)
+    return fileObjects.filter(isFileObject).map(this._imageAssetFromFileObject)
   }
 
   private async _listDirectoryNamesInPath(
@@ -131,13 +135,10 @@ export class Imagekit implements ImageCdnApi {
   }
 }
 
-type FolderObject = Pick<
-  FileObject,
-  'type' | 'name' | 'createdAt' | 'updatedAt'
-> & {
-  folderId: string
-  folderPath: string
-}
+const isFileObject = (
+  fileOrFolderObject: FileObject | FolderObject,
+): fileOrFolderObject is FileObject =>
+  !(fileOrFolderObject as FolderObject).folderId
 
 interface CustomMetadata {
   alt?: string
