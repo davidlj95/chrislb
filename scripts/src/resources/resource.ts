@@ -20,7 +20,7 @@ export class Resource {
   }
 
   async getData(): Promise<unknown> {
-    return new this.collection.fileType.reader(this.path).read()
+    return this.collection.fileType.read(this.path)
   }
 
   get childCollection(): ResourceCollection {

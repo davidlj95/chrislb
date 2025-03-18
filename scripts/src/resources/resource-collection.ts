@@ -1,15 +1,14 @@
 import { Resource } from './resource'
 import { basename, join } from 'path'
-import { FileType } from '../files/file-type'
-import { JSON_FILE_TYPE } from '../files/json-file-type'
-import { mkdirSync, readdirSync } from 'fs'
+import { FileType, JsonFileType } from './file'
+import { mkdir, readdir } from 'fs/promises'
 
 export class ResourceCollection {
   private _resources?: readonly Resource[]
 
   constructor(
     readonly path: string,
-    readonly fileType: FileType = JSON_FILE_TYPE,
+    readonly fileType: FileType = new JsonFileType(),
   ) {}
 
   get name(): string {
@@ -18,7 +17,7 @@ export class ResourceCollection {
 
   async getResources(): Promise<readonly Resource[]> {
     if (!this._resources) {
-      const directoryFiles = readdirSync(this.path, {
+      const directoryFiles = await readdir(this.path, {
         withFileTypes: true,
       })
       const resourceFiles = directoryFiles.filter(
@@ -40,17 +39,17 @@ export class ResourceCollection {
   async createResource(name: string, data: unknown): Promise<Resource> {
     await this._createDirectoryIfDoesNotExist()
     const filename = this.fileType.appendExtension(name)
-    await new this.fileType.writer(join(this.path, filename)).write(data)
+    await this.fileType.write(join(this.path, filename), data)
     return new Resource(this, filename)
   }
 
   async upsertResource(name: string, data: unknown): Promise<Resource> {
     const filename = this.fileType.appendExtension(name)
-    await new this.fileType.writer(join(this.path, filename)).write(data)
+    await this.fileType.write(join(this.path, filename), data)
     return new Resource(this, filename)
   }
 
   private async _createDirectoryIfDoesNotExist(): Promise<void> {
-    mkdirSync(this.path, { recursive: true })
+    await mkdir(this.path, { recursive: true })
   }
 }
