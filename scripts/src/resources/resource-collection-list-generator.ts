@@ -29,8 +29,7 @@ export class ResourceCollectionListGenerator {
       resourcesData.push(await this._generateResourceData(resource))
     }
     Log.info('Writing list as %s', this.filename)
-    const writer = new this.resourceCollection.fileType.writer(this.filepath)
-    await writer.write(resourcesData)
+    await this.resourceCollection.fileType.write(this.filepath, resourcesData)
     Log.ok('Done')
     Log.groupEnd()
   }
