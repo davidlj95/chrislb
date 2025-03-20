@@ -1,4 +1,3 @@
-import { ResourceImagesGenerator } from './resource-images-generator'
 import { ImageCdnApi } from '../images/image-cdn-api'
 import { isMain } from '../utils/is-main'
 import { Imagekit } from '../images/imagekit'
@@ -8,13 +7,7 @@ import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 import { Collections } from './collections'
 
 export class ImagesListsGenerators {
-  private readonly _resourceImagesGenerator: ResourceImagesGenerator
-  private readonly _collections: Collections
-
-  constructor(private readonly _imageCdnApi: ImageCdnApi) {
-    this._resourceImagesGenerator = new ResourceImagesGenerator(_imageCdnApi)
-    this._collections = new Collections()
-  }
+  constructor(private readonly _imageCdnApi: ImageCdnApi) {}
 
   static fromEnv() {
     const imagekit = Imagekit.fromEnv('unpublished')
@@ -23,7 +16,6 @@ export class ImagesListsGenerators {
 
   async all(): Promise<void> {
     await this.miscImages()
-    await this.projectsImages()
   }
 
   async miscImages() {
@@ -45,17 +37,7 @@ export class ImagesListsGenerators {
       horizontalLogo,
       aboutPortrait,
     }
-    await this._collections.misc.upsertResource(
-      IMAGES_FILE_BASENAME,
-      miscImages,
-    )
-  }
-
-  async projectsImages() {
-    Log.info('Looking for project images')
-    for (const project of await this._collections.projects.getResources()) {
-      await this._resourceImagesGenerator.generate(project)
-    }
+    await Collections.misc.upsertResource(IMAGES_FILE_BASENAME, miscImages)
   }
 }
 

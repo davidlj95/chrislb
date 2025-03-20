@@ -52,7 +52,7 @@ export class ProjectListItemExtraDataGenerator {
     if (!imagesResource) {
       return []
     }
-    return (await imagesResource.getData()) as readonly ImageAsset[]
+    return (await imagesResource.read()) as readonly ImageAsset[]
   }
 
   private async _getImagesResource(): Promise<Resource | null> {
@@ -87,7 +87,7 @@ export class ProjectListItemExtraDataGenerator {
   }
 
   private async _hasVideos(): Promise<boolean> {
-    const project = (await this.resource.getData()) as Project
+    const project = (await this.resource.read()) as Project
     return !isEmpty(project.youtubePlaylistId?.trim())
   }
 

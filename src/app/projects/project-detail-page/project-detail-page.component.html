@@ -1,37 +1,27 @@
-@if (assetsCollections()) {
-  @for (
-    assetsCollection of assetsCollections();
-    track assetsCollection;
-    let index = $index
-  ) {
-    <div
-      class="assets"
-      [class.half]="assetsCollection.data.size === AssetsCollectionSize.Half"
-    >
-      <h2>{{ assetsCollection.data.name }}</h2>
-      @if (assetsCollection.type === AssetsCollectionType.Video) {
-        <iframe
-          width="560"
-          height="315"
-          [attr.src]="
-            assetsCollection.youtubePlaylist.iframeUrl | sanitizeResourceUrl
-          "
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-      }
-      @if (assetsCollection.type === AssetsCollectionType.Image) {
-        <app-images-swiper
-          [images]="assetsCollection.images"
-          [responsiveImageAttributes]="assetsCollection.swiperConfig.attributes"
-          [customSwiperOptions]="
-            assetsCollection.swiperConfig.customSwiperOptions
-          "
-          [style.max-width.px]="assetsCollection.swiperConfig.maxWidth?.value"
-          [priority]="index < _maxSwipersPerViewport"
-        ></app-images-swiper>
-      }
-    </div>
-  }
+@let youtubePlaylistUrl = _youtubePlaylistUrl();
+@if (youtubePlaylistUrl) {
+  <div class="assets">
+    <!-- TODO: unhardcode this -->
+    <h2>Videos</h2>
+    <iframe
+      width="560"
+      height="315"
+      [attr.src]="youtubePlaylistUrl | sanitizeResourceUrl"
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+}
+@for (album of _albums(); track album; let index = $index) {
+  <div class="assets" [class.half]="album.size === 'half'">
+    <h2>{{ album.title }}</h2>
+    <app-images-swiper
+      [images]="album.images"
+      [responsiveImageAttributes]="album.swiper.attributes"
+      [customSwiperOptions]="album.swiper.options"
+      [style.max-width.px]="album.swiper.maxWidth?.value"
+      [priority]="index < _maxSwipersPerViewport"
+    ></app-images-swiper>
+  </div>
 }
