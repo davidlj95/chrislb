@@ -6,14 +6,14 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { from } from 'rxjs'
 
 @Component({
-  selector: 'app-projects-page',
-  templateUrl: './projects-page.component.html',
-  styleUrls: ['./projects-page.component.scss'],
+  selector: 'app-projects-list-page',
+  templateUrl: './projects-list-page.component.html',
+  styleUrls: ['./projects-list-page.component.scss'],
   standalone: true,
   imports: [ProjectListItemComponent],
   providers: [ProjectsService],
 })
-export class ProjectsPageComponent {
+export class ProjectsListPageComponent {
   readonly projects: Signal<readonly ProjectListItem[]>
   protected readonly _maxProjectsPerPage = 2
 

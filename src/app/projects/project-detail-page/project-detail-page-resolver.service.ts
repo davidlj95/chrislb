@@ -7,7 +7,7 @@ import { NavigatorService } from '../../common/routing/navigator.service'
 import { Injectable } from '@angular/core'
 
 @Injectable()
-export class ProjectPageResolver {
+export class ProjectDetailPageResolver {
   constructor(
     private readonly _projectsService: ProjectsService,
     private readonly _navigatorService: NavigatorService,
