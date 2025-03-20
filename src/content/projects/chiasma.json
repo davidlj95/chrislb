@@ -1,56 +1,525 @@
 {
-  "slug": "chiasma",
-  "date": "2023-10-31",
   "title": "CHIASMA",
-  "subtitle": "Final graduate collection",
   "quote": "Chiasma: crossing path of two organic structures, usually the bridge in the recombination process",
-  "description": "The collection explores hybrid identity, it shows my personal experience as a second generation immigrant who has grown up between two different cultures. My Latin heritage, being born in Peru, and being raised in Spain, has led me to develop an ego that combines these two worlds in one. This experience, which is shared by many people nowadays, is redefining new identities and social principles. This project brings to the surface these experiences by exploring different acculturation profiles that are known in the process of cultural adaptation and identity development.\n\nThe masculine ego reflected in the collection is stoic and sophisticated. It is a striking ego, so outwear garments are elemental pieces and traditional masculine silhouettes are predominant. The fluidity of identity is represented through nuanced colours and prints with ethnic cultural origins. The different garments finishings emphasize the separation between the individual identity and the collective one, to see how they mix and how this cultural hybridization that I speak about is produced.",
-  "lookbookNamesAndSlugs": [
+  "albums": [
     {
-      "slug": "ego",
-      "name": "Ego"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook01.jpg",
+          "filePath": "/projects/chiasma/lookbooks/ego/lookbook01.jpg?updatedAt=1699069546873",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook02.jpg",
+          "filePath": "/projects/chiasma/lookbooks/ego/lookbook02.jpg?updatedAt=1699069548101",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook03.jpg",
+          "filePath": "/projects/chiasma/lookbooks/ego/lookbook03.jpg?updatedAt=1699069550158",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook04.jpg",
+          "filePath": "/projects/chiasma/lookbooks/ego/lookbook04.jpg?updatedAt=1699069551251",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook05.jpg",
+          "filePath": "/projects/chiasma/lookbooks/ego/lookbook05.jpg?updatedAt=1699069552303",
+          "height": 3240,
+          "width": 2160
+        }
+      ],
+      "title": "Ego"
     },
     {
-      "slug": "defiant",
-      "name": "Defiant"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook06.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook06.jpg?updatedAt=1699069579703",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook07.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook07.jpg?updatedAt=1699069581588",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook08.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook08.jpg?updatedAt=1699069583131",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook09.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook09.jpg?updatedAt=1699069584273",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook10.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook10.jpg?updatedAt=1699069586172",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook11.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook11.jpg?updatedAt=1699069588227",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook12.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook12.jpg?updatedAt=1699069589731",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook13.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook13.jpg?updatedAt=1699069591182",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook14.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook14.jpg?updatedAt=1699069592517",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook15.jpg",
+          "filePath": "/projects/chiasma/lookbooks/defiant/lookbook15.jpg?updatedAt=1699069593816",
+          "height": 3240,
+          "width": 2160
+        }
+      ],
+      "title": "Defiant"
     },
     {
-      "slug": "moratorium",
-      "name": "Moratorium"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook16.jpg",
+          "filePath": "/projects/chiasma/lookbooks/moratorium/lookbook16.jpg?updatedAt=1699069625260",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook17.jpg",
+          "filePath": "/projects/chiasma/lookbooks/moratorium/lookbook17.jpg?updatedAt=1699069626658",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook18.jpg",
+          "filePath": "/projects/chiasma/lookbooks/moratorium/lookbook18.jpg?updatedAt=1699069627780",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook19.jpg",
+          "filePath": "/projects/chiasma/lookbooks/moratorium/lookbook19.jpg?updatedAt=1699069629757",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook20.jpg",
+          "filePath": "/projects/chiasma/lookbooks/moratorium/lookbook20.jpg?updatedAt=1699069631381",
+          "height": 3240,
+          "width": 2160
+        }
+      ],
+      "title": "Moratorium"
     },
     {
-      "slug": "foreclosure",
-      "name": "Foreclosure"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook21.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook21.jpg?updatedAt=1699069653661",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook22.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook22.jpg?updatedAt=1699069654705",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook23.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook23.jpg?updatedAt=1699069655906",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook24.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook24.jpg?updatedAt=1699069657216",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook25.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook25.jpg?updatedAt=1699069658324",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook26.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook26.jpg?updatedAt=1699069660086",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook27.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook27.jpg?updatedAt=1699069661434",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook28.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook28.jpg?updatedAt=1699069663389",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook29.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook29.jpg?updatedAt=1699069665221",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook30.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook30.jpg?updatedAt=1699069666352",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook31.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook31.jpg?updatedAt=1699069667462",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook32.jpg",
+          "filePath": "/projects/chiasma/lookbooks/foreclosure/lookbook32.jpg?updatedAt=1699069668763",
+          "height": 3240,
+          "width": 2160
+        }
+      ],
+      "title": "Foreclosure"
     },
     {
-      "slug": "diffusion",
-      "name": "Diffusion"
-    }
-  ],
-  "credits": [
-    {
-      "role": "Photographer",
-      "authorSlug": "alejandro-flama"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook33.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook33.jpg?updatedAt=1699069698937",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook34.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook34.jpg?updatedAt=1699069700683",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook35.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook35.jpg?updatedAt=1699069701989",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook36.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook36.jpg?updatedAt=1699069703335",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook37.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook37.jpg?updatedAt=1699069704453",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook38.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook38.jpg?updatedAt=1699069706156",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook39.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook39.jpg?updatedAt=1699069707555",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook40.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook40.jpg?updatedAt=1699069708903",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook41.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook41.jpg?updatedAt=1699069710724",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook42.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook42.jpg?updatedAt=1699069712700",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook43.jpg",
+          "filePath": "/projects/chiasma/lookbooks/diffusion/lookbook43.jpg?updatedAt=1699069713977",
+          "height": 3240,
+          "width": 2160
+        }
+      ],
+      "title": "Diffusion"
     },
     {
-      "authorSlug": "daniela-velazquez",
-      "role": "MUA"
+      "preset": "tech-material",
+      "images": [
+        {
+          "name": "01.jpg",
+          "filePath": "/projects/chiasma/tech-material/01.jpg?updatedAt=1698346542456",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "02.jpg",
+          "filePath": "/projects/chiasma/tech-material/02.jpg?updatedAt=1698346556637",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "03.jpg",
+          "filePath": "/projects/chiasma/tech-material/03.jpg?updatedAt=1698346548348",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "04.jpg",
+          "filePath": "/projects/chiasma/tech-material/04.jpg?updatedAt=1698346559479",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "06.jpg",
+          "filePath": "/projects/chiasma/tech-material/06.jpg?updatedAt=1698346539556",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "10.jpg",
+          "filePath": "/projects/chiasma/tech-material/10.jpg?updatedAt=1698346554719",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "11.jpg",
+          "filePath": "/projects/chiasma/tech-material/11.jpg?updatedAt=1698346551355",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "13.jpg",
+          "filePath": "/projects/chiasma/tech-material/13.jpg?updatedAt=1698346545791",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
     },
     {
-      "role": "Model",
-      "authorSlug": "karlo-vargas"
+      "preset": "design-book",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/chiasma/design-book/1.jpg?updatedAt=1698377557662",
+          "height": 3507,
+          "width": 4960
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/chiasma/design-book/2.jpg?updatedAt=1698377546243",
+          "height": 3507,
+          "width": 4960
+        },
+        {
+          "name": "design10.jpg",
+          "filePath": "/projects/chiasma/design-book/design10.jpg?updatedAt=1698377534570",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design11.jpg",
+          "filePath": "/projects/chiasma/design-book/design11.jpg?updatedAt=1698377554314",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design2.jpg",
+          "filePath": "/projects/chiasma/design-book/design2.jpg?updatedAt=1698377562835",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design3.jpg",
+          "filePath": "/projects/chiasma/design-book/design3.jpg?updatedAt=1698377565411",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design4.jpg",
+          "filePath": "/projects/chiasma/design-book/design4.jpg?updatedAt=1698377560111",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design5.jpg",
+          "filePath": "/projects/chiasma/design-book/design5.jpg?updatedAt=1698377551490",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design6.jpg",
+          "filePath": "/projects/chiasma/design-book/design6.jpg?updatedAt=1698377544014",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design7.jpg",
+          "filePath": "/projects/chiasma/design-book/design7.jpg?updatedAt=1698377537980",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design8.jpg",
+          "filePath": "/projects/chiasma/design-book/design8.jpg?updatedAt=1698377549329",
+          "height": 1754,
+          "width": 2480
+        },
+        {
+          "name": "design9.jpg",
+          "filePath": "/projects/chiasma/design-book/design9.jpg?updatedAt=1698377541217",
+          "height": 1754,
+          "width": 2480
+        }
+      ]
     },
     {
-      "authorSlug": "my-fucking-studio",
-      "role": "Studio"
-    },
-    {
-      "authorSlug": "belen-navas",
-      "role": "Assistant Director"
-    },
-    {
-      "role": "CD, Styling, process",
-      "authorSlug": "christian-lazaro"
+      "preset": "concept",
+      "images": [
+        {
+          "name": "EGO_1.jpg",
+          "filePath": "/projects/chiasma/concept/EGO_1.jpg?updatedAt=1698967847000",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "EGO_2.jpg",
+          "filePath": "/projects/chiasma/concept/EGO_2.jpg?updatedAt=1698967862000",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "EGO_3.jpg",
+          "filePath": "/projects/chiasma/concept/EGO_3.jpg?updatedAt=1698967859208",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "cactus hole.JPG",
+          "filePath": "/projects/chiasma/concept/cactus%20hole.JPG?updatedAt=1698967852507",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "f_base.jpg",
+          "filePath": "/projects/chiasma/concept/f_base.jpg?updatedAt=1698967866766",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "f_passionjpg.jpg",
+          "filePath": "/projects/chiasma/concept/f_passionjpg.jpg?updatedAt=1698967842191",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "fanchor.jpg",
+          "filePath": "/projects/chiasma/concept/fanchor.jpg?updatedAt=1698968356591",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "laser cut.JPG",
+          "filePath": "/projects/chiasma/concept/laser%20cut.JPG?updatedAt=1698967834108",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "new image.jpg",
+          "filePath": "/projects/chiasma/concept/new%20image.jpg?updatedAt=1698967836714",
+          "height": 3234,
+          "width": 2323
+        },
+        {
+          "name": "pre made.jpg",
+          "filePath": "/projects/chiasma/concept/pre%20made.jpg?updatedAt=1698967857320",
+          "height": 3074,
+          "width": 2208
+        },
+        {
+          "name": "relief.JPG",
+          "filePath": "/projects/chiasma/concept/relief.JPG?updatedAt=1698967864790",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "sketch 2.jpg",
+          "filePath": "/projects/chiasma/concept/sketch%202.jpg?updatedAt=1698967844752",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "sketch 3 (foto).jpg",
+          "filePath": "/projects/chiasma/concept/sketch%203%20(foto).jpg?updatedAt=1699264744220",
+          "height": 3933,
+          "width": 2835
+        },
+        {
+          "name": "soil print.JPG",
+          "filePath": "/projects/chiasma/concept/soil%20print.JPG?updatedAt=1698967831454",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "through .JPG",
+          "filePath": "/projects/chiasma/concept/through%20.JPG?updatedAt=1698967839486",
+          "height": 3508,
+          "width": 2480
+        },
+        {
+          "name": "totora print.JPG",
+          "filePath": "/projects/chiasma/concept/totora%20print.JPG?updatedAt=1698967854632",
+          "height": 3508,
+          "width": 2480
+        }
+      ]
     }
   ]
 }

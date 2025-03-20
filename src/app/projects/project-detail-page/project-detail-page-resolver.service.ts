@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router'
 import { EMPTY, tap } from 'rxjs'
-import { Project } from '../project'
+import { ProjectDetail } from '../project'
 import { ProjectsService } from '../projects.service'
 import { SLUG_PARAM } from '../projects.routes-params'
 import { NavigatorService } from '../../common/routing/navigator.service'
@@ -13,13 +13,15 @@ export class ProjectDetailPageResolver {
     private readonly _navigatorService: NavigatorService,
   ) {}
 
-  project(route: ActivatedRouteSnapshot): ReturnType<ResolveFn<Project>> {
+  projectDetail(
+    route: ActivatedRouteSnapshot,
+  ): ReturnType<ResolveFn<ProjectDetail>> {
     const slug = route.paramMap.get(SLUG_PARAM)
     if (!slug) {
       this._navigatorService.displayNotFoundPage()
       return EMPTY
     }
-    return this._projectsService.bySlug(slug!).pipe(
+    return this._projectsService.getDetail(slug!).pipe(
       tap({
         error: () => {
           this._navigatorService.displayNotFoundPage()

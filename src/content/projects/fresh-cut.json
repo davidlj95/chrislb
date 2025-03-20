@@ -1,13 +1,152 @@
 {
-  "date": "2023-10-22",
-  "slug": "fresh-cut",
   "title": "FRESH CUT",
-  "subtitle": "Leather Capsule",
   "description": "SS capsule collection inspired by the awe-inspiring \"Chan-Chan,\" the world's largest adobe city in South America. Drawing from the geometric lines and shapes of this remarkable place, our collection infuses a fresh and contemporary vibe into its fabrics.\n\nThis exclusive collection comprises three key pieces. The set includes a beige leather bra paired with a leather and tulle fabric belt, both echoing the architectural essence of Chan-Chan. Underneath, we offer a comfortable yet stylish elastic bodysuit crafted from suede material. Each item in this collection is thoughtfully designed to capture the spirit of this extraordinary ancient city while offering a modern and fashionable touch. ",
-  "lookbookNamesAndSlugs": [
+  "albums": [
     {
-      "name": "LOOKBOOK",
-      "slug": "lookbooks"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "lookbook_freshcut_1.jpg",
+          "filePath": "/projects/fresh-cut/lookbook/lookbook_freshcut_1.jpg?updatedAt=1699455379361",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook_freshcut_2.jpg",
+          "filePath": "/projects/fresh-cut/lookbook/lookbook_freshcut_2.jpg?updatedAt=1699455376244",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook_freshcut_3.jpg",
+          "filePath": "/projects/fresh-cut/lookbook/lookbook_freshcut_3.jpg?updatedAt=1699455372419",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook_freshcut_4.jpg",
+          "filePath": "/projects/fresh-cut/lookbook/lookbook_freshcut_4.jpg?updatedAt=1699455378665",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "lookbook_freshcut_5.jpg",
+          "filePath": "/projects/fresh-cut/lookbook/lookbook_freshcut_5.jpg?updatedAt=1699455379537",
+          "height": 3240,
+          "width": 2160
+        }
+      ]
+    },
+    {
+      "preset": "tech-material",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/fresh-cut/tech-material/1.jpg?updatedAt=1699455358783",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/fresh-cut/tech-material/2.jpg?updatedAt=1699455359122",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/fresh-cut/tech-material/3.jpg?updatedAt=1699455359036",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "4.jpg",
+          "filePath": "/projects/fresh-cut/tech-material/4.jpg?updatedAt=1699455359014",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
+    },
+    {
+      "preset": "design-book",
+      "images": [
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/fresh-cut/design-book/3.jpg?updatedAt=1699455374650",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "4.jpg",
+          "filePath": "/projects/fresh-cut/design-book/4.jpg?updatedAt=1699455361702",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "5.jpg",
+          "filePath": "/projects/fresh-cut/design-book/5.jpg?updatedAt=1699455361379",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "6.jpg",
+          "filePath": "/projects/fresh-cut/design-book/6.jpg?updatedAt=1699455369751",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "7.jpg",
+          "filePath": "/projects/fresh-cut/design-book/7.jpg?updatedAt=1699455362563",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "8.jpg",
+          "filePath": "/projects/fresh-cut/design-book/8.jpg?updatedAt=1699455361520",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
+    },
+    {
+      "preset": "concept",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/fresh-cut/concept/1.jpg?updatedAt=1699455359130",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "10.jpg",
+          "filePath": "/projects/fresh-cut/concept/10.jpg?updatedAt=1699455359027",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "11.jpg",
+          "filePath": "/projects/fresh-cut/concept/11.jpg?updatedAt=1699455359116",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "12.jpg",
+          "filePath": "/projects/fresh-cut/concept/12.jpg?updatedAt=1699455358924",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/fresh-cut/concept/2.jpg?updatedAt=1699455358875",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "9.jpg",
+          "filePath": "/projects/fresh-cut/concept/9.jpg?updatedAt=1699455359111",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
     }
   ]
 }
