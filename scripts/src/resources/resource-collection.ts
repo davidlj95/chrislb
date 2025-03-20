@@ -37,7 +37,7 @@ export class ResourceCollection {
   }
 
   async createResource(name: string, data: unknown): Promise<Resource> {
-    await this._createDirectoryIfDoesNotExist()
+    await this.createDirectoryIfDoesNotExist()
     const filename = this.fileType.appendExtension(name)
     await this.fileType.write(join(this.path, filename), data)
     return new Resource(this, filename)
@@ -49,7 +49,7 @@ export class ResourceCollection {
     return new Resource(this, filename)
   }
 
-  private async _createDirectoryIfDoesNotExist(): Promise<void> {
+  async createDirectoryIfDoesNotExist(): Promise<void> {
     await mkdir(this.path, { recursive: true })
   }
 }

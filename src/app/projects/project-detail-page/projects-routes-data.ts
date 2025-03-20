@@ -1,5 +1,5 @@
-import { Project } from '../project'
+import { ProjectDetail } from '../project'
 
-export interface ProjectRouteData {
-  project: Project
+export interface ProjectDetailRouteData {
+  projectDetail: ProjectDetail
 }

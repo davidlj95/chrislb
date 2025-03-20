@@ -1,5 +1,4 @@
 import { Component, computed, input } from '@angular/core'
-import { ProjectListItem } from '../../project-list-item'
 import { Author, AuthorsService } from '../../../common/authors.service'
 import { Social } from '../../../common/social/social'
 import { SocialService } from '../../../common/social/social.service'
@@ -13,6 +12,7 @@ import { Breakpoint } from '../../../common/style/breakpoint'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
+import { ProjectListItem } from '../../project'
 
 @Component({
   selector: 'app-project-list-item',

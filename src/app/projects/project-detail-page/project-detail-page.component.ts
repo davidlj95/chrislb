@@ -13,13 +13,14 @@ import { Vw } from '../../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
 import { Breakpoint } from '../../common/style/breakpoint'
 import { ActivatedRoute } from '@angular/router'
-import { ProjectRouteData } from './projects-routes-data'
+import { ProjectDetailRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { AnyAssetsCollection } from './any-asset-collection'
+import { ProjectDetail } from '../project'
 
 @Component({
   templateUrl: './project-detail-page.component.html',
@@ -29,9 +30,9 @@ import { AnyAssetsCollection } from './any-asset-collection'
   providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectDetailPageComponent {
-  readonly project = toSignal(
+  readonly projectDetail = toSignal(
     this._activatedRoute.data.pipe(
-      map((data) => (data as ProjectRouteData).project),
+      map((data) => (data as ProjectDetailRouteData).projectDetail),
     ),
   )
   readonly assetsCollections = signal<
@@ -91,19 +92,16 @@ export class ProjectDetailPageComponent {
     projectAssetsCollectionsService: ProjectAssetsCollectionsService,
   ) {
     effect(() => {
-      const project = this.project()
-      if (!project) {
+      const projectDetail = this.projectDetail()
+      if (!projectDetail) {
         return
       }
       ngxMetaService.set({
-        title: getTitle(project.title),
-        description:
-          project.description.length > 200
-            ? project.description.substring(0, 197) + '...'
-            : project.description,
+        title: getTitle(projectDetail.title),
+        description: getDescription(projectDetail) ?? undefined,
       } satisfies GlobalMetadata)
       projectAssetsCollectionsService
-        .byProject(project)
+        .byProject(projectDetail)
         .pipe(catchError(() => of([])))
         .subscribe((assetsCollections) => {
           if (!assetsCollections.length) {
@@ -123,6 +121,20 @@ export class ProjectDetailPageComponent {
           this.assetsCollections.set(assetsCollectionsWithSwiperConfig)
         })
     })
+  }
+}
+
+const getDescription = ({
+  quote,
+  description,
+}: ProjectDetail): string | void => {
+  if (quote) {
+    return quote
+  }
+  if (description) {
+    return description.length > 200
+      ? description.substring(0, 197) + '...'
+      : description
   }
 }
 

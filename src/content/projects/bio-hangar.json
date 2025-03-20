@@ -1,14 +1,134 @@
 {
-  "date": "2023-10-27",
-  "slug": "bio-hangar",
   "title": "BIO-HANGAR",
-  "subtitle": "Denim collection",
   "quote": "Retro-futuristic vision",
-  "description": "This retro-futuristic project represents an innovative fusion of past and future elements to create a distinct fashion aesthetic. The focus is on crafting garments with silver vinyl circuit-like patterns on the sleeves, evoking both nostalgia and a forward-thinking atmosphere. The core concept revolves around a technology facility from a bygone era, blending 100% cotton blue denim for vintage authenticity with futuristic silver foil accents. This juxtaposition signifies the coexistence of past and future.\n\nNotably, the garments feature a straight coat with a detachable hood, providing both weather protection and a touch of mystery by allowing wearers to see through it. The project aims to convey a sense of retro-futuristic fashion, offering a glimpse into a post-modern future. It combines the aesthetics of past eras with futuristic elements, creating a captivating collection where innovation meets nostalgia and technology harmonizes with history, weaving a compelling narrative through clothing.",
-  "lookbookNamesAndSlugs": [
+  "albums": [
     {
-      "slug": "lookbook",
-      "name": "LOOKBOOK"
+      "preset": "lookbook",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/1.jpg?updatedAt=1699295437135",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/2.jpg?updatedAt=1699295436451",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/3.jpg?updatedAt=1699322521189",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "4.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/4.jpg?updatedAt=1699295437162",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "5.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/5.jpg?updatedAt=1699295436510",
+          "height": 3240,
+          "width": 2160
+        },
+        {
+          "name": "6.jpg",
+          "filePath": "/projects/bio-hangar/lookbook/6.jpg?updatedAt=1699322537821",
+          "height": 3240,
+          "width": 2160
+        }
+      ]
+    },
+    {
+      "preset": "tech-material",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/bio-hangar/tech-material/1.jpg?updatedAt=1699313077636",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/bio-hangar/tech-material/2.jpg?updatedAt=1699313079816",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/bio-hangar/tech-material/3.jpg?updatedAt=1699322952697",
+          "height": 2160,
+          "width": 3240
+        }
+      ]
+    },
+    {
+      "preset": "design-book",
+      "images": [
+        {
+          "name": "1.jpg",
+          "filePath": "/projects/bio-hangar/design-book/1.jpg?updatedAt=1699323206219",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/bio-hangar/design-book/2.jpg?updatedAt=1699323206411",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/bio-hangar/design-book/3.jpg?updatedAt=1699323206222",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "4.jpg",
+          "filePath": "/projects/bio-hangar/design-book/4.jpg?updatedAt=1699323206025",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
+    },
+    {
+      "preset": "concept",
+      "images": [
+        {
+          "name": "2.jpg",
+          "filePath": "/projects/bio-hangar/concept/2.jpg?updatedAt=1699312982382",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "3.jpg",
+          "filePath": "/projects/bio-hangar/concept/3.jpg?updatedAt=1699312992538",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "4.jpg",
+          "filePath": "/projects/bio-hangar/concept/4.jpg?updatedAt=1699312987508",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "5.jpg",
+          "filePath": "/projects/bio-hangar/concept/5.jpg?updatedAt=1699312979790",
+          "height": 1122,
+          "width": 1587
+        },
+        {
+          "name": "6.jpg",
+          "filePath": "/projects/bio-hangar/concept/6.jpg?updatedAt=1699312989949",
+          "height": 1122,
+          "width": 1587
+        }
+      ]
     }
   ]
 }

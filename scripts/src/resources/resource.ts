@@ -19,8 +19,12 @@ export class Resource {
     return this.collection.fileType.removeExtension(this.filename)
   }
 
-  async getData(): Promise<unknown> {
+  async read(): Promise<unknown> {
     return this.collection.fileType.read(this.path)
+  }
+
+  async write(data: unknown): Promise<void> {
+    return this.collection.fileType.write(this.path, data)
   }
 
   get childCollection(): ResourceCollection {
