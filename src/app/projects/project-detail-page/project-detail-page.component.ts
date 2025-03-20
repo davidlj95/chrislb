@@ -22,7 +22,6 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { AnyAssetsCollection } from './any-asset-collection'
 
 @Component({
-  selector: 'app-project-detail-page',
   templateUrl: './project-detail-page.component.html',
   styleUrls: ['./project-detail-page.component.scss'],
   standalone: true,
