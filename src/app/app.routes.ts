@@ -1,4 +1,4 @@
-import { ProjectsPageComponent } from './projects/projects-page/projects-page.component'
+import { ProjectsListPageComponent } from './projects/projects-list-page/projects-list-page.component'
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component'
 import projectsPageMetadata from '../data/pages/projects.json'
 import notFoundPageMetadata from '../data/pages/404.json'
@@ -14,11 +14,10 @@ import { Routes } from '@angular/router'
 export const routes: Routes = [
   {
     path: '',
-    component: ProjectsPageComponent,
+    component: ProjectsListPageComponent,
     data: makeRouteMetadata(projectsPageMetadata),
     pathMatch: 'full',
   },
-
   {
     path: PROJECTS_PATH,
     children: PROJECTS_ROUTES,

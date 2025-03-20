@@ -5,7 +5,7 @@ import { Log } from '../utils/log'
 import { Project } from '../../../src/app/projects/project'
 import previewJson from '../../../src/data/assets-collections/preview.json'
 import { groupBy, isEmpty, isUndefined } from 'lodash-es'
-import { ProjectImageAsset } from '../../../src/app/projects/project-page/project-image-asset'
+import { ProjectImageAsset } from '../../../src/app/projects/project-detail-page/project-image-asset'
 
 export class ProjectListItemExtraDataGenerator {
   private _imagesResource?: Resource | null

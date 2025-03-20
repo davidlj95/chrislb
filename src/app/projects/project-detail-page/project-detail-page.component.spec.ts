@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ProjectPageComponent } from './project-page.component'
+import { ProjectDetailPageComponent } from './project-detail-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { of } from 'rxjs'
@@ -9,9 +9,9 @@ import { ActivatedRoute } from '@angular/router'
 import { ProjectRouteData } from './projects-routes-data'
 import { NgxMetaService } from '@davidlj95/ngx-meta/core'
 
-describe('ProjectPageComponent', () => {
-  let component: ProjectPageComponent
-  let fixture: ComponentFixture<ProjectPageComponent>
+describe('ProjectDetailPageComponent', () => {
+  let component: ProjectDetailPageComponent
+  let fixture: ComponentFixture<ProjectDetailPageComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +28,7 @@ describe('ProjectPageComponent', () => {
         MockProvider(NgxMetaService),
       ],
     })
-    TestBed.overrideComponent(ProjectPageComponent, {
+    TestBed.overrideComponent(ProjectDetailPageComponent, {
       set: {
         imports: [MockComponents(ImagesSwiperComponent)],
         providers: [
@@ -40,7 +40,7 @@ describe('ProjectPageComponent', () => {
         ],
       },
     })
-    fixture = TestBed.createComponent(ProjectPageComponent)
+    fixture = TestBed.createComponent(ProjectDetailPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

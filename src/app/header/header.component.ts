@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import projectPageMetadata from '../../data/pages/projects.json'
+import projectsListPageMetadata from '../../data/pages/projects.json'
 import aboutPageMetadata from '../../data/pages/about.json'
 import { ABOUT_PATH } from '../common/routing/paths'
 import { RouterLink, RouterLinkActive } from '@angular/router'
@@ -14,7 +14,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 export class HeaderComponent {
   readonly items: readonly NavigationItem[] = [
     {
-      displayName: projectPageMetadata.title || projectPageMetadata.name,
+      displayName:
+        projectsListPageMetadata.title || projectsListPageMetadata.name,
       path: '/',
     },
     {

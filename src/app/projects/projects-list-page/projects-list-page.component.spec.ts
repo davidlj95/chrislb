@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ProjectsPageComponent } from './projects-page.component'
+import { ProjectsListPageComponent } from './projects-list-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { ProjectsService } from '../projects.service'
 
-describe('ProjectsPageComponent', () => {
-  let component: ProjectsPageComponent
-  let fixture: ComponentFixture<ProjectsPageComponent>
+describe('ProjectsListPageComponent', () => {
+  let component: ProjectsListPageComponent
+  let fixture: ComponentFixture<ProjectsListPageComponent>
 
   beforeEach(() => {
-    TestBed.overrideComponent(ProjectsPageComponent, {
+    TestBed.overrideComponent(ProjectsListPageComponent, {
       set: {
         imports: [MockComponents(ProjectListItemComponent)],
         providers: [
@@ -22,7 +22,7 @@ describe('ProjectsPageComponent', () => {
         ],
       },
     })
-    fixture = TestBed.createComponent(ProjectsPageComponent)
+    fixture = TestBed.createComponent(ProjectsListPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
