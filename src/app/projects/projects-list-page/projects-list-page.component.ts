@@ -6,7 +6,6 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { from } from 'rxjs'
 
 @Component({
-  selector: 'app-projects-list-page',
   templateUrl: './projects-list-page.component.html',
   styleUrls: ['./projects-list-page.component.scss'],
   standalone: true,
