@@ -1,9 +1,7 @@
 import { Imagekit } from '../images/imagekit'
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
-import { Collections, CONTENT_PATH } from './collections'
 import { ImageCdnApi } from '../images/image-cdn-api'
-import { Resource } from '../resources/resource'
 import { ProjectImageAsset } from '../../../src/app/projects/project-detail-page/project-image-asset'
 import PREVIEW_JSON from '../../../src/data/assets-collections/preview.json'
 import LOOKBOOK_JSON from '../../../src/data/assets-collections/lookbook.json'
@@ -16,9 +14,20 @@ import {
   ProjectDetail,
   ProjectListItem,
 } from '../../../src/app/projects/project'
-import { join } from 'path'
-import { JsonFileType } from '../resources/file'
+import { basename, join } from 'path'
 import { mkdir } from 'fs/promises'
+import {
+  appendJsonExtension,
+  listJsonFilesInDirectory,
+  readJson,
+  writeJson,
+} from '../resources/json'
+import {
+  ASSETS_COLLECTIONS_PATH,
+  CONTENT_PATH,
+  DATA_PATH,
+} from '../utils/paths'
+import { PROJECTS_DIR } from '../../../src/app/common/directories'
 
 export const generateProjectsContent = async () => {
   const projectsContents = await mapProjectsDataToProjectsContents()
@@ -30,12 +39,14 @@ export const generateProjectsContent = async () => {
 const mapProjectsDataToProjectsContents = async (): Promise<
   readonly ProjectContent[]
 > => {
-  const dataProjects = await Collections.dataProjects.getResources()
+  const dataProjectFiles = await listJsonFilesInDirectory(
+    join(DATA_PATH, PROJECTS_DIR),
+  )
   const imagekitApi = Imagekit.fromEnv('unpublished')
   const projectContents: ProjectContent[] = []
-  for (const dataProject of dataProjects) {
+  for (const dataProjectFile of dataProjectFiles) {
     projectContents.push(
-      await mapProjectDataToProjectContent(imagekitApi, dataProject),
+      await mapProjectDataToProjectContent(imagekitApi, dataProjectFile),
     )
   }
   return projectContents
@@ -43,13 +54,13 @@ const mapProjectsDataToProjectsContents = async (): Promise<
 
 const mapProjectDataToProjectContent = async (
   imageCdnApi: ImageCdnApi,
-  dataProject: Resource,
+  dataProjectFile: string,
 ): Promise<ProjectContent> => {
+  const dataProject = await readJson<ProjectData>(dataProjectFile)
   const images = await imageCdnApi.getAllImagesInPath(
-    `projects/${dataProject.slug}`,
+    `${PROJECTS_DIR}/${dataProject.slug}`,
     true,
   )
-  const dataProjectJson = (await dataProject.read()) as ProjectData
   const projectImages = images.map(
     (image) => new ProjectImageAsset(image, dataProject.slug),
   )
@@ -64,13 +75,13 @@ const mapProjectDataToProjectContent = async (
     (projectImage) => projectImage.collection,
   )
   const assetsCollectionsFile = join(
-    Collections.assetsCollections.path,
+    ASSETS_COLLECTIONS_PATH,
     '..',
-    new JsonFileType().appendExtension(Collections.assetsCollections.name),
+    appendJsonExtension(basename(ASSETS_COLLECTIONS_PATH)),
   )
-  const assetsCollectionsJson = (await new JsonFileType().read(
+  const assetsCollectionsJson = await readJson<readonly AssetCollection[]>(
     assetsCollectionsFile,
-  )) as readonly AssetCollection[]
+  )
   const albums: readonly ProjectAlbum[] = Object.entries(imagesByAlbum)
     .map<readonly ProjectAlbumWithPresetSlug[]>(
       ([collection, projectImages]) => {
@@ -110,18 +121,16 @@ const mapProjectDataToProjectContent = async (
         return Object.entries(
           projectImagesByLookbook,
         ).map<ProjectAlbumWithPresetSlug>(([lookbookSlug, projectImages]) => {
-          const lookbookIndex =
-            dataProjectJson.lookbookNamesAndSlugs!.findIndex(
-              (lookbookNameAndSlug) =>
-                lookbookNameAndSlug.slug === lookbookSlug,
-            )
+          const lookbookIndex = dataProject.lookbookNamesAndSlugs!.findIndex(
+            (lookbookNameAndSlug) => lookbookNameAndSlug.slug === lookbookSlug,
+          )
           if (lookbookIndex === -1) {
             throw new Error(
               `No title for named lookbook ${lookbookSlug} in project ${dataProject.slug}`,
             )
           }
           const lookbookNameAndSlug =
-            dataProjectJson.lookbookNamesAndSlugs![lookbookIndex]
+            dataProject.lookbookNamesAndSlugs![lookbookIndex]
           return {
             title: `${LOOKBOOKS_JSON.name} ${lookbookIndex + 1} "${lookbookNameAndSlug.name}"`,
             images: projectImages!.map((projectImage) => projectImage.asset),
@@ -160,7 +169,7 @@ const mapProjectDataToProjectContent = async (
       return albumWithoutPreset
     })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { lookbookNamesAndSlugs, ...contentProjectJsonBase } = dataProjectJson
+  const { lookbookNamesAndSlugs, ...contentProjectJsonBase } = dataProject
   return {
     ...contentProjectJsonBase,
     previewImages,
@@ -211,14 +220,8 @@ const generateProjectsList = async (
       return projectListItem
     })
   await mkdir(CONTENT_PATH, { recursive: true })
-  await Collections.contentProjects.fileType.write(
-    join(
-      Collections.contentProjects.path,
-      '..',
-      Collections.contentProjects.fileType.appendExtension(
-        Collections.contentProjects.name,
-      ),
-    ),
+  await writeJson(
+    join(CONTENT_PATH, appendJsonExtension(PROJECTS_DIR)),
     projectListItems,
   )
 }
@@ -229,7 +232,7 @@ export const hasDetails = (projectContent: ProjectContent) =>
 const generateProjectsDetails = async (
   projectsContents: readonly ProjectContent[],
 ) => {
-  await Collections.contentProjects.createDirectoryIfDoesNotExist()
+  await mkdir(join(CONTENT_PATH, PROJECTS_DIR), { recursive: true })
   return Promise.all(projectsContents.map(generateProjectDetail))
 }
 
@@ -237,8 +240,8 @@ const generateProjectDetail = (projectContent: ProjectContent) => {
   if (!hasDetails(projectContent)) {
     return
   }
-  return Collections.contentProjects.upsertResource(
-    projectContent.slug,
+  return writeJson(
+    join(CONTENT_PATH, PROJECTS_DIR, appendJsonExtension(projectContent.slug)),
     mapProjectContentToProjectDetails(projectContent),
   )
 }
