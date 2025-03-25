@@ -210,7 +210,7 @@ const generateProjectsList = async (
       const { date, ...projectListItem } = projectListItemWithDate
       return projectListItem
     })
-  await mkdir(CONTENT_PATH)
+  await mkdir(CONTENT_PATH, { recursive: true })
   await Collections.contentProjects.fileType.write(
     join(
       Collections.contentProjects.path,

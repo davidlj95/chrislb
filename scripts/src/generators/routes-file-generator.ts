@@ -1,10 +1,11 @@
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { getRepositoryRootDir } from '../utils/get-repository-root-dir'
-import { isEmpty } from 'lodash-es'
 import { join } from 'path'
-import { CONTENTS_DIR, PROJECTS_DIR } from '../../../src/app/common/directories'
-import { readdirSync, readFileSync, writeFileSync } from 'fs'
+import { CONTENTS_DIR } from '../../../src/app/common/directories'
+import { readFileSync, writeFileSync } from 'fs'
+import { JsonFileType } from '../resources/file'
+import { ProjectListItem } from '../../../src/app/projects/project'
 
 export class RoutesFileGenerator {
   async all(): Promise<void> {
@@ -13,24 +14,17 @@ export class RoutesFileGenerator {
     const baseRoutes = await this._getBaseRoutes()
     Log.info('Found %d base routes', baseRoutes.length)
     Log.info('Listing projects with contents')
-    const projectDirs = readdirSync(PROJECTS_PATH, {
-      withFileTypes: true,
-    }).filter((dirent) => dirent.isDirectory())
-    const projectDirsWithContent = (
-      await Promise.all(
-        projectDirs.map(async (projectDir) => {
-          const projectDirFiles = readdirSync(
-            join(PROJECTS_PATH, projectDir.name),
-            { withFileTypes: true },
-          )
-          return !isEmpty(projectDirFiles) ? projectDir.name : ''
-        }),
-      )
-    ).filter((projectDir) => projectDir.length)
-    Log.info('Found %d projects with contents', projectDirsWithContent.length)
-    projectDirsWithContent.forEach((dir) => Log.item(dir))
-    const projectRoutes = projectDirsWithContent.map(
-      (projectDirWithContent) => `/projects/${projectDirWithContent}`,
+    const projectListFile = join(CONTENTS_PATH, 'projects.json')
+    const projectListJson = (await new JsonFileType().read(
+      projectListFile,
+    )) as readonly ProjectListItem[]
+    const projectSlugsWithContent = projectListJson
+      .filter((projectListItem) => projectListItem.hasDetails)
+      .map(({ slug }) => slug)
+    Log.info('Found %d projects with contents', projectSlugsWithContent.length)
+    projectSlugsWithContent.forEach((slug) => Log.item(slug))
+    const projectRoutes = projectSlugsWithContent.map(
+      (projectSlug) => `/projects/${projectSlug}`,
     )
     Log.info('Generated routes')
     projectRoutes.forEach((route) => Log.item(route))
@@ -51,7 +45,7 @@ export class RoutesFileGenerator {
 const ROOT_PATH = getRepositoryRootDir()
 const BASE_ROUTES_FILENAME = 'routes-file.base.txt'
 const ROUTES_FILENAME = 'routes-file.txt'
-const PROJECTS_PATH = join(ROOT_PATH, 'src', CONTENTS_DIR, PROJECTS_DIR)
+const CONTENTS_PATH = join(ROOT_PATH, 'src', CONTENTS_DIR)
 
 if (isMain(import.meta.url)) {
   await new RoutesFileGenerator().all()
