@@ -4,7 +4,6 @@ import { Log } from '../utils/log'
 import { ImageCdnApi } from '../images/image-cdn-api'
 import { ProjectImageAsset } from '../../../src/app/projects/project-detail-page/project-image-asset'
 import PREVIEW_JSON from '../../../src/data/assets-collections/preview.json'
-import LOOKBOOK_JSON from '../../../src/data/assets-collections/lookbook.json'
 import LOOKBOOKS_JSON from '../../../src/data/assets-collections/lookbooks.json'
 import ASSETS_COLLECTIONS_ORDER_JSON from '../../../src/data/misc/assets-collections-order.json'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
@@ -187,7 +186,7 @@ const isPreviewImage = (projectImage: ProjectImageAsset) =>
   projectImage.collection === PREVIEW_JSON.slug
 
 const isCustomLookbookAlbum = (album: ProjectAlbumWithPresetSlug) =>
-  album.presetSlug === LOOKBOOK_JSON.slug && album.title
+  album.presetSlug === LOOKBOOKS_JSON.slug && album.title
 
 export type ProjectContent = Omit<ProjectData, 'lookbookNamesAndSlugs'> & {
   readonly previewImages: readonly ImageAsset[]
