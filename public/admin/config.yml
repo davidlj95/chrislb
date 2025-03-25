@@ -126,7 +126,7 @@ collections:
     label: 'Projects'
     label_singular: 'project'
     description: 'Projects to show in the projects page and their data'
-    folder: 'src/content/projects'
+    folder: 'src/data/projects'
     extension: 'json'
     create: true
     slug: '{{fields.slug}}'

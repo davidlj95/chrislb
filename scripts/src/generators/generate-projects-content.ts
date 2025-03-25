@@ -20,7 +20,12 @@ import {
   readJson,
   writeJson,
 } from '../utils/json'
-import { ALBUM_PRESETS_PATH, CONTENT_PATH, DATA_PATH } from '../utils/paths'
+import {
+  ALBUM_PRESETS_PATH,
+  CONTENT_PATH,
+  DATA_PATH,
+  PROJECTS_CONTENT_PATH,
+} from '../utils/paths'
 import { PROJECTS_DIR } from '../../../src/app/common/directories'
 
 export const generateProjectsContent = async () => {
@@ -257,7 +262,7 @@ export const hasDetails = (projectContent: ProjectContent) =>
 const generateProjectsDetails = async (
   projectsContents: readonly ProjectContent[],
 ) => {
-  await mkdir(join(CONTENT_PATH, PROJECTS_DIR), { recursive: true })
+  await mkdir(PROJECTS_CONTENT_PATH, { recursive: true })
   return Promise.all(projectsContents.map(generateProjectDetail))
 }
 
@@ -266,7 +271,7 @@ const generateProjectDetail = (projectContent: ProjectContent) => {
     return
   }
   return writeJson(
-    join(CONTENT_PATH, PROJECTS_DIR, appendJsonExtension(projectContent.slug)),
+    join(PROJECTS_CONTENT_PATH, appendJsonExtension(projectContent.slug)),
     mapProjectContentToProjectDetails(projectContent),
   )
 }
