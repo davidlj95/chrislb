@@ -3,7 +3,7 @@ import { Imagekit } from '../images/imagekit'
 import { Log } from '../utils/log'
 import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 import { MiscImages } from '../../../src/app/common/images/misc-images'
-import { appendJsonExtension, writeJson } from '../resources/json'
+import { appendJsonExtension, writeJson } from '../utils/json'
 import { MISC_PATH } from '../utils/paths'
 import { basename, join } from 'path'
 
