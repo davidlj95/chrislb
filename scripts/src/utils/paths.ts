@@ -1,9 +1,5 @@
 import { dirname, join, resolve } from 'path'
-import {
-  CONTENTS_DIR,
-  DATA_DIR,
-  PROJECTS_DIR,
-} from '../../../src/app/common/directories'
+import { CONTENTS_DIR, PROJECTS_DIR } from '../../../src/app/common/directories'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -15,7 +11,7 @@ export function getRepositoryRootDir() {
 
 export const REPO_PATH = getRepositoryRootDir()
 const PUBLIC_PATH = join(REPO_PATH, 'public')
-const DATA_PATH = join(REPO_PATH, DATA_DIR)
+const DATA_PATH = join(REPO_PATH, 'data')
 export const CMS_DATA_PATH = join(DATA_PATH, 'cms')
 export const GENERATED_DATA_PATH = join(DATA_PATH, 'generated')
 export const CONTENT_PATH = join(PUBLIC_PATH, CONTENTS_DIR)
