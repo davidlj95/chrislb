@@ -1,15 +1,12 @@
 import { Resource } from './resource'
 import { basename, join } from 'path'
-import { FileType, JsonFileType } from './file'
-import { mkdir, readdir } from 'fs/promises'
+import { readdir } from 'fs/promises'
+import { appendJsonExtension, JSON_EXTENSION, writeJson } from './json'
 
 export class ResourceCollection {
   private _resources?: readonly Resource[]
 
-  constructor(
-    readonly path: string,
-    readonly fileType: FileType = new JsonFileType(),
-  ) {}
+  constructor(readonly path: string) {}
 
   get name(): string {
     return basename(this.path)
@@ -21,8 +18,7 @@ export class ResourceCollection {
         withFileTypes: true,
       })
       const resourceFiles = directoryFiles.filter(
-        (dirent) =>
-          dirent.isFile() && dirent.name.endsWith(this.fileType.extension),
+        (dirent) => dirent.isFile() && dirent.name.endsWith(JSON_EXTENSION),
       )
       this._resources = resourceFiles.map(
         (resourceFile) => new Resource(this, resourceFile.name),
@@ -31,25 +27,9 @@ export class ResourceCollection {
     return this._resources
   }
 
-  async getResource(slug: string): Promise<Resource | undefined> {
-    const resources = await this.getResources()
-    return resources.find((resource) => resource.slug === slug)
-  }
-
-  async createResource(name: string, data: unknown): Promise<Resource> {
-    await this.createDirectoryIfDoesNotExist()
-    const filename = this.fileType.appendExtension(name)
-    await this.fileType.write(join(this.path, filename), data)
-    return new Resource(this, filename)
-  }
-
   async upsertResource(name: string, data: unknown): Promise<Resource> {
-    const filename = this.fileType.appendExtension(name)
-    await this.fileType.write(join(this.path, filename), data)
+    const filename = appendJsonExtension(name)
+    await writeJson(join(this.path, appendJsonExtension(name)), data)
     return new Resource(this, filename)
-  }
-
-  async createDirectoryIfDoesNotExist(): Promise<void> {
-    await mkdir(this.path, { recursive: true })
   }
 }

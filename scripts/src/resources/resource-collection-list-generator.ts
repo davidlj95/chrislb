@@ -3,6 +3,7 @@ import { join } from 'path'
 import { Resource } from './resource'
 import { Log } from '../utils/log'
 import { isEmpty } from 'lodash-es'
+import { appendJsonExtension, writeJson } from './json'
 
 export class ResourceCollectionListGenerator {
   constructor(
@@ -11,9 +12,7 @@ export class ResourceCollectionListGenerator {
   ) {}
 
   get filename(): string {
-    return this.resourceCollection.fileType.appendExtension(
-      this.resourceCollection.name,
-    )
+    return appendJsonExtension(this.resourceCollection.name)
   }
 
   get filepath(): string {
@@ -29,7 +28,7 @@ export class ResourceCollectionListGenerator {
       resourcesData.push(await this._generateResourceData(resource))
     }
     Log.info('Writing list as %s', this.filename)
-    await this.resourceCollection.fileType.write(this.filepath, resourcesData)
+    await writeJson(this.filepath, resourcesData)
     Log.ok('Done')
     Log.groupEnd()
   }

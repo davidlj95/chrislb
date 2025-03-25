@@ -1,5 +1,6 @@
 import { ResourceCollection } from './resource-collection'
 import { join } from 'path'
+import { readJson, removeJsonExtension } from './json'
 
 export class Resource {
   constructor(
@@ -11,23 +12,11 @@ export class Resource {
     return join(this.collection.path, this.filename)
   }
 
-  get relativePath(): string {
-    return join(this.collection.name, this.slug)
-  }
-
   get slug(): string {
-    return this.collection.fileType.removeExtension(this.filename)
+    return removeJsonExtension(this.filename)
   }
 
   async read(): Promise<unknown> {
-    return this.collection.fileType.read(this.path)
-  }
-
-  async write(data: unknown): Promise<void> {
-    return this.collection.fileType.write(this.path, data)
-  }
-
-  get childCollection(): ResourceCollection {
-    return new ResourceCollection(join(this.collection.path, this.slug))
+    return readJson(this.path)
   }
 }
