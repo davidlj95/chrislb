@@ -21,7 +21,7 @@ import {
   listJsonFilesInDirectory,
   readJson,
   writeJson,
-} from '../resources/json'
+} from '../utils/json'
 import {
   ASSETS_COLLECTIONS_PATH,
   CONTENT_PATH,

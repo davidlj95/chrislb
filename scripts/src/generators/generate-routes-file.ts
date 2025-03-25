@@ -3,7 +3,7 @@ import { Log } from '../utils/log'
 import { join } from 'path'
 import { PROJECTS_DIR } from '../../../src/app/common/directories'
 import { ProjectListItem } from '../../../src/app/projects/project'
-import { appendJsonExtension, readJson } from '../resources/json'
+import { appendJsonExtension, readJson } from '../utils/json'
 import { CONTENT_PATH, REPO_PATH } from '../utils/paths'
 import { readFile, writeFile } from 'fs/promises'
 

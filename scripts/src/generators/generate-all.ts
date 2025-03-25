@@ -1,12 +1,12 @@
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
-import { generateMiscImages } from './misc-images'
-import { ContentGenerators } from './content-generators'
+import { generateMiscImages } from './generate-misc-images'
+import { generateListFiles } from './generate-list-files'
 import { generateProjectsContent } from './generate-projects-content'
 import { generateRoutesFile } from './generate-routes-file'
 
 export const generateAll = async (): Promise<void> => {
-  await Promise.all([generateMiscImages(), new ContentGenerators().all()])
+  await Promise.all([generateMiscImages(), generateListFiles()])
   await generateProjectsContent()
   await generateRoutesFile()
 }
