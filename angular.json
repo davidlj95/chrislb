@@ -41,16 +41,12 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/admin",
-              "src/apple-touch-icon.png",
-              "src/apple-touch-icon-precomposed.png",
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
               "src/assets",
-              "src/browserconfig.xml",
-              "src/content",
-              "src/favicon.ico",
-              "src/favicon.svg",
-              "src/robots.txt",
-              "src/site.webmanifest"
+              "src/content"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
@@ -121,16 +117,12 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/admin",
-              "src/apple-touch-icon.png",
-              "src/apple-touch-icon-precomposed.png",
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
               "src/assets",
-              "src/browserconfig.xml",
-              "src/content",
-              "src/favicon.ico",
-              "src/favicon.svg",
-              "src/robots.txt",
-              "src/site.webmanifest"
+              "src/content"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
