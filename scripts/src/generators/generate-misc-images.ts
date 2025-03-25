@@ -5,9 +5,11 @@ import { MiscImages } from '../../../src/app/common/images/misc-images'
 import { appendJsonExtension, writeJson } from '../utils/json'
 import { GENERATED_DATA_PATH } from '../utils/paths'
 import { join } from 'path'
+import { mkdir } from 'fs/promises'
 
 export const generateMiscImages = async (): Promise<void> => {
   const imageCdnApi = Imagekit.fromEnv()
+  await mkdir(GENERATED_DATA_PATH, { recursive: true })
   Log.info('Looking for misc images')
   const images = await imageCdnApi.getAllImagesInPath('misc')
   const [horizontalLogo, aboutPortrait] = ['horizontal', 'portrait'].map(
