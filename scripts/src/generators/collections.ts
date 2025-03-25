@@ -7,5 +7,4 @@ export class Collections {
   static readonly assetsCollections = new ResourceCollection(
     join(DATA_PATH, 'assets-collections'),
   )
-  static readonly misc = new ResourceCollection(join(DATA_PATH, 'misc'))
 }

@@ -1,7 +1,7 @@
 import { Resource } from './resource'
-import { basename, join } from 'path'
+import { basename } from 'path'
 import { readdir } from 'fs/promises'
-import { appendJsonExtension, JSON_EXTENSION, writeJson } from './json'
+import { JSON_EXTENSION } from './json'
 
 export class ResourceCollection {
   private _resources?: readonly Resource[]
@@ -25,11 +25,5 @@ export class ResourceCollection {
       )
     }
     return this._resources
-  }
-
-  async upsertResource(name: string, data: unknown): Promise<Resource> {
-    const filename = appendJsonExtension(name)
-    await writeJson(join(this.path, appendJsonExtension(name)), data)
-    return new Resource(this, filename)
   }
 }

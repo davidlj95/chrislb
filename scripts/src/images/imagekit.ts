@@ -16,16 +16,11 @@ import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
 export class Imagekit implements ImageCdnApi {
   private readonly _sdk: ImagekitSdk
 
-  constructor(
-    sdkOptions: ImageKitOptions,
-    readonly unpublishedTag?: string,
-  ) {
+  constructor(sdkOptions: ImageKitOptions) {
     this._sdk = new ImageKit(sdkOptions)
   }
 
-  static fromEnv(
-    ...otherInitOptions: RemoveFirst<ConstructorParameters<typeof Imagekit>>
-  ): Imagekit {
+  static fromEnv(): Imagekit {
     dotenv.config()
 
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
@@ -37,14 +32,11 @@ export class Imagekit implements ImageCdnApi {
       process.exit(1)
     }
 
-    return new this(
-      {
-        urlEndpoint: new URL(IMAGEKIT_URL).toString(),
-        publicKey: IMAGEKIT_PUBLIC_KEY,
-        privateKey: IMAGEKIT_PRIVATE_KEY,
-      },
-      ...otherInitOptions,
-    )
+    return new this({
+      urlEndpoint: new URL(IMAGEKIT_URL).toString(),
+      publicKey: IMAGEKIT_PUBLIC_KEY,
+      privateKey: IMAGEKIT_PRIVATE_KEY,
+    })
   }
 
   async getAllImagesInPath(
@@ -85,9 +77,7 @@ export class Imagekit implements ImageCdnApi {
   private async _listImageAssetsInPath(
     path: string,
   ): Promise<readonly ImageAsset[]> {
-    const searchQuery = this.unpublishedTag
-      ? `tags NOT IN ${JSON.stringify([this.unpublishedTag])}`
-      : undefined
+    const searchQuery = `tags NOT IN ${JSON.stringify([UNPUBLISHED_TAG])}`
     const fileObjects = await this._sdk.listFiles({
       searchQuery,
       path,
@@ -144,4 +134,4 @@ interface CustomMetadata {
   alt?: string
 }
 
-type RemoveFirst<T extends unknown[]> = T extends [unknown, ...infer R] ? R : T
+const UNPUBLISHED_TAG = 'unpublished'
