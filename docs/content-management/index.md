@@ -150,8 +150,7 @@ The names that will be displayed for each directory and the size of the images g
 in the "Assets collections" content. If no definition is found for an asset collection, images will appear under "Other
 images" at the end. Except for lookbooks, which will appear under an unnamed lookbook at the end.
 
-> Some image asset collections can't be removed given they are essential for the website. Those are: preview, lookbooks
-> and videos
+> Some image asset collections can't be removed given they are essential for the website. Those are: preview & lookbooks
 
 > ⚠️ If the `slug` field of a project does not match **exactly** the directory name in the [image CDN]
 > inside `projects`, image won't be able to be linked.
