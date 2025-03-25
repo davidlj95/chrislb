@@ -42,7 +42,7 @@ const mapProjectsDataToProjectsContents = async (): Promise<
   const dataProjectFiles = await listJsonFilesInDirectory(
     join(DATA_PATH, PROJECTS_DIR),
   )
-  const imagekitApi = Imagekit.fromEnv('unpublished')
+  const imagekitApi = Imagekit.fromEnv()
   const projectContents: ProjectContent[] = []
   for (const dataProjectFile of dataProjectFiles) {
     projectContents.push(
