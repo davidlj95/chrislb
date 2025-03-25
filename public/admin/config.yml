@@ -65,7 +65,7 @@ collections:
     # So lowercase is better for those contexts
     label_singular: 'page metadata'
     description: 'Metadata to use for each (static) page'
-    folder: 'src/data/pages'
+    folder: 'data/cms/pages'
     extension: 'json'
     create: false
     delete: false
@@ -126,7 +126,7 @@ collections:
     label: 'Projects'
     label_singular: 'project'
     description: 'Projects to show in the projects page and their data'
-    folder: 'src/data/projects'
+    folder: 'data/cms/projects'
     extension: 'json'
     create: true
     slug: '{{fields.slug}}'
@@ -189,7 +189,7 @@ collections:
     label: 'Authors'
     label_singular: 'author'
     description: 'People that have participated in projects, for their appearance in credits. Also contains data to reflect author of the website'
-    folder: 'src/data/authors'
+    folder: 'data/cms/authors'
     extension: 'json'
     create: true
     slug: '{{slug}}'
@@ -232,7 +232,7 @@ collections:
     label: 'Album presets'
     label_singular: 'album preset'
     description: 'An album preset is a set of album predefined configurations. Which includes image directory in the CDN, its display name and its size in the page. To sort their appearance on screen, check the miscellaneous content collection'
-    folder: 'src/data/album-presets'
+    folder: 'data/cms/album-presets'
     extension: 'json'
     create: true
     slug: '{{fields.slug}}'
@@ -259,7 +259,7 @@ collections:
     files:
       - label: 'Default metadata'
         name: 'metadata'
-        file: 'src/data/misc/metadata.json'
+        file: 'data/cms/misc/metadata.json'
         fields:
           - label: 'Site name'
             name: 'siteName'
@@ -273,7 +273,7 @@ collections:
             name: 'canonicalUrl'
       - label: 'About page'
         name: 'about'
-        file: 'src/data/misc/about.json'
+        file: 'data/cms/misc/about.json'
         preview_path: 'about'
         fields:
           - *title
@@ -323,7 +323,7 @@ collections:
                     multiple: false
       - label: 'Album presets order'
         name: 'album-presets-order'
-        file: 'src/data/misc/album-presets-order.json'
+        file: 'data/cms/misc/album-presets-order.json'
         fields:
           - label: 'Album presets order'
             name: 'albumPresetsOrder'

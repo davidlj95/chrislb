@@ -1,16 +1,15 @@
 import { isMain } from '../utils/is-main'
 import { Imagekit } from '../images/imagekit'
 import { Log } from '../utils/log'
-import { IMAGES_FILE_BASENAME } from '../../../src/app/common/files'
 import { MiscImages } from '../../../src/app/common/images/misc-images'
 import { appendJsonExtension, writeJson } from '../utils/json'
-import { MISC_PATH } from '../utils/paths'
-import { basename, join } from 'path'
+import { GENERATED_DATA_PATH } from '../utils/paths'
+import { join } from 'path'
 
 export const generateMiscImages = async (): Promise<void> => {
   const imageCdnApi = Imagekit.fromEnv()
   Log.info('Looking for misc images')
-  const images = await imageCdnApi.getAllImagesInPath(basename(MISC_PATH))
+  const images = await imageCdnApi.getAllImagesInPath('misc')
   const [horizontalLogo, aboutPortrait] = ['horizontal', 'portrait'].map(
     (substring) => {
       const image = images.find((image) => image.name.includes(substring))
@@ -25,7 +24,7 @@ export const generateMiscImages = async (): Promise<void> => {
     aboutPortrait,
   }
   await writeJson(
-    join(MISC_PATH, appendJsonExtension(IMAGES_FILE_BASENAME)),
+    join(GENERATED_DATA_PATH, appendJsonExtension('misc-images')),
     miscImages,
   )
 }

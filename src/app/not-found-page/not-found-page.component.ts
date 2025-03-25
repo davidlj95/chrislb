@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import notFoundPageMetadata from '../../data/pages/404.json'
+import notFoundPageMetadata from '../../../data/cms/pages/404.json'
 
 @Component({
   templateUrl: './not-found-page.component.html',
