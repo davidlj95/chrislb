@@ -2,10 +2,9 @@ import { Imagekit } from '../images/imagekit'
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { ImageCdnApi } from '../images/image-cdn-api'
-import { ProjectImageAsset } from '../../../src/app/projects/project-detail-page/project-image-asset'
-import PREVIEW_JSON from '../../../src/data/assets-collections/preview.json'
-import LOOKBOOKS_JSON from '../../../src/data/assets-collections/lookbooks.json'
-import ASSETS_COLLECTIONS_ORDER_JSON from '../../../src/data/misc/assets-collections-order.json'
+import PREVIEW_PRESET_JSON from '../../../src/data/album-presets/preview.json'
+import LOOKBOOKS_PRESET_JSON from '../../../src/data/album-presets/lookbooks.json'
+import ALBUM_PRESETS_ORDER_JSON from '../../../src/data/misc/album-presets-order.json'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
 import {
   ProjectAlbum,
@@ -21,11 +20,7 @@ import {
   readJson,
   writeJson,
 } from '../utils/json'
-import {
-  ASSETS_COLLECTIONS_PATH,
-  CONTENT_PATH,
-  DATA_PATH,
-} from '../utils/paths'
+import { ALBUM_PRESETS_PATH, CONTENT_PATH, DATA_PATH } from '../utils/paths'
 import { PROJECTS_DIR } from '../../../src/app/common/directories'
 
 export const generateProjectsContent = async () => {
@@ -69,39 +64,37 @@ const mapProjectDataToProjectContent = async (
   if (!previewImages.length) {
     throw new Error(`Project ${dataProject.slug} has no preview images`)
   }
-  const imagesByAlbum = Object.groupBy(
+  const imagesByAlbumPresetSlug = Object.groupBy(
     projectImages.filter((projectImage) => !isPreviewImage(projectImage)),
-    (projectImage) => projectImage.collection,
+    (projectImage) => projectImage.presetSlug,
   )
-  const assetsCollectionsFile = join(
-    ASSETS_COLLECTIONS_PATH,
+  const albumPresetsFile = join(
+    ALBUM_PRESETS_PATH,
     '..',
-    appendJsonExtension(basename(ASSETS_COLLECTIONS_PATH)),
+    appendJsonExtension(basename(ALBUM_PRESETS_PATH)),
   )
-  const assetsCollectionsJson = await readJson<readonly AssetCollection[]>(
-    assetsCollectionsFile,
+  const albumPresets = await readJson<readonly AlbumPreset[]>(albumPresetsFile)
+  const albums: readonly ProjectAlbum[] = Object.entries(
+    imagesByAlbumPresetSlug,
   )
-  const albums: readonly ProjectAlbum[] = Object.entries(imagesByAlbum)
     .map<readonly ProjectAlbumWithPresetSlug[]>(
-      ([collection, projectImages]) => {
-        const isLookbooks = collection === LOOKBOOKS_JSON.slug
+      ([presetSlug, projectImages]) => {
+        const isLookbooks = presetSlug === LOOKBOOKS_PRESET_JSON.slug
         const images = projectImages!.map((projectImage) => projectImage.asset)
-        const preset = assetsCollectionsJson.find(
-          ({ slug }) => collection === slug,
-        )
+        const preset = albumPresets.find(({ slug }) => presetSlug === slug)
         if (!preset) {
           Log.warn(
-            `Skipping ${dataProject.slug} project album ${collection} path in CDN. It is not a recognized asset collection`,
+            `Skipping ${dataProject.slug} project album ${presetSlug} path in CDN. It is not a recognized album preset`,
           )
           return []
         }
         if (!isLookbooks) {
-          const imagesWithSubcollections = projectImages!.filter(
-            ({ subCollection }) => subCollection,
+          const imagesWithinSubdirs = projectImages!.filter(
+            ({ subdir }) => subdir,
           )
-          if (imagesWithSubcollections.length) {
+          if (imagesWithinSubdirs.length) {
             Log.warn(
-              `${dataProject.slug} project album ${collection} path has images inside subdirectories. That's not expected though. Ignoring for now anyway`,
+              `${dataProject.slug} project album ${presetSlug} path has images inside subdirectories. That's not expected though. Ignoring for now anyway`,
             )
           }
           return [
@@ -115,7 +108,7 @@ const mapProjectDataToProjectContent = async (
         }
         const projectImagesByLookbook = Object.groupBy(
           projectImages!,
-          (projectImage) => projectImage.subCollection,
+          (projectImage) => projectImage.subdir,
         )
         return Object.entries(
           projectImagesByLookbook,
@@ -131,10 +124,10 @@ const mapProjectDataToProjectContent = async (
           const lookbookNameAndSlug =
             dataProject.lookbookNamesAndSlugs![lookbookIndex]
           return {
-            title: `${LOOKBOOKS_JSON.name} ${lookbookIndex + 1} "${lookbookNameAndSlug.name}"`,
+            title: `${LOOKBOOKS_PRESET_JSON.name} ${lookbookIndex + 1} "${lookbookNameAndSlug.name}"`,
             images: projectImages!.map((projectImage) => projectImage.asset),
-            size: LOOKBOOKS_JSON.size as ProjectAlbum['size'],
-            presetSlug: LOOKBOOKS_JSON.slug,
+            size: LOOKBOOKS_PRESET_JSON.size as ProjectAlbum['size'],
+            presetSlug: LOOKBOOKS_PRESET_JSON.slug,
           }
         })
       },
@@ -150,9 +143,7 @@ const mapProjectDataToProjectContent = async (
         albumB.presetSlug,
       ].map((preset) => {
         const presetIndex =
-          ASSETS_COLLECTIONS_ORDER_JSON.assetCollectionsOrder.findIndex(
-            (assetSlug) => assetSlug === preset,
-          )
+          ALBUM_PRESETS_ORDER_JSON.albumPresetsOrder.indexOf(preset)
         if (presetIndex === -1) {
           throw new Error(
             `Can't sort ${dataProject.slug} album with preset ${preset}. Cannot find position for preset`,
@@ -176,17 +167,52 @@ const mapProjectDataToProjectContent = async (
   }
 }
 
-interface AssetCollection {
+interface AlbumPreset {
   readonly name: string
   readonly slug: string
   readonly size: ProjectAlbum['size']
 }
 
+export class ProjectImageAsset {
+  private _relativeFilePath?: string
+
+  constructor(
+    readonly asset: ImageAsset,
+    readonly projectSlug: string,
+  ) {}
+
+  get presetSlug(): string {
+    const relativeFilePathParts = this.relativeFilePath.split('/')
+    if (relativeFilePathParts.length < 2) {
+      return ''
+    }
+    return relativeFilePathParts[0]
+  }
+
+  get subdir(): string {
+    const relativeFilePathParts = this.relativeFilePath.split('/')
+    if (relativeFilePathParts.length < 3) {
+      return ''
+    }
+    return relativeFilePathParts[1]
+  }
+
+  get relativeFilePath() {
+    if (!this._relativeFilePath) {
+      this._relativeFilePath = this.asset.filePath
+        .replace(/^\//, '')
+        .replace(new RegExp(`^${PROJECTS_DIR}/`), '')
+        .replace(new RegExp(`^${this.projectSlug}/`), '')
+    }
+    return this._relativeFilePath
+  }
+}
+
 const isPreviewImage = (projectImage: ProjectImageAsset) =>
-  projectImage.collection === PREVIEW_JSON.slug
+  projectImage.presetSlug === PREVIEW_PRESET_JSON.slug
 
 const isCustomLookbookAlbum = (album: ProjectAlbumWithPresetSlug) =>
-  album.presetSlug === LOOKBOOKS_JSON.slug && album.title
+  album.presetSlug === LOOKBOOKS_PRESET_JSON.slug && album.title
 
 export type ProjectContent = Omit<ProjectData, 'lookbookNamesAndSlugs'> & {
   readonly previewImages: readonly ImageAsset[]
