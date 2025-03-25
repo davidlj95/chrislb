@@ -147,10 +147,9 @@ directory in the [image CDN] with the same value as the `slug` field. In there, 
 images.
 
 The names that will be displayed for each directory and the size of the images gallery can be changed
-in the "Assets collections" content. If no definition is found for an asset collection, images will appear under "Other
-images" at the end. Except for lookbooks, which will appear under an unnamed lookbook at the end.
+in the "Album presets" content. If no definition is found for an album preset, images will not appear.
 
-> Some image asset collections can't be removed given they are essential for the website. Those are: preview & lookbooks
+> Some album presets can't be removed given they are essential for the website. Those are `preview` and `lookbooks`
 
 > ⚠️ If the `slug` field of a project does not match **exactly** the directory name in the [image CDN]
 > inside `projects`, image won't be able to be linked.

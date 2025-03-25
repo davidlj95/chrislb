@@ -8,12 +8,12 @@ import {
   writeJson,
 } from '../utils/json'
 import { basename, join } from 'path'
-import { ASSETS_COLLECTIONS_PATH, AUTHORS_PATH } from '../utils/paths'
+import { ALBUM_PRESETS_PATH, AUTHORS_PATH } from '../utils/paths'
 
 export const generateListFiles = () =>
   Promise.all([
     generateListFileForDirectory(AUTHORS_PATH, ({ slug }) => ({ slug })),
-    generateListFileForDirectory(ASSETS_COLLECTIONS_PATH),
+    generateListFileForDirectory(ALBUM_PRESETS_PATH),
   ])
 
 const generateListFileForDirectory = async <T = object>(

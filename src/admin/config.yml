@@ -1,4 +1,4 @@
-#local_backend: true
+local_backend: true
 backend:
   name: github
   repo: davidlj95/chrislb
@@ -228,11 +228,11 @@ collections:
             name: 'tiktok'
             required: false
             hint: 'Used to link to TikTok profile (https://tiktok.com/@<username>). To change yours: https://support.tiktok.com/en/getting-started/setting-up-your-profile/changing-your-username'
-  - name: 'assets-collections'
-    label: 'Assets collections'
-    label_singular: 'assets collection'
-    description: 'Specifies assets collections configurations. Like the known image directories in the CDN, their display names, gallery sizes... To sort their appearance on screen, check the miscellaneous content collection'
-    folder: 'src/data/assets-collections'
+  - name: 'album-presets'
+    label: 'Album presets'
+    label_singular: 'album preset'
+    description: 'An album preset is a set of album predefined configurations. Which includes image directory in the CDN, its display name and its size in the page. To sort their appearance on screen, check the miscellaneous content collection'
+    folder: 'src/data/album-presets'
     extension: 'json'
     create: true
     slug: '{{fields.slug}}'
@@ -240,13 +240,13 @@ collections:
     summary: '{{name}} ({{fields.slug}})'
     fields:
       - <<: *name
-        hint: 'Will be used when listing assets for a project'
+        hint: 'Name of the album in the project details page'
       - <<: *slug
         label: 'Slug (directory name in image CDN)'
-        hint: 'If representing a collection of images, ‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed. For videos, leave it to "videos" :) 💡 Lookbook specific names are specified per project'
+        hint: '‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed. Lookbook specific names are specified per project'
       - label: 'Gallery size'
         name: 'size'
-        hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width. Does not apply to videos (which have fixed size)'
+        hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width'
         widget: 'select'
         options:
           - label: 'Full'
@@ -321,16 +321,16 @@ collections:
                   allow_multiple: false
                   config:
                     multiple: false
-      - label: 'Assets collections order'
-        name: 'assets-collections-order'
-        file: 'src/data/misc/assets-collections-order.json'
+      - label: 'Album presets order'
+        name: 'album-presets-order'
+        file: 'src/data/misc/album-presets-order.json'
         fields:
-          - label: 'Assets collections order'
-            name: 'assetCollectionsOrder'
-            hint: 'Sort in which order you want assets collections to appear by default. The ones not specified here will appear at bottom'
+          - label: 'Album presets order'
+            name: 'albumPresetsOrder'
+            hint: 'Sort in which order you want album presets to appear by default. The ones not specified here will appear at bottom'
             widget: 'relation'
             multiple: true
-            collection: 'assets-collections'
+            collection: 'album-presets'
             value_field: '{{fields.slug}}'
             search_fields: ['name', 'slug']
             display_fields: ['name']
