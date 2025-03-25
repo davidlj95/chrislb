@@ -28,7 +28,7 @@ import { IMAGEKIT_URL } from './common/images/cdn-config'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { provideHttpClient } from '@angular/common/http'
-import defaultMetadata from '../data/misc/metadata.json'
+import defaultMetadata from '../../data/cms/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 

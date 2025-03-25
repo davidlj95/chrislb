@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
-import aboutPage from '../../../data/misc/about.json'
+import aboutPage from '../../../../data/cms/misc/about.json'
 
 @Component({
   selector: 'app-resume',

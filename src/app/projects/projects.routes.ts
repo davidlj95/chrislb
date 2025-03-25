@@ -8,7 +8,7 @@ import { RouteDataResolver } from '../common/routing/route-data-resolver'
 import { ProjectsService } from './projects.service'
 import { ProjectsListPageComponent } from './projects-list-page/projects-list-page.component'
 import { makeRouteMetadata } from '../common/routing/make-route-metadata'
-import projectsListPageMetadata from '../../data/pages/projects-list.json'
+import projectsListPageMetadata from '../../../data/cms/pages/projects-list.json'
 import { PROJECTS_PATH } from '../common/routing/paths'
 
 export const PROJECTS_ROUTES: Route[] = [

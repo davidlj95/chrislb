@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import authors from '../../data/authors.json'
-import christianLazaro from '../../data/authors/christian-lazaro.json'
+import authors from '../../../data/generated/authors.json'
+import christianLazaro from '../../../data/cms/authors/christian-lazaro.json'
 
 @Injectable({
   providedIn: 'root',

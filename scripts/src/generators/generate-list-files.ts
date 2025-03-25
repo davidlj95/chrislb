@@ -8,13 +8,20 @@ import {
   writeJson,
 } from '../utils/json'
 import { basename, join } from 'path'
-import { ALBUM_PRESETS_PATH, AUTHORS_PATH } from '../utils/paths'
+import {
+  ALBUM_PRESETS_PATH,
+  AUTHORS_PATH,
+  GENERATED_DATA_PATH,
+} from '../utils/paths'
+import { mkdir } from 'fs/promises'
 
-export const generateListFiles = () =>
-  Promise.all([
+export const generateListFiles = async () => {
+  await mkdir(GENERATED_DATA_PATH, { recursive: true })
+  return Promise.all([
     generateListFileForDirectory(AUTHORS_PATH, ({ slug }) => ({ slug })),
     generateListFileForDirectory(ALBUM_PRESETS_PATH),
   ])
+}
 
 const generateListFileForDirectory = async <T = object>(
   path: string,
@@ -38,7 +45,10 @@ const generateListFileForDirectory = async <T = object>(
       }
     }),
   )
-  const jsonListFile = join(path, '..', appendJsonExtension(basename(path)))
+  const jsonListFile = join(
+    GENERATED_DATA_PATH,
+    appendJsonExtension(basename(path)),
+  )
   Log.info('Writing list to %s', jsonListFile)
   await writeJson(jsonListFile, jsonList)
   Log.ok('Done')
