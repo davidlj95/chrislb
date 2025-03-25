@@ -377,8 +377,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,vim,visualstudiocode,node,webstorm+iml,macos,linux,windows,lighthouseci,dotenv
 src/content/*.json
+src/content/projects/**/*.json
 src/data/*.json
-src/content/**/images.json
 src/data/misc/images.json
 routes-file.txt
 package-lock.json

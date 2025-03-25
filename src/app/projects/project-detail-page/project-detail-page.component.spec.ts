@@ -4,10 +4,10 @@ import { ProjectDetailPageComponent } from './project-detail-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { of } from 'rxjs'
-import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
 import { ActivatedRoute } from '@angular/router'
-import { ProjectRouteData } from './projects-routes-data'
+import { ProjectDetailRouteData } from './projects-routes-data'
 import { NgxMetaService } from '@davidlj95/ngx-meta/core'
+import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 
 describe('ProjectDetailPageComponent', () => {
   let component: ProjectDetailPageComponent
@@ -18,25 +18,21 @@ describe('ProjectDetailPageComponent', () => {
       providers: [
         MockProvider(ActivatedRoute, {
           data: of({
-            project: {
+            projectDetail: {
               title: 'Title',
               description: 'Description',
               youtubePlaylistId: 'Playlist ID',
             },
-          } as ProjectRouteData),
+          } as ProjectDetailRouteData),
         }),
         MockProvider(NgxMetaService),
       ],
     })
     TestBed.overrideComponent(ProjectDetailPageComponent, {
       set: {
-        imports: [MockComponents(ImagesSwiperComponent)],
-        providers: [
-          MockProvider(ProjectAssetsCollectionsService, {
-            byProject() {
-              return of([])
-            },
-          }),
+        imports: [
+          MockComponents(ImagesSwiperComponent),
+          SanitizeResourceUrlPipe,
         ],
       },
     })

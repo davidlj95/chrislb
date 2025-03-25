@@ -3,6 +3,7 @@ import { Log } from '../utils/log'
 import { ImagesListsGenerators } from './images-lists-generators'
 import { ContentGenerators } from './content-generators'
 import { RoutesFileGenerator } from './routes-file-generator'
+import { generateProjectsContent } from './generate-projects-content'
 
 export class AllGenerators {
   constructor(
@@ -20,8 +21,11 @@ export class AllGenerators {
   }
 
   async generate(): Promise<void> {
-    await this._imagesListsGenerators.all()
-    await this._contentGenerators.all()
+    await Promise.all([
+      this._imagesListsGenerators.all(),
+      this._contentGenerators.all(),
+    ])
+    await generateProjectsContent()
     await this._routesFileGenerator.all()
   }
 }

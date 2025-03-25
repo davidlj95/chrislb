@@ -1,11 +1,6 @@
-import { Component, effect, signal } from '@angular/core'
-import { catchError, map, of } from 'rxjs'
-import { NavigatorService } from '../../common/routing/navigator.service'
-import { ProjectAssetsCollectionsService } from './project-assets-collections.service'
+import { Component, computed, effect } from '@angular/core'
+import { map } from 'rxjs'
 import { SwiperOptions } from 'swiper/types'
-import { AssetsCollectionData } from './assets-collection-data'
-import { AssetsCollectionSize } from './assets-collection-size'
-import { AssetsCollectionType } from './assets-collection-type'
 import { ResponsiveImageAttributesService } from '../../common/images/responsive-image-attributes.service'
 import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
 import { CssPxUnit, Px } from '../../common/css/unit/px'
@@ -13,38 +8,62 @@ import { Vw } from '../../common/css/unit/vw'
 import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
 import { Breakpoint } from '../../common/style/breakpoint'
 import { ActivatedRoute } from '@angular/router'
-import { ProjectRouteData } from './projects-routes-data'
+import { ProjectDetailRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { AnyAssetsCollection } from './any-asset-collection'
+import { ProjectAlbum, ProjectDetail } from '../project'
 
 @Component({
   templateUrl: './project-detail-page.component.html',
   styleUrls: ['./project-detail-page.component.scss'],
   standalone: true,
   imports: [ImagesSwiperComponent, SanitizeResourceUrlPipe],
-  providers: [ProjectAssetsCollectionsService],
 })
 export class ProjectDetailPageComponent {
-  readonly project = toSignal(
+  private readonly _projectDetail = toSignal(
     this._activatedRoute.data.pipe(
-      map((data) => (data as ProjectRouteData).project),
+      map((data) => (data as ProjectDetailRouteData).projectDetail),
     ),
   )
-  readonly assetsCollections = signal<
-    readonly AssetsCollectionWithSwiperConfig[]
-  >([])
+
+  protected readonly _youtubePlaylistUrl = computed<URL | undefined>(() => {
+    const playlistId = this._projectDetail()?.youtubePlaylistId
+    if (!playlistId) {
+      return
+    }
+    const iframeUrl = new URL('https://www.youtube-nocookie.com/embed')
+    iframeUrl.searchParams.set('listType', 'playlist')
+    iframeUrl.searchParams.set('loop', true.toString())
+    iframeUrl.searchParams.set('list', playlistId)
+    return iframeUrl
+  })
+
+  readonly _albums = computed<readonly ProjectAlbumViewModel[]>(() => {
+    const albums = this._projectDetail()?.albums
+    if (!albums) {
+      return []
+    }
+    return albums.map(({ title, images, size }) => {
+      return {
+        title,
+        images,
+        size,
+        swiper: this._albumSwiperByPresetSize[size],
+      }
+    })
+  })
 
   protected readonly _maxSwipersPerViewport = 2
-  private readonly _imageAssetsSwiperConfigByName: Record<
-    AssetsCollectionData['size'],
-    ImageAssetsSwiperConfig
+
+  private readonly _albumSwiperByPresetSize: Record<
+    ProjectAlbum['size'],
+    ProjectAlbumSwiper
   > = {
-    [AssetsCollectionSize.Full]: {
-      customSwiperOptions: {
+    full: {
+      options: {
         slidesPerView: FULL_SCREEN_SWIPER.slidesPerView,
       },
       attributes: this._responsiveImageAttributesService
@@ -61,8 +80,8 @@ export class ProjectDetailPageComponent {
         .reduce(),
       maxWidth: FULL_SCREEN_SWIPER.maxWidth,
     },
-    [AssetsCollectionSize.Half]: {
-      customSwiperOptions: {
+    half: {
+      options: {
         slidesPerView: HALF_SCREEN_SWIPER.slidesPerView,
       },
       attributes: this._responsiveImageAttributesService
@@ -80,60 +99,47 @@ export class ProjectDetailPageComponent {
         .reduce(),
     },
   }
-  protected readonly AssetsCollectionSize = AssetsCollectionSize
-  protected readonly AssetsCollectionType = AssetsCollectionType
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _responsiveImageAttributesService: ResponsiveImageAttributesService,
     ngxMetaService: NgxMetaService,
-    navigatorService: NavigatorService,
-    projectAssetsCollectionsService: ProjectAssetsCollectionsService,
   ) {
     effect(() => {
-      const project = this.project()
-      if (!project) {
+      const projectDetail = this._projectDetail()
+      if (!projectDetail) {
         return
       }
       ngxMetaService.set({
-        title: getTitle(project.title),
-        description:
-          project.description.length > 200
-            ? project.description.substring(0, 197) + '...'
-            : project.description,
+        title: getTitle(projectDetail.title),
+        description: getDescription(projectDetail) ?? undefined,
       } satisfies GlobalMetadata)
-      projectAssetsCollectionsService
-        .byProject(project)
-        .pipe(catchError(() => of([])))
-        .subscribe((assetsCollections) => {
-          if (!assetsCollections.length) {
-            navigatorService.displayNotFoundPage()
-            return
-          }
-          const assetsCollectionsWithSwiperConfig =
-            assetsCollections.map<AssetsCollectionWithSwiperConfig>(
-              (assetCollection) => ({
-                ...assetCollection,
-                swiperConfig:
-                  this._imageAssetsSwiperConfigByName[
-                    assetCollection.data.size
-                  ],
-              }),
-            )
-          this.assetsCollections.set(assetsCollectionsWithSwiperConfig)
-        })
     })
   }
 }
 
-interface ImageAssetsSwiperConfig {
-  readonly customSwiperOptions: SwiperOptions
-  readonly attributes: ResponsiveImageAttributes
-  readonly maxWidth?: CssPxUnit
+const getDescription = ({
+  quote,
+  description,
+}: ProjectDetail): string | void => {
+  if (quote) {
+    return quote
+  }
+  if (description) {
+    return description.length > 200
+      ? description.substring(0, 197) + '...'
+      : description
+  }
 }
 
-type AssetsCollectionWithSwiperConfig = AnyAssetsCollection & {
-  swiperConfig: ImageAssetsSwiperConfig
+type ProjectAlbumViewModel = ProjectAlbum & {
+  readonly swiper: ProjectAlbumSwiper
+}
+
+interface ProjectAlbumSwiper {
+  readonly options: SwiperOptions
+  readonly attributes: ResponsiveImageAttributes
+  readonly maxWidth?: CssPxUnit
 }
 
 const FULL_SCREEN_SWIPER = {

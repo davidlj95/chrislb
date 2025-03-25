@@ -36,7 +36,7 @@ export class ResourceCollectionListGenerator {
 
   async _generateResourceData(resource: Resource): Promise<unknown> {
     Log.group('Reading resource %s', resource.slug)
-    const resourceData = await resource.getData()
+    const resourceData = await resource.read()
     if (this.listItemExtraDataGenerator) {
       Log.info('Generating and appending extra data')
       const listItemExtraData = await this.listItemExtraDataGenerator(resource)
