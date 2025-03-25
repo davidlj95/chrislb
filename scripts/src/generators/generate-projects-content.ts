@@ -7,8 +7,8 @@ import LOOKBOOKS_PRESET_JSON from '../../../data/cms/album-presets/lookbooks.jso
 import ALBUM_PRESETS_ORDER_JSON from '../../../data/cms/misc/album-presets-order.json'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
 import {
-  CmsProject,
   ProjectAlbum,
+  ProjectCms,
   ProjectDetail,
   ProjectListItem,
 } from '../../../src/app/projects/project'
@@ -56,7 +56,7 @@ const mapCmsProjectToProjectContent = async (
   imageCdnApi: ImageCdnApi,
   cmsProjectFile: string,
 ): Promise<ProjectContent> => {
-  const cmsProject = await readJson<CmsProject>(cmsProjectFile)
+  const cmsProject = await readJson<ProjectCms>(cmsProjectFile)
   const images = await imageCdnApi.getAllImagesInPath(
     `${PROJECTS_DIR}/${cmsProject.slug}`,
     true,
@@ -219,7 +219,7 @@ const isPreviewImage = (projectImage: ProjectImageAsset) =>
 const isCustomLookbookAlbum = (album: ProjectAlbumWithPresetSlug) =>
   album.presetSlug === LOOKBOOKS_PRESET_JSON.slug && album.title
 
-export type ProjectContent = Omit<CmsProject, 'lookbookNamesAndSlugs'> & {
+export type ProjectContent = Omit<ProjectCms, 'lookbookNamesAndSlugs'> & {
   readonly previewImages: readonly ImageAsset[]
   readonly albums: readonly ProjectAlbum[]
 }

@@ -16,7 +16,7 @@ export interface Project {
   readonly credits?: readonly Credit[]
 }
 
-export interface CmsProject {
+export interface ProjectCms {
   readonly slug: string
   readonly date: string
   readonly title: string
@@ -31,16 +31,16 @@ export interface CmsProject {
 }
 
 export type ProjectListItem = Omit<
-  CmsProject,
+  ProjectCms,
   'date' | 'lookbookNamesAndSlugs' | 'albums' | 'youtubePlaylistId'
 > & {
   previewImages: readonly ImageAsset[]
   hasDetails: boolean
 }
 
-export type ProjectDetail = Pick<CmsProject, 'title' | 'youtubePlaylistId'> & {
+export type ProjectDetail = Pick<ProjectCms, 'title' | 'youtubePlaylistId'> & {
   readonly albums?: readonly ProjectAlbum[]
-} & Partial<Pick<CmsProject, 'description' | 'quote'>>
+} & Partial<Pick<ProjectCms, 'description' | 'quote'>>
 
 export interface ProjectAlbum {
   title: string
