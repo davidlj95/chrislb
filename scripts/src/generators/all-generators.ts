@@ -2,22 +2,17 @@ import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { ImagesListsGenerators } from './images-lists-generators'
 import { ContentGenerators } from './content-generators'
-import { RoutesFileGenerator } from './routes-file-generator'
 import { generateProjectsContent } from './generate-projects-content'
+import { generateRoutesFile } from './generate-routes-file'
 
 export class AllGenerators {
   constructor(
     private readonly _imagesListsGenerators: ImagesListsGenerators,
     private readonly _contentGenerators: ContentGenerators,
-    private readonly _routesFileGenerator: RoutesFileGenerator,
   ) {}
 
   static fromEnv() {
-    return new this(
-      ImagesListsGenerators.fromEnv(),
-      new ContentGenerators(),
-      new RoutesFileGenerator(),
-    )
+    return new this(ImagesListsGenerators.fromEnv(), new ContentGenerators())
   }
 
   async generate(): Promise<void> {
@@ -26,7 +21,7 @@ export class AllGenerators {
       this._contentGenerators.all(),
     ])
     await generateProjectsContent()
-    await this._routesFileGenerator.all()
+    await generateRoutesFile()
   }
 }
 

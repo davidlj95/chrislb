@@ -24,7 +24,7 @@
     "generate:images-lists": "tsm scripts/src/generators/images-lists-generators.ts",
     "generate:project-content": "tsm scripts/src/generators/generate-projects-content.ts",
     "generate:contents": "tsm scripts/src/generators/content-generators.ts",
-    "generate:routes-file": "tsm scripts/src/generators/routes-file-generator.ts",
+    "generate:routes-file": "tsm scripts/src/generators/generate-routes-file.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator",
     "lighthouse-ci": "npx @lhci/cli autorun",
     "serve:ssr:chrislb": "node dist/chrislb/server/server.mjs"
