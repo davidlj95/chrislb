@@ -44,8 +44,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/content"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]
@@ -119,8 +118,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/content"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass"]

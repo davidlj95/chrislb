@@ -1,3 +1,2 @@
 src/data/**/*.json
-src/content/**/*.json
 pnpm-lock.yaml
