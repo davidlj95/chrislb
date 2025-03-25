@@ -45,7 +45,6 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets",
               "src/content"
             ],
             "stylePreprocessorOptions": {
@@ -121,7 +120,6 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets",
               "src/content"
             ],
             "stylePreprocessorOptions": {

@@ -15,8 +15,8 @@ backend:
     deleteMedia: 'feat(media): delete “{{path}}”'
     openAuthoring: '{{message}}'
 publish_mode: editorial_workflow
-media_folder: 'src/assets/cms'
-public_folder: '/assets/cms'
+media_folder: 'public/cms/assets'
+public_folder: '/cms/assets'
 site_url: https://christianlazaro.es
 display_url: https://github.com/davidlj95/chrislb
 logo_url: https://christianlazaro.es/favicon.svg
