@@ -39,10 +39,7 @@ export class Imagekit implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(
-    path: string,
-    includeSubdirectories = false,
-  ): Promise<readonly ImageAsset[]> {
+  async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
     Log.group('Searching for images inside "%s" path', path)
     const imageAssets = await this._listImageAssetsInPath(path)
     if (isEmpty(imageAssets)) {
@@ -51,26 +48,7 @@ export class Imagekit implements ImageCdnApi {
       Log.info('Found %d images', imageAssets.length)
     }
     const imagesFromDirectories: ImageAsset[] = []
-    if (includeSubdirectories) {
-      const directoryNames = await this._listDirectoryNamesInPath(path)
-      if (isEmpty(directoryNames)) {
-        Log.info('No directories found')
-      } else {
-        Log.info('Found %d directories', directoryNames.length)
-        Log.info('Scanning directories...')
-      }
-      Log.groupEnd()
-      for (const directoryName of directoryNames) {
-        imagesFromDirectories.push(
-          ...(await this.getAllImagesInPath(
-            `${path}/${directoryName}`,
-            includeSubdirectories,
-          )),
-        )
-      }
-    } else {
-      Log.groupEnd()
-    }
+    Log.groupEnd()
     return [...imageAssets, ...imagesFromDirectories]
   }
 
@@ -86,17 +64,6 @@ export class Imagekit implements ImageCdnApi {
       sort: 'ASC_NAME',
     })
     return fileObjects.filter(isFileObject).map(this._imageAssetFromFileObject)
-  }
-
-  private async _listDirectoryNamesInPath(
-    path: string,
-  ): Promise<readonly string[]> {
-    const response = await this._sdk.listFiles({
-      path,
-      type: 'folder',
-    })
-    const folderObjects = response as unknown as readonly FolderObject[]
-    return folderObjects.map((folderObject) => folderObject.name)
   }
 
   private _imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
