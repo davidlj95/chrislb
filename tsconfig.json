@@ -21,7 +21,11 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     // Manually added to import JSON into app
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    // Improved imports,
+    "paths": {
+      "@/data/*": ["./data/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

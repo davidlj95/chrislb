@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
-import projectsListPageMetadata from '../../../data/cms/pages/projects-list.json'
-import aboutPageMetadata from '../../../data/cms/pages/about.json'
+import projectsListPageMetadata from '@/data/cms/pages/projects-list.json'
+import aboutPageMetadata from '@/data/cms/pages/about.json'
 import { ABOUT_PATH } from '../common/routing/paths'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 

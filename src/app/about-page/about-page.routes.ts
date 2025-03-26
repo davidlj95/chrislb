@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router'
 import { AboutPageComponent } from './about-page.component'
 import { makeRouteMetadata } from '../common/routing/make-route-metadata'
-import aboutPageMetadata from '../../../data/cms/pages/about.json'
+import aboutPageMetadata from '@/data/cms/pages/about.json'
 import {
   OPEN_GRAPH_TYPE_PROFILE,
   provideNgxMetaOpenGraphProfile,
 } from '@davidlj95/ngx-meta/open-graph'
-import aboutPageContents from '../../../data/cms/misc/about.json'
+import aboutPageContents from '@/data/cms/misc/about.json'
 import { provideNgxMetaMetadataLoader } from '@davidlj95/ngx-meta/core'
 
 export const ABOUT_ROUTES: Routes = [
