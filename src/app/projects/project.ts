@@ -23,7 +23,7 @@ export interface CmsProjectAlbum {
 
 export type ProjectListItem = Omit<
   CmsProject,
-  'date' | 'lookbookNamesAndSlugs' | 'albums' | 'youtubePlaylistId'
+  'date' | 'albums' | 'youtubePlaylistId'
 > & {
   previewImages: readonly ImageAsset[]
   hasDetails: boolean

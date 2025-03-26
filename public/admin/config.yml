@@ -179,7 +179,7 @@ collections:
         widget: 'list'
         summary: '{{fields.presetSlug}}/{{fields.subdirectory}} {{fields.customTitle}}'
         required: false
-        hint: 'An album is a set of images you want to display in the project details page. The album preset defines some configurations for it. Check album presets for more info. ‼️ Directory containing the album MUST exist, otherwise, site generation will fail. The directory containing the album images in the images CDN should be "projects/{projectSlug}/{albumPresetSlug}". With the exception of lookbooks, where in that directory multiple directories exist, one for each look'
+        hint: 'An album is a set of images you want to display in the project details page. The album preset defines some configurations for it. Check album presets for more info. ‼️ Directory containing the album MUST exist, otherwise, site generation will fail. The directory containing the album images in the images CDN should be "projects/{projectSlug}/{albumPresetSlug}". Except if specifying a subdirectory (see more info there)'
         fields:
           - label: 'Album preset'
             name: 'presetSlug'
@@ -256,7 +256,7 @@ collections:
         hint: 'Name of the album in the project details page'
       - <<: *slug
         label: 'Slug (directory name in image CDN)'
-        hint: '‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed. Lookbook specific names are specified per project'
+        hint: '‼️ MUST match the name of the directory you will use for it inside each project in the image CDN. Otherwise, proper name will not be displayed'
       - label: 'Gallery size'
         name: 'size'
         hint: 'Specifies the size for the gallery when displaying the assets in the project detail page. Full size: will take as much space as possible. This means as much height as possible on big screens or full width on small screens. Half size: assets will take half of width in big screens. On small screens, will keep taking full width'
