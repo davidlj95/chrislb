@@ -153,22 +153,6 @@ collections:
       - label: 'Description'
         name: 'description'
         widget: 'text'
-      - label: 'YouTube Playlist ID'
-        name: 'youtubePlaylistId'
-        widget: 'string'
-        required: false
-        hint: 'In case you want to attach some videos, create a YouTube Playlist with those videos. Then, click on share button in the playlist. Copy and paste the link, and extract whatever comes as list ID (after the "list" parameter). For instance, a sample link could be "https://youtube.com/playlist?list=PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI&si=zjfX69n2iqzZeVN4". In there, the playlist ID is "PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI"'
-      - label: 'Lookbooks'
-        name: 'lookbookNamesAndSlugs'
-        widget: 'list'
-        summary: '{{fields.name}} ({{fields.slug}})'
-        hint: 'Allows to attach names to lookbooks and set their order when listing them all'
-        required: false
-        fields:
-          - <<: *slug
-            hint: 'Identifies the lookbook. MUST match the directory name in the image CDN. Otherwise the lookbook will appear without name and after the known lookbooks (the ones listed here)'
-          - <<: *name
-            hint: 'Name to display alongside lookbook images'
       - label: 'Credits'
         name: 'credits'
         widget: 'list'
@@ -185,6 +169,35 @@ collections:
             search_fields: ['name']
             value_field: '{{slug}}'
             display_fields: ['{{name}}']
+      - label: 'YouTube playlist ID'
+        name: 'youtubePlaylistId'
+        widget: 'string'
+        required: false
+        hint: 'In case you want to attach some videos, create a YouTube playlist with those videos. Then, click on share button in the playlist. Copy and paste the link, and extract whatever comes as list ID (after the "list" parameter). For instance, a sample link could be "https://youtube.com/playlist?list=PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI&si=zjfX69n2iqzZeVN4". In there, the playlist ID is "PLbAKzQYf5_ME9HVqX2laYHNWCny96L5aI"'
+      - label: Albums
+        name: albums
+        widget: 'list'
+        summary: '{{fields.presetSlug}}/{{fields.subdirectory}} {{fields.customTitle}}'
+        required: false
+        hint: 'An album is a set of images you want to display in the project details page. The album preset defines some configurations for it. Check album presets for more info. ‼️ Directory containing the album MUST exist, otherwise, site generation will fail. The directory containing the album images in the images CDN should be "projects/{projectSlug}/{albumPresetSlug}". With the exception of lookbooks, where in that directory multiple directories exist, one for each look'
+        fields:
+          - label: 'Album preset'
+            name: 'presetSlug'
+            widget: 'relation'
+            collection: 'album-presets'
+            search_fields: ['name']
+            value_field: '{{slug}}'
+            display_fields: ['{{name}}']
+          - label: 'Subdirectory'
+            name: 'subdirectory'
+            required: false
+            widget: 'string'
+            hint: 'If you want more than one album of the same type, you can specify the subdirectory to look for images here. Then, the images for this album should be in `projects/{projectSlug}/{albumPresetSlug}/{subdirectory}` in the images CDN'
+          - label: 'Custom title'
+            name: 'customTitle'
+            required: false
+            widget: 'string'
+            hint: 'In the case you want more than one album of the same type, maybe you want also a custom title apart from the album preset title. The final title for the album will then be: `{albumPresetTitle} {subAlbumIndex} "{customTitle}"`'
   - name: 'authors'
     label: 'Authors'
     label_singular: 'author'

@@ -8,18 +8,13 @@ import {
   writeJson,
 } from '../utils/json'
 import { basename, join } from 'path'
-import {
-  ALBUM_PRESETS_PATH,
-  AUTHORS_PATH,
-  GENERATED_DATA_PATH,
-} from '../utils/paths'
+import { AUTHORS_PATH, GENERATED_DATA_PATH } from '../utils/paths'
 import { mkdir } from 'fs/promises'
 
 export const generateListFiles = async () => {
   await mkdir(GENERATED_DATA_PATH, { recursive: true })
   return Promise.all([
     generateListFileForDirectory(AUTHORS_PATH, ({ slug }) => ({ slug })),
-    generateListFileForDirectory(ALBUM_PRESETS_PATH),
   ])
 }
 
