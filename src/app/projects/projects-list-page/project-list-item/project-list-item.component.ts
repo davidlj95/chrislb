@@ -1,8 +1,8 @@
 import { Component, computed, input } from '@angular/core'
-import { Author, AuthorsService } from '../../../common/authors.service'
-import { Social } from '../../../common/social/social'
-import { SocialService } from '../../../common/social/social.service'
-import { Credit } from '../../credit'
+import {
+  mapSocialRefToSocialViewModel,
+  SocialRefViewModel,
+} from '../../../common/social'
 import { PROJECTS_PATH } from '../../../common/routing/paths'
 import { ResponsiveImageAttributes } from '../../../common/images/responsive-image-attributes'
 import { ResponsiveImageAttributesService } from '../../../common/images/responsive-image-attributes.service'
@@ -12,7 +12,7 @@ import { Breakpoint } from '../../../common/style/breakpoint'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
-import { ProjectListItem } from '../../project'
+import { ProjectListItem, ProjectListItemCredit } from '../../project'
 
 @Component({
   selector: 'app-project-list-item',
@@ -24,25 +24,20 @@ import { ProjectListItem } from '../../project'
 export class ProjectListItemComponent {
   readonly priority = input(false)
   readonly item = input.required<ProjectListItem>()
-  readonly credits = computed<readonly CreditItem[]>(
+  readonly credits = computed<readonly CreditViewModel[]>(
     () =>
-      this.item().credits?.map((credit) => {
-        const author = this._authorsService.bySlug(credit.authorSlug)
-        const social = author ? this._socialService.getMain(author) : undefined
-        return {
-          ...credit,
-          author,
-          social,
-        }
-      }) ?? [],
+      this.item().credits?.map((projectListItemCredit) => ({
+        ...projectListItemCredit,
+        social: projectListItemCredit.social
+          ? mapSocialRefToSocialViewModel(projectListItemCredit.social)
+          : undefined,
+      })) ?? [],
   )
 
   readonly responsiveImageAttributes: ResponsiveImageAttributes
   protected readonly _PROJECTS_PATH = PROJECTS_PATH
 
   constructor(
-    private readonly _authorsService: AuthorsService,
-    private readonly _socialService: SocialService,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
     this.responsiveImageAttributes = responsiveImageAttributesService
@@ -58,7 +53,6 @@ export class ProjectListItemComponent {
   }
 }
 
-type CreditItem = Omit<Credit, 'authorSlug'> & {
-  author: Author | undefined
-  social: Social | undefined
+type CreditViewModel = Omit<ProjectListItemCredit, 'social'> & {
+  social?: SocialRefViewModel
 }

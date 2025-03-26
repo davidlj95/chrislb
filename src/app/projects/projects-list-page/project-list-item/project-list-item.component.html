@@ -33,18 +33,16 @@
 @if (credits().length) {
   <div class="credits">
     @for (credit of credits(); track credit) {
-      @if (credit.author) {
-        <span>
-          {{ credit.role }}: {{ credit.author.name }}
-          @if (credit.social) {
-            <span class="anchor"
-              >(<a [href]="credit.social.url" target="_blank"
-                >&#64;{{ credit.social.username }}</a
-              >)</span
-            >
-          }
-        </span>
-      }
+      <span>
+        {{ credit.role }}: {{ credit.name }}
+        @if (credit.social) {
+          <span class="anchor"
+            >(<a [href]="credit.social.url" target="_blank"
+              >&#64;{{ credit.social.username }}</a
+            >)</span
+          >
+        }
+      </span>
     }
   </div>
 }

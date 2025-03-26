@@ -1,5 +1,5 @@
-import { Credit } from './credit'
 import { ImageAsset } from '../common/images/image-asset'
+import { SocialRef } from '../common/social'
 
 export interface CmsProject {
   readonly slug: string
@@ -11,8 +11,13 @@ export interface CmsProject {
   readonly youtubePlaylistId?: string
   //👇 When hasn't been set, CMS doesn't set the property
   //   CMS sets it after though (if adding & removing)
-  readonly credits?: readonly Credit[]
+  readonly credits?: readonly CmsProjectCredit[]
   readonly albums?: readonly CmsProjectAlbum[]
+}
+
+export interface CmsProjectCredit {
+  readonly role: string
+  readonly authorSlug: string
 }
 
 export interface CmsProjectAlbum {
@@ -23,10 +28,17 @@ export interface CmsProjectAlbum {
 
 export type ProjectListItem = Omit<
   CmsProject,
-  'date' | 'albums' | 'youtubePlaylistId'
+  'date' | 'credits' | 'albums' | 'youtubePlaylistId'
 > & {
-  previewImages: readonly ImageAsset[]
-  hasDetails: boolean
+  readonly credits?: readonly ProjectListItemCredit[]
+  readonly previewImages: readonly ImageAsset[]
+  readonly hasDetails: boolean
+}
+
+export interface ProjectListItemCredit {
+  readonly role: string
+  readonly name: string
+  readonly social?: SocialRef
 }
 
 export type ProjectDetail = Pick<CmsProject, 'title' | 'youtubePlaylistId'> & {
@@ -34,8 +46,8 @@ export type ProjectDetail = Pick<CmsProject, 'title' | 'youtubePlaylistId'> & {
 } & Partial<Pick<CmsProject, 'description' | 'quote'>>
 
 export interface ProjectDetailAlbum {
-  title: string
-  images: readonly ImageAsset[]
+  readonly title: string
+  readonly images: readonly ImageAsset[]
   //👇 Keep in sync with CMS
-  size: 'half' | 'full'
+  readonly size: 'half' | 'full'
 }

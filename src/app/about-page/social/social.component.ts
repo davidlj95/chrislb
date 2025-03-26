@@ -1,8 +1,10 @@
 import { Component } from '@angular/core'
-import { Social } from '../../common/social/social'
-import { AuthorsService } from '../../common/authors.service'
-import { SocialService } from '../../common/social/social.service'
+import {
+  mapCmsSocialToSocialViewModels,
+  SocialRefViewModel,
+} from '../../common/social'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
+import WEBSITE_AUTHOR from '@/data/cms/authors/christian-lazaro.json'
 
 @Component({
   selector: 'app-social',
@@ -12,9 +14,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome'
   imports: [FaIconComponent],
 })
 export class SocialComponent {
-  readonly items: readonly Social[]
-
-  constructor(authorsService: AuthorsService, socialService: SocialService) {
-    this.items = socialService.getAll(authorsService.website)
-  }
+  readonly items: readonly SocialRefViewModel[] =
+    mapCmsSocialToSocialViewModels(WEBSITE_AUTHOR.social)
 }
