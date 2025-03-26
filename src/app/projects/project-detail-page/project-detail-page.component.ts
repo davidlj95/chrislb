@@ -14,7 +14,7 @@ import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { ProjectAlbum, ProjectDetail } from '../project'
+import { ProjectDetail, ProjectDetailAlbum } from '../project'
 
 @Component({
   templateUrl: './project-detail-page.component.html',
@@ -59,7 +59,7 @@ export class ProjectDetailPageComponent {
   protected readonly _maxSwipersPerViewport = 2
 
   private readonly _albumSwiperByPresetSize: Record<
-    ProjectAlbum['size'],
+    ProjectDetailAlbum['size'],
     ProjectAlbumSwiper
   > = {
     full: {
@@ -132,7 +132,7 @@ const getDescription = ({
   }
 }
 
-type ProjectAlbumViewModel = ProjectAlbum & {
+type ProjectAlbumViewModel = ProjectDetailAlbum & {
   readonly swiper: ProjectAlbumSwiper
 }
 

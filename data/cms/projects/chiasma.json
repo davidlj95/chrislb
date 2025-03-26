@@ -5,28 +5,6 @@
   "subtitle": "Final graduate collection",
   "quote": "Chiasma: crossing path of two organic structures, usually the bridge in the recombination process",
   "description": "The collection explores hybrid identity, it shows my personal experience as a second generation immigrant who has grown up between two different cultures. My Latin heritage, being born in Peru, and being raised in Spain, has led me to develop an ego that combines these two worlds in one. This experience, which is shared by many people nowadays, is redefining new identities and social principles. This project brings to the surface these experiences by exploring different acculturation profiles that are known in the process of cultural adaptation and identity development.\n\nThe masculine ego reflected in the collection is stoic and sophisticated. It is a striking ego, so outwear garments are elemental pieces and traditional masculine silhouettes are predominant. The fluidity of identity is represented through nuanced colours and prints with ethnic cultural origins. The different garments finishings emphasize the separation between the individual identity and the collective one, to see how they mix and how this cultural hybridization that I speak about is produced.",
-  "lookbookNamesAndSlugs": [
-    {
-      "slug": "ego",
-      "name": "Ego"
-    },
-    {
-      "slug": "defiant",
-      "name": "Defiant"
-    },
-    {
-      "slug": "moratorium",
-      "name": "Moratorium"
-    },
-    {
-      "slug": "foreclosure",
-      "name": "Foreclosure"
-    },
-    {
-      "slug": "diffusion",
-      "name": "Diffusion"
-    }
-  ],
   "credits": [
     {
       "role": "Photographer",
@@ -51,6 +29,42 @@
     {
       "role": "CD, Styling, process",
       "authorSlug": "christian-lazaro"
+    }
+  ],
+  "albums": [
+    {
+      "presetSlug": "lookbooks",
+      "subdirectory": "ego",
+      "customTitle": "Ego"
+    },
+    {
+      "presetSlug": "lookbooks",
+      "subdirectory": "defiant",
+      "customTitle": "Defiant"
+    },
+    {
+      "presetSlug": "lookbooks",
+      "subdirectory": "moratorium",
+      "customTitle": "Moratorium"
+    },
+    {
+      "presetSlug": "lookbooks",
+      "subdirectory": "foreclosure",
+      "customTitle": "Foreclosure"
+    },
+    {
+      "presetSlug": "lookbooks",
+      "subdirectory": "diffusion",
+      "customTitle": "Diffusion"
+    },
+    {
+      "presetSlug": "tech-materials"
+    },
+    {
+      "presetSlug": "design-book"
+    },
+    {
+      "presetSlug": "concept"
     }
   ]
 }
