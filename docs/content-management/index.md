@@ -146,8 +146,7 @@ definition, an explanation will be there about it. In few words, you must create
 directory in the [image CDN] with the same value as the `slug` field. In there, add a directory for each kind of
 images.
 
-The names that will be displayed for each directory and the size of the images gallery can be changed
-in the "Album presets" content. If no definition is found for an album preset, images will not appear.
+How to name that directory? Look into the album presets section. Scripts to generate the site will use "slugs" of each preset to look for a directory called like that inside the project directory in the [image CDN]. Preview images will be the ones displayed in projects list page. Rest of albums displayed in each project can be configured in the "albums" section of each project.
 
 > ⚠️ `preview` album preset can't be removed given it is essential for the website
 
