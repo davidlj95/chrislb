@@ -23,7 +23,6 @@
     "generate": "tsm scripts/src/generators/generate-all.ts",
     "generate:misc-images": "tsm scripts/src/generators/generate-misc-images.ts",
     "generate:project-content": "tsm scripts/src/generators/generate-projects-content.ts",
-    "generate:list-files": "tsm scripts/src/generators/generate-list-files.ts",
     "generate:routes-file": "tsm scripts/src/generators/generate-routes-file.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator",
     "lighthouse-ci": "npx @lhci/cli autorun",

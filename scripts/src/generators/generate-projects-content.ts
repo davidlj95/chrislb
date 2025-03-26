@@ -6,9 +6,11 @@ import PREVIEW_PRESET_JSON from '../../../data/cms/album-presets/preview.json'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
 import {
   CmsProject,
+  CmsProjectCredit,
   ProjectDetail,
   ProjectDetailAlbum,
   ProjectListItem,
+  ProjectListItemCredit,
 } from '../../../src/app/projects/project'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
@@ -20,11 +22,13 @@ import {
 } from '../utils/json'
 import {
   ALBUM_PRESETS_PATH,
+  AUTHORS_PATH,
   CMS_DATA_PATH,
   CONTENT_PATH,
   PROJECTS_CONTENT_PATH,
 } from '../utils/paths'
 import { PROJECTS_DIR } from '../../../src/app/common/directories'
+import { CmsAuthorSocial } from '../../../src/app/common/social'
 
 export const generateProjectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -64,7 +68,9 @@ const expandCmsProject = async (
   }
   const albums: ProjectDetailAlbum[] = []
   for (const cmsProjectAlbum of cmsProject.albums ?? []) {
-    const preset = await getPresetBySlug(cmsProjectAlbum.presetSlug)
+    const preset = await readJson<CmsAlbumPreset>(
+      join(ALBUM_PRESETS_PATH, appendJsonExtension(cmsProjectAlbum.presetSlug)),
+    )
     const albumPresetImageDirectory = `${projectImageDirectory}/${preset.slug}`
     const albumImageDirectory = cmsProjectAlbum.subdirectory
       ? `${albumPresetImageDirectory}/${cmsProjectAlbum.subdirectory}`
@@ -98,19 +104,6 @@ const expandCmsProject = async (
   }
 }
 
-const PRESETS_BY_SLUG = new Map<string, CmsAlbumPreset>()
-const getPresetBySlug = async (slug: string): Promise<CmsAlbumPreset> => {
-  const cachedPreset = PRESETS_BY_SLUG.get(slug)
-  if (cachedPreset) {
-    return cachedPreset
-  }
-  const preset = await readJson<CmsAlbumPreset>(
-    join(ALBUM_PRESETS_PATH, appendJsonExtension(slug)),
-  )
-  PRESETS_BY_SLUG.set(slug, preset)
-  return preset
-}
-
 interface CmsAlbumPreset {
   readonly name: string
   readonly slug: string
@@ -125,19 +118,26 @@ export type ExpandedCmsProject = Omit<CmsProject, 'albums'> & {
 const generateProjectsList = async (
   expandedCmsProjects: readonly ExpandedCmsProject[],
 ) => {
-  const projectListItems = expandedCmsProjects
-    .map<ProjectListItem & Pick<ExpandedCmsProject, 'date'>>(
-      (expandedCmsProject) => {
+  const projectListItems = (
+    await Promise.all(
+      expandedCmsProjects.map<
+        Promise<ProjectListItem & Pick<ExpandedCmsProject, 'date'>>
+      >(async (expandedCmsProject) => {
         //👇 To remove unneeded props, they are assigned but unused
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { albums, youtubePlaylistId, ...baseProjectListItem } =
+        const { credits, albums, youtubePlaylistId, ...baseProjectListItem } =
           expandedCmsProject
+        const listItemCredits = await Promise.all(
+          (credits ?? []).map(mapCmsProjectCreditToProjectListItemCredit),
+        )
         return {
           ...baseProjectListItem,
+          credits: listItemCredits.length ? listItemCredits : undefined,
           hasDetails: hasDetails(expandedCmsProject),
         }
-      },
+      }),
     )
+  )
     .sort(
       (projectA, projectB) =>
         new Date(projectB.date).getTime() - new Date(projectA.date).getTime(),
@@ -156,6 +156,65 @@ const generateProjectsList = async (
 
 const hasDetails = (projectContent: ExpandedCmsProject) =>
   !!projectContent.youtubePlaylistId || !!projectContent.albums.length
+
+const mapCmsProjectCreditToProjectListItemCredit = async (
+  cmsProjectCredit: CmsProjectCredit,
+): Promise<ProjectListItemCredit> => {
+  const author = await readJson<CmsAuthor>(
+    join(AUTHORS_PATH, appendJsonExtension(cmsProjectCredit.authorSlug)),
+  )
+  const social = author.social
+    ? getPreferredSocialRef(author.social)
+    : undefined
+  return {
+    role: cmsProjectCredit.role,
+    name: author.name,
+    social,
+  }
+}
+
+const getPreferredSocialRef = (
+  social: CmsAuthorSocial,
+): ProjectListItemCredit['social'] | undefined => {
+  const { preferred, ...usernamesByNetSlug } = social
+  if (preferred && Object.keys(social).indexOf(preferred) > -1) {
+    const username = new Map<string, string>(Object.entries(social)).get(
+      preferred,
+    )!
+    return {
+      netSlug: preferred,
+      username,
+    }
+  }
+  const netSlugsAndNames = Object.entries(usernamesByNetSlug) as readonly [
+    keyof CmsAuthorSocial,
+    string,
+  ][]
+  if (!netSlugsAndNames.length) {
+    return
+  }
+  const preferredNetSlugAndUsername = netSlugsAndNames.toSorted(
+    (netSlugAndUsernameA, netSlugAndUsernameB) =>
+      SOCIAL_NETS_DEFAULT_PREFS.get(netSlugAndUsernameA[0])! -
+      SOCIAL_NETS_DEFAULT_PREFS.get(netSlugAndUsernameB[0])!,
+  )[0]
+  return {
+    netSlug: preferredNetSlugAndUsername[0],
+    username: preferredNetSlugAndUsername[1],
+  }
+}
+
+const SOCIAL_NETS_DEFAULT_PREFS = new Map<keyof CmsAuthorSocial, number>(
+  (['instagram', 'linkedin', 'tiktok'] as const).map((netSlug, index) => [
+    netSlug,
+    index,
+  ]),
+)
+
+interface CmsAuthor {
+  name: string
+  social?: CmsAuthorSocial
+}
 
 const generateProjectsDetails = async (
   expandedCmsProjects: readonly ExpandedCmsProject[],
