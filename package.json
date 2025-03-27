@@ -25,7 +25,7 @@
     "generate:project-content": "tsm scripts/src/generators/generate-projects-content.ts",
     "generate:routes-file": "tsm scripts/src/generators/generate-routes-file.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator",
-    "lighthouse-ci": "npx @lhci/cli autorun",
+    "lighthouse-ci": "lhci autorun",
     "serve:ssr:chrislb": "node dist/chrislb/server/server.mjs"
   },
   "packageManager": "pnpm@10.6.3",
