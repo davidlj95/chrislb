@@ -2,10 +2,6 @@ name: Deploy to Cloudflare Pages
 
 on:
   workflow_call:
-    inputs:
-      build-artifact-name:
-        required: true
-        type: string
     secrets:
       cloudflare-account-id:
         required: true
@@ -30,7 +26,7 @@ jobs:
       - name: Download built app
         uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4
         with:
-          name: ${{ inputs.build-artifact-name }}
+          name: build
         # This whole step was created to mitigate an error: Cloudflare Pages deploying failed as PR branch was removed
         # See https://github.com/davidlj95/website-v2/issues/8 for more info
         # If it gets unused, feel free (and I encourage you) to remove it!

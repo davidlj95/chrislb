@@ -1,10 +1,6 @@
 name: Build
 on:
   workflow_call:
-    inputs:
-      artifact-name:
-        required: false
-        type: string
     secrets:
       imagekit-public-key:
         required: true
@@ -45,9 +41,8 @@ jobs:
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}
         run: cd .ci && make build
       - name: Upload built app
-        if: ${{ inputs.artifact-name != '' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: ${{ inputs.artifact-name }}
+          name: build
           path: 'dist/chrislb/browser'
           retention-days: 5
