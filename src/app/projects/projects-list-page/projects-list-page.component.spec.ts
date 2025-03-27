@@ -4,12 +4,14 @@ import { ProjectsListPageComponent } from './projects-list-page.component'
 import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { ProjectsService } from '../projects.service'
+import { testbedSetup } from '../../../test/testbed-setup'
 
 describe('ProjectsListPageComponent', () => {
   let component: ProjectsListPageComponent
   let fixture: ComponentFixture<ProjectsListPageComponent>
 
   beforeEach(() => {
+    testbedSetup()
     TestBed.overrideComponent(ProjectsListPageComponent, {
       set: {
         imports: [MockComponents(ProjectListItemComponent)],

@@ -11,6 +11,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SwiperDirective } from './swiper.directive'
 import { By } from '@angular/platform-browser'
 import { SwiperContainer } from 'swiper/swiper-element'
+import { testbedSetup } from '../../../test/testbed-setup'
 
 describe('SwiperDirective', () => {
   const options: SwiperOptions = {
@@ -90,7 +91,7 @@ function makeSut<T>({
 }: {
   component: Type<T>
 }): [ComponentFixture<T>, T] {
-  TestBed.configureTestingModule({
+  testbedSetup({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   })
   const fixture = TestBed.createComponent(component)

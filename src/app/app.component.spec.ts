@@ -4,9 +4,11 @@ import { MockComponents } from 'ng-mocks'
 import { HeaderComponent } from './header/header.component'
 import { LogoComponent } from './logo/logo.component'
 import { RouterOutlet } from '@angular/router'
+import { testbedSetup } from '../test/testbed-setup'
 
 describe('AppComponent', () => {
   beforeEach(() => {
+    testbedSetup()
     TestBed.overrideComponent(AppComponent, {
       set: {
         imports: [RouterOutlet, MockComponents(HeaderComponent, LogoComponent)],

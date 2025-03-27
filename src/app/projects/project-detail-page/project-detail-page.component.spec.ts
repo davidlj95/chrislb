@@ -8,13 +8,14 @@ import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
 import { NgxMetaService } from '@davidlj95/ngx-meta/core'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
+import { testbedSetup } from '../../../test/testbed-setup'
 
 describe('ProjectDetailPageComponent', () => {
   let component: ProjectDetailPageComponent
   let fixture: ComponentFixture<ProjectDetailPageComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    testbedSetup({
       providers: [
         MockProvider(ActivatedRoute, {
           data: of({

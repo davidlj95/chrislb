@@ -3,12 +3,13 @@ import { TestBed } from '@angular/core/testing'
 import { ProjectsService } from './projects.service'
 import { JsonFetcher } from '../common/json-fetcher/json-fetcher'
 import { MockProviders } from 'ng-mocks'
+import { testbedSetup } from '../../test/testbed-setup'
 
 describe('ProjectsService', () => {
   let service: ProjectsService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    testbedSetup({
       providers: [ProjectsService, MockProviders(JsonFetcher)],
     })
     service = TestBed.inject(ProjectsService)
