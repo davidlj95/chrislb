@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ResponsiveImageAttributes } from './responsive-image-attributes'
-import { DEFAULT_RESOLUTIONS } from '@unpic/core'
+import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 import { CssVwUnit, Vw } from '../css/unit/vw'
 import { CssMinMaxMediaQuery } from '../css/css-min-max-media-query'
 import { HtmlImageSizesSingleAttribute } from '../html/html-image-sizes-single-attribute'
