@@ -19,18 +19,13 @@
 
   $balanced-luminance-color: theme.$accent;
 
-  swiper-container::part(button-prev) {
-    color: $balanced-luminance-color;
-  }
-
+  swiper-container::part(button-prev),
   swiper-container::part(button-next) {
+    position: absolute; // perf trick 2 avoid layout shifts
     color: $balanced-luminance-color;
   }
 
-  swiper-container::part(bullet-active) {
-    background-color: $balanced-luminance-color;
-  }
-
+  swiper-container::part(bullet-active),
   swiper-container::part(bullet) {
     background-color: $balanced-luminance-color;
   }
