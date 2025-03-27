@@ -9,7 +9,8 @@ export const MISC_IMAGES = new InjectionToken<MiscImages>(
   },
 )
 
-export interface MiscImages {
-  horizontalLogo: ImageAsset
-  aboutPortrait: ImageAsset
-}
+//👇 Optional so we can run tests without looking for real images
+export type MiscImages = Partial<{
+  horizontalLogo?: ImageAsset
+  aboutPortrait?: ImageAsset
+}>

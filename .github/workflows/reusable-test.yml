@@ -7,11 +7,6 @@ on:
         type: string
         required: false
         default: ''
-    secrets:
-      imagekit-public-key:
-        required: true
-      imagekit-private-key:
-        required: true
 
 jobs:
   test:
@@ -25,10 +20,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - name: Setup
         uses: ./.github/actions/setup
-      - name: Prebuild for generated data
-        env:
-          IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
-          IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}
-        run: cd .ci && make prebuild
+      - name: Generate empty misc images
+        run: mkdir -p data/generated && echo '{}' > 'data/generated/misc-images.json'
       - name: Run tests
         run: cd .ci && make test

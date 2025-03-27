@@ -1,11 +1,13 @@
-<a routerLink="/">
-  <img
-    [ngSrc]="_horizontalLogo.asset.filePath"
-    [alt]="_horizontalLogo.asset.alt"
-    [width]="_horizontalLogo.asset.width"
-    [height]="_horizontalLogo.asset.height"
-    [priority]="true"
-    [ngSrcset]="_horizontalLogo.attributes.breakpoints.ngSrcSet.asString"
-    [sizes]="_horizontalLogo.attributes.sizes.asString"
-  />
-</a>
+@if (_horizontalLogo) {
+  <a routerLink="/">
+    <img
+      [ngSrc]="_horizontalLogo.asset.filePath"
+      [alt]="_horizontalLogo.asset.alt"
+      [width]="_horizontalLogo.asset.width"
+      [height]="_horizontalLogo.asset.height"
+      [priority]="true"
+      [ngSrcset]="_horizontalLogo.attributes.breakpoints.ngSrcSet.asString"
+      [sizes]="_horizontalLogo.attributes.sizes.asString"
+    />
+  </a>
+}

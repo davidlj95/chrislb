@@ -22,30 +22,32 @@ export class AboutPageComponent {
   readonly text: string = aboutPageContents.text
   readonly emailLocalPart: string = 'contact'
   readonly domainName = new URL(defaultMetadata.canonicalUrl).hostname
-  readonly portrait: ResponsiveImage
+  readonly portrait?: ResponsiveImage
 
   constructor(
     @Inject(MISC_IMAGES) miscImages: MiscImages,
     responsiveImageAttributesService: ResponsiveImageAttributesService,
   ) {
-    //👇 Keep in sync with SCSS
-    this.portrait = new ResponsiveImage(
-      miscImages.aboutPortrait,
-      responsiveImageAttributesService
-        .vw(Vw(35), CssMinMaxMediaQuery.min(Breakpoint.S.px))
-        .concat(
-          responsiveImageAttributesService.vw(
-            Vw(60),
-            CssMinMaxMediaQuery.minMax(Breakpoint.Xs.px, Breakpoint.S.almost),
-            { includeMediaQueryInSizes: true },
-          ),
-          responsiveImageAttributesService.vw(
-            Vw(75),
-            CssMinMaxMediaQuery.max(Breakpoint.Xs.almost),
-            { includeMediaQueryInSizes: true },
-          ),
-        )
-        .reduce(),
-    )
+    if (miscImages.aboutPortrait) {
+      //👇 Keep in sync with SCSS
+      this.portrait = new ResponsiveImage(
+        miscImages.aboutPortrait,
+        responsiveImageAttributesService
+          .vw(Vw(35), CssMinMaxMediaQuery.min(Breakpoint.S.px))
+          .concat(
+            responsiveImageAttributesService.vw(
+              Vw(60),
+              CssMinMaxMediaQuery.minMax(Breakpoint.Xs.px, Breakpoint.S.almost),
+              { includeMediaQueryInSizes: true },
+            ),
+            responsiveImageAttributesService.vw(
+              Vw(75),
+              CssMinMaxMediaQuery.max(Breakpoint.Xs.almost),
+              { includeMediaQueryInSizes: true },
+            ),
+          )
+          .reduce(),
+      )
+    }
   }
 }
