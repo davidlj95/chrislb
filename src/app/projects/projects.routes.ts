@@ -9,7 +9,6 @@ import { ProjectsService } from './projects.service'
 import { ProjectsListPageComponent } from './projects-list-page/projects-list-page.component'
 import { makeRouteMetadata } from '../common/routing/make-route-metadata'
 import projectsListPageMetadata from '@/data/cms/pages/projects-list.json'
-import { PROJECTS_PATH } from '../common/routing/paths'
 
 export const PROJECTS_LIST_ROUTES: Routes = [
   {
@@ -22,7 +21,7 @@ export const PROJECTS_LIST_ROUTES: Routes = [
 
 export const PROJECTS_ROUTES: Route[] = [
   {
-    path: PROJECTS_PATH,
+    path: '',
     children: [
       { path: '', redirectTo: '/', pathMatch: 'full' },
       {
