@@ -379,7 +379,9 @@ $RECYCLE.BIN/
 /public/content/**/*.json
 /data/generated
 /routes-file.txt
+/scripts/cache
 # Manual edit
 # - Remove .idea from Angular. We want some IDE settings!
 # - Add generated JSON files
 # - Add generated route file
+# - Add scripts cache
