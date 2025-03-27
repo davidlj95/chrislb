@@ -1,4 +1,3 @@
-import { Imagekit } from '../images/imagekit'
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { ImageCdnApi } from '../images/image-cdn-api'
@@ -29,6 +28,7 @@ import {
 } from '../utils/paths'
 import { PROJECTS_DIR } from '../../../src/app/common/directories'
 import { CmsAuthorSocial } from '../../../src/app/common/social'
+import { getImageCdnApi } from '../images/get-image-cdn-api'
 
 export const generateProjectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -42,13 +42,13 @@ const expandCmsProjects = async (): Promise<readonly ExpandedCmsProject[]> => {
   const cmsProjectFiles = await listJsonFilesInDirectory(
     join(CMS_DATA_PATH, PROJECTS_DIR),
   )
-  const imagekitApi = Imagekit.fromEnv()
+  const imageCdnApi = getImageCdnApi()
   const expandedCmsProjects: ExpandedCmsProject[] = []
   for (const cmsProjectFile of cmsProjectFiles) {
     expandedCmsProjects.push(
       await expandCmsProject(
         await readJson<CmsProject>(cmsProjectFile),
-        imagekitApi,
+        imageCdnApi,
       ),
     )
   }
@@ -59,6 +59,7 @@ const expandCmsProject = async (
   cmsProject: CmsProject,
   imageCdnApi: ImageCdnApi,
 ): Promise<ExpandedCmsProject> => {
+  Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
   const previewImages = await imageCdnApi.getAllImagesInPath(
     `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,

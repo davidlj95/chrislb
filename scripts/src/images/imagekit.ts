@@ -8,7 +8,7 @@ import {
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
-import { ImageCdnApi } from './image-cdn-api'
+import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
 import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
@@ -80,9 +80,8 @@ export class Imagekit implements ImageCdnApi {
       new Date(fileObject.updatedAt).getTime().toString(),
     )
     return {
-      name: fileObject.name,
-      //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
-      filePath:
+      filename:
+        //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
         fileObject.filePath.split('/').map(encodeURIComponent).join('/') +
         `?${queryParams.toString()}`,
       height: fileObject.height,
@@ -100,5 +99,3 @@ const isFileObject = (
 interface CustomMetadata {
   alt?: string
 }
-
-const UNPUBLISHED_TAG = 'unpublished'

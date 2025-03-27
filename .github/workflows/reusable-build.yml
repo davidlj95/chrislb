@@ -6,6 +6,10 @@ on:
         required: true
       imagekit-private-key:
         required: true
+      cloudinary-api-key:
+        required: true
+      cloudinary-api-secret:
+        required: true
 
 # 👇 For Decap CMS commit status, only in PRs
 permissions:
