@@ -86,14 +86,6 @@ See [content management guide] for more information about managing and linking c
 In order to avoid having to manually use the image URLs of the image CDN, a script exists to list existing images in the
 CDN. However, that script requires authentication. To provide the authentication, run the create env run script and fill the public and private keys in there.
 
-You can find them
-in [the dashboard's developer options API keys section](https://imagekit.io/dashboard/developer/api-keys). Choose the
-restricted one, no write access is needed, just read only.
-
-Once this is configured, run the generator script to update the images list querying [ImageKit.io].
-
-[ImageKit.io]: https://imagekit.io
-
 ### Content Management System (CMS)
 
 [CMS]: #content-management-system-cms

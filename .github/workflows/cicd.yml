@@ -16,6 +16,8 @@ jobs:
     secrets:
       imagekit-public-key: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
       imagekit-private-key: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+      cloudinary-api-key: ${{ secrets.CLOUDINARY_API_KEY }}
+      cloudinary-api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
   test:
     name: Test
     uses: ./.github/workflows/reusable-test.yml

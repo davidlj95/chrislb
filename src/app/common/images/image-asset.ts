@@ -1,8 +1,6 @@
-import { FileObject } from 'imagekit/dist/libs/interfaces'
-
-export type ImageAsset = Pick<
-  FileObject,
-  'name' | 'filePath' | 'height' | 'width'
-> & {
+export interface ImageAsset {
+  filename: string
+  width: number
+  height: number
   alt?: string
 }
