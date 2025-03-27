@@ -1,10 +1,6 @@
 name: Performance
 on:
   workflow_call:
-    inputs:
-      build-artifact-name:
-        required: true
-        type: string
     secrets:
       LHCI_GITHUB_APP_TOKEN:
         required: true
@@ -22,7 +18,7 @@ jobs:
       - name: Download built app
         uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4
         with:
-          name: ${{ inputs.build-artifact-name }}
+          name: build
       - name: Run Lighthouse CI
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
