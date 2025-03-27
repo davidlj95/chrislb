@@ -9,11 +9,6 @@ on:
       LHCI_GITHUB_APP_TOKEN:
         required: true
 
-# Add those permissions if reporting test results
-# https://github.com/dorny/test-reporter/issues/229
-# permissions:
-#   checks: write
-
 jobs:
   lhci:
     name: Lighthouse CI
