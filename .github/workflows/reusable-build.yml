@@ -5,11 +5,6 @@ on:
       artifact-name:
         required: false
         type: string
-      ref:
-        description: Git reference to checkout. Defaults to @actions/checkout default.
-        type: string
-        required: false
-        default: ''
     secrets:
       imagekit-public-key:
         required: true
@@ -28,8 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          ref: ${{ inputs.ref }}
       - name: Notify deploy preview will come
         uses: ./.github/actions/deploy-preview-status
         with:
