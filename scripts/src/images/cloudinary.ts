@@ -30,21 +30,13 @@ export class Cloudinary implements ImageCdnApi {
   }
 
   async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
-    const imageAssets = await this._listImageAssetsInPath(path)
-    Log.info('Found %d images in path "%s"', imageAssets.length, path)
-    return imageAssets
-  }
-
-  private async _listImageAssetsInPath(
-    path: string,
-  ): Promise<readonly ImageAsset[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
       fields: 'width,height,tags', // public_id and asset_id are always included
       tags: true,
     })
-    return response.resources
+    const images = response.resources
       .filter((resource) => !resource.tags.includes(UNPUBLISHED_TAG))
       .toSorted((a, b) => (a.public_id < b.public_id ? -1 : 1))
       .map(({ public_id, width, height }) => ({
@@ -54,6 +46,8 @@ export class Cloudinary implements ImageCdnApi {
         //version,
         //asset_id,
       }))
+    Log.info('Found %d images in path "%s"', images.length, path)
+    return images
   }
 }
 
