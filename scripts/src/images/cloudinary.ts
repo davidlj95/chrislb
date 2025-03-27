@@ -1,9 +1,16 @@
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
-import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
+import {
+  ConfigOptions,
+  ResourceApiResponse,
+  v2 as cloudinary,
+} from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../utils/log'
 import { CLOUDINARY_CLOUD_NAME } from '../../../src/app/common/images/cdn-config'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import {
+  ImageAsset,
+  ImageAssetBreakpoints,
+} from '../../../src/app/common/images/image-asset'
 
 export class Cloudinary implements ImageCdnApi {
   constructor(sdkOptions: ConfigOptions) {
@@ -39,22 +46,125 @@ export class Cloudinary implements ImageCdnApi {
     const images = response.resources
       .filter((resource) => !resource.tags.includes(UNPUBLISHED_TAG))
       .toSorted((a, b) => (a.public_id < b.public_id ? -1 : 1))
-      .map(({ public_id, width, height }) => ({
+    Log.info('Found %d images in path "%s"', images.length, path)
+    const imagesWithBreakpoints: ImageAsset[] = []
+    for (const image of images) {
+      //asset_id,
+      //version,
+      const { public_id, width, height } = image
+      imagesWithBreakpoints.push({
         filename: public_id,
         width,
         height,
-        //version,
-        //asset_id,
-      }))
-    Log.info('Found %d images in path "%s"', images.length, path)
-    return images
+        breakpoints: await this._getImageBreakpoints(public_id),
+      })
+    }
+    return imagesWithBreakpoints
+  }
+
+  async _getImageBreakpoints(image_id: string): Promise<ImageAssetBreakpoints> {
+    const image = (await cloudinary.api.resource(
+      image_id,
+    )) as ResourceDetailApiResponse
+    const deriveds = image['derived']
+    const hasBreakpoints = (
+      deriveds: ResourceDetailApiResponse['derived'],
+    ): deriveds is DerivedResource[] => {
+      if (!deriveds) {
+        return false
+      }
+      return deriveds.some((derived) =>
+        derived.transformation.startsWith(
+          `${WIDTH_SCALE_TRANSFORM_PREFIX}auto:breakpoints`,
+        ),
+      )
+    }
+    if (!hasBreakpoints(deriveds)) {
+      Log.info(`Generating breakpoints for image "${image_id}"`)
+      const response = (await cloudinary.uploader.explicit(image_id, {
+        type: 'upload',
+        responsive_breakpoints: {
+          create_derived: true,
+          bytes_step: 12288, // lighthouse
+          min_width: 200,
+          max_width: 1080,
+        },
+      })) as ExplicitApiResponse
+      // Create them
+      if (response.responsive_breakpoints.length === 0) {
+        throw new Error(
+          `Image ${image_id} breakpoints generation failed: no breakpoints in response`,
+        )
+      }
+      if (response.responsive_breakpoints.length > 1) {
+        Log.warn(
+          `More than one breakpoint array for image ${image_id}. Using first`,
+        )
+      }
+      const breakpointsObj = response.responsive_breakpoints[0]
+      return uniqueNumberArray(
+        breakpointsObj.breakpoints.map((breakpoint) => breakpoint.width),
+      ).toSorted((a, b) => a - b)
+    }
+    return uniqueNumberArray(
+      deriveds
+        .map<number | undefined>((derived) => {
+          const { transformation } = derived
+          if (!transformation.startsWith(WIDTH_SCALE_TRANSFORM_PREFIX)) {
+            return
+          }
+          const widthString = transformation.substring(
+            WIDTH_SCALE_TRANSFORM_PREFIX.length,
+          )
+          const width = parseInt(widthString)
+          if (isNaN(width)) {
+            return
+          }
+          return width
+        })
+        .filter((b): b is number => !!b),
+    ).toSorted((a, b) => a - b)
   }
 }
 
-//type Unpacked<T> = T extends (infer U)[] ? U : T
-//type ResourceApiResponseItem = Unpacked<ResourceApiResponse['resources']>
-//type CloudinaryImageAsset = ImageAsset
-//& Pick<ResourceApiResponseItem, 'version'> & {
-// TODO: could be included, as it's in the actual response, but not in the response type
-//asset_id: string
-//}
+const WIDTH_SCALE_TRANSFORM_PREFIX = 'c_scale,w_'
+type Unpacked<T> = T extends (infer U)[] ? U : T
+type ResourceApiResponseItem = Unpacked<ResourceApiResponse['resources']>
+
+type ResourceDetailApiResponse = Omit<ResourceApiResponseItem, 'derived'> & {
+  derived?: readonly DerivedResource[]
+}
+
+interface DerivedResource {
+  readonly transformation: string
+  readonly format: string
+  readonly bytes: number
+  readonly id: string
+  readonly url: string
+  readonly secure_url: string
+}
+
+type ExplicitApiResponse = Pick<
+  ResourceApiResponseItem,
+  'public_id' | 'version'
+> & {
+  readonly version_id: string
+  readonly signature: string
+  readonly placeholder: boolean
+  readonly responsive_breakpoints: readonly ResponsiveBreakpointItem[]
+}
+
+interface ResponsiveBreakpointItem {
+  readonly breakpoints: readonly ResponsiveBreakpoint[]
+}
+
+interface ResponsiveBreakpoint {
+  readonly width: number
+  readonly height: number
+  readonly bytes: number
+  readonly url: string
+  readonly secure_url: string
+}
+
+const uniqueNumberArray = (numberArray: readonly number[]): readonly number[] =>
+  Array.from(new Set(numberArray))
