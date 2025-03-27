@@ -6,6 +6,10 @@ on:
         required: true
       imagekit-private-key:
         required: true
+      cloudinary-api-key:
+        required: true
+      cloudinary-api-secret:
+        required: true
 
 # 👇 For Decap CMS commit status, only in PRs
 permissions:
@@ -39,6 +43,8 @@ jobs:
         env:
           IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}
+          CLOUDINARY_API_KEY: ${{ secrets.cloudinary-api-key }}
+          CLOUDINARY_API_SECRET: ${{ secrets.cloudinary-api-secret }}
         run: cd .ci && make build
       - name: Upload built app
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

@@ -8,7 +8,7 @@ import {
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
-import { ImageCdnApi } from './image-cdn-api'
+import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
 import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
@@ -40,30 +40,19 @@ export class Imagekit implements ImageCdnApi {
   }
 
   async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
-    Log.group('Searching for images inside "%s" path', path)
-    const imageAssets = await this._listImageAssetsInPath(path)
-    if (isEmpty(imageAssets)) {
-      Log.info('No images found')
-    } else {
-      Log.info('Found %d images', imageAssets.length)
-    }
-    const imagesFromDirectories: ImageAsset[] = []
-    Log.groupEnd()
-    return [...imageAssets, ...imagesFromDirectories]
-  }
-
-  private async _listImageAssetsInPath(
-    path: string,
-  ): Promise<readonly ImageAsset[]> {
     const searchQuery = `tags NOT IN ${JSON.stringify([UNPUBLISHED_TAG])}`
-    const fileObjects = await this._sdk.listFiles({
+    const response = await this._sdk.listFiles({
       searchQuery,
       path,
       fileType: 'image',
       includeFolder: false,
       sort: 'ASC_NAME',
     })
-    return fileObjects.filter(isFileObject).map(this._imageAssetFromFileObject)
+    const images = response
+      .filter(isFileObject)
+      .map(this._imageAssetFromFileObject)
+    Log.info('Found %d images in path "%s"', images.length, path)
+    return images
   }
 
   private _imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
@@ -80,9 +69,8 @@ export class Imagekit implements ImageCdnApi {
       new Date(fileObject.updatedAt).getTime().toString(),
     )
     return {
-      name: fileObject.name,
-      //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
-      filePath:
+      filename:
+        //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
         fileObject.filePath.split('/').map(encodeURIComponent).join('/') +
         `?${queryParams.toString()}`,
       height: fileObject.height,
@@ -100,5 +88,3 @@ const isFileObject = (
 interface CustomMetadata {
   alt?: string
 }
-
-const UNPUBLISHED_TAG = 'unpublished'

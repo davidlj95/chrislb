@@ -1,5 +1,9 @@
 import { ApplicationConfig } from '@angular/core'
-import { APP_BASE_HREF, provideImageKitLoader } from '@angular/common'
+import {
+  APP_BASE_HREF,
+  provideCloudinaryLoader,
+  provideImageKitLoader,
+} from '@angular/common'
 import {
   ANGULAR_ROUTER_URL,
   GlobalMetadata,
@@ -24,7 +28,12 @@ import {
   withInMemoryScrolling,
 } from '@angular/router'
 import { routes } from './app.routes'
-import { IMAGEKIT_URL } from './common/images/cdn-config'
+import {
+  CLOUDINARY_CLOUD_NAME,
+  IMAGEKIT_URL,
+  IS_IMAGE_CDN_CLOUDINARY,
+  IS_IMAGE_CDN_IMAGEKIT,
+} from './common/images/cdn-config'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { provideHttpClient } from '@angular/common/http'
@@ -41,7 +50,14 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     provideTrailingSlashUrlSerializer(),
-    provideImageKitLoader(IMAGEKIT_URL),
+    ...(IS_IMAGE_CDN_IMAGEKIT ? [provideImageKitLoader(IMAGEKIT_URL)] : []),
+    ...(IS_IMAGE_CDN_CLOUDINARY
+      ? [
+          provideCloudinaryLoader(
+            `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}`,
+          ),
+        ]
+      : []),
     { provide: JsonFetcher, useClass: HttpJsonFetcherService },
     { provide: APP_BASE_HREF, useValue: '/' },
     provideNgxMetaCore(
