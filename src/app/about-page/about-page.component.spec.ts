@@ -6,13 +6,14 @@ import { SocialComponent } from './social/social.component'
 import { ResumeComponent } from './resume/resume.component'
 import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-image'
 import { NgOptimizedImage } from '@angular/common'
+import { testbedSetup } from '../../test/testbed-setup'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
   let fixture: ComponentFixture<AboutPageComponent>
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    testbedSetup({
       providers: [provideDummyOptimizedImage()],
     })
     TestBed.overrideComponent(AboutPageComponent, {
