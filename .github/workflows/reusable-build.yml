@@ -12,8 +12,8 @@ on:
         required: true
 
 # 👇 For Decap CMS commit status, only in PRs
-#permissions:
-#  statuses: write
+permissions:
+  statuses: write
 
 jobs:
   build:
@@ -24,6 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Notify deploy preview will come
+        if: github.event_name == 'pull_request'
         uses: ./.github/actions/deploy-preview-status
         with:
           state: 'pending'

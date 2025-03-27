@@ -1,16 +1,18 @@
-name: Push to main
+name: CI/CD
 
 on:
   push:
-    branches: ['main']
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+      - main
+  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
     name: Build
     uses: ./.github/workflows/reusable-build.yml
+    permissions:
+      statuses: write
     with:
       artifact-name: build
     secrets:
@@ -22,8 +24,6 @@ jobs:
   lint:
     name: Lint
     uses: ./.github/workflows/reusable-lint.yml
-    permissions:
-      checks: write
   style:
     name: Style
     uses: ./.github/workflows/reusable-style.yml
@@ -31,13 +31,12 @@ jobs:
     name: Performance
     needs: build
     uses: ./.github/workflows/reusable-performance.yml
-    permissions:
-      checks: write
     with:
       build-artifact-name: build
     secrets:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   deploy-gh-pages:
+    if: github.event_name == 'push'
     name: Deploy to GitHub Pages (latest)
     needs: [build, lint, test, performance]
     uses: ./.github/workflows/reusable-deploy-github-pages.yml
@@ -48,9 +47,13 @@ jobs:
       pages: write
       id-token: write
   deploy-cloudflare-pages:
-    name: Deploy to Cloudflare Pages (pro)
-    if: fromJSON(vars.DEPLOY_TO_PRO_ON_MAIN)
-    needs: [build, lint, test, performance]
+    name: Deploy to Cloudflare Pages
+    # Cannot run on PRs from forked repos right now.
+    # https://developers.cloudflare.com/pages/platform/known-issues/
+    # Quote to avoid YAML issues with "!" at the beginning
+    # https://github.com/actions/runner/issues/753
+    if: github.event_name =='push' && fromJSON(vars.DEPLOY_TO_PRO_ON_MAIN)
+    needs: [build, test, lint, style, performance]
     uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
     with:
       build-artifact-name: build
@@ -60,5 +63,22 @@ jobs:
     permissions:
       contents: read
       deployments: write
-      #👇 For Decap CMS
+      statuses: write
+  deploy-preview:
+    name: Deploy preview
+    # Cannot run on PRs from forked repos right now.
+    # https://developers.cloudflare.com/pages/platform/known-issues/
+    # Quote to avoid YAML issues with "!" at the beginning
+    # https://github.com/actions/runner/issues/753
+    if: github.event_name == 'pull_request' && ! github.event.pull_request.head.repo.fork
+    needs: build
+    uses: ./.github/workflows/reusable-deploy-cloudflare-pages.yml
+    with:
+      build-artifact-name: build
+    secrets:
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    permissions:
+      contents: read
+      deployments: write
       statuses: write

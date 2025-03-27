@@ -12,7 +12,6 @@ runs:
   using: 'composite'
   steps:
     - name: Set deploy status
-      if: github.event_name == 'pull_request'
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
       env:
         # 👇 To be in sync with Decap CMS config
