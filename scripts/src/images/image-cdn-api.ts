@@ -6,3 +6,5 @@ export interface ImageCdnApi {
     includeSubdirectories?: boolean,
   ): Promise<readonly ImageAsset[]>
 }
+
+export const UNPUBLISHED_TAG = 'unpublished'
