@@ -4,15 +4,19 @@ import {
   SocialRefViewModel,
 } from '../../../common/social'
 import { PROJECTS_PATH } from '../../../common/routing/paths'
-import { ResponsiveImageAttributes } from '../../../common/images/responsive-image-attributes'
-import { ResponsiveImageAttributesService } from '../../../common/images/responsive-image-attributes.service'
-import { Vw } from '../../../common/css/unit/vw'
-import { CssMinMaxMediaQuery } from '../../../common/css/css-min-max-media-query'
-import { Breakpoint } from '../../../common/style/breakpoint'
+import { BREAKPOINT_S_PX } from '../../../common/style/breakpoints'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
 import { ProjectListItem, ProjectListItemCredit } from '../../project'
+import {
+  calcSizeWithoutHorizontalPagePadding,
+  minWidthMediaCondition,
+  px,
+  sourceSize,
+  sourceSizesFromList,
+  vw,
+} from '../../../common/css'
 
 @Component({
   selector: 'app-project-list-item',
@@ -33,25 +37,18 @@ export class ProjectListItemComponent {
           : undefined,
       })) ?? [],
   )
+  protected readonly _sizes = sourceSizesFromList(
+    sourceSize(
+      calcSizeWithoutHorizontalPagePadding(vw(33.33), SLIDES_PER_VIEW),
+    ),
+    minWidthMediaCondition(px(BREAKPOINT_S_PX)),
+    sourceSize(calcSizeWithoutHorizontalPagePadding(vw(50), SLIDES_PER_VIEW)),
+  )
 
-  readonly responsiveImageAttributes: ResponsiveImageAttributes
   protected readonly _PROJECTS_PATH = PROJECTS_PATH
-
-  constructor(
-    responsiveImageAttributesService: ResponsiveImageAttributesService,
-  ) {
-    this.responsiveImageAttributes = responsiveImageAttributesService
-      .vw(Vw(33.33), CssMinMaxMediaQuery.min(Breakpoint.S.px))
-      .concat(
-        responsiveImageAttributesService.vw(
-          Vw(50),
-          CssMinMaxMediaQuery.max(Breakpoint.S.almost),
-          { includeMediaQueryInSizes: true },
-        ),
-      )
-      .reduce()
-  }
 }
+
+const SLIDES_PER_VIEW = 2
 
 type CreditViewModel = Omit<ProjectListItemCredit, 'social'> & {
   social?: SocialRefViewModel

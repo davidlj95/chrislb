@@ -7,7 +7,10 @@ import {
   FolderObject,
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import {
+  DEFAULT_BREAKPOINTS,
+  ImageAsset,
+} from '../../../src/app/common/images/image-asset'
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
@@ -75,6 +78,7 @@ export class Imagekit implements ImageCdnApi {
         `?${queryParams.toString()}`,
       height: fileObject.height,
       width: fileObject.width,
+      breakpoints: DEFAULT_BREAKPOINTS,
       ...altMetadata,
     }
   }

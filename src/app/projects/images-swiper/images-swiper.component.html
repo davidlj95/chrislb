@@ -19,8 +19,8 @@
       >
         <img
           [ngSrc]="image.filename"
-          [ngSrcset]="responsiveImageAttributes().breakpoints.ngSrcSet.asString"
-          [sizes]="responsiveImageAttributes().sizes.asString"
+          [ngSrcset]="image.breakpoints | toNgSrcSet"
+          [sizes]="sizes()"
           [fill]="true"
           [priority]="priority() && i < (maxSlidesPerView ?? 0)"
           [alt]="image.alt || 'Image'"

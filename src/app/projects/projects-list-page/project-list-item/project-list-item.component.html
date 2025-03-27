@@ -24,7 +24,7 @@
   @if (previewImages && previewImages.length) {
     <app-images-swiper
       [images]="previewImages"
-      [responsiveImageAttributes]="responsiveImageAttributes"
+      [sizes]="_sizes"
       [priority]="priority()"
       [customSwiperOptions]="{ slidesPerView: 2 }"
     ></app-images-swiper>
