@@ -47,6 +47,8 @@ jobs:
         env:
           IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.imagekit-private-key }}
+          CLOUDINARY_API_KEY: ${{ secrets.cloudinary-api-key }}
+          CLOUDINARY_API_SECRET: ${{ secrets.cloudinary-api-secret }}
         run: cd .ci && make build
       - name: Upload built app
         if: ${{ inputs.artifact-name != '' }}
