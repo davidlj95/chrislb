@@ -1,4 +1,7 @@
-import { ApplicationConfig } from '@angular/core'
+import {
+  ApplicationConfig,
+  provideExperimentalZonelessChangeDetection,
+} from '@angular/core'
 import { APP_BASE_HREF, provideImageKitLoader } from '@angular/common'
 import {
   ANGULAR_ROUTER_URL,
@@ -64,5 +67,6 @@ export const appConfig: ApplicationConfig = {
     provideNgxMetaOpenGraph(),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideExperimentalZonelessChangeDetection(),
   ],
 }
