@@ -1,4 +1,4 @@
-import { Route } from '@angular/router'
+import { Route, Routes } from '@angular/router'
 import { ProjectDetailPageComponent } from './project-detail-page/project-detail-page.component'
 import { ProjectDetailPageResolver } from './project-detail-page/project-detail-page-resolver.service'
 import { inject } from '@angular/core'
@@ -11,13 +11,16 @@ import { makeRouteMetadata } from '../common/routing/make-route-metadata'
 import projectsListPageMetadata from '@/data/cms/pages/projects-list.json'
 import { PROJECTS_PATH } from '../common/routing/paths'
 
-export const PROJECTS_ROUTES: Route[] = [
+export const PROJECTS_LIST_ROUTES: Routes = [
   {
     path: '',
     component: ProjectsListPageComponent,
     data: makeRouteMetadata(projectsListPageMetadata),
     pathMatch: 'full',
   },
+]
+
+export const PROJECTS_ROUTES: Route[] = [
   {
     path: PROJECTS_PATH,
     children: [
