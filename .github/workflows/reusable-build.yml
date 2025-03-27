@@ -19,7 +19,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -39,6 +39,20 @@ jobs:
           key: ${{ env.cache-name }}-${{ github.ref }}
           restore-keys: |
             ${{ env.cache-name }}
+      - name: Cache key data
+        run: |
+          week_of_year="$(date --utc '+%V')"
+          [ -z "$week_of_year" ] && echo "Week of year cache part missing" && exit 1
+          {
+          echo "week_of_year=${week_of_year}"
+          } >> "$GITHUB_ENV"
+      - name: Scripts cache (images breakpoints)
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        env:
+          cache-name: scripts-cache
+        with:
+          path: scripts/cache
+          key: ${{ env.cache-name }}-${{ env.week_of_year }}
       - name: Build
         env:
           IMAGEKIT_PUBLIC_KEY: ${{ secrets.imagekit-public-key }}
