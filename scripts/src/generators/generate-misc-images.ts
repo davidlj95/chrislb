@@ -8,7 +8,7 @@ import { mkdir } from 'fs/promises'
 import { getImageCdnApi } from '../images/get-image-cdn-api'
 
 export const generateMiscImages = async (): Promise<void> => {
-  const imageCdnApi = getImageCdnApi()
+  const imageCdnApi = await getImageCdnApi()
   await mkdir(GENERATED_DATA_PATH, { recursive: true })
   Log.info('Looking for misc images')
   const images = await imageCdnApi.getAllImagesInPath('misc')

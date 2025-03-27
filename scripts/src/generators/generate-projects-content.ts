@@ -42,7 +42,7 @@ const expandCmsProjects = async (): Promise<readonly ExpandedCmsProject[]> => {
   const cmsProjectFiles = await listJsonFilesInDirectory(
     join(CMS_DATA_PATH, PROJECTS_DIR),
   )
-  const imageCdnApi = getImageCdnApi()
+  const imageCdnApi = await getImageCdnApi()
   const expandedCmsProjects: ExpandedCmsProject[] = []
   for (const cmsProjectFile of cmsProjectFiles) {
     expandedCmsProjects.push(

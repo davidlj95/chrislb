@@ -11,36 +11,62 @@ import {
   ResponsiveImage,
   ResponsiveImageBreakpoints,
 } from '../../../src/app/common/images/responsive-image'
+import { SCRIPTS_CACHE_PATH } from '../utils/paths'
+import { mkdir } from 'fs/promises'
+import { appendJsonExtension, readJson, writeJsonSync } from '../utils/json'
+import { join } from 'path'
 
 export class Cloudinary implements ImageCdnApi {
-  constructor(sdkOptions: ConfigOptions) {
-    cloudinary.config(sdkOptions)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
 
-  static fromEnv(): Cloudinary {
-    dotenv.config()
+  private static _sdkOptions: ConfigOptions
 
-    const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env
-    if (!CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
-      Log.error('Either Cloudinary API key or API secret is missing')
-      Log.item(
-        'Add them as environment variables or to a .env file and try again',
+  static async fromEnv(): Promise<Cloudinary> {
+    if (!this._sdkOptions) {
+      // Read from env
+      dotenv.config()
+
+      const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env
+      if (!CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
+        Log.error('Either Cloudinary API key or API secret is missing')
+        Log.item(
+          'Add them as environment variables or to a .env file and try again',
+        )
+        process.exit(1)
+      }
+
+      // Read cache if exists, update it on exit
+      await mkdir(SCRIPTS_CACHE_PATH, { recursive: true })
+      breakpointsCache = new Map(
+        Object.entries(
+          await readJson(BREAKPOINTS_CACHE_FILEPATH, { fallback: {} }),
+        ),
       )
-      process.exit(1)
+      process.on('beforeExit', () => {
+        writeJsonSync(
+          BREAKPOINTS_CACHE_FILEPATH,
+          Object.fromEntries(breakpointsCache),
+        )
+      })
+
+      // Configure SDK
+      this._sdkOptions = {
+        api_key: CLOUDINARY_API_KEY,
+        api_secret: CLOUDINARY_API_SECRET,
+        cloud_name: CLOUD_NAME,
+      }
+      cloudinary.config(this._sdkOptions)
     }
 
-    return new Cloudinary({
-      api_key: CLOUDINARY_API_KEY,
-      api_secret: CLOUDINARY_API_SECRET,
-      cloud_name: CLOUD_NAME,
-    })
+    return new Cloudinary()
   }
 
   async getAllImagesInPath(path: string): Promise<readonly ResponsiveImage[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
-      fields: 'width,height,tags', // public_id and asset_id are always included
+      fields: 'width,height,tags,version', // public_id and asset_id are always included
       tags: true,
     })
     const images = response.resources
@@ -49,21 +75,32 @@ export class Cloudinary implements ImageCdnApi {
     Log.info('Found %d images in path "%s"', images.length, path)
     const imagesWithBreakpoints: ResponsiveImage[] = []
     for (const image of images) {
-      const { public_id, width, height } = image
+      const { public_id, width, height, version } = image
       imagesWithBreakpoints.push({
         filename: public_id,
         width,
         height,
-        breakpoints: await getImageBreakpoints({ public_id }),
+        breakpoints: await getImageBreakpoints({ public_id, version }),
       })
     }
     return imagesWithBreakpoints
   }
 }
 
+let breakpointsCache: Map<string, ResponsiveImageBreakpoints>
+const BREAKPOINTS_CACHE_FILEPATH = join(
+  SCRIPTS_CACHE_PATH,
+  appendJsonExtension('breakpoints'),
+)
+
 const getImageBreakpoints = async (
   imageRef: ImageRef,
 ): Promise<ResponsiveImageBreakpoints> => {
+  const imageCacheKey = getImageCacheKey(imageRef)
+  const cachedBreakpoints = breakpointsCache.get(imageCacheKey)
+  if (cachedBreakpoints) {
+    return cachedBreakpoints
+  }
   const { public_id } = imageRef
   const image = (await cloudinary.api.resource(
     public_id,
@@ -72,12 +109,17 @@ const getImageBreakpoints = async (
   const unsortedBreakpoints = hasBreakpoints(deriveds)
     ? mapDerivedsToBreakpoints(deriveds)
     : await generateBreakpointsForImage(imageRef)
-  return Array.from(
+  const sortedAndFullWidthBreakpoints = Array.from(
     new Set<number>([...unsortedBreakpoints, image.width]),
   ).toSorted((a, b) => a - b)
+  breakpointsCache.set(imageCacheKey, sortedAndFullWidthBreakpoints)
+  return sortedAndFullWidthBreakpoints
 }
 
-type ImageRef = Pick<ResourceApiResponseItem, 'public_id'>
+const getImageCacheKey = ({ public_id, version }: ImageRef): string =>
+  `${public_id}@${version}`
+
+type ImageRef = Pick<ResourceApiResponseItem, 'public_id' | 'version'>
 type Unpacked<T> = T extends (infer U)[] ? U : T
 type ResourceApiResponseItem = Unpacked<ResourceApiResponse['resources']>
 type ResourceDetailApiResponse = Omit<ResourceApiResponseItem, 'derived'> & {
