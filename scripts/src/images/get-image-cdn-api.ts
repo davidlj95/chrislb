@@ -6,7 +6,7 @@ import { Cloudinary } from './cloudinary'
 import { ImageCdnApi } from './image-cdn-api'
 import { Imagekit } from './imagekit'
 
-export const getImageCdnApi = (): ImageCdnApi => {
+export const getImageCdnApi = async (): Promise<ImageCdnApi> => {
   if (IS_IMAGE_CDN_CLOUDINARY) {
     return Cloudinary.fromEnv()
   }
