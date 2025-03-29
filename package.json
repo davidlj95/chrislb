@@ -28,7 +28,7 @@
     "lighthouse-ci": "lhci autorun",
     "serve:ssr:chrislb": "node dist/chrislb/server/server.mjs"
   },
-  "packageManager": "pnpm@10.6.3",
+  "packageManager": "pnpm@10.7.0",
   "private": true,
   "dependencies": {
     "@angular/animations": "18.2.12",
