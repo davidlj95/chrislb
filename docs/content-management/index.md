@@ -201,14 +201,20 @@ gibberish, contact your trusted developer🧑‍💻
 [image CDN]: #images-cdn
 
 Image assets of the project are hosted in an image CDN platform
-for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options). [ImageKit.io]
-in this case.
+for [image optimization purposes](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options).
+
+[Cloudinary] in this case.
+
+> Because of their great tool to generate [responsive image breakpoints](https://www.responsivebreakpoints.com/) for uploaded images in there.
+
+> However, images were previously stored in [ImageKit]. The app is ready to switch from one to another. Beware that if images uploaded to one are different from the other, when switching you may notice those changes.
 
 By doing so, we deliver images with the right size. So that images are not too big (and therefore heavier) for users
 with small screens (mobile devices) but are big enough so that they aren't pixelated (laptop / desktop computers
 devices). This ensures the website loads as fast as possible 💨
 
-[ImageKit.io]: https://imagekit.io
+[Cloudinary]: https://cloudinary.com
+[ImageKit]: https://imagekit.io
 
 ### Linking projects to images
 
@@ -224,9 +230,10 @@ properly (see [linking images])
 
 If you upload an image with same name, the CDN [will add a new version for that image][asset-versioning]. However, the change will not immediately appear in the website, because when the website is built, images are pointed to a specific version. You'll need to generate a new website version for the new image version to appear (see [side effects]).
 
-To look for image versions in the CDN, [check their asset versioning documentation][asset-versioning]
+To look for image versions in the CDN, check their asset versioning documentation:
 
-[asset-versioning]: https://docs.imagekit.io/media-library/overview/asset-versioning
+- [ImageKit](https://docs.imagekit.io/media-library/overview/asset-versioning)
+- [Cloudinary](https://support.cloudinary.com/hc/en-us/articles/202520912-What-are-image-versions)
 
 ### Removing images
 
