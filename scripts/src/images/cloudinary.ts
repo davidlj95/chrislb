@@ -2,8 +2,8 @@ import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../utils/log'
-import { CLOUD_NAME } from '../../../src/app/common/images/cdn/cloudinary'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { CLOUD_NAME } from '@/app/common/images/cdn/cloudinary'
+import { ImageAsset } from '@/app/common/images/image-asset'
 
 export class Cloudinary implements ImageCdnApi {
   constructor(sdkOptions: ConfigOptions) {
