@@ -1,3 +1,6 @@
+// 👇 Needs to be here, first line.
+//    Because of image CDN config exporting Angular providers
+import '@angular/compiler'
 import { Cloudinary } from './cloudinary'
 import { ImageCdnApi } from './image-cdn-api'
 import { Imagekit } from './imagekit'

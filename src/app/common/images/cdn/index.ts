@@ -1,5 +1,5 @@
 // 👇 To switch CDN
-export { CDN_NAME, BASE_URL } from './cloudinary'
+export { CDN_NAME, BASE_URL, provideResponsiveImageLoader } from './cloudinary'
 
 import { CDN_NAME as CLOUDINARY_NAME } from './cloudinary'
 import { CDN_NAME as IMAGEKIT_NAME } from './imagekit'

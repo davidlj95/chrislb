@@ -33,7 +33,7 @@ import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '@/data/cms/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
-import { provideResponsiveImageLoader } from './common/images/cdn/provide-responsive-image-loader'
+import { provideResponsiveImageLoader } from './common/images/cdn'
 
 export const appConfig: ApplicationConfig = {
   providers: [
