@@ -2,11 +2,7 @@ import {
   ApplicationConfig,
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core'
-import {
-  APP_BASE_HREF,
-  provideCloudinaryLoader,
-  provideImageKitLoader,
-} from '@angular/common'
+import { APP_BASE_HREF } from '@angular/common'
 import {
   ANGULAR_ROUTER_URL,
   GlobalMetadata,
@@ -31,18 +27,13 @@ import {
   withInMemoryScrolling,
 } from '@angular/router'
 import { routes } from './app.routes'
-import {
-  CLOUDINARY_CLOUD_NAME,
-  IMAGEKIT_URL,
-  IS_IMAGE_CDN_CLOUDINARY,
-  IS_IMAGE_CDN_IMAGEKIT,
-} from './common/images/cdn-config'
 import { JsonFetcher } from './common/json-fetcher/json-fetcher'
 import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
 import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '@/data/cms/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
+import { provideResponsiveImageLoader } from './common/images/cdn/provide-responsive-image-loader'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -53,14 +44,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     provideTrailingSlashUrlSerializer(),
-    ...(IS_IMAGE_CDN_IMAGEKIT ? [provideImageKitLoader(IMAGEKIT_URL)] : []),
-    ...(IS_IMAGE_CDN_CLOUDINARY
-      ? [
-          provideCloudinaryLoader(
-            `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}`,
-          ),
-        ]
-      : []),
+    provideResponsiveImageLoader(),
     { provide: JsonFetcher, useClass: HttpJsonFetcherService },
     { provide: APP_BASE_HREF, useValue: '/' },
     provideNgxMetaCore(

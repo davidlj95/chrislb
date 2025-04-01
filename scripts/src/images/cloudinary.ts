@@ -2,7 +2,7 @@ import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../utils/log'
-import { CLOUDINARY_CLOUD_NAME } from '../../../src/app/common/images/cdn-config'
+import { CLOUD_NAME } from '../../../src/app/common/images/cdn/cloudinary'
 import { ImageAsset } from '../../../src/app/common/images/image-asset'
 
 export class Cloudinary implements ImageCdnApi {
@@ -22,10 +22,10 @@ export class Cloudinary implements ImageCdnApi {
       process.exit(1)
     }
 
-    return new this({
+    return new Cloudinary({
       api_key: CLOUDINARY_API_KEY,
       api_secret: CLOUDINARY_API_SECRET,
-      cloud_name: CLOUDINARY_CLOUD_NAME,
+      cloud_name: CLOUD_NAME,
     })
   }
 

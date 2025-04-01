@@ -11,7 +11,7 @@ import { ImageAsset } from '../../../src/app/common/images/image-asset'
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
-import { IMAGEKIT_URL } from '../../../src/app/common/images/cdn-config'
+import { URL } from '../../../src/app/common/images/cdn/imagekit'
 
 export class Imagekit implements ImageCdnApi {
   private readonly _sdk: ImagekitSdk
@@ -32,8 +32,8 @@ export class Imagekit implements ImageCdnApi {
       process.exit(1)
     }
 
-    return new this({
-      urlEndpoint: new URL(IMAGEKIT_URL).toString(),
+    return new Imagekit({
+      urlEndpoint: URL,
       publicKey: IMAGEKIT_PUBLIC_KEY,
       privateKey: IMAGEKIT_PRIVATE_KEY,
     })
