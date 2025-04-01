@@ -8,7 +8,6 @@ module.exports = {
       staticDistDir: process.env.CI ? '.' : 'dist/chrislb/browser',
       url: [
         'http://localhost/',
-        'http://localhost/404/',
         'http://localhost/about/',
         'http://localhost/projects/chiasma/',
       ],
