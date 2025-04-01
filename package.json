@@ -7,7 +7,6 @@
     "start:dev": "ng serve",
     "start:dev:public": "pnpm run start:dev --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
-    "postbuild": "cp dist/chrislb/browser/404/index.html dist/chrislb/browser/content/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
