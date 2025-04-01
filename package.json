@@ -1,6 +1,9 @@
 {
   "name": "chrislb",
   "version": "0.0.0",
+  "packageManager": "pnpm@10.7.0",
+  "type": "module",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "pnpm dlx http-server dist/chrislb/browser -a localhost",
@@ -19,16 +22,14 @@
     "git-hooks": "husky",
     "cms-server": "npx decap-server",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
-    "generate": "tsm scripts/src/generators/generate-all.ts",
-    "generate:misc-images": "tsm scripts/src/generators/generate-misc-images.ts",
-    "generate:project-content": "tsm scripts/src/generators/generate-projects-content.ts",
-    "generate:routes-file": "tsm scripts/src/generators/generate-routes-file.ts",
+    "generate": "tsx scripts/src/generators/generate-all.ts",
+    "generate:misc-images": "tsx scripts/src/generators/generate-misc-images.ts",
+    "generate:project-content": "tsx scripts/src/generators/generate-projects-content.ts",
+    "generate:routes-file": "tsx scripts/src/generators/generate-routes-file.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator",
     "lighthouse-ci": "lhci autorun",
     "serve:ssr:chrislb": "node dist/chrislb/server/server.mjs"
   },
-  "packageManager": "pnpm@10.7.0",
-  "private": true,
   "dependencies": {
     "@angular/animations": "18.2.12",
     "@angular/common": "18.2.12",
@@ -83,7 +84,7 @@
     "lint-staged": "15.5.0",
     "ng-mocks": "14.13.4",
     "prettier": "3.5.3",
-    "tsm": "2.3.0",
+    "tsx": "4.19.3",
     "typescript": "5.5.4",
     "typescript-eslint": "8.28.0"
   }
