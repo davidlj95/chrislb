@@ -1,5 +1,5 @@
 import { dirname, join, resolve } from 'path'
-import { CONTENTS_DIR, PROJECTS_DIR } from '../../../src/app/common/directories'
+import { CONTENTS_DIR, PROJECTS_DIR } from '@/app/common/directories'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)

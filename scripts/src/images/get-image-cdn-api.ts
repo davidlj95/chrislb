@@ -4,7 +4,7 @@ import '@angular/compiler'
 import { Cloudinary } from './cloudinary'
 import { ImageCdnApi } from './image-cdn-api'
 import { Imagekit } from './imagekit'
-import { CDN_NAME, CdnNames } from '../../../src/app/common/images/cdn/index'
+import { CDN_NAME, CdnNames } from '@/app/common/images/cdn'
 import { Log } from '../utils/log'
 
 const CDN_APIS_BY_NAME: Record<CdnNames, () => ImageCdnApi> = {

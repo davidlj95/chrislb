@@ -18,6 +18,9 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     //👇 Required for "tsc" to work without extensions in imports
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@/app/*": ["../src/app/*"]
+    }
   }
 }

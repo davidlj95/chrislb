@@ -2,7 +2,7 @@ import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { ImageCdnApi } from '../images/image-cdn-api'
 import PREVIEW_PRESET_JSON from '../../../data/cms/album-presets/preview.json'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ImageAsset } from '@/app/common/images/image-asset'
 import {
   CmsProject,
   CmsProjectCredit,
@@ -10,7 +10,7 @@ import {
   ProjectDetailAlbum,
   ProjectListItem,
   ProjectListItemCredit,
-} from '../../../src/app/projects/project'
+} from '@/app/projects/project'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
 import {
@@ -26,8 +26,8 @@ import {
   CONTENT_PATH,
   PROJECTS_CONTENT_PATH,
 } from '../utils/paths'
-import { PROJECTS_DIR } from '../../../src/app/common/directories'
-import { CmsAuthorSocial } from '../../../src/app/common/social'
+import { PROJECTS_DIR } from '@/app/common/directories'
+import { CmsAuthorSocial } from '@/app/common/social'
 import { getImageCdnApi } from '../images/get-image-cdn-api'
 
 export const generateProjectsContent = async () => {

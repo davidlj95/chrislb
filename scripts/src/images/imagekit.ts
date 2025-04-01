@@ -7,11 +7,11 @@ import {
   FolderObject,
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ImageAsset } from '@/app/common/images/image-asset'
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
-import { URL } from '../../../src/app/common/images/cdn/imagekit'
+import { URL } from '@/app/common/images/cdn/imagekit'
 
 export class Imagekit implements ImageCdnApi {
   private readonly _sdk: ImagekitSdk

@@ -1,6 +1,6 @@
 import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
-import { MiscImages } from '../../../src/app/common/images/misc-images'
+import { MiscImages } from '@/app/common/images/misc-images'
 import { appendJsonExtension, writeJson } from '../utils/json'
 import { GENERATED_DATA_PATH } from '../utils/paths'
 import { join } from 'path'

@@ -1,6 +1,5 @@
 import { basename, join } from 'path'
-import { readdir, writeFile } from 'fs/promises'
-import { readFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile } from 'fs/promises'
 
 const CACHED_JSONS = new Map<string, object>()
 export const readJson = async <T extends object = object>(
