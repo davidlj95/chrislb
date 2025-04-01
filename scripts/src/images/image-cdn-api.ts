@@ -1,10 +1,10 @@
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ResponsiveImage } from '../../../src/app/common/images/responsive-image'
 
 export interface ImageCdnApi {
   getAllImagesInPath(
     path: string,
     includeSubdirectories?: boolean,
-  ): Promise<readonly ImageAsset[]>
+  ): Promise<readonly ResponsiveImage[]>
 }
 
 export const UNPUBLISHED_TAG = 'unpublished'

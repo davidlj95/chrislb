@@ -13,7 +13,7 @@ import {
   Navigation,
   Pagination,
 } from 'swiper/modules'
-import { ImageAsset } from '../../common/images/image-asset'
+import { ResponsiveImage } from '../../common/images/responsive-image'
 import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
 import { ToNgSrcSet } from '../../common/images/to-ng-src-set'
@@ -34,7 +34,7 @@ registerSwiper()
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ImagesSwiperComponent {
-  readonly images = input.required<readonly ImageAsset[]>()
+  readonly images = input.required<readonly ResponsiveImage[]>()
   readonly sizes = input.required<string>()
   readonly priority = input(false)
   readonly customSwiperOptions = input<SwiperOptions>()

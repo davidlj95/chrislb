@@ -8,9 +8,9 @@ import dotenv from 'dotenv'
 import { Log } from '../utils/log'
 import { CLOUD_NAME } from '../../../src/app/common/images/cdn/cloudinary'
 import {
-  ImageAsset,
-  ImageAssetBreakpoints,
-} from '../../../src/app/common/images/image-asset'
+  ResponsiveImage,
+  ResponsiveImageBreakpoints,
+} from '../../../src/app/common/images/responsive-image'
 
 export class Cloudinary implements ImageCdnApi {
   constructor(sdkOptions: ConfigOptions) {
@@ -36,7 +36,7 @@ export class Cloudinary implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
+  async getAllImagesInPath(path: string): Promise<readonly ResponsiveImage[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
@@ -47,7 +47,7 @@ export class Cloudinary implements ImageCdnApi {
       .filter((resource) => !resource.tags.includes(UNPUBLISHED_TAG))
       .toSorted((a, b) => (a.public_id < b.public_id ? -1 : 1))
     Log.info('Found %d images in path "%s"', images.length, path)
-    const imagesWithBreakpoints: ImageAsset[] = []
+    const imagesWithBreakpoints: ResponsiveImage[] = []
     for (const image of images) {
       const { public_id, width, height } = image
       imagesWithBreakpoints.push({
@@ -63,7 +63,7 @@ export class Cloudinary implements ImageCdnApi {
 
 const getImageBreakpoints = async (
   imageRef: ImageRef,
-): Promise<ImageAssetBreakpoints> => {
+): Promise<ResponsiveImageBreakpoints> => {
   const { public_id } = imageRef
   const image = (await cloudinary.api.resource(
     public_id,
@@ -103,7 +103,7 @@ const hasBreakpoints = (
 
 const mapDerivedsToBreakpoints = (
   deriveds: readonly DerivedResource[],
-): ImageAssetBreakpoints =>
+): ResponsiveImageBreakpoints =>
   deriveds
     .map<number | undefined>((derived) => {
       const { transformation } = derived
@@ -123,7 +123,7 @@ const mapDerivedsToBreakpoints = (
 
 const generateBreakpointsForImage = async ({
   public_id,
-}: ImageRef): Promise<ImageAssetBreakpoints> => {
+}: ImageRef): Promise<ResponsiveImageBreakpoints> => {
   Log.info(`Generating breakpoints for image "${public_id}"`)
   const response = (await cloudinary.uploader.explicit(public_id, {
     type: 'upload',

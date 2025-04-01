@@ -2,7 +2,7 @@ import { isMain } from '../utils/is-main'
 import { Log } from '../utils/log'
 import { ImageCdnApi } from '../images/image-cdn-api'
 import PREVIEW_PRESET_JSON from '../../../data/cms/album-presets/preview.json'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ResponsiveImage } from '../../../src/app/common/images/responsive-image'
 import {
   CmsProject,
   CmsProjectCredit,
@@ -112,7 +112,7 @@ interface CmsAlbumPreset {
 }
 
 export type ExpandedCmsProject = Omit<CmsProject, 'albums'> & {
-  readonly previewImages: readonly ImageAsset[]
+  readonly previewImages: readonly ResponsiveImage[]
   readonly albums: readonly ProjectDetailAlbum[]
 }
 

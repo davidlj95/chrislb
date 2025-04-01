@@ -1,4 +1,4 @@
-import { ImageAsset } from '../common/images/image-asset'
+import { ResponsiveImage } from '../common/images/responsive-image'
 import { SocialRef } from '../common/social'
 
 export interface CmsProject {
@@ -31,7 +31,7 @@ export type ProjectListItem = Omit<
   'date' | 'credits' | 'albums' | 'youtubePlaylistId'
 > & {
   readonly credits?: readonly ProjectListItemCredit[]
-  readonly previewImages: readonly ImageAsset[]
+  readonly previewImages: readonly ResponsiveImage[]
   readonly hasDetails: boolean
 }
 
@@ -47,7 +47,7 @@ export type ProjectDetail = Pick<CmsProject, 'title' | 'youtubePlaylistId'> & {
 
 export interface ProjectDetailAlbum {
   readonly title: string
-  readonly images: readonly ImageAsset[]
+  readonly images: readonly ResponsiveImage[]
   //👇 Keep in sync with CMS
   readonly size: 'half' | 'full'
 }

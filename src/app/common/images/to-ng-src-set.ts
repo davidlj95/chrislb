@@ -1,4 +1,4 @@
-import { ImageAssetBreakpoints } from './image-asset'
+import { ResponsiveImageBreakpoints } from './responsive-image'
 import { Pipe, PipeTransform } from '@angular/core'
 
 @Pipe({ name: 'toNgSrcSet', standalone: true, pure: true })
@@ -8,5 +8,5 @@ export class ToNgSrcSet implements PipeTransform {
   }
 }
 
-export const toNgSrcSet = (breakpoints: ImageAssetBreakpoints): string =>
+export const toNgSrcSet = (breakpoints: ResponsiveImageBreakpoints): string =>
   breakpoints.map((breakpoint) => `${breakpoint}w`).join(', ')

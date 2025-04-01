@@ -7,7 +7,7 @@ import {
   FolderObject,
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '../../../src/app/common/images/image-asset'
+import { ResponsiveImage } from '../../../src/app/common/images/responsive-image'
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
 import { isEmpty } from 'lodash-es'
@@ -40,7 +40,7 @@ export class Imagekit implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
+  async getAllImagesInPath(path: string): Promise<readonly ResponsiveImage[]> {
     const searchQuery = `tags NOT IN ${JSON.stringify([UNPUBLISHED_TAG])}`
     const response = await this._sdk.listFiles({
       searchQuery,
@@ -51,14 +51,16 @@ export class Imagekit implements ImageCdnApi {
     })
     const images = response
       .filter(isFileObject)
-      .map(this._imageAssetFromFileObject)
+      .map(this._responsiveImageFromFileObject)
     Log.info('Found %d images in path "%s"', images.length, path)
     return images
   }
 
-  private _imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
+  private _responsiveImageFromFileObject(
+    fileObject: FileObject,
+  ): ResponsiveImage {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
-    const altMetadata: Pick<ImageAsset, 'alt'> = {}
+    const altMetadata: Pick<ResponsiveImage, 'alt'> = {}
     // Avoid adding if empty string to save some space
     if (!isEmpty(alt?.trim())) {
       altMetadata.alt = alt
