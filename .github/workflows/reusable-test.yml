@@ -3,8 +3,8 @@ on:
   workflow_call:
 
 jobs:
-  test:
-    name: All tests
+  unit:
+    name: Unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -14,5 +14,17 @@ jobs:
         uses: ./.github/actions/setup
       - name: Generate empty misc images
         run: mkdir -p data/generated && echo '{}' > 'data/generated/misc-images.json'
-      - name: Run tests
-        run: cd .ci && make test
+      - name: Run unit tests
+        run: cd .ci && make unit-test
+
+  scripts-tsc:
+    name: Scripts' Typescript compilation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Compile scripts
+        run: pnpm run test:scripts-tsc

@@ -20,11 +20,12 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    // Manually added to import JSON into app
+    // 👇 Import JSON
     "resolveJsonModule": true,
-    // Improved imports,
+    // 👇 Improved imports
     "paths": {
-      "@/data/*": ["./data/*"]
+      "@/data/*": ["./data/*"],
+      "@/app/*": ["./src/app/*"]
     }
   },
   "angularCompilerOptions": {
@@ -32,5 +33,13 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  // 👇 So `tsc` runs with no errors
+  "include": [],
+  // 👇 To allow `-b scripts`
+  "references": [
+    {
+      "path": "scripts"
+    }
+  ]
 }

@@ -1,7 +1,7 @@
-import { isMain } from '../utils/is-main'
-import { Log } from '../utils/log'
-import { ImageCdnApi } from '../images/image-cdn-api'
-import PREVIEW_PRESET_JSON from '../../../data/cms/album-presets/preview.json'
+import { isMain } from './utils/is-main'
+import { Log } from './utils/log'
+import { ImageCdnApi } from './images/image-cdn-api'
+import PREVIEW_PRESET_JSON from '@/data/cms/album-presets/preview.json'
 import { ImageAsset } from '@/app/common/images/image-asset'
 import {
   CmsProject,
@@ -18,22 +18,22 @@ import {
   listJsonFilesInDirectory,
   readJson,
   writeJson,
-} from '../utils/json'
+} from './utils/json'
 import {
   ALBUM_PRESETS_PATH,
   AUTHORS_PATH,
   CMS_DATA_PATH,
   CONTENT_PATH,
   PROJECTS_CONTENT_PATH,
-} from '../utils/paths'
+} from './utils/paths'
 import { PROJECTS_DIR } from '@/app/common/directories'
 import { CmsAuthorSocial } from '@/app/common/social'
-import { getImageCdnApi } from '../images/get-image-cdn-api'
+import { getImageCdnApi } from './images/get-image-cdn-api'
 
-export const generateProjectsContent = async () => {
+export const projectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
-  await generateProjectsList(expandedCmsProjects)
-  await generateProjectsDetails(expandedCmsProjects)
+  await projectsList(expandedCmsProjects)
+  await projectsDetails(expandedCmsProjects)
 }
 
 // Adds images, reads other assets to provide the frontend app just the info it will need
@@ -116,7 +116,7 @@ export type ExpandedCmsProject = Omit<CmsProject, 'albums'> & {
   readonly albums: readonly ProjectDetailAlbum[]
 }
 
-const generateProjectsList = async (
+const projectsList = async (
   expandedCmsProjects: readonly ExpandedCmsProject[],
 ) => {
   const projectListItems = (
@@ -217,14 +217,14 @@ interface CmsAuthor {
   social?: CmsAuthorSocial
 }
 
-const generateProjectsDetails = async (
+const projectsDetails = async (
   expandedCmsProjects: readonly ExpandedCmsProject[],
 ) => {
   await mkdir(PROJECTS_CONTENT_PATH, { recursive: true })
-  return Promise.all(expandedCmsProjects.map(generateProjectDetail))
+  return Promise.all(expandedCmsProjects.map(projectDetail))
 }
 
-const generateProjectDetail = (expandedCmsProject: ExpandedCmsProject) => {
+const projectDetail = (expandedCmsProject: ExpandedCmsProject) => {
   if (!hasDetails(expandedCmsProject)) {
     return
   }
@@ -244,6 +244,6 @@ const generateProjectDetail = (expandedCmsProject: ExpandedCmsProject) => {
 }
 
 if (isMain(import.meta.url)) {
-  await generateProjectsContent()
+  await projectsContent()
   Log.ok('All done')
 }

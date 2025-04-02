@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Create .env from sample" type="js.build_tools.npm">
+  <configuration default="false" name="Serve: dev (public)" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="create-env-from-sample" />
+      <script value="start:dev:public" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

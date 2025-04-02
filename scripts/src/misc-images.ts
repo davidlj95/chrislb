@@ -1,13 +1,13 @@
-import { isMain } from '../utils/is-main'
-import { Log } from '../utils/log'
+import { isMain } from './utils/is-main'
+import { Log } from './utils/log'
 import { MiscImages } from '@/app/common/images/misc-images'
-import { appendJsonExtension, writeJson } from '../utils/json'
-import { GENERATED_DATA_PATH } from '../utils/paths'
+import { appendJsonExtension, writeJson } from './utils/json'
+import { GENERATED_DATA_PATH } from './utils/paths'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
-import { getImageCdnApi } from '../images/get-image-cdn-api'
+import { getImageCdnApi } from './images/get-image-cdn-api'
 
-export const generateMiscImages = async (): Promise<void> => {
+export const miscImages = async (): Promise<void> => {
   const imageCdnApi = getImageCdnApi()
   await mkdir(GENERATED_DATA_PATH, { recursive: true })
   Log.info('Looking for misc images')
@@ -32,6 +32,6 @@ export const generateMiscImages = async (): Promise<void> => {
 }
 
 if (isMain(import.meta.url)) {
-  await generateMiscImages()
+  await miscImages()
   Log.ok('All done')
 }

@@ -1,13 +1,13 @@
-import { isMain } from '../utils/is-main'
-import { Log } from '../utils/log'
+import { isMain } from './utils/is-main'
+import { Log } from './utils/log'
 import { join } from 'path'
 import { PROJECTS_DIR } from '@/app/common/directories'
 import { ProjectListItem } from '@/app/projects/project'
-import { appendJsonExtension, readJson } from '../utils/json'
-import { CONTENT_PATH, REPO_PATH } from '../utils/paths'
+import { appendJsonExtension, readJson } from './utils/json'
+import { CONTENT_PATH, REPO_PATH } from './utils/paths'
 import { readFile, writeFile } from 'fs/promises'
 
-export const generateRoutesFile = async (): Promise<void> => {
+export const routesFile = async (): Promise<void> => {
   Log.group('Routes file')
 
   Log.info("Reading base routes file '%s'", BASE_ROUTES_FILENAME)
@@ -44,6 +44,6 @@ const BASE_ROUTES_FILENAME = 'routes-file.base.txt'
 const ROUTES_FILENAME = 'routes-file.txt'
 
 if (isMain(import.meta.url)) {
-  await generateRoutesFile()
+  await routesFile()
   Log.ok('All done')
 }

@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Lighthouse CI" type="js.build_tools.npm">
+  <configuration default="false" name="Scripts: routes file" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="lighthouse-ci" />
+      <script value="scripts:routes-file" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
