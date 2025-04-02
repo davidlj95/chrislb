@@ -32,6 +32,8 @@ Some files required by the app are generated from the data managed by the [CMS] 
 pnpm run scripts:all
 ```
 
+> If you don't want to set that configuration, you can also run with some mock data and a less complete app by running `cd .ci && make mock-data`
+
 ### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you

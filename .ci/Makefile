@@ -7,6 +7,9 @@ build: prebuild
 prebuild:
 	cd .. && pnpm run scripts:all
 
+mock-data:
+	cd .. && mkdir -p data/generated && echo '{}' > data/generated/misc-images.json
+
 install:
 	# Despite it's enabled by default on CI. This allows to mock CI locally
 	# https://pnpm.io/cli/install#--frozen-lockfile
