@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Analyze main bundle" type="js.build_tools.npm">
+  <configuration default="false" name="Serve: dev" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="analyze-main-bundle" />
+      <script value="start:dev" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

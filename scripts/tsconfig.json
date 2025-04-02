@@ -1,26 +1,25 @@
-/* Dedicated to run several dev scripts */
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    // -- Base configs (based upon `tsc --init`)
-    //👇 Won't be emitted anyway
-    "target": "esnext",
-    //👇 So we can use "bundler" resolution
-    "module": "esnext",
-    //👇 Not needed :)
-    "esModuleInterop": false,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    // -- Our configs
-    "lib": ["esnext"],
-    "outDir": "dist",
-    //👇 So we can use imports without extension with ESM
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    //👇 Required for "tsc" to work without extensions in imports
+    "composite": true,
+    // 👇 Due to composite enabled
+    "declaration": true,
+    "rootDir": "../",
     "noEmit": true,
-    "paths": {
-      "@/app/*": ["../src/app/*"]
-    }
-  }
+    // 👇 Enable moar features. Right now, `.toSorted`
+    "lib": [
+      "esnext",
+      // 👇 Due to overriding "lib" & importing files with DOM stuff
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "../src/app/common/*.ts",
+    "../src/app/common/css/**/*.ts",
+    "../src/app/common/html/**/*.ts",
+    "../src/app/common/images/**/*.ts",
+    "../src/app/projects/project.ts",
+    "../data/**/*.json"
+  ]
 }

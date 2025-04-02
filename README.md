@@ -29,8 +29,10 @@ Some files required by the app are generated from the data managed by the [CMS] 
 [Set the image CDN configuration][image CDN] and run the data generation script before building or serving the app
 
 ```shell
-pnpm run generate
+pnpm run scripts:all
 ```
+
+> If you don't want to set that configuration, you can also run with some mock data and a less complete app by running `cd .ci && make mock-data`
 
 ### Development server
 
