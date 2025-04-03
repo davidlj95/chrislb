@@ -1,6 +1,5 @@
 import { Component, computed, effect } from '@angular/core'
 import { map } from 'rxjs'
-import { SwiperOptions } from 'swiper/types'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
@@ -9,6 +8,10 @@ import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { ProjectDetail, ProjectDetailAlbum } from '../project'
+import {
+  PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE,
+  ProjectDetailPageSwiper,
+} from '@/app/projects/project-detail-page/project-detail-page-swipers'
 
 @Component({
   templateUrl: './project-detail-page.component.html',
@@ -40,35 +43,14 @@ export class ProjectDetailPageComponent {
     if (!albums) {
       return []
     }
-    return albums.map(({ title, images, imageSizes, size }) => {
+    return albums.map((album) => {
       return {
-        title,
-        images,
-        imageSizes,
-        size,
-        swiper: this._albumSwiperByPresetSize[size],
+        ...album,
+        ...PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE[album.size],
       }
     })
   })
-
   protected readonly _maxSwipersPerViewport = 2
-
-  private readonly _albumSwiperByPresetSize: Record<
-    ProjectDetailAlbum['size'],
-    ProjectAlbumSwiper
-  > = {
-    full: {
-      options: {
-        slidesPerView: FULL_SCREEN_SWIPER.slidesPerView,
-      },
-      maxWidthPx: FULL_SCREEN_SWIPER.maxWidth,
-    },
-    half: {
-      options: {
-        slidesPerView: HALF_SCREEN_SWIPER.slidesPerView,
-      },
-    },
-  }
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
@@ -101,19 +83,4 @@ const getDescription = ({
   }
 }
 
-type ProjectAlbumViewModel = ProjectDetailAlbum & {
-  readonly swiper: ProjectAlbumSwiper
-}
-
-interface ProjectAlbumSwiper {
-  readonly options: SwiperOptions
-  readonly maxWidthPx?: number
-}
-
-const FULL_SCREEN_SWIPER = {
-  slidesPerView: 2,
-  maxWidth: 850,
-}
-const HALF_SCREEN_SWIPER = {
-  slidesPerView: 1,
-}
+type ProjectAlbumViewModel = ProjectDetailAlbum & ProjectDetailPageSwiper

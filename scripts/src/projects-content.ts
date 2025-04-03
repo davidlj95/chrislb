@@ -29,11 +29,9 @@ import {
 import { PROJECTS_DIR } from '@/app/common/directories'
 import { CmsAuthorSocial } from '@/app/common/social'
 import {
-  PROJECT_DETAIL_FULL,
-  PROJECT_DETAIL_HALF,
+  PROJECT_DETAIL_BY_PRESET_SIZE,
   PROJECT_LIST_ITEM,
 } from './images/sizes'
-import { SourceSizeList } from './models/source-size-list'
 import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
 
 export const projectsContent = async () => {
@@ -102,7 +100,7 @@ const expandCmsProject = async (
         : cmsProjectAlbum.customTitle
           ? `${preset.name} "${cmsProjectAlbum.customTitle}"`
           : preset.name
-    const sourceSizeList = DETAILS_SOURCE_SIZE_LIST_BY_PRESET_SIZE[preset.size]
+    const sourceSizeList = PROJECT_DETAIL_BY_PRESET_SIZE[preset.size]
     albums.push({
       title,
       imageSizes: sourceSizeList.toString(),
@@ -117,14 +115,6 @@ const expandCmsProject = async (
     previewImages,
     albums,
   }
-}
-
-const DETAILS_SOURCE_SIZE_LIST_BY_PRESET_SIZE: Record<
-  CmsAlbumPreset['size'],
-  SourceSizeList
-> = {
-  half: PROJECT_DETAIL_HALF,
-  full: PROJECT_DETAIL_FULL,
 }
 
 interface CmsAlbumPreset {

@@ -20,6 +20,7 @@
     "../src/app/common/html/**/*.ts",
     "../src/app/common/images/**/*.ts",
     "../src/app/projects/project.ts",
+    "../src/app/projects/project-detail-page/project-detail-page-swipers.ts",
     "../data/**/*.json"
   ]
 }
