@@ -7,7 +7,6 @@ import { join } from 'path'
 import { mkdir } from 'fs/promises'
 import { getImageCdnApi } from './images/cdn'
 import { ABOUT, LOGO } from './images/sizes'
-import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
 
 export const miscImages = async (): Promise<void> => {
   const imageCdnApi = getImageCdnApi()
@@ -24,8 +23,8 @@ export const miscImages = async (): Promise<void> => {
     },
   )
   const miscImages: MiscImages = {
-    horizontalLogo: responsiveImageFromSizes(horizontalLogo, LOGO),
-    aboutPortrait: responsiveImageFromSizes(aboutPortrait, ABOUT),
+    horizontalLogo: await imageCdnApi.responsiveImage(horizontalLogo, LOGO),
+    aboutPortrait: await imageCdnApi.responsiveImage(aboutPortrait, ABOUT),
   }
   await writeJson(
     join(GENERATED_DATA_PATH, appendJsonExtension('misc-images')),

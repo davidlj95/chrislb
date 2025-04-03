@@ -12,10 +12,11 @@ import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
 import { URL } from '@/app/common/images/cdn/imagekit'
 
-export class Imagekit implements ImageCdnApi {
+export class Imagekit extends ImageCdnApi {
   private readonly _sdk: ImagekitSdk
 
   constructor(sdkOptions: ImageKitOptions) {
+    super()
     this._sdk = new ImageKit(sdkOptions)
   }
 

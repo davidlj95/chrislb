@@ -1,47 +1,11 @@
 import { SourceSizeList } from '../models/source-size-list'
-import {
-  Image,
-  ResponsiveImage,
-  ResponsiveImageBreakpoints,
-} from '@/app/common/images/image'
+import { Image, ResponsiveImageBreakpoints } from '@/app/common/images/image'
 import { SourceSize } from '../models/source-size'
 import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
-import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 import { CSS_PX_UNIT, CSS_VW_UNIT } from '../models/css-length'
-import { Log } from '../utils/log'
+import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 
-export const responsiveImageFromSizes = (
-  image: Image,
-  sizes: SourceSizeList,
-  opts: {
-    withoutSizes?: boolean
-  } = {},
-): ResponsiveImage => {
-  const responsiveImageWithoutSizes = {
-    ...image,
-    breakpoints: breakpointsFromSizesAndImage(sizes, image),
-  }
-  if (
-    responsiveImageWithoutSizes.breakpoints.length > MAX_RECOMMENDED_BREAKPOINTS
-  ) {
-    Log.warn(
-      `Too many breakpoints generated for image "%s": %d`,
-      image.src,
-      responsiveImageWithoutSizes.breakpoints.length,
-    )
-  }
-  if (opts.withoutSizes) {
-    return responsiveImageWithoutSizes
-  }
-  return {
-    ...responsiveImageWithoutSizes,
-    sizes: sizes.toString(),
-  }
-}
-
-const MAX_RECOMMENDED_BREAKPOINTS = 20
-
-const breakpointsFromSizesAndImage = (
+export const breakpointsFromSizesAndImage = (
   sourceSizeList: SourceSizeList,
   image: Image,
 ): ResponsiveImageBreakpoints =>
