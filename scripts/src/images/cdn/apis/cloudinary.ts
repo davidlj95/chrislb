@@ -1,9 +1,9 @@
-import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
+import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
-import { Log } from '../utils/log'
+import { Log } from '../../../utils/log'
 import { CLOUD_NAME } from '@/app/common/images/cdn/cloudinary'
-import { ImageAsset } from '@/app/common/images/image-asset'
+import { Image } from '@/app/common/images/image'
 
 export class Cloudinary implements ImageCdnApi {
   constructor(sdkOptions: ConfigOptions) {
@@ -29,7 +29,7 @@ export class Cloudinary implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
+  async getAllImagesInPath(path: string): Promise<readonly Image[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
@@ -40,7 +40,7 @@ export class Cloudinary implements ImageCdnApi {
       .filter((resource) => !resource.tags.includes(UNPUBLISHED_TAG))
       .toSorted((a, b) => (a.public_id < b.public_id ? -1 : 1))
       .map(({ public_id, width, height }) => ({
-        filename: public_id,
+        src: public_id,
         width,
         height,
         //version,

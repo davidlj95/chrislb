@@ -13,10 +13,10 @@ import {
   Navigation,
   Pagination,
 } from 'swiper/modules'
-import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
-import { ImageAsset } from '../../common/images/image-asset'
+import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
+import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -27,16 +27,15 @@ registerSwiper()
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
   standalone: true,
-  imports: [SwiperDirective, NgOptimizedImage],
+  imports: [SwiperDirective, NgOptimizedImage, ToNgSrcSet],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ImagesSwiperComponent {
-  readonly images = input.required<readonly ImageAsset[]>()
-  readonly responsiveImageAttributes =
-    input.required<ResponsiveImageAttributes>()
+  readonly images = input.required<readonly ResponsiveImage[]>()
+  readonly sizes = input<string>()
   readonly priority = input(false)
   readonly customSwiperOptions = input<SwiperOptions>()
   protected readonly _swiperOptions = computed<SwiperOptions>(() => ({

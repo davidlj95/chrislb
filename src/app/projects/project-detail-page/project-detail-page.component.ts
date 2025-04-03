@@ -1,12 +1,6 @@
 import { Component, computed, effect } from '@angular/core'
 import { map } from 'rxjs'
 import { SwiperOptions } from 'swiper/types'
-import { ResponsiveImageAttributesService } from '../../common/images/responsive-image-attributes.service'
-import { ResponsiveImageAttributes } from '../../common/images/responsive-image-attributes'
-import { CssPxUnit, Px } from '../../common/css/unit/px'
-import { Vw } from '../../common/css/unit/vw'
-import { CssMinMaxMediaQuery } from '../../common/css/css-min-max-media-query'
-import { Breakpoint } from '../../common/style/breakpoint'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
@@ -46,10 +40,11 @@ export class ProjectDetailPageComponent {
     if (!albums) {
       return []
     }
-    return albums.map(({ title, images, size }) => {
+    return albums.map(({ title, images, imageSizes, size }) => {
       return {
         title,
         images,
+        imageSizes,
         size,
         swiper: this._albumSwiperByPresetSize[size],
       }
@@ -66,43 +61,17 @@ export class ProjectDetailPageComponent {
       options: {
         slidesPerView: FULL_SCREEN_SWIPER.slidesPerView,
       },
-      attributes: this._responsiveImageAttributesService
-        .fixedSinceWidth(FULL_SCREEN_SWIPER.maxSlideWidth, {
-          minWidth: FULL_SCREEN_SWIPER.maxWidth,
-        })
-        .concat(
-          this._responsiveImageAttributesService.vw(
-            Vw(100 / FULL_SCREEN_SWIPER.slidesPerView),
-            CssMinMaxMediaQuery.max(FULL_SCREEN_SWIPER.maxWidth),
-            // ℹ️ Here the media query is included in previous attribute set
-          ),
-        )
-        .reduce(),
-      maxWidth: FULL_SCREEN_SWIPER.maxWidth,
+      maxWidthPx: FULL_SCREEN_SWIPER.maxWidth,
     },
     half: {
       options: {
         slidesPerView: HALF_SCREEN_SWIPER.slidesPerView,
       },
-      attributes: this._responsiveImageAttributesService
-        .vw(
-          Vw(50 / HALF_SCREEN_SWIPER.slidesPerView),
-          CssMinMaxMediaQuery.min(Breakpoint.S.px),
-        )
-        .concat(
-          this._responsiveImageAttributesService.vw(
-            Vw(100 / HALF_SCREEN_SWIPER.slidesPerView),
-            CssMinMaxMediaQuery.max(Breakpoint.S.almost),
-            { includeMediaQueryInSizes: true },
-          ),
-        )
-        .reduce(),
     },
   }
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
-    private readonly _responsiveImageAttributesService: ResponsiveImageAttributesService,
     ngxMetaService: NgxMetaService,
   ) {
     effect(() => {
@@ -138,16 +107,12 @@ type ProjectAlbumViewModel = ProjectDetailAlbum & {
 
 interface ProjectAlbumSwiper {
   readonly options: SwiperOptions
-  readonly attributes: ResponsiveImageAttributes
-  readonly maxWidth?: CssPxUnit
+  readonly maxWidthPx?: number
 }
 
 const FULL_SCREEN_SWIPER = {
   slidesPerView: 2,
-  maxWidth: Px(850),
-  get maxSlideWidth() {
-    return Px(this.maxWidth.value / this.slidesPerView)
-  },
+  maxWidth: 850,
 }
 const HALF_SCREEN_SWIPER = {
   slidesPerView: 1,

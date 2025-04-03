@@ -1,16 +1,10 @@
-import { InjectionToken } from '@angular/core'
-import miscImages from '@/data/generated/misc-images.json'
-import { ImageAsset } from './image-asset'
+import MISC_IMAGES_JSON from '@/data/generated/misc-images.json'
+import { ResponsiveImage } from './image'
 
-export const MISC_IMAGES = new InjectionToken<MiscImages>(
-  'Miscellaneous images',
-  {
-    factory: () => miscImages,
-  },
-)
+export const MISC_IMAGES: MiscImages = MISC_IMAGES_JSON
 
 //👇 Optional so we can run tests without looking for real images
 export type MiscImages = Partial<{
-  horizontalLogo?: ImageAsset
-  aboutPortrait?: ImageAsset
+  horizontalLogo: ResponsiveImage
+  aboutPortrait: ResponsiveImage
 }>

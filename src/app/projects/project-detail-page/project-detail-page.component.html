@@ -18,9 +18,9 @@
     <h2>{{ album.title }}</h2>
     <app-images-swiper
       [images]="album.images"
-      [responsiveImageAttributes]="album.swiper.attributes"
+      [sizes]="album.imageSizes"
       [customSwiperOptions]="album.swiper.options"
-      [style.max-width.px]="album.swiper.maxWidth?.value"
+      [style.max-width.px]="album.swiper.maxWidthPx"
       [priority]="index < _maxSwipersPerViewport"
     ></app-images-swiper>
   </div>
