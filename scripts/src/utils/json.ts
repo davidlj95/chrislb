@@ -34,7 +34,7 @@ export const writeJsonSync = async (
   data: object,
 ): Promise<void> => writeFileSync(path, stringifyJson(data))
 
-const stringifyJson = (json: object): string => JSON.stringify(json, null, 2)
+const stringifyJson = (json: object): string => JSON.stringify(json)
 
 export const listJsonFilesInDirectory = async (
   path: string,
