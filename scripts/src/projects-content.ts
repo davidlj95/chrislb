@@ -32,7 +32,7 @@ import {
   PROJECT_DETAIL_BY_PRESET_SIZE,
   PROJECT_LIST_ITEM,
 } from './images/sizes'
-import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
+import { resolveSequentially } from './utils/resolve-sequentially'
 
 export const projectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -47,16 +47,11 @@ const expandCmsProjects = async (): Promise<readonly ExpandedCmsProject[]> => {
     join(CMS_DATA_PATH, PROJECTS_DIR),
   )
   const imageCdnApi = getImageCdnApi()
-  const expandedCmsProjects: ExpandedCmsProject[] = []
-  for (const cmsProjectFile of cmsProjectFiles) {
-    expandedCmsProjects.push(
-      await expandCmsProject(
-        await readJson<CmsProject>(cmsProjectFile),
-        imageCdnApi,
-      ),
-    )
-  }
-  return expandedCmsProjects
+  return resolveSequentially(
+    cmsProjectFiles.map(async (cmsProjectFile) =>
+      expandCmsProject(await readJson<CmsProject>(cmsProjectFile), imageCdnApi),
+    ),
+  )
 }
 
 const expandCmsProject = async (
@@ -65,51 +60,65 @@ const expandCmsProject = async (
 ): Promise<ExpandedCmsProject> => {
   Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
-  const previewImages = (
-    await imageCdnApi.getAllImagesInPath(
-      `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
-    )
-  ).map((image) =>
-    responsiveImageFromSizes(image, PROJECT_LIST_ITEM, { withoutSizes: true }),
+  const previewImages = await resolveSequentially(
+    (
+      await imageCdnApi.getAllImagesInPath(
+        `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
+      )
+    ).map((image) =>
+      imageCdnApi.responsiveImage(image, PROJECT_LIST_ITEM, {
+        withoutSizes: true,
+      }),
+    ),
   )
   if (!previewImages.length) {
     throw new Error(`Project ${cmsProject.slug} has no preview images`)
   }
-  const albums: ProjectDetailAlbum[] = []
-  for (const cmsProjectAlbum of cmsProject.albums ?? []) {
-    const preset = await readJson<CmsAlbumPreset>(
-      join(ALBUM_PRESETS_PATH, appendJsonExtension(cmsProjectAlbum.presetSlug)),
-    )
-    const albumPresetImageDirectory = `${projectImageDirectory}/${preset.slug}`
-    const albumImageDirectory = cmsProjectAlbum.subdirectory
-      ? `${albumPresetImageDirectory}/${cmsProjectAlbum.subdirectory}`
-      : albumPresetImageDirectory
-    const images = await imageCdnApi.getAllImagesInPath(
-      albumImageDirectory,
-      false,
-    )
-    const albumsWithSamePreset = (cmsProject.albums ?? []).filter(
-      (album) => album.presetSlug === cmsProjectAlbum.presetSlug,
-    )
-    const albumIndex = albumsWithSamePreset.indexOf(cmsProjectAlbum) + 1
-    const title =
-      albumsWithSamePreset.length > 1
-        ? cmsProjectAlbum.customTitle
-          ? `${preset.name} ${albumIndex} "${cmsProjectAlbum.customTitle}"`
-          : `${preset.name} ${albumIndex}`
-        : cmsProjectAlbum.customTitle
-          ? `${preset.name} "${cmsProjectAlbum.customTitle}"`
-          : preset.name
-    const sourceSizeList = PROJECT_DETAIL_BY_PRESET_SIZE[preset.size]
-    albums.push({
-      title,
-      imageSizes: sourceSizeList.toString(),
-      images: images.map((image) =>
-        responsiveImageFromSizes(image, sourceSizeList, { withoutSizes: true }),
-      ),
-      size: preset.size,
-    })
-  }
+  const albums = await resolveSequentially(
+    (cmsProject.albums ?? []).map<Promise<ProjectDetailAlbum>>(
+      async (cmsProjectAlbum) => {
+        const preset = await readJson<CmsAlbumPreset>(
+          join(
+            ALBUM_PRESETS_PATH,
+            appendJsonExtension(cmsProjectAlbum.presetSlug),
+          ),
+        )
+        const albumPresetImageDirectory = `${projectImageDirectory}/${preset.slug}`
+        const albumImageDirectory = cmsProjectAlbum.subdirectory
+          ? `${albumPresetImageDirectory}/${cmsProjectAlbum.subdirectory}`
+          : albumPresetImageDirectory
+        const images = await imageCdnApi.getAllImagesInPath(
+          albumImageDirectory,
+          false,
+        )
+        const albumsWithSamePreset = (cmsProject.albums ?? []).filter(
+          (album) => album.presetSlug === cmsProjectAlbum.presetSlug,
+        )
+        const albumIndex = albumsWithSamePreset.indexOf(cmsProjectAlbum) + 1
+        const title =
+          albumsWithSamePreset.length > 1
+            ? cmsProjectAlbum.customTitle
+              ? `${preset.name} ${albumIndex} "${cmsProjectAlbum.customTitle}"`
+              : `${preset.name} ${albumIndex}`
+            : cmsProjectAlbum.customTitle
+              ? `${preset.name} "${cmsProjectAlbum.customTitle}"`
+              : preset.name
+        const sourceSizeList = PROJECT_DETAIL_BY_PRESET_SIZE[preset.size]
+        return {
+          title,
+          imageSizes: sourceSizeList.toString(),
+          images: await resolveSequentially(
+            images.map((image) =>
+              imageCdnApi.responsiveImage(image, sourceSizeList, {
+                withoutSizes: true,
+              }),
+            ),
+          ),
+          size: preset.size,
+        }
+      },
+    ),
+  )
   return {
     ...cmsProject,
     previewImages,

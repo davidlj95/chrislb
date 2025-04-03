@@ -5,8 +5,9 @@ import { Log } from '../../../utils/log'
 import { CLOUD_NAME } from '@/app/common/images/cdn/cloudinary'
 import { Image } from '@/app/common/images/image'
 
-export class Cloudinary implements ImageCdnApi {
+export class Cloudinary extends ImageCdnApi {
   constructor(sdkOptions: ConfigOptions) {
+    super()
     cloudinary.config(sdkOptions)
   }
 
@@ -43,18 +44,8 @@ export class Cloudinary implements ImageCdnApi {
         src: public_id,
         width,
         height,
-        //version,
-        //asset_id,
       }))
     Log.info('Found %d images in path "%s"', images.length, path)
     return images
   }
 }
-
-//type Unpacked<T> = T extends (infer U)[] ? U : T
-//type ResourceApiResponseItem = Unpacked<ResourceApiResponse['resources']>
-//type CloudinaryImageAsset = ImageAsset
-//& Pick<ResourceApiResponseItem, 'version'> & {
-// TODO: could be included, as it's in the actual response, but not in the response type
-//asset_id: string
-//}
