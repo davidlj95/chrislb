@@ -17,6 +17,7 @@
     "src/**/*.ts",
     "../src/app/common/breakpoints.ts",
     "../src/app/common/directories.ts",
+    "../src/app/common/paddings.ts",
     "../src/app/common/social.ts",
     "../src/app/common/images/cdn/**/*.ts",
     "../src/app/common/images/image.ts",

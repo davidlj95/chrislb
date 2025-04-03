@@ -2,7 +2,7 @@ import { SourceSizeList } from '../models/source-size-list'
 import { Image, ResponsiveImageBreakpoints } from '@/app/common/images/image'
 import { SourceSize } from '../models/source-size'
 import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
-import { CSS_PX_UNIT, CSS_VW_UNIT } from '../models/css-length'
+import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
 import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 
 export const breakpointsFromSizesAndImage = (
@@ -67,7 +67,14 @@ const applicableResolutionWidth = (
 const lengthToPx = (
   length: SourceSize['length'],
   viewportWidth: number,
-): number => {
+): number =>
+  (Array.isArray(length) ? length : [length]).reduce<number>(
+    (accumulator, length) =>
+      accumulator + singleLengthToPx(length, viewportWidth),
+    0,
+  )
+
+const singleLengthToPx = (length: CssLength, viewportWidth: number): number => {
   switch (length.unit) {
     case CSS_PX_UNIT:
       return length.quantity
