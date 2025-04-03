@@ -13,6 +13,7 @@ export const ABOUT = sourceSizeList(
   sourceSize(Vw(75)),
 )
 
+// TODO: could be just one asset indeed (for max-height + multiple densities)
 export const LOGO = (() => {
   const LOGO_ASPECT_RATIO = { width: 2757, height: 409 }
   // Keep in sync with SCSS
