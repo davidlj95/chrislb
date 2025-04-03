@@ -1,4 +1,4 @@
-import { SourceSizes } from '../models/source-sizes'
+import { SourceSizeList } from '../models/source-size-list'
 import {
   Image,
   ResponsiveImage,
@@ -12,7 +12,7 @@ import { Log } from '../utils/log'
 
 export const responsiveImageFromSizes = (
   image: Image,
-  sizes: SourceSizes,
+  sizes: SourceSizeList,
   opts: {
     withoutSizes?: boolean
   } = {},
@@ -42,12 +42,12 @@ export const responsiveImageFromSizes = (
 const MAX_RECOMMENDED_BREAKPOINTS = 20
 
 const breakpointsFromSizesAndImage = (
-  sourceSizes: SourceSizes,
+  sourceSizeList: SourceSizeList,
   image: Image,
 ): ResponsiveImageBreakpoints =>
   reduceBreakpoints(
     uniq(
-      sourceSizes.sizes.reduce<BreakpointsAndResolutionWidths>(
+      sourceSizeList.sizes.reduce<BreakpointsAndResolutionWidths>(
         (allBreakpointsAndWidths, size) => {
           const { length, mediaCondition } = size
           let removedItems = 0

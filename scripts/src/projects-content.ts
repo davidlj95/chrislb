@@ -33,7 +33,7 @@ import {
   PROJECT_DETAIL_HALF,
   PROJECT_LIST_ITEM,
 } from './images/sizes'
-import { SourceSizes } from './models/source-sizes'
+import { SourceSizeList } from './models/source-size-list'
 import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
 
 export const projectsContent = async () => {
@@ -102,12 +102,12 @@ const expandCmsProject = async (
         : cmsProjectAlbum.customTitle
           ? `${preset.name} "${cmsProjectAlbum.customTitle}"`
           : preset.name
-    const sourceSizes = PROJECT_DETAIL_SOURCE_SIZES_BY_PRESET_SIZE[preset.size]
+    const sourceSizeList = DETAILS_SOURCE_SIZE_LIST_BY_PRESET_SIZE[preset.size]
     albums.push({
       title,
-      imageSizes: sourceSizes.toString(),
+      imageSizes: sourceSizeList.toString(),
       images: images.map((image) =>
-        responsiveImageFromSizes(image, sourceSizes, { withoutSizes: true }),
+        responsiveImageFromSizes(image, sourceSizeList, { withoutSizes: true }),
       ),
       size: preset.size,
     })
@@ -119,9 +119,9 @@ const expandCmsProject = async (
   }
 }
 
-const PROJECT_DETAIL_SOURCE_SIZES_BY_PRESET_SIZE: Record<
+const DETAILS_SOURCE_SIZE_LIST_BY_PRESET_SIZE: Record<
   CmsAlbumPreset['size'],
-  SourceSizes
+  SourceSizeList
 > = {
   half: PROJECT_DETAIL_HALF,
   full: PROJECT_DETAIL_FULL,

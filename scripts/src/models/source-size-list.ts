@@ -1,6 +1,6 @@
 import { SourceSize } from './source-size'
 
-export class SourceSizes {
+export class SourceSizeList {
   constructor(readonly sizes: readonly SourceSize[]) {
     if (sizes.length === 0) {
       throw new Error('At least one size must be specified')
@@ -18,5 +18,6 @@ export class SourceSizes {
   }
 }
 
-export const sourceSizes = (...sizes: readonly SourceSize[]): SourceSizes =>
-  new SourceSizes(sizes)
+export const sourceSizeList = (
+  ...sizes: readonly SourceSize[]
+): SourceSizeList => new SourceSizeList(sizes)
