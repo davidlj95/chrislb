@@ -23,7 +23,7 @@ module.exports = {
             // If we optimize, we can probably turn this back on. 500kb for main bundle is a bit too much
             // ~Now we're below 500kb, enabling it again by leaving it commented in case it's bigger~
             'valid-source-maps': 'off',
-            'uses-responsive-images': ['error', { maxLength: 2 }],
+            'uses-responsive-images': 'off', // It is customized below
             // 👇 Probably Swiper.js 😭
             // Just happens on project detail page tho, when many swipers there
             // Maybe a grid would solve it
@@ -31,6 +31,13 @@ module.exports = {
             'bf-cache': 'warn',
             'csp-xss': 'warn',
             'unused-javascript': 'warn',
+          },
+        },
+        // Non-project detail
+        {
+          matchingUrlPattern: '^((?!\\/projects\\/.+).)*$',
+          assertions: {
+            'uses-responsive-images': ['error', { maxLength: 2 }],
           },
         },
         // Project detail
