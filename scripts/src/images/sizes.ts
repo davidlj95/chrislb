@@ -41,10 +41,8 @@ export const PROJECT_DETAIL_FULL = (() => {
 export const PROJECT_DETAIL_HALF = (() => {
   const SLIDERS_WIDE_VIEW = 2
   const SLIDERS_NARROW_VIEW = 1
-  const SLIDES_PER_VIEW = 2
-  const SLIDE_VW = 100 / SLIDES_PER_VIEW
   return sourceSizeList(
-    sourceSize(Vw(SLIDE_VW / SLIDERS_WIDE_VIEW), minWidth(BREAKPOINT_S_PX)),
-    sourceSize(Vw(SLIDE_VW / SLIDERS_NARROW_VIEW)),
+    sourceSize(Vw(100 / SLIDERS_WIDE_VIEW), minWidth(BREAKPOINT_S_PX)),
+    sourceSize(Vw(100 / SLIDERS_NARROW_VIEW)),
   )
 })()
