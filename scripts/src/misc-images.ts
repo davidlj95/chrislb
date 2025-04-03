@@ -9,7 +9,7 @@ import { getImageCdnApi } from './images/cdn'
 import { ABOUT, LOGO } from './images/sizes'
 
 export const miscImages = async (): Promise<void> => {
-  const imageCdnApi = getImageCdnApi()
+  const imageCdnApi = await getImageCdnApi()
   await mkdir(GENERATED_DATA_PATH, { recursive: true })
   Log.info('Looking for misc images')
   const images = await imageCdnApi.getAllImagesInPath('misc')

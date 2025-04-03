@@ -2,8 +2,8 @@ import { Component, computed, input } from '@angular/core'
 import {
   mapSocialRefToSocialViewModel,
   SocialRefViewModel,
-} from '../../../common/social'
-import { PROJECTS_PATH } from '../../../common/routing/paths'
+} from '@/app/common/social'
+import { PROJECTS_PATH } from '@/app/common/routing/paths'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
