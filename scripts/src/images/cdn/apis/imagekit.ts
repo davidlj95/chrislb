@@ -1,14 +1,14 @@
 import ImagekitSdk from 'imagekit'
 import ImageKit from 'imagekit'
 import dotenv from 'dotenv'
-import { Log } from '../utils/log'
+import { Log } from '../../../utils/log'
 import {
   FileObject,
   FolderObject,
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
-import { ImageAsset } from '@/app/common/images/image-asset'
-import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
+import { Image } from '@/app/common/images/image'
+import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
 import { URL } from '@/app/common/images/cdn/imagekit'
 
@@ -38,7 +38,7 @@ export class Imagekit implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly ImageAsset[]> {
+  async getAllImagesInPath(path: string): Promise<readonly Image[]> {
     const searchQuery = `tags NOT IN ${JSON.stringify([UNPUBLISHED_TAG])}`
     const response = await this._sdk.listFiles({
       searchQuery,
@@ -54,9 +54,9 @@ export class Imagekit implements ImageCdnApi {
     return images
   }
 
-  private _imageAssetFromFileObject(fileObject: FileObject): ImageAsset {
+  private _imageAssetFromFileObject(fileObject: FileObject): Image {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
-    const altMetadata: Pick<ImageAsset, 'alt'> = {}
+    const altMetadata: Pick<Image, 'alt'> = {}
     // Avoid adding if empty string to save some space
     if (!alt?.trim()) {
       altMetadata.alt = alt
@@ -68,7 +68,7 @@ export class Imagekit implements ImageCdnApi {
       new Date(fileObject.updatedAt).getTime().toString(),
     )
     return {
-      filename:
+      src:
         //👇 Needed as otherwise srcSet attribute doesn't work if URL has spaces
         fileObject.filePath.split('/').map(encodeURIComponent).join('/') +
         `?${queryParams.toString()}`,

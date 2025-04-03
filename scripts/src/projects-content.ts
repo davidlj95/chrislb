@@ -1,8 +1,8 @@
 import { isMain } from './utils/is-main'
 import { Log } from './utils/log'
-import { ImageCdnApi } from './images/image-cdn-api'
+import { getImageCdnApi, ImageCdnApi } from './images/cdn'
 import PREVIEW_PRESET_JSON from '@/data/cms/album-presets/preview.json'
-import { ImageAsset } from '@/app/common/images/image-asset'
+import { ResponsiveImage } from '@/app/common/images/image'
 import {
   CmsProject,
   CmsProjectCredit,
@@ -28,7 +28,11 @@ import {
 } from './utils/paths'
 import { PROJECTS_DIR } from '@/app/common/directories'
 import { CmsAuthorSocial } from '@/app/common/social'
-import { getImageCdnApi } from './images/get-image-cdn-api'
+import {
+  PROJECT_DETAIL_BY_PRESET_SIZE,
+  PROJECT_LIST_ITEM,
+} from './images/sizes'
+import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
 
 export const projectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -61,8 +65,12 @@ const expandCmsProject = async (
 ): Promise<ExpandedCmsProject> => {
   Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
-  const previewImages = await imageCdnApi.getAllImagesInPath(
-    `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
+  const previewImages = (
+    await imageCdnApi.getAllImagesInPath(
+      `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
+    )
+  ).map((image) =>
+    responsiveImageFromSizes(image, PROJECT_LIST_ITEM, { withoutSizes: true }),
   )
   if (!previewImages.length) {
     throw new Error(`Project ${cmsProject.slug} has no preview images`)
@@ -92,9 +100,13 @@ const expandCmsProject = async (
         : cmsProjectAlbum.customTitle
           ? `${preset.name} "${cmsProjectAlbum.customTitle}"`
           : preset.name
+    const sourceSizeList = PROJECT_DETAIL_BY_PRESET_SIZE[preset.size]
     albums.push({
       title,
-      images,
+      imageSizes: sourceSizeList.toString(),
+      images: images.map((image) =>
+        responsiveImageFromSizes(image, sourceSizeList, { withoutSizes: true }),
+      ),
       size: preset.size,
     })
   }
@@ -112,7 +124,7 @@ interface CmsAlbumPreset {
 }
 
 export type ExpandedCmsProject = Omit<CmsProject, 'albums'> & {
-  readonly previewImages: readonly ImageAsset[]
+  readonly previewImages: readonly ResponsiveImage[]
   readonly albums: readonly ProjectDetailAlbum[]
 }
 
@@ -133,6 +145,7 @@ const projectsList = async (
         )
         return {
           ...baseProjectListItem,
+          previewImageSizes: PROJECT_LIST_ITEM.sizes.toString(),
           credits: listItemCredits.length ? listItemCredits : undefined,
           hasDetails: hasDetails(expandedCmsProject),
         }

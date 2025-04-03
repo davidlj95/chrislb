@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core'
-import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/style/animations'
+import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/animations'
 import { RouterOutlet } from '@angular/router'
 import { LogoComponent } from './logo/logo.component'
 import { HeaderComponent } from './header/header.component'

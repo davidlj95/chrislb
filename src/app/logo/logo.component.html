@@ -1,13 +1,13 @@
-@if (_horizontalLogo) {
+@if (_logo) {
   <a routerLink="/">
     <img
-      [ngSrc]="_horizontalLogo.asset.filename"
-      [alt]="_horizontalLogo.asset.alt"
-      [width]="_horizontalLogo.asset.width"
-      [height]="_horizontalLogo.asset.height"
+      [ngSrc]="_logo.src"
+      [alt]="_logo.alt"
+      [width]="_logo.width"
+      [height]="_logo.height"
       [priority]="true"
-      [ngSrcset]="_horizontalLogo.attributes.breakpoints.ngSrcSet.asString"
-      [sizes]="_horizontalLogo.attributes.sizes.asString"
+      [ngSrcset]="_logo.breakpoints | toNgSrcSet"
+      [sizes]="_logo.sizes"
     />
   </a>
 }

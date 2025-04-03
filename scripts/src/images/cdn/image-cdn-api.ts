@@ -1,10 +1,10 @@
-import { ImageAsset } from '@/app/common/images/image-asset'
+import { Image } from '@/app/common/images/image'
 
 export interface ImageCdnApi {
   getAllImagesInPath(
     path: string,
     includeSubdirectories?: boolean,
-  ): Promise<readonly ImageAsset[]>
+  ): Promise<readonly Image[]>
 }
 
 export const UNPUBLISHED_TAG = 'unpublished'

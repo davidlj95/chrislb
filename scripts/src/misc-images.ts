@@ -5,7 +5,9 @@ import { appendJsonExtension, writeJson } from './utils/json'
 import { GENERATED_DATA_PATH } from './utils/paths'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
-import { getImageCdnApi } from './images/get-image-cdn-api'
+import { getImageCdnApi } from './images/cdn'
+import { ABOUT, LOGO } from './images/sizes'
+import { responsiveImageFromSizes } from './images/responsive-image-from-sizes'
 
 export const miscImages = async (): Promise<void> => {
   const imageCdnApi = getImageCdnApi()
@@ -14,7 +16,7 @@ export const miscImages = async (): Promise<void> => {
   const images = await imageCdnApi.getAllImagesInPath('misc')
   const [horizontalLogo, aboutPortrait] = ['horizontal', 'portrait'].map(
     (substring) => {
-      const image = images.find((image) => image.filename.includes(substring))
+      const image = images.find((image) => image.src.includes(substring))
       if (!image) {
         throw new Error(`Cannot find misc image file containing ${substring}`)
       }
@@ -22,8 +24,8 @@ export const miscImages = async (): Promise<void> => {
     },
   )
   const miscImages: MiscImages = {
-    horizontalLogo,
-    aboutPortrait,
+    horizontalLogo: responsiveImageFromSizes(horizontalLogo, LOGO),
+    aboutPortrait: responsiveImageFromSizes(aboutPortrait, ABOUT),
   }
   await writeJson(
     join(GENERATED_DATA_PATH, appendJsonExtension('misc-images')),
