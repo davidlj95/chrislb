@@ -33,15 +33,18 @@ export const PROJECT_DETAIL_FULL = (() => {
   const FIXED_WIDTH_PX = 850
   const SLIDES_PER_VIEW = 2
   return sourceSizes(
-    sourceSize(Px(FIXED_WIDTH_PX), minWidth(FIXED_WIDTH_PX)),
+    sourceSize(Px(FIXED_WIDTH_PX / SLIDES_PER_VIEW), minWidth(FIXED_WIDTH_PX)),
     sourceSize(Vw(100 / SLIDES_PER_VIEW)),
   )
 })()
 
 export const PROJECT_DETAIL_HALF = (() => {
+  const SLIDERS_WIDE_VIEW = 2
+  const SLIDERS_NARROW_VIEW = 1
   const SLIDES_PER_VIEW = 2
+  const SLIDE_VW = 100 / SLIDES_PER_VIEW
   return sourceSizes(
-    sourceSize(Vw(50 / SLIDES_PER_VIEW), minWidth(BREAKPOINT_S_PX)),
-    sourceSize(Vw(100 / SLIDES_PER_VIEW)),
+    sourceSize(Vw(SLIDE_VW / SLIDERS_WIDE_VIEW), minWidth(BREAKPOINT_S_PX)),
+    sourceSize(Vw(SLIDE_VW / SLIDERS_NARROW_VIEW)),
   )
 })()

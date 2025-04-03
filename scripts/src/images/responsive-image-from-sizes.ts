@@ -50,20 +50,25 @@ const breakpointsFromSizesAndImage = (
       sourceSizes.sizes.reduce<BreakpointsAndResolutionWidths>(
         (allBreakpointsAndWidths, size) => {
           const { length, mediaCondition } = size
+          let removedItems = 0
           return allBreakpointsAndWidths.resolutionWidths.reduce<BreakpointsAndResolutionWidths>(
             (breakpointsAndWidths, resolutionWidth, index) => {
               if (applicableResolutionWidth(resolutionWidth, mediaCondition)) {
+                const breakpoints = [
+                  ...breakpointsAndWidths.breakpoints,
+                  ...getHighDensityBreakpoints(
+                    lengthToPx(length, resolutionWidth),
+                    image.width,
+                  ),
+                ]
+                const resolutionWidths = [
+                  ...breakpointsAndWidths.resolutionWidths,
+                ]
+                resolutionWidths.splice(index - removedItems, 1)
+                removedItems += 1
                 return {
-                  breakpoints: [
-                    ...breakpointsAndWidths.breakpoints,
-                    ...getHighDensityBreakpoints(
-                      lengthToPx(length, resolutionWidth),
-                      image.width,
-                    ),
-                  ],
-                  resolutionWidths: [
-                    ...breakpointsAndWidths.resolutionWidths,
-                  ].splice(index, 1),
+                  breakpoints,
+                  resolutionWidths,
                 }
               }
               return breakpointsAndWidths
@@ -178,7 +183,6 @@ const estimateMaxPxBetweenBreakpoints = (
   aspectRatio: Pick<Image, 'width' | 'height'>,
 ) => {
   // Amount of bytes each pixel takes at a true color bit depth
-  // Not assuming compression
   const PX_SIZE_BYTES = 3
   const COMPRESSION_RATIO = 0.5
   const LIGHTHOUSE_PX_THRESHOLD =
