@@ -7,6 +7,7 @@ import { ResumeComponent } from './resume/resume.component'
 import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-image'
 import { NgOptimizedImage } from '@angular/common'
 import { testbedSetup } from '../../test/testbed-setup'
+import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
@@ -21,6 +22,7 @@ describe('AboutPageComponent', () => {
         imports: [
           NgOptimizedImage,
           MockComponents(SocialComponent, ResumeComponent),
+          ToNgSrcSet,
         ],
       },
     })
