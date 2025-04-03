@@ -1,6 +1,5 @@
 import { ResponsiveImageBreakpointsReducer } from './responsive-image-breakpoints-reducer'
 import { HtmlNgSrcSetAttribute } from '../html/html-ng-src-set-attribute'
-import { uniq } from 'lodash-es'
 
 export class ResponsiveImageBreakpoints {
   readonly ngSrcSet = new HtmlNgSrcSetAttribute(this)
@@ -8,7 +7,9 @@ export class ResponsiveImageBreakpoints {
   private constructor(readonly pxList: readonly number[]) {}
 
   static from(list: readonly number[]): ResponsiveImageBreakpoints {
-    const sortedUniqueBreakpointPxs = uniq(list).sort((a, b) => a - b)
+    const sortedUniqueBreakpointPxs = Array.from(new Set(list)).sort(
+      (a, b) => a - b,
+    )
     return new this(sortedUniqueBreakpointPxs)
   }
 

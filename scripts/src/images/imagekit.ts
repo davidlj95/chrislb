@@ -10,7 +10,6 @@ import {
 import { ImageAsset } from '@/app/common/images/image-asset'
 import { ImageCdnApi, UNPUBLISHED_TAG } from './image-cdn-api'
 import { URLSearchParams } from 'url'
-import { isEmpty } from 'lodash-es'
 import { URL } from '@/app/common/images/cdn/imagekit'
 
 export class Imagekit implements ImageCdnApi {
@@ -59,7 +58,7 @@ export class Imagekit implements ImageCdnApi {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
     const altMetadata: Pick<ImageAsset, 'alt'> = {}
     // Avoid adding if empty string to save some space
-    if (!isEmpty(alt?.trim())) {
+    if (!alt?.trim()) {
       altMetadata.alt = alt
     }
     // Point to specific file version
