@@ -1,5 +1,5 @@
 import { SourceSizeList } from '../models/source-size-list'
-import { Image, ResponsiveImageBreakpoints } from '@/app/common/images/image'
+import { Breakpoints, Image } from '@/app/common/images/image'
 import { SourceSize } from '../models/source-size'
 import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
 import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
@@ -8,7 +8,7 @@ import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 export const breakpointsFromSizesAndImage = (
   image: Image,
   sourceSizeList: SourceSizeList,
-): ResponsiveImageBreakpoints =>
+): Breakpoints =>
   reduceBreakpoints(
     uniq(
       sourceSizeList.sizes.reduce<BreakpointsAndResolutionWidths>(
@@ -47,8 +47,8 @@ export const breakpointsFromSizesAndImage = (
   )
 
 interface BreakpointsAndResolutionWidths {
-  breakpoints: ResponsiveImageBreakpoints
-  resolutionWidths: ResponsiveImageBreakpoints
+  breakpoints: readonly number[]
+  resolutionWidths: readonly number[]
 }
 
 const applicableResolutionWidth = (
