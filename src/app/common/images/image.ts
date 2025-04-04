@@ -1,9 +1,9 @@
 export interface Image {
-  src: string
-  width: number
-  height: number
-  alt?: string
-  params?: Record<string, string>
+  readonly src: string
+  readonly width: number
+  readonly height: number
+  readonly alt?: string
+  readonly params?: Record<string, unknown>
 }
 
 export type ResponsiveImage = Image & {
@@ -11,4 +11,10 @@ export type ResponsiveImage = Image & {
   readonly sizes?: string
 }
 
-export type ResponsiveImageBreakpoints = readonly number[]
+export type ResponsiveImageBreakpoints = Breakpoints | SignaturesByBreakpoint
+export type Breakpoints = readonly number[]
+export type SignaturesByBreakpoint = Record<string, string>
+
+export const areBreakpointsUnsigned = (
+  breakpoints: ResponsiveImageBreakpoints,
+): breakpoints is Breakpoints => Array.isArray(breakpoints)

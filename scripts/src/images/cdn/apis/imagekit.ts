@@ -10,7 +10,8 @@ import {
 import { Image } from '@/app/common/images/image'
 import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
-import { URL } from '@/app/common/images/cdn/imagekit'
+import { URL as IMAGEKIT_URL } from '@/app/common/images/cdn/imagekit'
+import { getSignature } from 'imagekit/dist/libs/url/builder'
 
 export class Imagekit extends ImageCdnApi {
   private readonly _sdk: ImagekitSdk
@@ -33,7 +34,7 @@ export class Imagekit extends ImageCdnApi {
     }
 
     return new Imagekit({
-      urlEndpoint: URL,
+      urlEndpoint: IMAGEKIT_URL,
       publicKey: IMAGEKIT_PUBLIC_KEY,
       privateKey: IMAGEKIT_PRIVATE_KEY,
     })
@@ -57,11 +58,7 @@ export class Imagekit extends ImageCdnApi {
 
   private _imageAssetFromFileObject(fileObject: FileObject): Image {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
-    const altMetadata: Pick<Image, 'alt'> = {}
-    // Avoid adding if empty string to save some space
-    if (!alt?.trim()) {
-      altMetadata.alt = alt
-    }
+    const altMetadata: Pick<Image, 'alt'> = alt?.trim() ? { alt } : {}
     // Point to specific file version
     const queryParams = new URLSearchParams()
     queryParams.set(
@@ -78,6 +75,26 @@ export class Imagekit extends ImageCdnApi {
       ...altMetadata,
     }
   }
+
+  async signImageBreakpoint(image: Image, breakpoint: number): Promise<string> {
+    const transformationsString = `tr:w-${breakpoint}`
+    const { privateKey, urlEndpoint } = this._sdk.options
+    // https://github.com/angular/angular/blob/19.2.5/packages/common/src/directives/ng_optimized_image/image_loaders/imagekit_loader.ts
+    const url = [
+      urlEndpoint,
+      transformationsString,
+      image.src.startsWith('/') ? image.src.substring(1) : image.src,
+    ].join('/')
+    // https://github.com/imagekit-developer/imagekit-nodejs/blob/6.0.0/libs/url/builder.ts#L169
+    return getSignature({
+      privateKey,
+      url,
+      urlEndpoint,
+      // 👇 To generate same signature as SDK
+      // https://github.com/imagekit-developer/imagekit-nodejs/blob/6.0.0/libs/url/builder.ts#L98-L102
+      expiryTimestamp: DEFAULT_TIMESTAMP,
+    })
+  }
 }
 
 const isFileObject = (
@@ -88,3 +105,6 @@ const isFileObject = (
 interface CustomMetadata {
   alt?: string
 }
+
+// https://github.com/imagekit-developer/imagekit-nodejs/blob/6.0.0/libs/url/builder.ts#L25
+const DEFAULT_TIMESTAMP = '9999999999'
