@@ -20,7 +20,7 @@ export class Cloudinary extends ImageCdnApi {
 
   private static _sdkOptions: ConfigOptions
 
-  static async fromEnv(): Promise<Cloudinary> {
+  static async getInstance(): Promise<Cloudinary> {
     if (!this._sdkOptions) {
       // Read from env
       dotenv.config()
@@ -80,17 +80,28 @@ export class Cloudinary extends ImageCdnApi {
     return images
   }
 
-  override async _breakpointsForImage(
-    image: CloudinaryImage,
+  async breakpointsForImage(
+    image: Image | CloudinaryImage,
   ): Promise<ResponsiveImageBreakpoints> {
-    const imageCacheKey = getImageCacheKey(image)
-    const cachedBreakpoints = breakpointsCache.get(imageCacheKey)
-    if (cachedBreakpoints) {
-      return cachedBreakpoints
+    let version: string | undefined
+    let imageCacheKey: string | undefined
+    if (!isCloudinaryImage(image)) {
+      Log.warn(
+        'Cannot use cache for image "%s" as it is not a Cloudinary image',
+        image.src,
+      )
+    } else {
+      version = image.params.version
+      imageCacheKey = getImageCacheKey(image)
+      const cachedBreakpoints = breakpointsCache.get(imageCacheKey)
+      if (cachedBreakpoints) {
+        return cachedBreakpoints
+      }
     }
+
     const breakpointsUrl = cloudinary.url(image.src, {
       urlAnalytics: false,
-      version: image.params.version,
+      version,
       // https://cloudinary.com/documentation/transformation_reference#examples_w_auto
       raw_transformation: [
         'c_scale',
@@ -113,7 +124,9 @@ export class Cloudinary extends ImageCdnApi {
     const sortedAndFullWidthBreakpoints = Array.from(
       new Set<number>([...breakpointsUrlResponse.breakpoints, image.width]),
     ).toSorted((a, b) => a - b)
-    breakpointsCache.set(imageCacheKey, sortedAndFullWidthBreakpoints)
+    if (imageCacheKey) {
+      breakpointsCache.set(imageCacheKey, sortedAndFullWidthBreakpoints)
+    }
     return sortedAndFullWidthBreakpoints
   }
 }
@@ -130,10 +143,17 @@ type CloudinaryImage = Image & {
   }
 }
 
-const getImageCacheKey = ({
-  src: public_id,
-  params,
-}: CloudinaryImage): string => `${public_id}@${params.version}`
+const isCloudinaryImage = (
+  image: Image | CloudinaryImage,
+): image is CloudinaryImage => !!image.params?.version
+
+const getImageCacheKey = (image: CloudinaryImage): string => {
+  const {
+    src: public_id,
+    params: { version },
+  } = image
+  return `${public_id}@${version}`
+}
 
 const BREAKPOINTS_PARAMS = {
   MinWidth: 200,
