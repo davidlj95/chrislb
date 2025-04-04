@@ -6,8 +6,8 @@ import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
 import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 
 export const breakpointsFromSizesAndImage = (
-  sourceSizeList: SourceSizeList,
   image: Image,
+  sourceSizeList: SourceSizeList,
 ): ResponsiveImageBreakpoints =>
   reduceBreakpoints(
     uniq(

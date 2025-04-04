@@ -33,6 +33,7 @@ import {
   PROJECT_LIST_ITEM,
 } from './images/sizes'
 import { resolveSequentially } from './utils/resolve-sequentially'
+import { toResponsiveImages } from './images/responsive/to-responsive-image'
 
 export const projectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -60,16 +61,11 @@ const expandCmsProject = async (
 ): Promise<ExpandedCmsProject> => {
   Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
-  const previewImages = await resolveSequentially(
-    (
-      await imageCdnApi.getAllImagesInPath(
-        `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
-      )
-    ).map((image) =>
-      imageCdnApi.responsiveImage(image, PROJECT_LIST_ITEM, {
-        withoutSizes: true,
-      }),
+  const previewImages = await toResponsiveImages(
+    await imageCdnApi.getAllImagesInPath(
+      `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
     ),
+    PROJECT_LIST_ITEM,
   )
   if (!previewImages.length) {
     throw new Error(`Project ${cmsProject.slug} has no preview images`)
@@ -107,13 +103,7 @@ const expandCmsProject = async (
         return {
           title,
           imageSizes: sourceSizeList.toString(),
-          images: await resolveSequentially(
-            images.map((image) =>
-              imageCdnApi.responsiveImage(image, sourceSizeList, {
-                withoutSizes: true,
-              }),
-            ),
-          ),
+          images: await toResponsiveImages(images, sourceSizeList),
           size: preset.size,
         }
       },

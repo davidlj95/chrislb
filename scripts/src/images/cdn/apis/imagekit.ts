@@ -20,7 +20,7 @@ export class Imagekit extends ImageCdnApi {
     this._sdk = new ImageKit(sdkOptions)
   }
 
-  static fromEnv(): Imagekit {
+  static getInstance(): Imagekit {
     dotenv.config()
 
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
