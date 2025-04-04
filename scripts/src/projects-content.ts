@@ -2,7 +2,6 @@ import { isMain } from './utils/is-main'
 import { Log } from './utils/log'
 import { getImageCdnApi, ImageCdnApi } from './images/cdn'
 import PREVIEW_PRESET_JSON from '@/data/cms/album-presets/preview.json'
-import { ResponsiveImage } from '@/app/common/images/image'
 import {
   CmsProject,
   CmsProjectCredit,
@@ -33,7 +32,8 @@ import {
   PROJECT_LIST_ITEM,
 } from './images/sizes'
 import { resolveSequentially } from './utils/resolve-sequentially'
-import { toResponsiveImages } from './images/responsive/to-responsive-image'
+import { ResponsiveImage } from '@/app/common/images/image'
+import { toSignedResponsiveImages } from './images/responsive/to-signed-responsive-image'
 
 export const projectsContent = async () => {
   const expandedCmsProjects = await expandCmsProjects()
@@ -61,11 +61,12 @@ const expandCmsProject = async (
 ): Promise<ExpandedCmsProject> => {
   Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
-  const previewImages = await toResponsiveImages(
+  const previewImages = await toSignedResponsiveImages(
     await imageCdnApi.getAllImagesInPath(
       `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
     ),
     PROJECT_LIST_ITEM,
+    imageCdnApi,
   )
   if (!previewImages.length) {
     throw new Error(`Project ${cmsProject.slug} has no preview images`)
@@ -103,7 +104,11 @@ const expandCmsProject = async (
         return {
           title,
           imageSizes: sourceSizeList.toString(),
-          images: await toResponsiveImages(images, sourceSizeList),
+          images: await toSignedResponsiveImages(
+            images,
+            sourceSizeList,
+            imageCdnApi,
+          ),
           size: preset.size,
         }
       },
