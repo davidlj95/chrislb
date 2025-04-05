@@ -17,3 +17,7 @@ export type SignaturesByBreakpoint = Record<string, string>
 export const areBreakpointsUnsigned = (
   breakpoints: ResponsiveImageBreakpoints,
 ): breakpoints is Breakpoints => Array.isArray(breakpoints)
+
+export interface LoaderParams {
+  signaturesByBreakpoint?: SignaturesByBreakpoint
+}

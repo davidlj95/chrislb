@@ -17,6 +17,7 @@ import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
+import { ToLoaderParams } from '@/app/common/images/loader-params'
 
 // There's no fancier way to install Web Components in Angular :P
 // https://stackoverflow.com/a/75353889/3263250
@@ -27,7 +28,7 @@ registerSwiper()
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
   standalone: true,
-  imports: [SwiperDirective, NgOptimizedImage, ToNgSrcSet],
+  imports: [SwiperDirective, NgOptimizedImage, ToNgSrcSet, ToLoaderParams],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250

@@ -5,6 +5,7 @@ import { Log } from '../../../utils/log'
 import {
   ANTE_TRANSFORMATIONS,
   CLOUD_NAME,
+  IMAGE_DELIVERY_TYPE,
 } from '@/app/common/images/cdn/cloudinary'
 import { Breakpoints, Image } from '@/app/common/images/image'
 import { SCRIPTS_CACHE_PATH } from '../../../utils/paths'
@@ -124,6 +125,7 @@ export class Cloudinary extends ImageCdnApi {
     const imageUrl = cloudinary.url(image.src, {
       urlAnalytics: false,
       sign_url: true,
+      type: IMAGE_DELIVERY_TYPE,
       raw_transformation: [...ANTE_TRANSFORMATIONS, `w_${breakpoint}`].join(
         ',',
       ),

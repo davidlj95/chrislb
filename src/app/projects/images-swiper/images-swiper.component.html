@@ -24,6 +24,7 @@
           [fill]="true"
           [priority]="priority() && i < (maxSlidesPerView ?? 0)"
           [alt]="image.alt || 'Image'"
+          [loaderParams]="image | toLoaderParams"
         />
       </swiper-slide>
     }
