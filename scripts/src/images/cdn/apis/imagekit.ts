@@ -10,7 +10,7 @@ import {
 import { Image } from '@/app/common/images/image'
 import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
-import { URL as IMAGEKIT_URL } from '@/app/common/images/cdn/imagekit'
+import { CLOUD_URL as IMAGEKIT_URL } from '@/app/common/images/cdn/imagekit'
 import { getSignature } from 'imagekit/dist/libs/url/builder'
 
 export class Imagekit extends ImageCdnApi {
