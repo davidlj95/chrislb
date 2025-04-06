@@ -3,7 +3,6 @@ export interface Image {
   width: number
   height: number
   alt?: string
-  params?: Record<string, string>
 }
 
 export type ResponsiveImage = Image & {
