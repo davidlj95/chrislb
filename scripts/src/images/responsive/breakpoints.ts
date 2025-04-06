@@ -11,6 +11,8 @@ export type BreakpointsFn = (
 ) => Promise<Breakpoints>
 
 export const getBreakpointsFn = async (): Promise<BreakpointsFn> => {
+  // eslint-disable-next-line
+  // @ts-ignore
   if (CDN_NAME === CLOUDINARY_CDN_NAME) {
     return getCloudinaryResponsiveBreakpointsApi()
   }

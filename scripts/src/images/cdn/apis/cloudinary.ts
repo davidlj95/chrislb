@@ -7,7 +7,7 @@ import {
   CLOUD_NAME,
   IMAGE_DELIVERY_TYPE,
 } from '@/app/common/images/cdn/cloudinary'
-import { Breakpoints, Image } from '@/app/common/images/image'
+import { Breakpoints, Image, ResponsiveImage } from '@/app/common/images/image'
 import { SCRIPTS_CACHE_PATH } from '../../../utils/paths'
 import { mkdir } from 'fs/promises'
 import {
@@ -16,12 +16,9 @@ import {
   writeJsonSync,
 } from '../../../utils/json'
 import { join } from 'path'
+import { isDefined } from '@/app/common/is-defined'
 
-export class Cloudinary extends ImageCdnApi {
-  private constructor() {
-    super()
-  }
-
+export class Cloudinary implements ImageCdnApi {
   private static _sdkOptions: ConfigOptions
 
   static async getInstance(): Promise<Cloudinary> {
@@ -118,7 +115,7 @@ export class Cloudinary extends ImageCdnApi {
     return sortedAndFullWidthBreakpoints
   }
 
-  async signImageBreakpoint(image: Image, breakpoint: number): Promise<string> {
+  async signImage(image: ResponsiveImage, breakpoint: number | undefined) {
     // Seems there's no way to get the raw sig using Cloudinary's Node.js SDK
     // https://github.com/cloudinary/cloudinary_npm/blob/2.6.0/lib/utils/index.js#L894-L898
     // So extracting it from the URL instead to avoid signing manually
@@ -126,9 +123,12 @@ export class Cloudinary extends ImageCdnApi {
       urlAnalytics: false,
       sign_url: true,
       type: IMAGE_DELIVERY_TYPE,
-      raw_transformation: [...ANTE_TRANSFORMATIONS, `w_${breakpoint}`].join(
-        ',',
-      ),
+      raw_transformation: [
+        ...ANTE_TRANSFORMATIONS,
+        breakpoint ? `w_${breakpoint}` : undefined,
+      ]
+        .filter(isDefined)
+        .join(','),
     })
     const paths = new URL(imageUrl).pathname.substring(1).split('/')
     if (!(paths.length > SIGNATURE_INDEX_IN_PATH)) {

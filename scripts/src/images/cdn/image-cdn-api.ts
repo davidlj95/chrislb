@@ -6,9 +6,9 @@ export abstract class ImageCdnApi {
     includeSubdirectories?: boolean,
   ): Promise<readonly Image[]>
 
-  abstract signImageBreakpoint(
+  abstract signImage(
     image: Image,
-    breakpoint: number,
+    breakpoint: number | undefined,
   ): Promise<string>
 }
 

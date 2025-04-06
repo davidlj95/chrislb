@@ -1,5 +1,6 @@
 import {
   areBreakpointsUnsigned,
+  ORIGINAL_SRC_BREAKPOINT,
   ResponsiveImage,
 } from '@/app/common/images/image'
 import { Log } from '../../utils/log'
@@ -15,10 +16,12 @@ export const signResponsiveImage = async (
   }
   const { breakpoints, ...baseResponsiveImage } = responsiveImage
   const breakpointsAndSignatures = await Promise.all(
-    breakpoints.map<Promise<[string, string]>>(async (breakpoint) => [
-      breakpoint.toString(),
-      await imageCdnApi.signImageBreakpoint(responsiveImage, breakpoint),
-    ]),
+    [undefined, ...breakpoints].map<Promise<[string, string]>>(
+      async (breakpoint) => [
+        (breakpoint ?? ORIGINAL_SRC_BREAKPOINT).toString(),
+        await imageCdnApi.signImage(responsiveImage, breakpoint),
+      ],
+    ),
   )
   return {
     ...baseResponsiveImage,

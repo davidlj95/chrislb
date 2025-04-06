@@ -16,6 +16,8 @@ export type ResponsiveImageBreakpoints = Breakpoints | SignaturesByBreakpoint
 export type Breakpoints = readonly number[]
 export type SignaturesByBreakpoint = Record<string, string>
 
+export const ORIGINAL_SRC_BREAKPOINT = ''
+
 export const areBreakpointsUnsigned = (
   breakpoints: ResponsiveImageBreakpoints,
 ): breakpoints is Breakpoints => Array.isArray(breakpoints)
@@ -28,8 +30,6 @@ export const getBreakpointSignatureFromLoaderConfig = (
   loaderConfig: ImageLoaderConfig,
 ) => {
   const loaderParams = (loaderConfig.loaderParams ?? {}) as LoaderParams
-
-  return loaderConfig.width
-    ? (loaderParams.signaturesByBreakpoint ?? {})[loaderConfig.width.toString()]
-    : undefined
+  const width = loaderConfig.width?.toString() ?? ORIGINAL_SRC_BREAKPOINT
+  return (loaderParams.signaturesByBreakpoint ?? {})[width]
 }
