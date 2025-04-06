@@ -8,8 +8,8 @@ import { Log } from '../../utils/log'
 import type { ImageCdnApi } from './image-cdn-api'
 
 const CDN_APIS_BY_NAME: Record<CdnNames, () => Promise<ImageCdnApi>> = {
-  imagekit: async () => Imagekit.fromEnv(),
-  cloudinary: Cloudinary.fromEnv,
+  imagekit: async () => Imagekit.getInstance(),
+  cloudinary: Cloudinary.getInstance,
 }
 export const getImageCdnApi = (): Promise<ImageCdnApi> => {
   Log.info(`Using ${CDN_NAME} as image CDN`)
