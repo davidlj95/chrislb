@@ -10,7 +10,7 @@ import {
 import { Image } from '@/app/common/images/image'
 import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
-import { CLOUD_URL as IMAGEKIT_URL } from '@/app/common/images/cdn/imagekit'
+import { CLOUD_URL } from '@/app/common/images/cdn/imagekit'
 import { getSignature } from 'imagekit/dist/libs/url/builder'
 import { isDefined } from '@/app/common/is-defined'
 
@@ -34,7 +34,7 @@ export class Imagekit implements ImageCdnApi {
     }
 
     return new Imagekit({
-      urlEndpoint: IMAGEKIT_URL,
+      urlEndpoint: CLOUD_URL,
       publicKey: IMAGEKIT_PUBLIC_KEY,
       privateKey: IMAGEKIT_PRIVATE_KEY,
     })
@@ -58,7 +58,6 @@ export class Imagekit implements ImageCdnApi {
 
   private _imageAssetFromFileObject(fileObject: FileObject): Image {
     const alt = (fileObject.customMetadata as CustomMetadata)?.alt
-    const altMetadata: Pick<Image, 'alt'> = alt?.trim() ? { alt } : {}
     // Point to specific file version
     const queryParams = new URLSearchParams()
     queryParams.set(
@@ -72,7 +71,7 @@ export class Imagekit implements ImageCdnApi {
         `?${queryParams.toString()}`,
       height: fileObject.height,
       width: fileObject.width,
-      ...altMetadata,
+      ...(alt?.trim() ? { alt } : {}),
     }
   }
 
