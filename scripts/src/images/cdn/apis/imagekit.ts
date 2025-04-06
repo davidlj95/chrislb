@@ -10,9 +10,8 @@ import {
 import { Image } from '@/app/common/images/image'
 import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { URLSearchParams } from 'url'
-import { CLOUD_URL } from '@/app/common/images/cdn/imagekit'
+import { CLOUD_URL, urlForBreakpoint } from '@/app/common/images/cdn/imagekit'
 import { getSignature } from 'imagekit/dist/libs/url/builder'
-import { isDefined } from '@/app/common/is-defined'
 
 export class Imagekit implements ImageCdnApi {
   private readonly _sdk: ImagekitSdk
@@ -79,17 +78,9 @@ export class Imagekit implements ImageCdnApi {
     image: Image,
     breakpoint: number | undefined,
   ): Promise<string> {
-    const transformationsString = breakpoint ? `tr:w-${breakpoint}` : undefined
-    const { privateKey, urlEndpoint } = this._sdk.options
-    // https://github.com/angular/angular/blob/19.2.5/packages/common/src/directives/ng_optimized_image/image_loaders/imagekit_loader.ts
-    const url = [
-      urlEndpoint,
-      transformationsString,
-      image.src.startsWith('/') ? image.src.substring(1) : image.src,
-    ]
-      .filter(isDefined)
-      .join('/')
+    const url = urlForBreakpoint(image.src, breakpoint)
     // https://github.com/imagekit-developer/imagekit-nodejs/blob/6.0.0/libs/url/builder.ts#L169
+    const { privateKey, urlEndpoint } = this._sdk.options
     return getSignature({
       privateKey,
       url,
