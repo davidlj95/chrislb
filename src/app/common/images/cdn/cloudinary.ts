@@ -1,6 +1,6 @@
 import { IMAGE_LOADER, ImageLoader } from '@angular/common'
 import { Provider } from '@angular/core'
-import { LoaderParams } from '@/app/common/images/image'
+import { getBreakpointSignatureFromLoaderConfig } from '@/app/common/images/image'
 import { isDefined } from '@/app/common/is-defined'
 
 export const CDN_NAME = 'cloudinary'
@@ -15,19 +15,13 @@ export const provideResponsiveImageLoader = (): Provider => ({
 export const IMAGE_DELIVERY_TYPE = 'authenticated'
 
 const cloudinaryImageLoader: ImageLoader = (config) => {
-  const loaderParams = (config.loaderParams ?? {}) as LoaderParams
-
-  const signature = config.width
-    ? (loaderParams.signaturesByBreakpoint ?? {})[config.width.toString()]
-    : undefined
-
   const widthTransformation = config.width ? `w_${config.width}` : undefined
 
   return [
     CLOUD_URL,
     'image',
     IMAGE_DELIVERY_TYPE,
-    signature,
+    getBreakpointSignatureFromLoaderConfig(config),
     [...ANTE_TRANSFORMATIONS, widthTransformation].filter(isDefined).join(','),
     config.src,
   ]

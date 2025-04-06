@@ -1,5 +1,5 @@
 import { IMAGE_LOADER, ImageLoader } from '@angular/common'
-import { LoaderParams } from '@/app/common/images/image'
+import { getBreakpointSignatureFromLoaderConfig } from '@/app/common/images/image'
 import { isDefined } from '@/app/common/is-defined'
 
 export const CDN_NAME = 'imagekit'
@@ -11,12 +11,6 @@ export const provideResponsiveImageLoader = () => ({
   useValue: imageKitImageLoader,
 })
 const imageKitImageLoader: ImageLoader = (config) => {
-  const loaderParams = (config.loaderParams ?? {}) as LoaderParams
-
-  const signature = config.width
-    ? (loaderParams.signaturesByBreakpoint ?? {})[config.width.toString()]
-    : undefined
-
   const widthTransformation = config.width ? `w-${config.width}` : undefined
 
   // https://github.com/angular/angular/blob/19.2.5/packages/common/src/directives/ng_optimized_image/image_loaders/imagekit_loader.ts
@@ -27,11 +21,12 @@ const imageKitImageLoader: ImageLoader = (config) => {
   ]
     .filter(isDefined)
     .join('/')
+
+  const signature = getBreakpointSignatureFromLoaderConfig(config)
   if (!signature) return unsignedUrl
 
   // https://imagekit.io/docs/media-delivery-basic-security#how-to-generate-signed-urls
   const signedUrl = new URL(unsignedUrl)
   signedUrl.searchParams.set('ik-s', signature)
-
   return signedUrl.href
 }

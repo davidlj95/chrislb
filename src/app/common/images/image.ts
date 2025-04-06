@@ -1,3 +1,5 @@
+import { ImageLoaderConfig } from '@angular/common'
+
 export interface Image {
   src: string
   width: number
@@ -20,4 +22,14 @@ export const areBreakpointsUnsigned = (
 
 export interface LoaderParams {
   signaturesByBreakpoint?: SignaturesByBreakpoint
+}
+
+export const getBreakpointSignatureFromLoaderConfig = (
+  loaderConfig: ImageLoaderConfig,
+) => {
+  const loaderParams = (loaderConfig.loaderParams ?? {}) as LoaderParams
+
+  return loaderConfig.width
+    ? (loaderParams.signaturesByBreakpoint ?? {})[loaderConfig.width.toString()]
+    : undefined
 }
