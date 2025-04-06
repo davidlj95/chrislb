@@ -15,14 +15,12 @@ export const provideResponsiveImageLoader = (): Provider => ({
 export const IMAGE_DELIVERY_TYPE = 'authenticated'
 
 const cloudinaryImageLoader: ImageLoader = (config) => {
-  const widthTransformation = config.width ? `w_${config.width}` : undefined
-
   return [
     CLOUD_URL,
     'image',
     IMAGE_DELIVERY_TYPE,
     getBreakpointSignatureFromLoaderConfig(config),
-    [...ANTE_TRANSFORMATIONS, widthTransformation].filter(isDefined).join(','),
+    getRawTransformationForBreakpoint(config.width),
     config.src,
   ]
     .filter(isDefined)
@@ -31,4 +29,9 @@ const cloudinaryImageLoader: ImageLoader = (config) => {
 
 //👇 Applying default transformations from Angular built-in loader
 // https://github.com/angular/angular/blob/19.2.5/packages/common/src/directives/ng_optimized_image/image_loaders/cloudinary_loader.ts#L58-L60
-export const ANTE_TRANSFORMATIONS = ['q_auto', 'f_auto']
+export const getRawTransformationForBreakpoint = (
+  width: number | undefined,
+): string => {
+  const widthTransformation = width ? `w_${width}` : undefined
+  return ['q_auto', 'f_auto', widthTransformation].filter(isDefined).join(',')
+}

@@ -3,8 +3,8 @@ import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../../../utils/log'
 import {
-  ANTE_TRANSFORMATIONS,
   CLOUD_NAME,
+  getRawTransformationForBreakpoint,
   IMAGE_DELIVERY_TYPE,
 } from '@/app/common/images/cdn/cloudinary'
 import { Breakpoints, Image, ResponsiveImage } from '@/app/common/images/image'
@@ -16,7 +16,6 @@ import {
   writeJsonSync,
 } from '../../../utils/json'
 import { join } from 'path'
-import { isDefined } from '@/app/common/is-defined'
 
 export class Cloudinary implements ImageCdnApi {
   private static _sdkOptions: ConfigOptions
@@ -123,12 +122,7 @@ export class Cloudinary implements ImageCdnApi {
       urlAnalytics: false,
       sign_url: true,
       type: IMAGE_DELIVERY_TYPE,
-      raw_transformation: [
-        ...ANTE_TRANSFORMATIONS,
-        breakpoint ? `w_${breakpoint}` : undefined,
-      ]
-        .filter(isDefined)
-        .join(','),
+      raw_transformation: getRawTransformationForBreakpoint(breakpoint),
     })
     const paths = new URL(imageUrl).pathname.substring(1).split('/')
     if (!(paths.length > SIGNATURE_INDEX_IN_PATH)) {
