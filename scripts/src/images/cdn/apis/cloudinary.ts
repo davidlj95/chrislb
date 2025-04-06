@@ -60,7 +60,7 @@ export class Cloudinary extends ImageCdnApi {
     return new Cloudinary()
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly CloudinaryImage[]> {
+  async getAllImagesInPath(path: string): Promise<readonly Image[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
@@ -71,37 +71,22 @@ export class Cloudinary extends ImageCdnApi {
       .filter((resource) => !resource.tags.includes(UNPUBLISHED_TAG))
       .toSorted((a, b) => (a.public_id < b.public_id ? -1 : 1))
       .map(({ public_id, width, height, version }) => ({
-        src: public_id,
+        src: `${VERSION_SEGMENT_PREFIX}${version}/${public_id}`,
         width,
         height,
-        params: { version: version.toString() },
       }))
     Log.info('Found %d images in path "%s"', images.length, path)
     return images
   }
 
-  async breakpointsForImage(
-    image: Image | CloudinaryImage,
-  ): Promise<ResponsiveImageBreakpoints> {
-    let version: string | undefined
-    let imageCacheKey: string | undefined
-    if (!isCloudinaryImage(image)) {
-      Log.warn(
-        'Cannot use cache for image "%s" as it is not a Cloudinary image',
-        image.src,
-      )
-    } else {
-      version = image.params.version
-      imageCacheKey = getImageCacheKey(image)
-      const cachedBreakpoints = breakpointsCache.get(imageCacheKey)
-      if (cachedBreakpoints) {
-        return cachedBreakpoints
-      }
+  async breakpointsForImage(image: Image): Promise<ResponsiveImageBreakpoints> {
+    const cachedBreakpoints = breakpointsCache.get(image.src)
+    if (cachedBreakpoints) {
+      return cachedBreakpoints
     }
 
     const breakpointsUrl = cloudinary.url(image.src, {
       urlAnalytics: false,
-      version,
       // https://cloudinary.com/documentation/transformation_reference#examples_w_auto
       raw_transformation: [
         'c_scale',
@@ -124,36 +109,19 @@ export class Cloudinary extends ImageCdnApi {
     const sortedAndFullWidthBreakpoints = Array.from(
       new Set<number>([...breakpointsUrlResponse.breakpoints, image.width]),
     ).toSorted((a, b) => a - b)
-    if (imageCacheKey) {
-      breakpointsCache.set(imageCacheKey, sortedAndFullWidthBreakpoints)
-    }
+
+    breakpointsCache.set(image.src, sortedAndFullWidthBreakpoints)
     return sortedAndFullWidthBreakpoints
   }
 }
+
+const VERSION_SEGMENT_PREFIX = 'v'
 
 let breakpointsCache: Map<string, ResponsiveImageBreakpoints>
 const BREAKPOINTS_CACHE_FILEPATH = join(
   SCRIPTS_CACHE_PATH,
   appendJsonExtension('breakpoints'),
 )
-
-type CloudinaryImage = Image & {
-  readonly params: {
-    readonly version: string
-  }
-}
-
-const isCloudinaryImage = (
-  image: Image | CloudinaryImage,
-): image is CloudinaryImage => !!image.params?.version
-
-const getImageCacheKey = (image: CloudinaryImage): string => {
-  const {
-    src: public_id,
-    params: { version },
-  } = image
-  return `${public_id}@${version}`
-}
 
 const BREAKPOINTS_PARAMS = {
   MinWidth: 200,
