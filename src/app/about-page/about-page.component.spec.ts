@@ -8,6 +8,7 @@ import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-i
 import { NgOptimizedImage } from '@angular/common'
 import { testbedSetup } from '../../test/testbed-setup'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
+import { ToLoaderParams } from '@/app/common/images/loader-params'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
@@ -23,6 +24,7 @@ describe('AboutPageComponent', () => {
           NgOptimizedImage,
           MockComponents(SocialComponent, ResumeComponent),
           ToNgSrcSet,
+          ToLoaderParams,
         ],
       },
     })
