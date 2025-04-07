@@ -2,8 +2,12 @@ import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../../../utils/log'
-import { CLOUD_NAME } from '@/app/common/images/cdn/cloudinary'
-import { Image, ResponsiveImageBreakpoints } from '@/app/common/images/image'
+import {
+  CLOUD_NAME,
+  getRawTransformationForBreakpoint,
+  IMAGE_DELIVERY_TYPE,
+} from '@/app/common/images/cdn/cloudinary'
+import { Breakpoints, Image, ResponsiveImage } from '@/app/common/images/image'
 import { SCRIPTS_CACHE_PATH } from '../../../utils/paths'
 import { mkdir } from 'fs/promises'
 import {
@@ -13,11 +17,7 @@ import {
 } from '../../../utils/json'
 import { join } from 'path'
 
-export class Cloudinary extends ImageCdnApi {
-  private constructor() {
-    super()
-  }
-
+export class Cloudinary implements ImageCdnApi {
   private static _sdkOptions: ConfigOptions
 
   static async getInstance(): Promise<Cloudinary> {
@@ -79,7 +79,7 @@ export class Cloudinary extends ImageCdnApi {
     return images
   }
 
-  async breakpointsForImage(image: Image): Promise<ResponsiveImageBreakpoints> {
+  async breakpointsForImage(image: Image): Promise<Breakpoints> {
     const cachedBreakpoints = breakpointsCache.get(image.src)
     if (cachedBreakpoints) {
       return cachedBreakpoints
@@ -113,11 +113,41 @@ export class Cloudinary extends ImageCdnApi {
     breakpointsCache.set(image.src, sortedAndFullWidthBreakpoints)
     return sortedAndFullWidthBreakpoints
   }
+
+  async signImage(image: ResponsiveImage, breakpoint: number | undefined) {
+    // Seems there's no way to get the raw sig using Cloudinary's Node.js SDK
+    // https://github.com/cloudinary/cloudinary_npm/blob/2.6.0/lib/utils/index.js#L894-L898
+    // So extracting it from the URL instead to avoid signing manually
+    const imageUrl = cloudinary.url(image.src, {
+      urlAnalytics: false,
+      sign_url: true,
+      type: IMAGE_DELIVERY_TYPE,
+      raw_transformation: getRawTransformationForBreakpoint(breakpoint),
+    })
+    const paths = new URL(imageUrl).pathname.substring(1).split('/')
+    if (!(paths.length > SIGNATURE_INDEX_IN_PATH)) {
+      throw new Error(`Cannot find signature in image URL "${imageUrl}"`)
+    }
+    const signature = paths[3]
+    if (
+      !signature.startsWith(SIGNATURE_PREFIX) ||
+      !signature.endsWith(SIGNATURE_SUFFIX)
+    ) {
+      throw new Error(
+        `Signature does not have an expected format: "${signature}"`,
+      )
+    }
+    return signature
+  }
 }
 
 const VERSION_SEGMENT_PREFIX = 'v'
 
-let breakpointsCache: Map<string, ResponsiveImageBreakpoints>
+const SIGNATURE_INDEX_IN_PATH = 3
+const SIGNATURE_PREFIX = 's--'
+const SIGNATURE_SUFFIX = '--'
+
+let breakpointsCache: Map<string, Breakpoints>
 const BREAKPOINTS_CACHE_FILEPATH = join(
   SCRIPTS_CACHE_PATH,
   appendJsonExtension('breakpoints'),

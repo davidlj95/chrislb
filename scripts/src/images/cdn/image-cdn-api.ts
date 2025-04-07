@@ -5,6 +5,11 @@ export abstract class ImageCdnApi {
     path: string,
     includeSubdirectories?: boolean,
   ): Promise<readonly Image[]>
+
+  abstract signImage(
+    image: Image,
+    breakpoint: number | undefined,
+  ): Promise<string>
 }
 
 export const UNPUBLISHED_TAG = 'unpublished'

@@ -7,9 +7,7 @@ import { resolveSequentially } from '../../utils/resolve-sequentially'
 export const toResponsiveImage = async (
   image: Image,
   sourceSizeList: SourceSizeList,
-  opts: Partial<{
-    withoutSizes: boolean
-  }> = {},
+  opts: ToResponsiveImageOpts = {},
 ): Promise<ResponsiveImage> => {
   const breakpointsFunction = await getBreakpointsFn()
   const responsiveImageWithoutSizes = {
@@ -33,6 +31,8 @@ export const toResponsiveImage = async (
     sizes: sourceSizeList.toString(),
   }
 }
+
+export type ToResponsiveImageOpts = Partial<{ withoutSizes: boolean }>
 
 export const toResponsiveImages = async (
   images: readonly Image[],
