@@ -1,5 +1,5 @@
 import { Image, ResponsiveImage } from '@/app/common/images/image'
-import { SourceSizeList } from '../../models/source-size-list'
+import { SourceSizeList } from '../models/source-size-list'
 import { Log } from '../../utils/log'
 import { getBreakpointsFn } from './breakpoints'
 import { resolveSequentially } from '../../utils/resolve-sequentially'

@@ -1,5 +1,5 @@
 import { Image, ResponsiveImage } from '@/app/common/images/image'
-import { SourceSizeList } from '../../models/source-size-list'
+import { SourceSizeList } from '../models/source-size-list'
 import { ImageCdnApi } from '../cdn'
 import { signResponsiveImage } from './sign-responsive-image'
 import {
