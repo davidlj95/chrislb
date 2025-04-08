@@ -1,9 +1,9 @@
 import { Breakpoints, Image } from '@/app/common/images/image'
-import { SourceSizeList } from '../../models/source-size-list'
+import { SourceSizeList } from '../models/source-size-list'
 import { CDN_NAME } from '@/app/common/images/cdn'
 import { CDN_NAME as CLOUDINARY_CDN_NAME } from '@/app/common/images/cdn/cloudinary'
 import { Cloudinary } from '../cdn/apis/cloudinary'
-import { breakpointsFromSizesAndImage } from '../breakpoints-from-sizes-and-image'
+import { breakpointsFromSizesAndDimensions } from './breakpoints-from-sizes-and-dimensions'
 
 export type BreakpointsFn = (
   image: Image,
@@ -16,7 +16,7 @@ export const getBreakpointsFn = async (): Promise<BreakpointsFn> => {
   if (CDN_NAME === CLOUDINARY_CDN_NAME) {
     return getCloudinaryResponsiveBreakpointsApi()
   }
-  return getBreakpointsFromSizesAndImageApi()
+  return getBreakpointsFromSizesAndDimensionsApi()
 }
 
 const getCloudinaryResponsiveBreakpointsApi =
@@ -25,6 +25,6 @@ const getCloudinaryResponsiveBreakpointsApi =
     return cloudinaryApi.breakpointsForImage.bind(cloudinaryApi)
   }
 
-const getBreakpointsFromSizesAndImageApi =
+const getBreakpointsFromSizesAndDimensionsApi =
   async (): Promise<BreakpointsFn> => async (image, sourceSizeList) =>
-    breakpointsFromSizesAndImage(image, sourceSizeList)
+    breakpointsFromSizesAndDimensions(image, sourceSizeList)

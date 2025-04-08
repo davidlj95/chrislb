@@ -3,8 +3,8 @@ on:
   workflow_call:
 
 jobs:
-  unit:
-    name: Unit tests
+  app-unit:
+    name: App's unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -29,4 +29,16 @@ jobs:
       - name: Generate mock data
         run: cd .ci && make mock-data
       - name: Compile scripts
-        run: pnpm run test:scripts-tsc
+        run: pnpm run test:scripts:tsc
+
+  scripts-unit:
+    name: Scripts' unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run scripts tests
+        run: pnpm run test:scripts:unit

@@ -5,8 +5,8 @@ import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
 import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
 import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
 
-export const breakpointsFromSizesAndImage = (
-  image: Image,
+export const breakpointsFromSizesAndDimensions = (
+  imageDimensions: ImageDimensions,
   sourceSizeList: SourceSizeList,
 ): Breakpoints =>
   reduceBreakpoints(
@@ -17,12 +17,18 @@ export const breakpointsFromSizesAndImage = (
           let removedItems = 0
           return allBreakpointsAndWidths.resolutionWidths.reduce<BreakpointsAndResolutionWidths>(
             (breakpointsAndWidths, resolutionWidth, index) => {
-              if (applicableResolutionWidth(resolutionWidth, mediaCondition)) {
+              if (
+                applicableResolutionWidth(
+                  resolutionWidth,
+                  mediaCondition,
+                  imageDimensions.width,
+                )
+              ) {
                 const breakpoints = [
                   ...breakpointsAndWidths.breakpoints,
                   ...getHighDensityBreakpoints(
                     lengthToPx(length, resolutionWidth),
-                    image.width,
+                    imageDimensions.width,
                   ),
                 ]
                 const resolutionWidths = [
@@ -43,18 +49,25 @@ export const breakpointsFromSizesAndImage = (
         { breakpoints: [], resolutionWidths: [...RESOLUTION_WIDTHS] },
       ).breakpoints,
     ),
-    estimateMaxPxBetweenBreakpoints(image),
+    estimateMaxPxBetweenBreakpoints(imageDimensions),
   )
 
+export interface ImageDimensions {
+  readonly width: number
+  readonly height: number
+}
+
 interface BreakpointsAndResolutionWidths {
-  breakpoints: readonly number[]
-  resolutionWidths: readonly number[]
+  readonly breakpoints: readonly number[]
+  readonly resolutionWidths: readonly number[]
 }
 
 const applicableResolutionWidth = (
   resolutionWidth: number,
   mediaCondition: SourceSize['mediaCondition'],
+  imageWidth: number,
 ): boolean => {
+  if (resolutionWidth > imageWidth) return false
   if (!mediaCondition) return true
   switch (mediaCondition.limit) {
     case MIN_LIMIT:
@@ -93,7 +106,8 @@ const MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
 // Despite they are high density screens, so browsers will probably use
 // bigger images
 // Maybe if network allows only? So low density must be there too? 🤔
-const MOBILE_RESOLUTION_WIDTHS = [
+// @visibleForTesting
+export const MOBILE_RESOLUTION_WIDTHS = [
   // 414, // Too similar
   412,
   // 393, // Too similar
