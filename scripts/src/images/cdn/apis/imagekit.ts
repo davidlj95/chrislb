@@ -8,7 +8,11 @@ import {
   ImageKitOptions,
 } from 'imagekit/dist/libs/interfaces'
 import { Image } from '@/app/common/images/image'
-import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
+import {
+  GetUrlSignatureOptions,
+  ImageCdnApi,
+  UNPUBLISHED_TAG,
+} from '../image-cdn-api'
 import { URLSearchParams } from 'url'
 import { CLOUD_URL, urlForBreakpoint } from '@/app/common/images/cdn/imagekit'
 import { getSignature } from 'imagekit/dist/libs/url/builder'
@@ -39,7 +43,7 @@ export class Imagekit implements ImageCdnApi {
     })
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly Image[]> {
+  async findByPath(path: string): Promise<readonly Image[]> {
     const searchQuery = `tags NOT IN ${JSON.stringify([UNPUBLISHED_TAG])}`
     const response = await this._sdk.listFiles({
       searchQuery,
@@ -74,11 +78,11 @@ export class Imagekit implements ImageCdnApi {
     }
   }
 
-  async signImage(
-    image: Image,
-    breakpoint: number | undefined,
+  async getUrlSignature(
+    path: string,
+    { breakpoint }: GetUrlSignatureOptions,
   ): Promise<string> {
-    const url = urlForBreakpoint(image.src, breakpoint)
+    const url = urlForBreakpoint(path, breakpoint)
     // https://github.com/imagekit-developer/imagekit-nodejs/blob/6.0.0/libs/url/builder.ts#L169
     const { privateKey, urlEndpoint } = this._sdk.options
     return getSignature({

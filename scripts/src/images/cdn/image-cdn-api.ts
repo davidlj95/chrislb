@@ -1,15 +1,16 @@
 import { Image } from '@/app/common/images/image'
 
 export abstract class ImageCdnApi {
-  abstract getAllImagesInPath(
-    path: string,
-    includeSubdirectories?: boolean,
-  ): Promise<readonly Image[]>
+  abstract findByPath(path: string): Promise<readonly Image[]>
 
-  abstract signImage(
-    image: Image,
-    breakpoint: number | undefined,
+  abstract getUrlSignature(
+    path: string,
+    opts?: GetUrlSignatureOptions,
   ): Promise<string>
+}
+
+export interface GetUrlSignatureOptions {
+  breakpoint?: number
 }
 
 export const UNPUBLISHED_TAG = 'unpublished'
