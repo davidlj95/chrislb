@@ -1,4 +1,8 @@
-import { ImageCdnApi, UNPUBLISHED_TAG } from '../image-cdn-api'
+import {
+  GetUrlSignatureOptions,
+  ImageCdnApi,
+  UNPUBLISHED_TAG,
+} from '../image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
 import dotenv from 'dotenv'
 import { Log } from '../../../utils/log'
@@ -7,7 +11,7 @@ import {
   getRawTransformationForBreakpoint,
   IMAGE_DELIVERY_TYPE,
 } from '@/app/common/images/cdn/cloudinary'
-import { Breakpoints, Image, ResponsiveImage } from '@/app/common/images/image'
+import { Breakpoints, Image } from '@/app/common/images/image'
 import { SCRIPTS_CACHE_PATH } from '../../../utils/paths'
 import { mkdir } from 'fs/promises'
 import {
@@ -60,7 +64,7 @@ export class Cloudinary implements ImageCdnApi {
     return new Cloudinary()
   }
 
-  async getAllImagesInPath(path: string): Promise<readonly Image[]> {
+  async findByPath(path: string): Promise<readonly Image[]> {
     const response = await cloudinary.api.resources_by_asset_folder(path, {
       max_results: 50, // the default right now, but to be specific & consistent over time
       resource_type: 'image',
@@ -114,11 +118,14 @@ export class Cloudinary implements ImageCdnApi {
     return sortedAndFullWidthBreakpoints
   }
 
-  async signImage(image: ResponsiveImage, breakpoint: number | undefined) {
+  async getUrlSignature(
+    publicId: string,
+    { breakpoint }: GetUrlSignatureOptions,
+  ) {
     // Seems there's no way to get the raw sig using Cloudinary's Node.js SDK
     // https://github.com/cloudinary/cloudinary_npm/blob/2.6.0/lib/utils/index.js#L894-L898
     // So extracting it from the URL instead to avoid signing manually
-    const imageUrl = cloudinary.url(image.src, {
+    const imageUrl = cloudinary.url(publicId, {
       urlAnalytics: false,
       sign_url: true,
       type: IMAGE_DELIVERY_TYPE,

@@ -19,7 +19,7 @@ export const signResponsiveImage = async (
     [undefined, ...breakpoints].map<Promise<[string, string]>>(
       async (breakpoint) => [
         (breakpoint ?? ORIGINAL_SRC_BREAKPOINT).toString(),
-        await imageCdnApi.signImage(responsiveImage, breakpoint),
+        await imageCdnApi.getUrlSignature(responsiveImage.src, { breakpoint }),
       ],
     ),
   )

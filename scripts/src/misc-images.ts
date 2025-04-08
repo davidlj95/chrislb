@@ -13,7 +13,7 @@ export const miscImages = async (): Promise<void> => {
   const imageCdnApi = await getImageCdnApi()
   await mkdir(GENERATED_DATA_PATH, { recursive: true })
   Log.info('Looking for misc images')
-  const images = await imageCdnApi.getAllImagesInPath('misc')
+  const images = await imageCdnApi.findByPath('misc')
   const [horizontalLogo, aboutPortrait] = ['horizontal', 'portrait'].map(
     (substring) => {
       const image = images.find((image) => image.src.includes(substring))

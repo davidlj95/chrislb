@@ -62,7 +62,7 @@ const expandCmsProject = async (
   Log.info('Expanding project "%s"', cmsProject.slug)
   const projectImageDirectory = `${PROJECTS_DIR}/${cmsProject.slug}`
   const previewImages = await toSignedResponsiveImages(
-    await imageCdnApi.getAllImagesInPath(
+    await imageCdnApi.findByPath(
       `${projectImageDirectory}/${PREVIEW_PRESET_JSON.slug}`,
     ),
     PROJECT_LIST_ITEM,
@@ -84,10 +84,7 @@ const expandCmsProject = async (
         const albumImageDirectory = cmsProjectAlbum.subdirectory
           ? `${albumPresetImageDirectory}/${cmsProjectAlbum.subdirectory}`
           : albumPresetImageDirectory
-        const images = await imageCdnApi.getAllImagesInPath(
-          albumImageDirectory,
-          false,
-        )
+        const images = await imageCdnApi.findByPath(albumImageDirectory)
         const albumsWithSamePreset = (cmsProject.albums ?? []).filter(
           (album) => album.presetSlug === cmsProjectAlbum.presetSlug,
         )
