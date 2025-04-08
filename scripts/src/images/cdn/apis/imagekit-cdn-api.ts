@@ -17,14 +17,14 @@ import { URLSearchParams } from 'url'
 import { CLOUD_URL, urlForBreakpoint } from '@/app/common/images/cdn/imagekit'
 import { getSignature } from 'imagekit/dist/libs/url/builder'
 
-export class Imagekit implements ImageCdnApi {
+export class ImagekitCdnApi implements ImageCdnApi {
   private readonly _sdk: ImagekitSdk
 
   constructor(sdkOptions: ImageKitOptions) {
     this._sdk = new ImageKit(sdkOptions)
   }
 
-  static getInstance(): Imagekit {
+  static getInstance(): ImagekitCdnApi {
     dotenv.config()
 
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
@@ -36,7 +36,7 @@ export class Imagekit implements ImageCdnApi {
       process.exit(1)
     }
 
-    return new Imagekit({
+    return new ImagekitCdnApi({
       urlEndpoint: CLOUD_URL,
       publicKey: IMAGEKIT_PUBLIC_KEY,
       privateKey: IMAGEKIT_PRIVATE_KEY,

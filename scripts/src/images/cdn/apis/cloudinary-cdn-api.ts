@@ -21,10 +21,10 @@ import {
 } from '../../../utils/json'
 import { join } from 'path'
 
-export class Cloudinary implements ImageCdnApi {
+export class CloudinaryCdnApi implements ImageCdnApi {
   private static _sdkOptions: ConfigOptions
 
-  static async getInstance(): Promise<Cloudinary> {
+  static async getInstance(): Promise<CloudinaryCdnApi> {
     if (!this._sdkOptions) {
       // Read from env
       dotenv.config()
@@ -61,7 +61,7 @@ export class Cloudinary implements ImageCdnApi {
       cloudinary.config(this._sdkOptions)
     }
 
-    return new Cloudinary()
+    return new CloudinaryCdnApi()
   }
 
   async findByPath(path: string): Promise<readonly Image[]> {
