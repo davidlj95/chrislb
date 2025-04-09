@@ -119,7 +119,7 @@ const RESOLUTION_WIDTHS = Array.from(
   new Set([...DEFAULT_RESOLUTIONS, ...MOBILE_RESOLUTION_WIDTHS]),
 ).sort((a, b) => a - b)
 
-const getHighDensityBreakpoints = (
+export const getHighDensityBreakpoints = (
   pxWidth: number,
   maxPxWidth: number,
 ): readonly number[] => {
