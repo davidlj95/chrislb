@@ -16,7 +16,7 @@
     "test:app:lighthouse": "lhci autorun",
     "test:scripts:tsc": "tsc -b scripts",
     "test:scripts:unit": "tsx --test 'scripts/**/*.test.ts'",
-    "snapshots:scripts:update": "pnpm run test:scripts:unit --test-update-snapshots",
+    "snapshots:scripts:update": "tsx --test-update-snapshots --test 'scripts/**/*.test.ts'",
     "lint": "ng lint",
     "format:check": "prettier --check",
     "format:check:all": "pnpm run format:check -- .",
