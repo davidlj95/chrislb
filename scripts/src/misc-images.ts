@@ -6,8 +6,10 @@ import { GENERATED_DATA_PATH } from './utils/paths'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
 import { getImageCdnApi } from './images/cdn'
-import { ABOUT, LOGO } from './images/sizes'
+import { ABOUT, LOGO, LOGO_MAX_WIDTH_PX } from './images/sizes'
 import { toSignedResponsiveImage } from './images/responsive/to-signed-responsive-image'
+import { signResponsiveImage } from './images/responsive/sign-responsive-image'
+import { getHighDensityBreakpoints } from './images/responsive/breakpoints-from-sizes-and-dimensions'
 
 export const miscImages = async (): Promise<void> => {
   const imageCdnApi = await getImageCdnApi()
@@ -24,9 +26,15 @@ export const miscImages = async (): Promise<void> => {
     },
   )
   const miscImages: MiscImages = {
-    horizontalLogo: await toSignedResponsiveImage(
-      horizontalLogo,
-      LOGO,
+    horizontalLogo: await signResponsiveImage(
+      {
+        ...horizontalLogo,
+        breakpoints: getHighDensityBreakpoints(
+          LOGO_MAX_WIDTH_PX,
+          horizontalLogo.width,
+        ),
+        sizes: LOGO.toString(),
+      },
       imageCdnApi,
     ),
     aboutPortrait: await toSignedResponsiveImage(
