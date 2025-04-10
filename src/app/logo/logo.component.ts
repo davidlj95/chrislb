@@ -9,7 +9,6 @@ import { ToLoaderParams } from '@/app/common/images/to-loader-params'
   selector: 'app-logo',
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss'],
-  standalone: true,
   imports: [RouterLink, NgOptimizedImage, ToNgSrcSet, ToLoaderParams],
 })
 export class LogoComponent {

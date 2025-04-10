@@ -8,7 +8,6 @@ import { ProjectListItem } from '../project'
 @Component({
   templateUrl: './projects-list-page.component.html',
   styleUrls: ['./projects-list-page.component.scss'],
-  standalone: true,
   imports: [ProjectListItemComponent],
   providers: [ProjectsService],
 })

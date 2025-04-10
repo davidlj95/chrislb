@@ -14,7 +14,6 @@ import { BASE_URL as IMAGE_CDN_BASE_URL } from '../app/common/images/cdn'
     ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS.children('routeAnimations'),
     ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS.element('enterLeave'),
   ],
-  standalone: true,
   imports: [HeaderComponent, LogoComponent, RouterOutlet],
 })
 export class AppComponent implements OnInit {

@@ -8,7 +8,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: true,
   imports: [RouterLinkActive, RouterLink],
 })
 export class HeaderComponent {

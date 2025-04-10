@@ -25,7 +25,6 @@ import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swip
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
-  standalone: true,
   imports: [SwiperDirective, SwiperAutoplayScrollDirective],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
