@@ -5,7 +5,7 @@
     'config:recommended',
     'config:best-practices',
     'config:js-app',
-    'github>davidlj95/renovate-config:angular/v18-lts',
+    'github>davidlj95/renovate-config:angular/v19-lts',
   ],
   prHourlyLimit: 0,
   prConcurrentLimit: 5,
@@ -54,11 +54,11 @@
       matchDepTypes: ['devDependencies'],
       automerge: true,
     },
-    // Keep in Angular v18 til manually upgrading
+    // Keep in Angular v19 til manually upgrading
     {
       // 👇 Includes devkit & eslint
       matchDepNames: ['@angular{/,}**'],
-      allowedVersions: '^18',
+      allowedVersions: '^19',
     },
     // Font Awesome & Angular v18
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
