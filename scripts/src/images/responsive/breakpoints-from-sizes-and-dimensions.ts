@@ -1,5 +1,5 @@
 import { SourceSizeList } from '../models/source-size-list'
-import { Breakpoints, Image } from '@/app/common/images/image'
+import { Breakpoints, ImageDimensions } from '@/app/common/images/image'
 import { SourceSize } from '../models/source-size'
 import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
 import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
@@ -51,11 +51,6 @@ export const breakpointsFromSizesAndDimensions = (
     ),
     estimateMaxPxBetweenBreakpoints(imageDimensions),
   )
-
-export interface ImageDimensions {
-  readonly width: number
-  readonly height: number
-}
 
 interface BreakpointsAndResolutionWidths {
   readonly breakpoints: readonly number[]
@@ -164,17 +159,14 @@ const reduceBreakpoints = (
   return reducedBreakpoints
 }
 
-const estimateMaxPxBetweenBreakpoints = (
-  aspectRatio: Pick<Image, 'width' | 'height'>,
-) => {
+const estimateMaxPxBetweenBreakpoints = (dimensions: ImageDimensions) => {
   // Amount of bytes each pixel takes at a true color bit depth
   const PX_SIZE_BYTES = 3
   const COMPRESSION_RATIO = 0.5
   const LIGHTHOUSE_PX_THRESHOLD =
     LIGHTHOUSE_BYTES_THRESHOLD / (PX_SIZE_BYTES * COMPRESSION_RATIO)
   return Math.floor(
-    Math.sqrt(LIGHTHOUSE_PX_THRESHOLD) *
-      (aspectRatio.height / aspectRatio.width),
+    Math.sqrt(LIGHTHOUSE_PX_THRESHOLD) * (dimensions.height / dimensions.width),
   )
 }
 

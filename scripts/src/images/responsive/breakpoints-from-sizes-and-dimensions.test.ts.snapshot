@@ -25,17 +25,6 @@ exports[`Breakpoints from sizes and dimensions > should return expected breakpoi
 ]
 `;
 
-exports[`Breakpoints from sizes and dimensions > should return expected breakpoints snapshot for LOGO 1`] = `
-[
-  328,
-  371,
-  656,
-  742,
-  984,
-  1113
-]
-`;
-
 exports[`Breakpoints from sizes and dimensions > should return expected breakpoints snapshot for PROJECT_DETAIL_FULL 1`] = `
 [
   164,

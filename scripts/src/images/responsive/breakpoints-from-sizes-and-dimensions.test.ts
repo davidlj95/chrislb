@@ -2,7 +2,6 @@ import { describe, it } from 'node:test'
 import { SourceSizeList } from '../models/source-size-list'
 import {
   breakpointsFromSizesAndDimensions,
-  ImageDimensions,
   MOBILE_RESOLUTION_WIDTHS,
 } from './breakpoints-from-sizes-and-dimensions'
 import { sourceSize } from '../models/source-size'
@@ -10,6 +9,7 @@ import { Px, Vw } from '../models/css-length'
 import assert from 'node:assert'
 import * as SIZES_IMPORT from '../sizes'
 import { PROJECT_DETAIL_BY_PRESET_SIZE } from '../sizes'
+import { ImageDimensions } from '@/app/common/images/image'
 
 describe('Breakpoints from sizes and dimensions', () => {
   const SAMPLE_IMAGE_DIMENSIONS: ImageDimensions = {

@@ -9,7 +9,6 @@ import {
 } from '@/app/projects/project'
 import { PROJECT_DETAIL_PAGE_SWIPER_FULL } from '@/app/projects/project-detail-page/project-detail-page-swipers'
 import { HORIZONTAL_PAGE_PADDING_PX } from '@/app/common/paddings'
-import { ImageDimensions } from './responsive/breakpoints-from-sizes-and-dimensions'
 
 const horizontalPagePadding = (divider = 1) =>
   Px(HORIZONTAL_PAGE_PADDING_PX / divider)
@@ -35,22 +34,15 @@ export const ABOUT = sourceSizeList(
   sourceSize(withoutHorizontalPagePadding(Vw(75))),
 )
 
-// TODO: could be just one asset indeed (for max-height + multiple densities)
-const LOGO_DIMENSIONS: ImageDimensions = { width: 2757, height: 409 }
-// Keep in sync with SCSS
-const LOGO_MAX_HEIGHT_PX = 55
-export const LOGO_MAX_WIDTH_PX = Math.ceil(
-  (LOGO_MAX_HEIGHT_PX * LOGO_DIMENSIONS.width) / LOGO_DIMENSIONS.height,
-)
-export const LOGO = (() => {
+export const logoSizesFromMaxWidth = (maxWidthPx: number) => {
   return sourceSizeList(
     sourceSize(
       withoutHorizontalPagePadding(Vw(100)),
-      maxWidth(LOGO_MAX_WIDTH_PX + HORIZONTAL_PAGE_PADDING_PX),
+      maxWidth(maxWidthPx + HORIZONTAL_PAGE_PADDING_PX),
     ),
-    sourceSize(Px(LOGO_MAX_WIDTH_PX)),
+    sourceSize(Px(maxWidthPx)),
   )
-})()
+}
 
 export const PROJECT_LIST_ITEM = (() => {
   const SLIDES_PER_VIEW = PROJECT_LIST_ITEM_SLIDES_PER_VIEW
