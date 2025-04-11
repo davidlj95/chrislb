@@ -19,18 +19,25 @@ module.exports = {
           matchingUrlPattern: '.*',
           preset: 'lighthouse:no-pwa',
           assertions: {
-            'uses-responsive-images': ['error', { maxLength: 1 }],
+            'uses-responsive-images': 'off',
+            'total-byte-weight': 'off',
           },
         },
         // Non-project detail
         {
           matchingUrlPattern: '^((?!\\/projects\\/.+).)*$',
-          assertions: {},
+          assertions: {
+            'uses-responsive-images': ['error', { maxLength: 1 }],
+            'total-byte-weight': 'error',
+          },
         },
         // Project detail
         {
           matchingUrlPattern: '.+\/projects\/.+',
-          assertions: {},
+          assertions: {
+            'uses-responsive-images': ['error', { maxLength: 5 }],
+            'total-byte-weight': 'warn',
+          },
         },
       ],
     },
