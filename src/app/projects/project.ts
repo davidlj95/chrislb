@@ -53,3 +53,5 @@ export interface ProjectDetailAlbum {
   //👇 Keep in sync with CMS
   readonly size: 'half' | 'full'
 }
+
+export const PROJECT_LIST_ITEM_SLIDES_PER_VIEW = 2
