@@ -1,10 +1,13 @@
 import { ImageLoaderConfig } from '@angular/common'
 
-export interface Image {
-  src: string
-  width: number
-  height: number
-  alt?: string
+export interface ImageDimensions {
+  readonly width: number
+  readonly height: number
+}
+
+export type Image = ImageDimensions & {
+  readonly src: string
+  readonly alt?: string
 }
 
 export type ResponsiveImage = Image & {

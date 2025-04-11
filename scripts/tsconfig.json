@@ -23,6 +23,7 @@
     "../src/app/common/images/cdn/**/*.ts",
     "../src/app/common/images/image.ts",
     "../src/app/common/images/misc-images.ts",
+    "../src/app/logo/logo.ts",
     "../src/app/projects/project.ts",
     "../src/app/projects/project-detail-page/project-detail-page-swipers.ts",
     "../data/**/*.json"
