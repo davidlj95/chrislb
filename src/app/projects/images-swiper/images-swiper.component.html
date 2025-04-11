@@ -17,12 +17,14 @@
           maxSlidesPerView ? 100 / maxSlidesPerView : undefined
         "
       >
+        @let isPriority = priority() && i < (maxSlidesPerView ?? 0);
+        @let effectiveSizes = image.sizes || sizes();
         <img
           [ngSrc]="image.src"
           [ngSrcset]="image.breakpoints | toNgSrcSet"
-          [sizes]="image.sizes || sizes()"
+          [sizes]="isPriority ? effectiveSizes : 'auto,' + effectiveSizes"
           [fill]="true"
-          [priority]="priority() && i < (maxSlidesPerView ?? 0)"
+          [priority]="isPriority"
           [alt]="image.alt || 'Image'"
           [loaderParams]="image | toLoaderParams"
         />

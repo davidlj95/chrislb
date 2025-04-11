@@ -12,7 +12,7 @@ describe('Source size list', () => {
   it('should join sizes by comma and add auto when representing it as a string', () => {
     strictEqual(
       SOURCE_SIZE_LIST.toString(),
-      `auto,${SOURCE_SIZE_LIST.sizes[0].toString()},${SOURCE_SIZE_LIST.sizes[1].toString()}`,
+      `${SOURCE_SIZE_LIST.sizes[0].toString()},${SOURCE_SIZE_LIST.sizes[1].toString()}`,
     )
   })
 })
