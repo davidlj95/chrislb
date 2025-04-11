@@ -36,7 +36,7 @@ registerSwiper()
 })
 export class ImagesSwiperComponent {
   readonly images = input.required<readonly ResponsiveImage[]>()
-  readonly sizes = input<string>()
+  readonly sizes = input.required<string>()
   readonly priority = input(false)
   readonly customSwiperOptions = input<SwiperOptions>()
   protected readonly _swiperOptions = computed<SwiperOptions>(() => ({

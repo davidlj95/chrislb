@@ -20,7 +20,7 @@
         <img
           [ngSrc]="image.src"
           [ngSrcset]="image.breakpoints | toNgSrcSet"
-          [sizes]="image.sizes || sizes()"
+          [sizes]="sizes()"
           [fill]="true"
           [priority]="priority() && i < (maxSlidesPerView ?? 0)"
           [alt]="image.alt || 'Image'"
