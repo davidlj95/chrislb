@@ -1,14 +1,12 @@
 @use 'margins';
 
-:host {
-  ul {
-    display: flex;
-    gap: margins.$m;
-  }
+ul {
+  display: flex;
+  gap: margins.$m;
+}
 
-  fa-icon {
-    display: inline-block;
-    font-size: 1em;
-    height: 1em;
-  }
+fa-icon {
+  display: inline-block;
+  font-size: 1em;
+  height: 1em;
 }

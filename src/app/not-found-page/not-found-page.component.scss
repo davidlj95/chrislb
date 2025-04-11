@@ -8,15 +8,15 @@
   flex-direction: column;
   place-content: center;
   text-align: center;
+}
 
-  .sad-face {
-    @include typographies.size(10);
-    @include typographies.bold;
-    margin-bottom: margins.$m;
-  }
+.sad-face {
+  @include typographies.size(10);
+  @include typographies.bold;
+  margin-bottom: margins.$m;
+}
 
-  h2 {
-    @include typographies.size(8);
-    @include typographies.bold;
-  }
+h2 {
+  @include typographies.size(8);
+  @include typographies.bold;
 }

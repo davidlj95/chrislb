@@ -2,7 +2,6 @@
 @use 'page';
 @use 'typographies';
 @use 'margins';
-@use 'content';
 
 :host {
   display: flex;
@@ -10,42 +9,42 @@
   @include page.padding;
   gap: margins.$m;
   align-items: center;
+}
 
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: margins.$m;
-    place-content: center;
-    align-items: center;
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: margins.$m;
+  place-content: center;
+  align-items: center;
+}
+
+h1 {
+  @include typographies.size(7);
+  @include typographies.bold;
+}
+
+/** 👇 Keep in sync with component responsive image breakpoints **/
+article {
+  display: flex;
+  flex-direction: column;
+  gap: margins.$m;
+  max-width: 35vw;
+
+  @include breakpoints.s {
+    max-width: 60vw;
   }
 
-  h1 {
-    @include typographies.size(7);
-    @include typographies.bold;
+  @include breakpoints.xs {
+    max-width: 75vw;
   }
+}
 
-  /** 👇 Keep in sync with component responsive image breakpoints **/
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: margins.$m;
-    max-width: 35vw;
+p {
+  white-space: pre-wrap;
+}
 
-    @include breakpoints.s {
-      max-width: 60vw;
-    }
-
-    @include breakpoints.xs {
-      max-width: 75vw;
-    }
-  }
-
-  p {
-    white-space: pre-wrap;
-  }
-
-  img {
-    object-fit: contain;
-    object-position: top;
-  }
+img {
+  object-fit: contain;
+  object-position: top;
 }

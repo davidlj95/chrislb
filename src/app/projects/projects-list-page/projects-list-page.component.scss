@@ -8,13 +8,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: margins.$l;
+}
 
-  app-project-list-item {
-    flex: 1;
+app-project-list-item {
+  flex: 1;
 
-    &.has-preview-images {
-      flex: unset;
-      max-width: 100%;
-    }
+  &.has-preview-images {
+    flex: unset;
+    max-width: 100%;
   }
 }

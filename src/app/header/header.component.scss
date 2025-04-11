@@ -5,16 +5,16 @@
 
 :host {
   background-color: white;
+}
 
-  header {
-    @include typographies.regular;
-    padding: header.$padding-vertical page.$padding-horizontal;
-    justify-content: center;
-    font-size: header.$font-size;
+header {
+  @include typographies.regular;
+  padding: header.$padding-vertical page.$padding-horizontal;
+  justify-content: center;
+  font-size: header.$font-size;
 
-    ul {
-      display: flex;
-      justify-content: space-evenly;
-    }
+  ul {
+    display: flex;
+    justify-content: space-evenly;
   }
 }
