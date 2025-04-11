@@ -3,7 +3,10 @@ import { SourceSize, sourceSize } from './models/source-size'
 import { Px, Vw } from './models/css-length'
 import { maxWidth, minWidth } from './models/css-media-condition'
 import { BREAKPOINT_S_PX, BREAKPOINT_XS_PX } from '@/app/common/breakpoints'
-import { ProjectDetailAlbum } from '@/app/projects/project'
+import {
+  PROJECT_LIST_ITEM_SLIDES_PER_VIEW,
+  ProjectDetailAlbum,
+} from '@/app/projects/project'
 import { PROJECT_DETAIL_PAGE_SWIPER_FULL } from '@/app/projects/project-detail-page/project-detail-page-swipers'
 import { HORIZONTAL_PAGE_PADDING_PX } from '@/app/common/paddings'
 import { ImageDimensions } from './responsive/breakpoints-from-sizes-and-dimensions'
@@ -50,7 +53,7 @@ export const LOGO = (() => {
 })()
 
 export const PROJECT_LIST_ITEM = (() => {
-  const SLIDES_PER_VIEW = 2
+  const SLIDES_PER_VIEW = PROJECT_LIST_ITEM_SLIDES_PER_VIEW
   return sourceSizeList(
     sourceSize(
       withoutHorizontalPagePadding(Vw(33.3), SLIDES_PER_VIEW),

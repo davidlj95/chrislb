@@ -7,7 +7,11 @@ import { PROJECTS_PATH } from '@/app/common/routing/paths'
 import { ImagesSwiperComponent } from '../../images-swiper/images-swiper.component'
 import { RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
-import { ProjectListItem, ProjectListItemCredit } from '../../project'
+import {
+  PROJECT_LIST_ITEM_SLIDES_PER_VIEW,
+  ProjectListItem,
+  ProjectListItemCredit,
+} from '../../project'
 
 @Component({
   selector: 'app-project-list-item',
@@ -30,6 +34,7 @@ export class ProjectListItemComponent {
   )
 
   protected readonly _PROJECTS_PATH = PROJECTS_PATH
+  protected readonly _SLIDES_PER_VIEW = PROJECT_LIST_ITEM_SLIDES_PER_VIEW
 }
 
 type CreditViewModel = Omit<ProjectListItemCredit, 'social'> & {
