@@ -16,7 +16,7 @@
   margin-bottom: margins.$m;
 }
 
-h2 {
+h1 {
   @include typographies.size(8);
   @include typographies.bold;
 }
