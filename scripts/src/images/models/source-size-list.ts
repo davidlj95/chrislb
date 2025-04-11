@@ -14,7 +14,7 @@ export class SourceSizeList {
   }
 
   toString() {
-    return this.sizes.join(',')
+    return ['auto', ...this.sizes].join(',')
   }
 }
 
