@@ -7,5 +7,6 @@ import notFoundPageMetadata from '@/data/cms/pages/404.json'
   standalone: true,
 })
 export class NotFoundPageComponent {
-  readonly description: string = notFoundPageMetadata.description
+  readonly title = notFoundPageMetadata.title
+  readonly description = notFoundPageMetadata.description
 }
