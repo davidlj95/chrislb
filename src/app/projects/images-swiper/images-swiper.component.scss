@@ -1,32 +1,30 @@
 @use 'theme';
 
-:host {
-  swiper-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
+swiper-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
 
-    swiper-slide {
-      position: relative;
-      max-height: inherit;
+  swiper-slide {
+    position: relative;
+    max-height: inherit;
 
-      img {
-        object-fit: contain;
-      }
+    img {
+      object-fit: contain;
     }
   }
+}
 
-  $balanced-luminance-color: theme.$accent;
+$balanced-luminance-color: theme.$accent;
 
-  swiper-container::part(button-prev),
-  swiper-container::part(button-next) {
-    position: absolute; // perf trick 2 avoid layout shifts
-    color: $balanced-luminance-color;
-  }
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  position: absolute; // perf trick 2 avoid layout shifts
+  color: $balanced-luminance-color;
+}
 
-  swiper-container::part(bullet-active),
-  swiper-container::part(bullet) {
-    background-color: $balanced-luminance-color;
-  }
+swiper-container::part(bullet-active),
+swiper-container::part(bullet) {
+  background-color: $balanced-luminance-color;
 }

@@ -17,10 +17,10 @@
   justify-content: center;
 
   padding: logo.$padding-vertical page.$padding-horizontal;
+}
 
-  img {
-    // Keep in sync with component for responsive sizing!
-    max-height: logo.$height-image;
-    width: auto;
-  }
+img {
+  // Keep in sync with component for responsive sizing!
+  max-height: logo.$height-image;
+  width: auto;
 }

@@ -8,36 +8,36 @@
   @include page.padding;
   gap: margins.$m;
   justify-content: center;
+}
 
-  h2 {
-    text-align: center;
-  }
+h2 {
+  text-align: center;
+}
 
-  $assetsGap: margins.$m;
+$assetsGap: margins.$m;
 
-  //👇 Keep in sync with component responsive images
-  .assets {
-    display: flex;
-    flex-direction: column;
-    gap: $assetsGap;
-    align-items: center;
+//👇 Keep in sync with component responsive images
+.assets {
+  display: flex;
+  flex-direction: column;
+  gap: $assetsGap;
+  align-items: center;
+  width: 100%;
+
+  > app-images-swiper {
     width: 100%;
-
-    > app-images-swiper {
-      width: 100%;
-      //ℹ️ max-width set by component for big screens
-    }
-
-    iframe {
-      max-width: 100%;
-    }
+    //ℹ️ max-width set by component for big screens
   }
 
-  .half {
-    width: calc(50% - $assetsGap);
+  iframe {
+    max-width: 100%;
+  }
+}
 
-    @include breakpoints.until-s {
-      width: 100%;
-    }
+.half {
+  width: calc(50% - $assetsGap);
+
+  @include breakpoints.until-s {
+    width: 100%;
   }
 }

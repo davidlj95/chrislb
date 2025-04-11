@@ -9,91 +9,91 @@
   display: flex;
   flex-direction: column;
   gap: margins.$m;
+}
 
+.text-and-images {
+  display: flex;
+  align-content: flex-start;
+  gap: margins.$l;
+}
+
+$texts-width-big-screen: 55ch;
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  max-width: 55ch;
+}
+
+//👇 Keep in sync with component responsive images
+app-images-swiper {
+  // 👇 Seems swiper needs size set to work fine
+  $page-padding-horizontal: page.$padding-horizontal;
+  width: calc(100vw - $texts-width-big-screen - $page-padding-horizontal * 2);
+  $extra-space: 48px;
+  $available-height: content.$available-height;
+  max-height: calc($available-height);
+}
+
+@include breakpoints.until-s {
   .text-and-images {
-    display: flex;
-    align-content: flex-start;
-    gap: margins.$l;
+    flex-wrap: wrap;
+    gap: margins.$m;
   }
-
-  $texts-width-big-screen: 55ch;
 
   .texts {
-    display: flex;
-    flex-direction: column;
-    max-width: 55ch;
+    order: 2;
+    max-width: unset;
   }
 
-  //👇 Keep in sync with component responsive images
   app-images-swiper {
-    // 👇 Seems swiper needs size set to work fine
-    $page-padding-horizontal: page.$padding-horizontal;
-    width: calc(100vw - $texts-width-big-screen - $page-padding-horizontal * 2);
-    $extra-space: 48px;
-    $available-height: content.$available-height;
-    max-height: calc($available-height);
+    width: 100%;
+    min-height: 300px;
+    order: 1;
+
+    $extra-space: 128px;
+    $available-height: content.$available-height-with-header;
+    max-height: calc($available-height - $extra-space);
   }
+}
 
-  @include breakpoints.until-s {
-    .text-and-images {
-      flex-wrap: wrap;
-      gap: margins.$m;
-    }
+.title {
+  @include typographies.size(8);
+  @include typographies.bold;
 
-    .texts {
-      order: 2;
-      max-width: unset;
-    }
+  margin-bottom: margins.$xxs;
+}
 
-    app-images-swiper {
-      width: 100%;
-      min-height: 300px;
-      order: 1;
+.subtitle {
+  @include typographies.size(4);
+  @include typographies.bold;
 
-      $extra-space: 128px;
-      $available-height: content.$available-height-with-header;
-      max-height: calc($available-height - $extra-space);
-    }
-  }
+  margin-bottom: margins.$l;
+}
 
-  .title {
-    @include typographies.size(8);
-    @include typographies.bold;
+.quote {
+  @include typographies.size(1);
+  @include typographies.regular;
 
-    margin-bottom: margins.$xxs;
-  }
+  margin-bottom: margins.$l;
+}
 
-  .subtitle {
-    @include typographies.size(4);
-    @include typographies.bold;
+.description {
+  @include typographies.light;
 
-    margin-bottom: margins.$l;
-  }
+  // Keep line breaks
+  white-space: pre-wrap;
+}
 
-  .quote {
-    @include typographies.size(1);
-    @include typographies.regular;
+.credits {
+  @include typographies.regular;
 
-    margin-bottom: margins.$l;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: margins.$s;
+  justify-content: flex-start;
 
-  .description {
-    @include typographies.light;
-
-    // Keep line breaks
-    white-space: pre-wrap;
-  }
-
-  .credits {
-    @include typographies.regular;
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: margins.$s;
-    justify-content: flex-start;
-
-    .anchor {
-      display: inline-block;
-    }
+  .anchor {
+    display: inline-block;
   }
 }
