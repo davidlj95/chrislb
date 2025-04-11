@@ -37,23 +37,12 @@ registerSwiper()
 export class ImagesSwiperComponent {
   readonly images = input.required<readonly ResponsiveImage[]>()
   readonly sizes = input.required<string>()
+  readonly slidesPerView = input.required<number>()
   readonly priority = input(false)
-  readonly customSwiperOptions = input<SwiperOptions>()
   protected readonly _swiperOptions = computed<SwiperOptions>(() => ({
     ...DEFAULT_SWIPER_OPTIONS,
-    ...this.customSwiperOptions(),
+    slidesPerView: this.slidesPerView(),
   }))
-  protected readonly _effectiveSwiperOptions = computed<SwiperOptions>(
-    (): SwiperOptions =>
-      autoLoopOrRewindSwiperOptions(
-        this._swiperOptions(),
-        this._maxSlidesPerView(),
-        this.images().length,
-      ),
-  )
-  protected readonly _maxSlidesPerView = computed<number | undefined>(() =>
-    getMaxSlidesPerView(this._swiperOptions()),
-  )
 }
 
 const DEFAULT_SWIPER_OPTIONS = {
@@ -78,35 +67,3 @@ const DEFAULT_SWIPER_OPTIONS = {
     dynamicBullets: true,
   },
 } satisfies SwiperOptions
-
-const autoLoopOrRewindSwiperOptions = (
-  swiperOptions: SwiperOptions,
-  maxSlidesPerView: number | undefined,
-  imagesCount: number,
-): SwiperOptions => {
-  if (!swiperOptions.loop || !swiperOptions.rewind) {
-    return swiperOptions
-  }
-  const loop =
-    maxSlidesPerView !== undefined && imagesCount > maxSlidesPerView * 2
-  return {
-    ...swiperOptions,
-    loop,
-    rewind: !loop,
-  }
-}
-
-const getMaxSlidesPerView = (swiperOptions: SwiperOptions) => {
-  const breakpointSlidesPerViews = Object.values(
-    swiperOptions.breakpoints ?? {},
-  ).map((options) => options.slidesPerView)
-  const defaultSlidesPerView = swiperOptions.slidesPerView
-  const allSlidesPerView = [
-    ...breakpointSlidesPerViews,
-    defaultSlidesPerView,
-  ].filter(Number.isInteger as (x: unknown) => x is number)
-  if (!allSlidesPerView.length) {
-    return
-  }
-  return Math.max(...allSlidesPerView)
-}

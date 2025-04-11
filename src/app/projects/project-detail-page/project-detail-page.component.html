@@ -19,7 +19,7 @@
     <app-images-swiper
       [images]="album.images"
       [sizes]="album.imageSizes"
-      [customSwiperOptions]="{ slidesPerView: album.slidesPerView }"
+      [slidesPerView]="album.slidesPerView"
       [style.max-width.px]="album.maxWidthPx"
       [priority]="index < _maxSwipersPerViewport"
     ></app-images-swiper>
