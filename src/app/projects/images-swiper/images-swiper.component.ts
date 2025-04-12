@@ -12,6 +12,7 @@ import {
   Keyboard,
   Navigation,
   Pagination,
+  Virtual,
 } from 'swiper/modules'
 import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
@@ -46,7 +47,7 @@ export class ImagesSwiperComponent {
 }
 
 const DEFAULT_SWIPER_OPTIONS = {
-  modules: [A11y, Autoplay, Keyboard, Navigation, Pagination],
+  modules: [A11y, Autoplay, Keyboard, Navigation, Pagination, Virtual],
   injectStylesUrls: ['/swiper.css'],
   a11y: {
     enabled: false,
@@ -65,5 +66,8 @@ const DEFAULT_SWIPER_OPTIONS = {
     enabled: true,
     clickable: true,
     dynamicBullets: true,
+  },
+  virtual: {
+    enabled: true,
   },
 } satisfies SwiperOptions
