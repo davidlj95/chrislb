@@ -1,30 +1,31 @@
+@let item = _item();
 <div class="text-and-images">
   <div class="texts">
     <span class="title">
-      @if (item().hasDetails) {
-        <a [routerLink]="[_PROJECTS_PATH, item().slug]"
+      @if (item.hasDetails) {
+        <a [routerLink]="[_PROJECTS_PATH, item.slug]"
           ><ng-container [ngTemplateOutlet]="title"></ng-container
         ></a>
       } @else {
-        {{ item().title }}
+        {{ item.title }}
       }
       <ng-template #title>
-        {{ item().title }}
+        {{ item.title }}
       </ng-template>
     </span>
     <span class="subtitle">
-      {{ item().subtitle }}
+      {{ item.subtitle }}
     </span>
-    @if (item().quote) {
-      <span class="quote"> "{{ item().quote }}" </span>
+    @if (item.quote) {
+      <span class="quote"> "{{ item.quote }}" </span>
     }
-    <div class="description" [innerHtml]="item().description"></div>
+    <div class="description" [innerHtml]="item.description"></div>
   </div>
-  @let previewImages = item().previewImages;
+  @let previewImages = item.previewImages;
   @if (previewImages && previewImages.length) {
     <app-images-swiper
       [images]="previewImages"
-      [sizes]="item().previewImageSizes"
+      [sizes]="item.previewImageSizes"
       [priority]="priority()"
       [slidesPerView]="_SLIDES_PER_VIEW"
     ></app-images-swiper>

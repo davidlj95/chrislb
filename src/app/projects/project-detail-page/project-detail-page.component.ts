@@ -1,4 +1,4 @@
-import { Component, computed, effect } from '@angular/core'
+import { Component, computed, effect, Inject, PLATFORM_ID } from '@angular/core'
 import { map } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
@@ -12,6 +12,7 @@ import {
   PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE,
   ProjectDetailPageSwiper,
 } from '@/app/projects/project-detail-page/project-detail-page-swipers'
+import { isPlatformBrowser } from '@angular/common'
 
 @Component({
   templateUrl: './project-detail-page.component.html',
@@ -44,8 +45,13 @@ export class ProjectDetailPageComponent {
       return []
     }
     return albums.map((album) => {
+      const swiper = PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE[album.size]
+      const imagesLimit = isPlatformBrowser(this._platformObject)
+        ? Infinity
+        : swiper.slidesPerView
       return {
         ...album,
+        images: album.images.slice(0, imagesLimit),
         ...PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE[album.size],
       }
     })
@@ -54,6 +60,7 @@ export class ProjectDetailPageComponent {
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
+    @Inject(PLATFORM_ID) private readonly _platformObject: object,
     ngxMetaService: NgxMetaService,
   ) {
     effect(() => {
