@@ -146,7 +146,7 @@ const projectsList = async (
         )
         return {
           ...baseProjectListItem,
-          previewImageSizes: PROJECT_LIST_ITEM.sizes.toString(),
+          previewImageSizes: PROJECT_LIST_ITEM.toString(),
           credits: listItemCredits.length ? listItemCredits : undefined,
           hasDetails: hasDetails(expandedCmsProject),
         }
