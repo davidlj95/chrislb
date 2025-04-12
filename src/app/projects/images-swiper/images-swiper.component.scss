@@ -1,19 +1,19 @@
 @use 'theme';
+@use 'content';
 
 swiper-container {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
+  display: block;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
 
-  swiper-slide {
-    position: relative;
-    max-height: inherit;
+swiper-slide {
+  text-align: center;
+}
 
-    img {
-      object-fit: contain;
-    }
-  }
+img {
+  max-height: content.$available-height;
+  width: auto;
 }
 
 $balanced-luminance-color: theme.$accent;
