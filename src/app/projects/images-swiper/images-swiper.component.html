@@ -15,14 +15,15 @@
         [style.width.%]="100 / slidesPerView()"
         [style.aspect-ratio]="image.width / image.height"
       >
+        @let isPriority = priority() && i < slidesPerView();
         <img
           [ngSrc]="image.src"
           [width]="image.width"
           [height]="image.height"
           [alt]="image.alt || 'Image'"
           [ngSrcset]="image.breakpoints | toNgSrcSet"
-          [sizes]="sizes()"
-          [priority]="priority() && i < slidesPerView()"
+          [sizes]="isPriority ? sizes() : 'auto,' + sizes()"
+          [priority]="isPriority"
           [loaderParams]="image | toLoaderParams"
         />
       </swiper-slide>
