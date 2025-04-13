@@ -3,17 +3,21 @@
 
 swiper-container {
   display: block;
+  // 👇 If Swiper.js isn't there it'd display as an horizontal list of slides
   white-space: nowrap;
-  overflow-x: scroll;
+  // 👇 If scroll, weird blue box appears even after Swiper.js inits
+  overflow: hidden;
 }
 
 swiper-slide {
-  text-align: center;
+  display: inline-block;
+  // 👇 So layout applies if no images in there
+  max-height: content.$available-height;
 }
 
 img {
-  max-height: content.$available-height;
-  width: auto;
+  object-fit: contain;
+  max-height: 100%;
 }
 
 $balanced-luminance-color: theme.$accent;
