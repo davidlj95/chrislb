@@ -18,13 +18,20 @@ import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
 import { ToLoaderParams } from '@/app/common/images/loader-params'
+import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swiper-autoplay-scroll.directive'
 
 @Component({
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
   standalone: true,
-  imports: [SwiperDirective, NgOptimizedImage, ToNgSrcSet, ToLoaderParams],
+  imports: [
+    SwiperDirective,
+    NgOptimizedImage,
+    ToNgSrcSet,
+    ToLoaderParams,
+    SwiperAutoplayScrollDirective,
+  ],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250

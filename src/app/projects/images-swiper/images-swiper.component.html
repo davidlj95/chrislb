@@ -5,6 +5,7 @@
   @let aspectRatio = (firstImage.width * slidesPerView()) / firstImage.height;
   <swiper-container
     [appSwiper]="_swiperOptions()"
+    appSwiperAutoplayScroll
     init="false"
     [style.aspect-ratio]="fixContainerAspectRatio() ? aspectRatio : undefined"
   >

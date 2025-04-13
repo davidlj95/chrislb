@@ -1,6 +1,6 @@
 @use 'paddings';
 
-$padding-vertical: paddings.$m;
 // Keep in sync with component for responsive sizing!
+$padding-vertical: paddings.$m;
 $height-image: 55px;
 $height: calc($height-image + $padding-vertical * 2);
