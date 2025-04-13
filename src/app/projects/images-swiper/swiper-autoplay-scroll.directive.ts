@@ -1,10 +1,10 @@
 import {
   Directive,
-  effect,
   ElementRef,
   inject,
   InjectionToken,
   OnDestroy,
+  OnInit,
   PLATFORM_ID,
 } from '@angular/core'
 import { SwiperContainer } from 'swiper/swiper-element'
@@ -15,13 +15,12 @@ import { isPlatformBrowser } from '@angular/common'
   selector: '[appSwiperAutoplayScroll]',
   standalone: true,
 })
-export class SwiperAutoplayScrollDirective implements OnDestroy {
+export class SwiperAutoplayScrollDirective implements OnInit, OnDestroy {
   private readonly _observer = inject(SWIPER_AUTOPLAY_INTERSECTION_OBSERVER)
+  private readonly _elRef = inject(ElementRef)
 
-  constructor(private readonly _elRef: ElementRef<HTMLElement>) {
-    effect(() => {
-      this._observer?.observe(this._elRef.nativeElement)
-    })
+  ngOnInit() {
+    this._observer?.observe(this._elRef.nativeElement)
   }
 
   ngOnDestroy() {
@@ -29,7 +28,7 @@ export class SwiperAutoplayScrollDirective implements OnDestroy {
   }
 }
 
-const SWIPER_AUTOPLAY_INTERSECTION_OBSERVER =
+export const SWIPER_AUTOPLAY_INTERSECTION_OBSERVER =
   new InjectionToken<IntersectionObserver | null>('', {
     factory: () =>
       isPlatformBrowser(inject(PLATFORM_ID))

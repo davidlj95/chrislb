@@ -16,7 +16,7 @@ registerSwiper()
 export class SwiperDirective {
   readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
 
-  constructor(readonly elRef: ElementRef<Element & Partial<SwiperContainer>>) {
+  constructor(elRef: ElementRef<Element & Partial<SwiperContainer>>) {
     effect(() => {
       const element = elRef.nativeElement
       const initializer = element.initialize
