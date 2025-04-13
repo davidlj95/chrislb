@@ -6,7 +6,7 @@
   <swiper-container
     [appSwiper]="_swiperOptions()"
     init="false"
-    [style.aspect-ratio]="aspectRatio"
+    [style.aspect-ratio]="fixContainerAspectRatio() ? aspectRatio : undefined"
   >
     @for (image of images(); track image; let i = $index) {
       <!-- 👇 Base layout until Swiper.js initializes -->
