@@ -4,7 +4,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   input,
 } from '@angular/core'
-import { register as registerSwiper } from 'swiper/element'
 import { SwiperOptions } from 'swiper/types'
 import {
   A11y,
@@ -19,10 +18,6 @@ import { SwiperDirective } from './swiper.directive'
 import { NgOptimizedImage } from '@angular/common'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
 import { ToLoaderParams } from '@/app/common/images/loader-params'
-
-// There's no fancier way to install Web Components in Angular :P
-// https://stackoverflow.com/a/75353889/3263250
-registerSwiper()
 
 @Component({
   selector: 'app-images-swiper',

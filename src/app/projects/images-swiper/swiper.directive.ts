@@ -1,6 +1,13 @@
+import {
+  register as registerSwiper,
+  type SwiperContainer,
+} from 'swiper/element'
 import { Directive, effect, ElementRef, input, NgZone } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-import { type SwiperContainer } from 'swiper/swiper-element'
+
+// There's no fancier way to install Web Components in Angular :P
+// https://stackoverflow.com/a/75353889/3263250
+registerSwiper()
 
 @Directive({
   selector: '[appSwiper]',
