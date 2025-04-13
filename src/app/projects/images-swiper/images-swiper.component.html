@@ -9,21 +9,22 @@
     init="false"
     [style.aspect-ratio]="fixContainerAspectRatio() ? aspectRatio : undefined"
   >
-    @for (image of images(); track image; let i = $index) {
+    @for (image of _imageViewModels(); track image) {
       <!-- 👇 Base layout until Swiper.js initializes -->
       <swiper-slide
         [style.width.%]="100 / slidesPerView()"
         [style.aspect-ratio]="image.width / image.height"
       >
+        <!--suppress AngularNgOptimizedImage - Can't use due to auto `auto` sizes -->
         <img
-          [ngSrc]="image.src"
+          [src]="image.src"
           [width]="image.width"
           [height]="image.height"
-          [alt]="image.alt || 'Image'"
-          [ngSrcset]="image.breakpoints | toNgSrcSet"
-          [sizes]="sizes()"
-          [priority]="priority() && i < slidesPerView()"
-          [loaderParams]="image | toLoaderParams"
+          [alt]="image.alt"
+          [srcset]="image.srcset"
+          [sizes]="image.sizes"
+          [attr.loading]="image.loading"
+          [attr.fetchpriority]="image.fetchPriority"
         />
       </swiper-slide>
     }
