@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   CUSTOM_ELEMENTS_SCHEMA,
+  inject,
   input,
 } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
@@ -15,9 +16,9 @@ import {
 } from 'swiper/modules'
 import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
-import { NgOptimizedImage } from '@angular/common'
-import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
-import { ToLoaderParams } from '@/app/common/images/loader-params'
+import { IMAGE_LOADER, ImageLoader, ImageLoaderConfig } from '@angular/common'
+import { unsignedBreakpoints } from '@/app/common/images/to-ng-src-set'
+import { toLoaderParams } from '@/app/common/images/loader-params'
 import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swiper-autoplay-scroll.directive'
 
 @Component({
@@ -25,13 +26,7 @@ import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swip
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
   standalone: true,
-  imports: [
-    SwiperDirective,
-    NgOptimizedImage,
-    ToNgSrcSet,
-    ToLoaderParams,
-    SwiperAutoplayScrollDirective,
-  ],
+  imports: [SwiperDirective, SwiperAutoplayScrollDirective],
   // Use swiper web components
   // A better approach would be to declare those but there's no easy way
   // https://stackoverflow.com/a/43012920/3263250
@@ -47,6 +42,35 @@ export class ImagesSwiperComponent {
     ...DEFAULT_SWIPER_OPTIONS,
     slidesPerView: this.slidesPerView(),
   }))
+
+  readonly _imageViewModels = computed<readonly ImageViewModel[]>(() =>
+    this.images().map((image, index) => {
+      const imageConfig: ImageLoaderConfig = {
+        src: image.src,
+        loaderParams: toLoaderParams(image),
+      }
+      const breakpoints = unsignedBreakpoints(image.breakpoints)
+      const isPriority = this.priority() && index < this.slidesPerView()
+      return {
+        src: this._imageLoader(imageConfig),
+        width: image.width,
+        height: image.height,
+        alt: image.alt ?? 'Image',
+        srcset: breakpoints
+          .map((breakpoint) =>
+            [
+              this._imageLoader({ ...imageConfig, width: breakpoint }),
+              `${breakpoint}w`,
+            ].join(' '),
+          )
+          .join(','),
+        sizes: this.sizes(),
+        loading: isPriority ? 'eager' : 'lazy',
+        fetchPriority: isPriority ? 'high' : 'auto',
+      }
+    }),
+  )
+  readonly _imageLoader: ImageLoader = inject(IMAGE_LOADER)
 }
 
 const DEFAULT_SWIPER_OPTIONS = {
@@ -74,3 +98,15 @@ const DEFAULT_SWIPER_OPTIONS = {
     enabled: true,
   },
 } satisfies SwiperOptions
+
+type ImageViewModel = Pick<
+  HTMLImageElement,
+  | 'src'
+  | 'width'
+  | 'height'
+  | 'alt'
+  | 'srcset'
+  | 'sizes'
+  | 'loading'
+  | 'fetchPriority'
+>

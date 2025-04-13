@@ -8,11 +8,15 @@ import {
 @Pipe({ name: 'toNgSrcSet', standalone: true, pure: true })
 export class ToNgSrcSet implements PipeTransform {
   transform(breakpoints: ResponsiveImageBreakpoints): string {
-    const unsignedBreakpoints = areBreakpointsUnsigned(breakpoints)
-      ? breakpoints
-      : Object.keys(breakpoints)
-          .filter((breakpoint) => breakpoint !== ORIGINAL_SRC_BREAKPOINT)
-          .map((breakpoint) => parseInt(breakpoint))
-    return unsignedBreakpoints.map((breakpoint) => `${breakpoint}w`).join(', ')
+    return unsignedBreakpoints(breakpoints)
+      .map((breakpoint) => `${breakpoint}w`)
+      .join(', ')
   }
 }
+
+export const unsignedBreakpoints = (breakpoints: ResponsiveImageBreakpoints) =>
+  areBreakpointsUnsigned(breakpoints)
+    ? breakpoints
+    : Object.keys(breakpoints)
+        .filter((breakpoint) => breakpoint !== ORIGINAL_SRC_BREAKPOINT)
+        .map((breakpoint) => parseInt(breakpoint))
