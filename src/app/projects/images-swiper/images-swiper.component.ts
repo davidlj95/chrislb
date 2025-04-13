@@ -35,7 +35,6 @@ export class ImagesSwiperComponent {
   readonly sizes = input.required<string>()
   readonly slidesPerView = input.required<number>()
   readonly priority = input(false)
-  readonly fixContainerAspectRatio = input(false)
   protected readonly _swiperOptions = computed<SwiperOptions>(() => ({
     ...DEFAULT_SWIPER_OPTIONS,
     slidesPerView: this.slidesPerView(),
