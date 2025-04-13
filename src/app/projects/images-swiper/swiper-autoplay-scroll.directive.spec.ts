@@ -54,7 +54,6 @@ const setupHostComponent = (
   @Component({
     template: ``,
     hostDirectives: [SwiperAutoplayScrollDirective],
-    standalone: true,
   })
   class HostComponent {}
 

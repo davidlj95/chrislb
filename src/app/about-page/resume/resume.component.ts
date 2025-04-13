@@ -7,7 +7,6 @@ import aboutPage from '@/data/cms/misc/about.json'
   selector: 'app-resume',
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss'],
-  standalone: true,
   imports: [FaIconComponent],
 })
 export class ResumeComponent {

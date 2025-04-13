@@ -10,7 +10,6 @@ import WEBSITE_AUTHOR from '@/data/cms/authors/christian-lazaro.json'
   selector: 'app-social',
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.scss'],
-  standalone: true,
   imports: [FaIconComponent],
 })
 export class SocialComponent {

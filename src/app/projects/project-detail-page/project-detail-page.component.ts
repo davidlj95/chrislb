@@ -17,7 +17,6 @@ import { isPlatformBrowser } from '@angular/common'
 @Component({
   templateUrl: './project-detail-page.component.html',
   styleUrls: ['./project-detail-page.component.scss'],
-  standalone: true,
   imports: [ImagesSwiperComponent, SanitizeResourceUrlPipe],
 })
 export class ProjectDetailPageComponent {

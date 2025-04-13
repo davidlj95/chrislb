@@ -11,7 +11,6 @@ import { ToLoaderParams } from '@/app/common/images/to-loader-params'
 @Component({
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.scss'],
-  standalone: true,
   imports: [
     SocialComponent,
     ResumeComponent,

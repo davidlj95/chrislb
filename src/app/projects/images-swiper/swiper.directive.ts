@@ -9,10 +9,7 @@ import { SwiperOptions } from 'swiper/types'
 // https://stackoverflow.com/a/75353889/3263250
 registerSwiper()
 
-@Directive({
-  selector: '[appSwiper]',
-  standalone: true,
-})
+@Directive({ selector: '[appSwiper]' })
 export class SwiperDirective {
   readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
 

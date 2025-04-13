@@ -18,7 +18,6 @@ import { PROJECT_DETAIL_PAGE_SWIPER_BY_SIZE } from '@/app/projects/project-detai
   selector: 'app-project-list-item',
   templateUrl: './project-list-item.component.html',
   styleUrls: ['./project-list-item.component.scss'],
-  standalone: true,
   imports: [RouterLink, NgTemplateOutlet, ImagesSwiperComponent],
 })
 export class ProjectListItemComponent {

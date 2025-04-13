@@ -71,7 +71,6 @@ function makeComponentWithDirective({
     template: `
       <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
     imports: [SwiperDirective],
-    standalone: true,
   })
   class SwiperComponent implements OnInit {
     readonly options = options

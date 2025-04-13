@@ -13,7 +13,6 @@ import { isPlatformBrowser } from '@angular/common'
 
 @Directive({
   selector: '[appSwiperAutoplayScroll]',
-  standalone: true,
 })
 export class SwiperAutoplayScrollDirective implements OnInit, OnDestroy {
   private readonly _observer = inject(SWIPER_AUTOPLAY_INTERSECTION_OBSERVER)
