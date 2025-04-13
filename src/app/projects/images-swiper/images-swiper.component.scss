@@ -9,10 +9,14 @@ swiper-container {
   overflow: hidden;
 }
 
+swiper-container,
 swiper-slide {
-  display: inline-block;
   // 👇 So layout applies if no images in there
   max-height: content.$available-height;
+}
+
+swiper-slide {
+  display: inline-block;
 }
 
 img {
