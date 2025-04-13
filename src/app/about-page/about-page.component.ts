@@ -6,7 +6,7 @@ import { NgOptimizedImage } from '@angular/common'
 import { ResumeComponent } from './resume/resume.component'
 import { SocialComponent } from './social/social.component'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
-import { ToLoaderParams } from '@/app/common/images/loader-params'
+import { ToLoaderParams } from '@/app/common/images/to-loader-params'
 
 @Component({
   templateUrl: './about-page.component.html',

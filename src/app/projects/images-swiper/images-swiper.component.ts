@@ -18,7 +18,7 @@ import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
 import { IMAGE_LOADER, ImageLoader, ImageLoaderConfig } from '@angular/common'
 import { unsignedBreakpoints } from '@/app/common/images/to-ng-src-set'
-import { toLoaderParams } from '@/app/common/images/loader-params'
+import { toLoaderParams } from '@/app/common/images/to-loader-params'
 import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swiper-autoplay-scroll.directive'
 
 @Component({
