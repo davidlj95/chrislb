@@ -5,7 +5,7 @@ import {
   ResponsiveImageBreakpoints,
 } from '@/app/common/images/image'
 
-@Pipe({ name: 'toNgSrcSet', standalone: true, pure: true })
+@Pipe({ name: 'toNgSrcSet', pure: true })
 export class ToNgSrcSet implements PipeTransform {
   transform(breakpoints: ResponsiveImageBreakpoints): string {
     return unsignedBreakpoints(breakpoints)
