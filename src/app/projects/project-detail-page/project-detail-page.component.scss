@@ -37,7 +37,7 @@ $assetsGap: margins.$m;
 .half {
   width: calc(50% - $assetsGap);
 
-  @include breakpoints.until-s {
+  @include breakpoints.until(breakpoints.$s) {
     width: 100%;
   }
 }

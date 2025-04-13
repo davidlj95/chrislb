@@ -2,7 +2,8 @@
  * Responsive layout breakpoints
  *
  * Obtained from Angular CDK
- * https://github.com/angular/components/blob/16.2.1/src/cdk/layout/breakpoints.ts
+ * https://material.angular.io/cdk/layout/overview
+ * https://github.com/angular/components/blob/19.2.9/src/cdk/layout/breakpoints.ts
  *
  * 👇 Keep in sync with Typescript component code
  */
@@ -11,21 +12,16 @@
 }
 
 $xs: 600px;
-@mixin xs {
-  @media (max-width: almost($xs)) {
-    @content;
-  }
-}
-
 $s: 960px;
-@mixin until-s {
-  @media (max-width: almost($s)) {
+
+@mixin between($a, $b) {
+  @media (min-width: $a) and (max-width: almost($b)) {
     @content;
   }
 }
 
-@mixin s {
-  @media (min-width: $xs) and (max-width: almost($s)) {
+@mixin until($breakpoint) {
+  @media (max-width: almost($breakpoint)) {
     @content;
   }
 }
