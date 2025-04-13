@@ -3,7 +3,7 @@ import { MISC_IMAGES } from '../common/images/misc-images'
 import { NgOptimizedImage } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
-import { ToLoaderParams } from '@/app/common/images/loader-params'
+import { ToLoaderParams } from '@/app/common/images/to-loader-params'
 
 @Component({
   selector: 'app-logo',

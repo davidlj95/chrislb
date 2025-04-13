@@ -8,7 +8,7 @@ import { provideDummyOptimizedImage } from '../../test/provide-dummy-optimized-i
 import { NgOptimizedImage } from '@angular/common'
 import { testbedSetup } from '../../test/testbed-setup'
 import { ToNgSrcSet } from '@/app/common/images/to-ng-src-set'
-import { ToLoaderParams } from '@/app/common/images/loader-params'
+import { ToLoaderParams } from '@/app/common/images/to-loader-params'
 
 describe('AboutPageComponent', () => {
   let component: AboutPageComponent
