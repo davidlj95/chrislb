@@ -9,15 +9,11 @@ swiper-container {
   overflow: hidden;
 }
 
-swiper-container,
-swiper-slide {
-  // 👇 So layout applies if no images in there
-  max-height: content.$available-height;
-}
-
 swiper-slide {
   // 👇 To size a slide. See HTML to see why needs to be sized.
   display: inline-block;
+  // 👇 So layout applies if no images in there
+  max-height: content.$available-height;
 }
 
 img {
