@@ -7,13 +7,16 @@ swiper-container {
   white-space: nowrap;
   // 👇 If scroll, weird blue box appears even after Swiper.js inits
   overflow: hidden;
+  // 👇 For portrait images.
+  //    Applying it here instead of image/slide so that:
+  //     - Can see layout when no images inside
+  //     - Slide doesn't overflow container height
+  max-height: calc(100vh - #{logo.$height});
 }
 
 swiper-slide {
   // 👇 To size a slide. See HTML to see why needs to be sized.
   display: inline-block;
-  // 👇 So layout applies if no images in there
-  max-height: calc(100vh - #{logo.$height});
 }
 
 img {

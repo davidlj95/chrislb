@@ -2,7 +2,11 @@ import { SourceSizeList, sourceSizeList } from './models/source-size-list'
 import { SourceSize, sourceSize } from './models/source-size'
 import { Px, Vw } from './models/css-length'
 import { maxWidth, minWidth } from './models/css-media-condition'
-import { BREAKPOINT_S_PX, BREAKPOINT_XS_PX } from '@/app/common/breakpoints'
+import {
+  BREAKPOINT_M_PX,
+  BREAKPOINT_S_PX,
+  BREAKPOINT_XS_PX,
+} from '@/app/common/breakpoints'
 import {
   PROJECT_LIST_ITEM_SLIDES_PER_VIEW,
   ProjectDetailAlbum,
@@ -47,9 +51,11 @@ export const logoSizesFromMaxWidth = (maxWidthPx: number) => {
 export const PROJECT_LIST_ITEM = (() => {
   const SLIDES_PER_VIEW = PROJECT_LIST_ITEM_SLIDES_PER_VIEW
   return sourceSizeList(
+    // 👇 TODO: to be accurate, this should be height -> 100vh
+    //          however, this needs a bit of work in this responsive images infra
     sourceSize(
       withoutHorizontalPagePadding(Vw(33.3), SLIDES_PER_VIEW),
-      minWidth(BREAKPOINT_S_PX),
+      minWidth(BREAKPOINT_M_PX),
     ),
     sourceSize(
       withoutHorizontalPagePadding(Vw(100 / SLIDES_PER_VIEW), SLIDES_PER_VIEW),

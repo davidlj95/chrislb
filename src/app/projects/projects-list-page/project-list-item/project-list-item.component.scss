@@ -17,25 +17,21 @@
   gap: margins.$l;
 }
 
-$texts-width-big-screen: 55ch;
-
+$texts-width-big-screen: 400px; // ~50ch
 .texts {
   display: flex;
   flex-direction: column;
-  max-width: 55ch;
 }
-
-//👇 Keep in sync with component responsive images
-$available-height: calc(100vh - #{logo.$height});
 
 app-images-swiper {
+  // 👇 Keep in sync with component responsive images
   // 👇 Seems Swiper.js needs size set to work fine
-  $page-padding-horizontal: page.$padding-horizontal;
-  width: calc(100vw - $texts-width-big-screen - $page-padding-horizontal * 2);
-  max-height: $available-height;
+  width: calc(
+    100vw - $texts-width-big-screen - #{(page.$padding-horizontal * 2)}
+  );
 }
 
-@include breakpoints.until(breakpoints.$s) {
+@include breakpoints.until(breakpoints.$m) {
   .text-and-images {
     flex-wrap: wrap;
     gap: margins.$m;
@@ -46,13 +42,10 @@ app-images-swiper {
     max-width: unset;
   }
 
+  // 👇 Keep in sync with component responsive images
   app-images-swiper {
     width: 100%;
-    min-height: 300px;
     order: 1;
-
-    $extra-space: 128px;
-    max-height: calc($available-height - $extra-space);
   }
 }
 

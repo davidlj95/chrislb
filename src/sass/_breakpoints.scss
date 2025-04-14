@@ -13,6 +13,7 @@
 
 $xs: 600px;
 $s: 960px;
+$m: 1280px;
 
 @mixin between($a, $b) {
   @media (min-width: $a) and (max-width: almost($b)) {
