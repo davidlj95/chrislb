@@ -6,11 +6,11 @@ import {
   PUBLIC_DIR,
 } from '@/app/common/directories'
 import { join } from 'path'
-import { cwd } from 'process'
 import { PROJECTS_PATH } from '@/app/common/routing/paths'
 import { SLUG_PARAM } from '@/app/common/routes-params'
 import { listJsonFilesInDirectory } from '@/app/common/json/json-file-utils'
 import { removeJsonExtension } from '@/app/common/json/json-extension-utils'
+import { REPO_ROOT_DIRECTORY } from '@/app/common/repo-root-directory'
 
 export const serverRoutes: ServerRoute[] = [
   {
@@ -29,6 +29,6 @@ const slugsInDirectory = async (
 ): Promise<Record<string, string>[]> =>
   (
     await listJsonFilesInDirectory(
-      join(cwd(), PUBLIC_DIR, CONTENTS_DIR, directory),
+      join(REPO_ROOT_DIRECTORY, PUBLIC_DIR, CONTENTS_DIR, directory),
     )
   ).map((dirent) => ({ slug: removeJsonExtension(dirent.name) }))
