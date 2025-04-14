@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { firstValueFrom } from 'rxjs'
 import { Inject, Injectable } from '@angular/core'
 import { APP_BASE_HREF } from '@angular/common'
+import { appendJsonExtensionIfNeeded } from '@/app/common/json/json-extension-utils'
 
 @Injectable({ providedIn: 'root' })
 export class HttpJsonFetcherService implements JsonFetcher {
@@ -15,9 +16,11 @@ export class HttpJsonFetcherService implements JsonFetcher {
   async fetch<T>(...pathSegments: string[]): Promise<T> {
     return firstValueFrom(
       this._httpClient.get<T>(
-        [this._baseHref, this._jsonDataDir, ...pathSegments]
-          .join('/')
-          .replace(/^\//, ''),
+        appendJsonExtensionIfNeeded(
+          [this._baseHref, this._jsonDataDir, ...pathSegments]
+            .join('/')
+            .replace(/^\//, ''),
+        ),
       ),
     )
   }
