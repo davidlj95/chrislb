@@ -7,14 +7,14 @@ import { ProjectDetailRouteData } from './project-detail-page/projects-routes-da
 import { RouteDataResolver } from '../common/routing/route-data-resolver'
 import { ProjectsService } from './projects.service'
 import { ProjectsListPageComponent } from './projects-list-page/projects-list-page.component'
-import { makeRouteMetadata } from '../common/routing/make-route-metadata'
 import projectsListPageMetadata from '@/data/cms/pages/projects-list.json'
+import { NgxMetaRouteData } from '@davidlj95/ngx-meta/routing'
 
 export const PROJECTS_LIST_ROUTES: Routes = [
   {
     path: '',
     component: ProjectsListPageComponent,
-    data: makeRouteMetadata(projectsListPageMetadata),
+    data: { meta: projectsListPageMetadata } satisfies NgxMetaRouteData,
     pathMatch: 'full',
   },
 ]
