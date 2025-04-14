@@ -13,11 +13,11 @@ import {
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
 import {
-  appendJsonExtension,
   listJsonFilesInDirectory,
   readJson,
   writeJson,
-} from './utils/json'
+} from '@/app/common/json/json-file-utils'
+import { appendJsonExtension } from '@/app/common/json/json-extension-utils'
 import {
   ALBUM_PRESETS_PATH,
   AUTHORS_PATH,

@@ -27,8 +27,8 @@ import {
   withInMemoryScrolling,
 } from '@angular/router'
 import { routes } from './app.routes'
-import { JsonFetcher } from './common/json-fetcher/json-fetcher'
-import { HttpJsonFetcherService } from './common/json-fetcher/http-json-fetcher.service'
+import { JsonFetcher } from '@/app/common/json/json-fetcher'
+import { HttpJsonFetcherService } from '@/app/common/json/http-json-fetcher.service'
 import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '@/data/cms/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'

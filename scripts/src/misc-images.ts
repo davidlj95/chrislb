@@ -1,7 +1,6 @@
 import { isMain } from './utils/is-main'
 import { Log } from './utils/log'
 import { MiscImages } from '@/app/common/images/misc-images'
-import { appendJsonExtension, writeJson } from './utils/json'
 import { GENERATED_DATA_PATH } from './utils/paths'
 import { join } from 'path'
 import { mkdir } from 'fs/promises'
@@ -11,6 +10,8 @@ import { toSignedResponsiveImage } from './images/responsive/to-signed-responsiv
 import { signResponsiveImage } from './images/responsive/sign-responsive-image'
 import { getHighDensityBreakpoints } from './images/responsive/breakpoints-from-sizes-and-dimensions'
 import { getLogoMaxWidthFromDimensions } from '@/app/logo/logo'
+import { writeJson } from '@/app/common/json/json-file-utils'
+import { appendJsonExtension } from '@/app/common/json/json-extension-utils'
 
 export const miscImages = async (): Promise<void> => {
   const imageCdnApi = await getImageCdnApi()

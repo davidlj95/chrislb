@@ -14,11 +14,8 @@ import {
 import { Breakpoints, Image } from '@/app/common/images/image'
 import { SCRIPTS_CACHE_PATH } from '../../../utils/paths'
 import { mkdir } from 'fs/promises'
-import {
-  appendJsonExtension,
-  readJson,
-  writeJsonSync,
-} from '../../../utils/json'
+import { readJson, writeJsonSync } from '@/app/common/json/json-file-utils'
+import { appendJsonExtension } from '@/app/common/json/json-extension-utils'
 import { join } from 'path'
 
 export class CloudinaryCdnApi implements ImageCdnApi {

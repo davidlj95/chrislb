@@ -6,5 +6,5 @@ export const JSON_DATA_DIR = new InjectionToken<string>('JSON data dir', {
 })
 
 export abstract class JsonFetcher {
-  abstract fetch<T>(...pathSegments: string[]): Promise<T>
+  abstract fetch<T extends object>(...pathSegments: string[]): Promise<T>
 }

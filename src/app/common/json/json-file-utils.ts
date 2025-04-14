@@ -1,7 +1,7 @@
-import { basename, join } from 'path'
 import { readdir, readFile, writeFile } from 'fs/promises'
-import { Log } from './log'
 import { writeFileSync } from 'fs'
+import { join } from 'path'
+import { JSON_EXTENSION } from './json-extension-utils'
 
 const CACHED_JSONS = new Map<string, object>()
 export const readJson = async <T extends object = object>(
@@ -17,7 +17,6 @@ export const readJson = async <T extends object = object>(
     json = JSON.parse(await readFile(path, 'utf-8'))
   } catch {
     if (opts.fallback) {
-      Log.info('File "%s" cannot be read. Using fallback value', path)
       return opts.fallback
     }
     throw new Error(`Unable to read file ${path}`)
@@ -47,11 +46,3 @@ export const listJsonFilesInDirectory = async (
     .filter((dirent) => dirent.isFile() && dirent.name.endsWith(JSON_EXTENSION))
     .map(({ name }) => join(path, name))
 }
-
-export const appendJsonExtension = (basename: string): string =>
-  `${basename}${JSON_EXTENSION}`
-
-export const removeJsonExtension = (filename: string): string =>
-  basename(filename, JSON_EXTENSION)
-
-export const JSON_EXTENSION = '.json'
