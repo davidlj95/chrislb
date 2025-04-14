@@ -60,11 +60,11 @@
       matchDepNames: ['@angular{/,}**'],
       allowedVersions: '^19',
     },
-    // Font Awesome & Angular v18
+    // Font Awesome & Angular v19
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
       matchDepNames: ['@fortawesome/angular-fontawesome'],
-      allowedVersions: '0.15.x',
+      allowedVersions: '1.x',
     },
     {
       matchDepNames: [
