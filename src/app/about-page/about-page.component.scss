@@ -31,12 +31,12 @@ article {
   gap: margins.$m;
   max-width: 35vw;
 
-  @include breakpoints.s {
-    max-width: 60vw;
+  @include breakpoints.until(breakpoints.$xs) {
+    max-width: 75vw;
   }
 
-  @include breakpoints.xs {
-    max-width: 75vw;
+  @include breakpoints.between(breakpoints.$xs, breakpoints.$s) {
+    max-width: 60vw;
   }
 }
 

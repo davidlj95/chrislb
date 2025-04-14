@@ -1,5 +1,5 @@
 @use 'breakpoints';
-@use 'content';
+@use 'logo';
 @use 'margins';
 @use 'paddings';
 @use 'page';
@@ -26,16 +26,16 @@ $texts-width-big-screen: 55ch;
 }
 
 //👇 Keep in sync with component responsive images
+$available-height: calc(100vh - #{logo.$height});
+
 app-images-swiper {
-  // 👇 Seems swiper needs size set to work fine
+  // 👇 Seems Swiper.js needs size set to work fine
   $page-padding-horizontal: page.$padding-horizontal;
   width: calc(100vw - $texts-width-big-screen - $page-padding-horizontal * 2);
-  $extra-space: 48px;
-  $available-height: content.$available-height;
-  max-height: calc($available-height);
+  max-height: $available-height;
 }
 
-@include breakpoints.until-s {
+@include breakpoints.until(breakpoints.$s) {
   .text-and-images {
     flex-wrap: wrap;
     gap: margins.$m;
@@ -52,7 +52,6 @@ app-images-swiper {
     order: 1;
 
     $extra-space: 128px;
-    $available-height: content.$available-height-with-header;
     max-height: calc($available-height - $extra-space);
   }
 }

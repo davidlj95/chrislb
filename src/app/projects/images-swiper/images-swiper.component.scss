@@ -1,5 +1,5 @@
+@use 'logo';
 @use 'theme';
-@use 'content';
 
 swiper-container {
   display: block;
@@ -13,7 +13,7 @@ swiper-slide {
   // 👇 To size a slide. See HTML to see why needs to be sized.
   display: inline-block;
   // 👇 So layout applies if no images in there
-  max-height: content.$available-height;
+  max-height: calc(100vh - #{logo.$height});
 }
 
 img {
