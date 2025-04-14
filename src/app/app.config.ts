@@ -9,6 +9,7 @@ import {
   provideNgxMetaCore,
   withNgxMetaBaseUrl,
   withNgxMetaDefaults,
+  withNgxMetaTitleFormatter,
 } from '@davidlj95/ngx-meta/core'
 import {
   OPEN_GRAPH_TYPE_WEBSITE,
@@ -61,6 +62,12 @@ export const appConfig: ApplicationConfig = {
         },
       } satisfies GlobalMetadata & StandardMetadata & OpenGraphMetadata),
       withNgxMetaBaseUrl(defaultMetadata.canonicalUrl),
+      withNgxMetaTitleFormatter((title) => {
+        if (!title?.trim()) {
+          return defaultMetadata.siteName
+        }
+        return `${title} | ${defaultMetadata.siteName}`
+      }),
     ),
     provideNgxMetaRouting(),
     provideNgxMetaStandard(),

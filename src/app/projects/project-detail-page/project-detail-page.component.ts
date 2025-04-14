@@ -3,7 +3,6 @@ import { map } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
 import { GlobalMetadata, NgxMetaService } from '@davidlj95/ngx-meta/core'
-import { getTitle } from '../../common/routing/get-title'
 import { SanitizeResourceUrlPipe } from '../sanitize-resource-url.pipe'
 import { ImagesSwiperComponent } from '../images-swiper/images-swiper.component'
 import { toSignal } from '@angular/core/rxjs-interop'
@@ -68,7 +67,7 @@ export class ProjectDetailPageComponent {
         return
       }
       ngxMetaService.set({
-        title: getTitle(projectDetail.title),
+        title: projectDetail.title,
         description: getDescription(projectDetail) ?? undefined,
       } satisfies GlobalMetadata)
     })
