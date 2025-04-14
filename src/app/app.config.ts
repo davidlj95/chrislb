@@ -27,8 +27,8 @@ import {
   withInMemoryScrolling,
 } from '@angular/router'
 import { routes } from './app.routes'
-import { JsonFetcher } from '@/app/common/json/fetcher/json-fetcher'
-import { HttpJsonFetcherService } from '@/app/common/json/fetcher/http-json-fetcher.service'
+import { provideJsonFetcher } from '@/app/common/json/fetcher/json-fetcher'
+import { HTTP_JSON_FETCHER } from '@/app/common/json/fetcher/http-json-fetcher'
 import { provideHttpClient } from '@angular/common/http'
 import defaultMetadata from '@/data/cms/misc/metadata.json'
 import { provideTrailingSlashUrlSerializer } from './common/provide-trailing-slash-url-serializer'
@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideTrailingSlashUrlSerializer(),
     provideResponsiveImageLoader(),
-    { provide: JsonFetcher, useClass: HttpJsonFetcherService },
+    provideJsonFetcher(HTTP_JSON_FETCHER),
     { provide: APP_BASE_HREF, useValue: '/' },
     provideNgxMetaCore(
       withNgxMetaDefaults({
