@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { MockProvider } from 'ng-mocks'
 import { APP_BASE_HREF } from '@angular/common'
 import { provideHttpClient } from '@angular/common/http'
-import { testbedSetup } from '../../../test/testbed-setup'
+import { testbedSetup } from '../../../../test/testbed-setup'
 
 describe('HttpJsonFetcherService', () => {
   let service: HttpJsonFetcherService

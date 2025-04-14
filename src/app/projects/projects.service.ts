@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { JsonFetcher } from '@/app/common/json/json-fetcher'
+import { JsonFetcher } from '@/app/common/json/fetcher/json-fetcher'
 import { PROJECTS_DIR } from '../common/directories'
 import { from, Observable } from 'rxjs'
 import { ProjectDetail, ProjectListItem } from './project'
