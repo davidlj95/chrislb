@@ -44,9 +44,9 @@ export const projectsContent = async () => {
 // Adds images, reads other assets to provide the frontend app just the info it will need
 // Both for list and for details. That will be split in a later step.
 const expandCmsProjects = async (): Promise<readonly ExpandedCmsProject[]> => {
-  const cmsProjectFiles = await listJsonFilesInDirectory(
-    join(CMS_DATA_PATH, PROJECTS_DIR),
-  )
+  const cmsProjectFiles = (
+    await listJsonFilesInDirectory(join(CMS_DATA_PATH, PROJECTS_DIR))
+  ).map((dirent) => join(dirent.parentPath, dirent.name))
   const imageCdnApi = await getImageCdnApi()
   return resolveSequentially(
     cmsProjectFiles.map(async (cmsProjectFile) =>

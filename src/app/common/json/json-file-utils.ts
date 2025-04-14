@@ -1,6 +1,5 @@
 import { readdir, readFile, writeFile } from 'fs/promises'
-import { writeFileSync } from 'fs'
-import { join } from 'path'
+import { Dirent, writeFileSync } from 'fs'
 import { JSON_EXTENSION } from './json-extension-utils'
 
 const CACHED_JSONS = new Map<string, object>()
@@ -37,12 +36,10 @@ const stringifyJson = (json: object): string => JSON.stringify(json, null, 2)
 
 export const listJsonFilesInDirectory = async (
   path: string,
-): Promise<readonly string[]> => {
+): Promise<readonly Dirent[]> => {
   return (
     await readdir(path, {
       withFileTypes: true,
     })
-  )
-    .filter((dirent) => dirent.isFile() && dirent.name.endsWith(JSON_EXTENSION))
-    .map(({ name }) => join(path, name))
+  ).filter((dirent) => dirent.isFile() && dirent.name.endsWith(JSON_EXTENSION))
 }

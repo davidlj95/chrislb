@@ -31,4 +31,4 @@ const slugsInDirectory = async (
     await listJsonFilesInDirectory(
       join(cwd(), PUBLIC_DIR, CONTENTS_DIR, directory),
     )
-  ).map((file) => ({ slug: removeJsonExtension(file) }))
+  ).map((dirent) => ({ slug: removeJsonExtension(dirent.name) }))
