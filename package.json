@@ -30,7 +30,6 @@
     "scripts:all": "tsx scripts/src/all.ts",
     "scripts:misc-images": "tsx scripts/src/misc-images.ts",
     "scripts:project-content": "tsx scripts/src/projects-content.ts",
-    "scripts:routes-file": "tsx scripts/src/routes-file.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator"
   },
   "dependencies": {

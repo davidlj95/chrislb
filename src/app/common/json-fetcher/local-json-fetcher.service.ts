@@ -3,6 +3,7 @@ import { JSON_DATA_DIR, JsonFetcher } from './json-fetcher'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import { cwd } from 'process'
+import { PUBLIC_DIR } from '@/app/common/directories'
 
 @Injectable({ providedIn: 'root' })
 export class LocalJsonFetcherService implements JsonFetcher {
@@ -14,7 +15,7 @@ export class LocalJsonFetcherService implements JsonFetcher {
     //   https://github.com/angular/angular-cli/blob/18.0.5/packages/angular/build/src/utils/server-rendering/esm-in-memory-loader/loader-hooks.ts#L40-L44
     const jsonFile = resolve(
       cwd(),
-      'public',
+      PUBLIC_DIR,
       this._jsonDataDir,
       ...pathSegments,
     )
