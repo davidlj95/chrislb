@@ -21,7 +21,7 @@ export class ProjectDetailPageResolver {
       this._navigatorService.displayNotFoundPage()
       return EMPTY
     }
-    return this._projectsService.getDetail(slug!).pipe(
+    return this._projectsService.getDetail(slug).pipe(
       tap({
         error: () => {
           this._navigatorService.displayNotFoundPage()
