@@ -1,5 +1,5 @@
 import { readdir, readFile, writeFile } from 'fs/promises'
-import { Dirent, readFileSync, writeFileSync } from 'fs'
+import { Dirent, writeFileSync } from 'fs'
 import { JSON_EXTENSION } from './json-extension-utils'
 
 const CACHED_JSONS = new Map<string, object>()
@@ -23,8 +23,6 @@ export const readJson = async <T extends object = object>(
   CACHED_JSONS.set(path, json)
   return json as T
 }
-export const readJsonSync = <T extends object>(path: string): T =>
-  CACHED_JSONS.get(path) ?? JSON.parse(readFileSync(path, 'utf-8'))
 
 export const writeJson = async (path: string, data: object): Promise<void> =>
   writeFile(path, stringifyJson(data))
