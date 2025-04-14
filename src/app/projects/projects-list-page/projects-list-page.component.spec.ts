@@ -5,6 +5,7 @@ import { MockComponents, MockProvider } from 'ng-mocks'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { ProjectsService } from '../projects.service'
 import { testbedSetup } from '../../../test/testbed-setup'
+import { of } from 'rxjs'
 
 describe('ProjectsListPageComponent', () => {
   let component: ProjectsListPageComponent
@@ -17,9 +18,7 @@ describe('ProjectsListPageComponent', () => {
         imports: [MockComponents(ProjectListItemComponent)],
         providers: [
           MockProvider(ProjectsService, {
-            async getListItems() {
-              return []
-            },
+            getListItems: () => of([]),
           }),
         ],
       },

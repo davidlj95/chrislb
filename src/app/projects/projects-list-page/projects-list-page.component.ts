@@ -2,7 +2,6 @@ import { Component, Signal } from '@angular/core'
 import { ProjectsService } from '../projects.service'
 import { ProjectListItemComponent } from './project-list-item/project-list-item.component'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { from } from 'rxjs'
 import { ProjectListItem } from '../project'
 
 @Component({
@@ -13,13 +12,10 @@ import { ProjectListItem } from '../project'
 })
 export class ProjectsListPageComponent {
   readonly projects: Signal<readonly ProjectListItem[]>
-  protected readonly _maxProjectsPerPage = 2
+  protected readonly _MAX_PROJECTS_PER_PAGE = 2
 
   constructor(projectsService: ProjectsService) {
-    this.projects = toSignal<
-      readonly ProjectListItem[],
-      readonly ProjectListItem[]
-    >(from(projectsService.getListItems()), {
+    this.projects = toSignal(projectsService.getListItems(), {
       initialValue: [],
     })
   }
