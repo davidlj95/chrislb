@@ -11,6 +11,8 @@ describe('ImagesSwiperComponent', () => {
     testbedSetup()
     fixture = TestBed.createComponent(ImagesSwiperComponent)
     fixture.componentRef.setInput('images', [])
+    fixture.componentRef.setInput('sizes', '')
+    fixture.componentRef.setInput('slidesPerView', 2)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
