@@ -1,17 +1,9 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-  ElementRef,
-  OnInit,
-  Type,
-} from '@angular/core'
+import { Component } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SwiperDirective } from './swiper.directive'
-import { By } from '@angular/platform-browser'
-import { SwiperContainer } from 'swiper/swiper-element'
+import { TestBed } from '@angular/core/testing'
+import { SWIPER_JS, SwiperDirective } from './swiper.directive'
 import { testbedSetup } from '../../../test/testbed-setup'
+import Swiper from 'swiper'
 
 describe('SwiperDirective', () => {
   const options: SwiperOptions = {
@@ -27,76 +19,74 @@ describe('SwiperDirective', () => {
     },
   }
 
-  it('should not call initializer method if does not exist', () => {
-    const component = makeComponentWithDirective({
+  it('should initialize Swiper.js on init', () => {
+    const constructorSpy = jasmine.createSpy()
+    const [fixture] = setupHostComponent({
       options,
-      initialize: undefined,
+      SwiperJs: makeSwiperJs({ constructorSpy }),
     })
-    const [fixture] = makeSut({ component })
     fixture.detectChanges()
 
-    expect(getSwiperElement(fixture).nativeElement).not.toEqual(
-      jasmine.objectContaining(options),
+    expect(constructorSpy).toHaveBeenCalledOnceWith(
+      fixture.debugElement.children[0].nativeElement,
+      options,
     )
   })
 
-  it('should call initializer method to set all swiper options', () => {
-    const initialize = jasmine
-      .createSpy<SwiperContainer['initialize']>('initializer')
-      .and.callThrough()
-    const component = makeComponentWithDirective({
+  it('should destroy Swiper.js on component destroy', () => {
+    const destroySpy = jasmine.createSpy()
+    const [fixture] = setupHostComponent({
       options,
-      initialize,
+      SwiperJs: makeSwiperJs({ destroySpy }),
     })
-    const [fixture] = makeSut({ component })
     fixture.detectChanges()
 
-    expect(initialize).toHaveBeenCalledOnceWith()
-    expect(getSwiperElement(fixture)?.nativeElement).toEqual(
-      jasmine.objectContaining(options),
-    )
+    expect(destroySpy).not.toHaveBeenCalled()
+
+    fixture.componentRef.destroy()
+
+    expect(destroySpy).toHaveBeenCalledOnceWith()
   })
 })
 
-const SWIPER_ELEMENT_TAG = 'swiper-container'
-
-function makeComponentWithDirective({
+function setupHostComponent({
   options,
-  initialize,
+  SwiperJs,
 }: {
-  options: SwiperOptions
-  initialize: (() => void) | undefined
-}): Type<unknown> {
+  options?: SwiperOptions
+  SwiperJs?: Partial<typeof Swiper>
+} = {}) {
+  testbedSetup({
+    providers: [SwiperJs ? { provide: SWIPER_JS, useValue: SwiperJs } : []],
+  })
+
   @Component({
-    template: `
-      <${SWIPER_ELEMENT_TAG} [appSwiper]="options"></${SWIPER_ELEMENT_TAG}>`,
+    template: ` <div [appSwiper]="options"></div>`,
     imports: [SwiperDirective],
   })
-  class SwiperComponent implements OnInit {
-    readonly options = options
-
-    constructor(private readonly _el: ElementRef) {}
-
-    ngOnInit() {
-      this._el.nativeElement.children[0].initialize = initialize
-    }
+  class HostComponent {
+    readonly options = options ?? {}
   }
 
-  return SwiperComponent
+  const fixture = TestBed.createComponent(HostComponent)
+  return [fixture, fixture.componentInstance] as const
 }
 
-function makeSut<T>({
-  component,
+const makeSwiperJs = ({
+  constructorSpy,
+  destroySpy,
 }: {
-  component: Type<T>
-}): [ComponentFixture<T>, T] {
-  testbedSetup({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  })
-  const fixture = TestBed.createComponent(component)
-  return [fixture, fixture.componentInstance]
-}
+  constructorSpy?: jasmine.Spy
+  destroySpy?: jasmine.Spy
+} = {}) => {
+  class swiperJs implements Pick<Swiper, 'destroy'> {
+    constructor(...args: unknown[]) {
+      ;(constructorSpy ?? jasmine.createSpy('Swiper.constructor'))(...args)
+    }
 
-function getSwiperElement(fixture: ComponentFixture<unknown>): DebugElement {
-  return fixture.debugElement.query(By.css(SWIPER_ELEMENT_TAG))
+    // noinspection JSUnusedGlobalSymbols
+    destroy = destroySpy ?? jasmine.createSpy('Swiper.destroy')
+  }
+
+  return swiperJs as unknown as typeof Swiper
 }

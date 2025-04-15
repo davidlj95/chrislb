@@ -2,7 +2,9 @@ import {
   Directive,
   effect,
   ElementRef,
+  inject,
   Inject,
+  InjectionToken,
   input,
   OnDestroy,
   PLATFORM_ID,
@@ -17,12 +19,12 @@ export class SwiperDirective implements OnDestroy {
   instance?: Swiper
 
   constructor(
+    @Inject(SWIPER_JS) swiperJs: typeof Swiper,
     elRef: ElementRef<HTMLElement>,
-    @Inject(PLATFORM_ID) platformId: object,
   ) {
     effect(() => {
-      if (!this.instance && isPlatformBrowser(platformId)) {
-        this.instance = new Swiper(elRef.nativeElement, this.options())
+      if (swiperJs && !this.instance) {
+        this.instance = new swiperJs(elRef.nativeElement, this.options())
       }
     })
   }
@@ -31,3 +33,8 @@ export class SwiperDirective implements OnDestroy {
     this.instance?.destroy()
   }
 }
+
+// @visibleForTesting
+export const SWIPER_JS = new InjectionToken<typeof Swiper | null>('Swiper.js', {
+  factory: () => (isPlatformBrowser(inject(PLATFORM_ID)) ? Swiper : null),
+})
