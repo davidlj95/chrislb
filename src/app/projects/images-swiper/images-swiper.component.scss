@@ -1,17 +1,21 @@
 @use 'logo';
 @use 'theme';
 
-swiper-container {
-  display: block;
-  // 👇 If Swiper.js isn't there it'd display as an horizontal list of slides
-  white-space: nowrap;
-  // 👇 If scroll, weird blue box appears even after Swiper.js inits
-  overflow: hidden;
+@forward 'swiper/scss';
+@forward 'swiper/scss/a11y';
+@forward 'swiper/scss/autoplay';
+@forward 'swiper/scss/keyboard';
+@forward 'swiper/scss/navigation';
+@forward 'swiper/scss/pagination';
+@forward 'swiper/scss/virtual';
+
+@at-root {
+  :root {
+    --swiper-theme-color: #{theme.$accent};
+  }
 }
 
-swiper-slide {
-  // 👇 To size a slide. See HTML to see why needs to be sized.
-  display: inline-block;
+.swiper-slide {
   // 👇 For portrait images.
   //    Applying it here instead of image so that layout can be seen
   //    when no images inside.
@@ -21,17 +25,4 @@ swiper-slide {
 img {
   object-fit: contain;
   max-height: 100%;
-}
-
-$balanced-luminance-color: theme.$accent;
-
-swiper-container::part(button-prev),
-swiper-container::part(button-next) {
-  position: absolute; // perf trick 2 avoid layout shifts
-  color: $balanced-luminance-color;
-}
-
-swiper-container::part(bullet-active),
-swiper-container::part(bullet) {
-  background-color: $balanced-luminance-color;
 }

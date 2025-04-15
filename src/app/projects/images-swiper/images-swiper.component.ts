@@ -1,9 +1,9 @@
 import {
   Component,
   computed,
-  CUSTOM_ELEMENTS_SCHEMA,
   inject,
   input,
+  ViewEncapsulation,
 } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
 import {
@@ -19,24 +19,20 @@ import { SwiperDirective } from './swiper.directive'
 import { IMAGE_LOADER, ImageLoader, ImageLoaderConfig } from '@angular/common'
 import { unsignedBreakpoints } from '@/app/common/images/to-ng-src-set'
 import { toLoaderParams } from '@/app/common/images/to-loader-params'
-import { SwiperAutoplayScrollDirective } from '@/app/projects/images-swiper/swiper-autoplay-scroll.directive'
+import { SwiperAutoplayScrollDirective } from './swiper-autoplay-scroll.directive'
 
 @Component({
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   imports: [SwiperDirective, SwiperAutoplayScrollDirective],
-  // Use swiper web components
-  // A better approach would be to declare those but there's no easy way
-  // https://stackoverflow.com/a/43012920/3263250
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ImagesSwiperComponent {
   readonly images = input.required<readonly ResponsiveImage[]>()
   readonly sizes = input.required<string>()
   readonly slidesPerView = input.required<number>()
   readonly priority = input(false)
-  readonly fixContainerAspectRatio = input(false)
   protected readonly _swiperOptions = computed<SwiperOptions>(() => ({
     ...DEFAULT_SWIPER_OPTIONS,
     slidesPerView: this.slidesPerView(),
@@ -87,9 +83,12 @@ const DEFAULT_SWIPER_OPTIONS = {
   },
   navigation: {
     enabled: true,
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
   },
   pagination: {
     enabled: true,
+    el: '.swiper-pagination',
     clickable: true,
     dynamicBullets: true,
   },
