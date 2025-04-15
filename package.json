@@ -29,7 +29,7 @@
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
     "scripts:all": "tsx scripts/src/all.ts",
     "scripts:misc-images": "tsx scripts/src/misc-images.ts",
-    "scripts:project-content": "tsx scripts/src/projects-content.ts",
+    "scripts:projects-content": "tsx scripts/src/projects-content.ts",
     "validate-renovate-config": "npx -p renovate renovate-config-validator"
   },
   "dependencies": {
