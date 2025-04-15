@@ -17,18 +17,17 @@
   gap: margins.$l;
 }
 
-$texts-width-big-screen: 400px; // ~50ch
 .texts {
   display: flex;
   flex-direction: column;
+  flex: 1 0 50ch;
 }
 
 app-images-swiper {
-  // 👇 Keep in sync with component responsive images
-  // 👇 Seems Swiper.js needs size set to work fine
-  width: calc(
-    100vw - $texts-width-big-screen - #{(page.$padding-horizontal * 2)}
-  );
+  // 👇 Needed for Swiper.js to properly calculate width in a flex container
+  //    https://github.com/nolimits4web/swiper/issues/2361#issuecomment-348208353
+  min-width: 0;
+  width: 100%;
 }
 
 @include breakpoints.until(breakpoints.$m) {
@@ -39,12 +38,11 @@ app-images-swiper {
 
   .texts {
     order: 2;
-    max-width: unset;
+    flex-shrink: 1;
   }
 
   // 👇 Keep in sync with component responsive images
   app-images-swiper {
-    width: 100%;
     order: 1;
   }
 }

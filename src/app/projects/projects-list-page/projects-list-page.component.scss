@@ -5,16 +5,6 @@
   @include page.padding;
 
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: margins.$l;
-}
-
-app-project-list-item {
-  flex: 1;
-
-  &.has-preview-images {
-    flex: unset;
-    max-width: 100%;
-  }
 }
