@@ -1,22 +1,21 @@
 <div class="swiper" [appSwiper]="_swiperOptions()" appSwiperAutoplayScroll>
   <div class="swiper-wrapper">
-    @for (image of _imageViewModels(); track image) {
+    @for (image of images(); track image) {
       <!-- 👇 Styles for base layout until Swiper.js initializes -->
       <div
         class="swiper-slide"
         [style.width.%]="100 / slidesPerView()"
         [style.aspect-ratio]="image.width / image.height"
       >
-        <!--suppress AngularNgOptimizedImage - Can't use due to auto `auto` sizes -->
         <img
-          [src]="image.src"
+          [ngSrc]="image.src"
           [width]="image.width"
           [height]="image.height"
           [alt]="image.alt"
-          [srcset]="image.srcset"
-          [sizes]="image.sizes"
-          [attr.loading]="image.loading"
-          [attr.fetchpriority]="image.fetchPriority"
+          [ngSrcset]="image.breakpoints | toNgSrcSet"
+          [sizes]="sizes()"
+          [priority]="priority() && $index < slidesPerView()"
+          [loaderParams]="image | toLoaderParams"
         />
       </div>
     }

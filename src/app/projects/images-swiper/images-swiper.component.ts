@@ -16,9 +16,20 @@ import {
 } from 'swiper/modules'
 import { ResponsiveImage } from '../../common/images/image'
 import { SwiperDirective } from './swiper.directive'
-import { IMAGE_LOADER, ImageLoader, ImageLoaderConfig } from '@angular/common'
-import { unsignedBreakpoints } from '@/app/common/images/to-ng-src-set'
-import { toLoaderParams } from '@/app/common/images/to-loader-params'
+import {
+  IMAGE_LOADER,
+  ImageLoader,
+  ImageLoaderConfig,
+  NgOptimizedImage,
+} from '@angular/common'
+import {
+  ToNgSrcSet,
+  unsignedBreakpoints,
+} from '@/app/common/images/to-ng-src-set'
+import {
+  ToLoaderParams,
+  toLoaderParams,
+} from '@/app/common/images/to-loader-params'
 import { SwiperAutoplayScrollDirective } from './swiper-autoplay-scroll.directive'
 
 @Component({
@@ -26,7 +37,13 @@ import { SwiperAutoplayScrollDirective } from './swiper-autoplay-scroll.directiv
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [SwiperDirective, SwiperAutoplayScrollDirective],
+  imports: [
+    SwiperDirective,
+    SwiperAutoplayScrollDirective,
+    NgOptimizedImage,
+    ToNgSrcSet,
+    ToLoaderParams,
+  ],
 })
 export class ImagesSwiperComponent {
   readonly images = input.required<readonly ResponsiveImage[]>()
