@@ -1,22 +1,20 @@
 import { describe, it } from 'node:test'
 import { SourceSizeList } from '../models/source-size-list'
-import {
-  breakpointsFromSizesAndDimensions,
-  MOBILE_RESOLUTION_WIDTHS,
-} from './breakpoints-from-sizes-and-dimensions'
+import { breakpointsFromSizesAndDimensions } from './breakpoints-from-sizes-and-dimensions'
 import { sourceSize } from '../models/source-size'
 import { Px, Vw } from '../models/css-length'
 import assert from 'node:assert'
 import * as SIZES_IMPORT from '../sizes'
 import { PROJECT_DETAIL_BY_PRESET_SIZE } from '../sizes'
 import { ImageDimensions } from '@/app/common/images/image'
+import { RESOLUTIONS } from './resolutions'
 
 describe('Breakpoints from sizes and dimensions', () => {
   const SAMPLE_IMAGE_DIMENSIONS: ImageDimensions = {
     width: 3240,
     height: 2160,
   }
-  const MIN_RES_WIDTH = Math.min(...MOBILE_RESOLUTION_WIDTHS)
+  const MIN_RES_WIDTH = Math.min(...RESOLUTIONS.map(({ width }) => width))
   const sut = breakpointsFromSizesAndDimensions
 
   it('should return high density breakpoints whilst respecting max width query', () => {

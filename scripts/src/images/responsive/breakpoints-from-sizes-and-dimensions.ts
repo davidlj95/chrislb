@@ -1,9 +1,12 @@
 import { SourceSizeList } from '../models/source-size-list'
 import { Breakpoints, ImageDimensions } from '@/app/common/images/image'
-import { SourceSize } from '../models/source-size'
-import { MAX_LIMIT, MIN_LIMIT } from '../models/css-media-condition'
-import { CSS_PX_UNIT, CSS_VW_UNIT, CssLength } from '../models/css-length'
-import { DEFAULT_RESOLUTIONS } from '@unpic/core/base'
+import { isHeightSourceSize, lengthToPx } from '../models/source-size'
+import {
+  MAX_MOBILE_RESOLUTION_WIDTH,
+  MAX_RESOLUTION_WIDTH,
+  RESOLUTIONS,
+  resolutionWidthMatchesMediaCondition,
+} from './resolutions'
 
 export const breakpointsFromSizesAndDimensions = (
   imageDimensions: ImageDimensions,
@@ -11,108 +14,85 @@ export const breakpointsFromSizesAndDimensions = (
 ): Breakpoints =>
   reduceBreakpoints(
     uniq(
-      sourceSizeList.sizes.reduce<BreakpointsAndResolutionWidths>(
-        (allBreakpointsAndWidths, size) => {
-          const { length, mediaCondition } = size
+      sourceSizeList.sizes.reduce<BreakpointsAndResolutions>(
+        (allBreakpointsAndResolutions, size) => {
           let removedItems = 0
-          return allBreakpointsAndWidths.resolutionWidths.reduce<BreakpointsAndResolutionWidths>(
-            (breakpointsAndWidths, resolutionWidth, index) => {
-              if (
-                applicableResolutionWidth(
-                  resolutionWidth,
-                  mediaCondition,
-                  imageDimensions.width,
-                )
-              ) {
-                const breakpoints = [
-                  ...breakpointsAndWidths.breakpoints,
-                  ...getHighDensityBreakpoints(
-                    lengthToPx(length, resolutionWidth),
-                    imageDimensions.width,
-                  ),
-                ]
-                const resolutionWidths = [
-                  ...breakpointsAndWidths.resolutionWidths,
-                ]
-                resolutionWidths.splice(index - removedItems, 1)
+          return allBreakpointsAndResolutions.resolutions.reduce<BreakpointsAndResolutions>(
+            (breakpointsAndResolutions, resolution, index) => {
+              if (isHeightSourceSize(size)) {
+                const heightSizePx = lengthToPx(size.length, resolution.height)
+                if (
+                  wouldUpscale({
+                    sizePx: heightSizePx,
+                    maxPx: resolution.height,
+                  })
+                ) {
+                  return breakpointsAndResolutions
+                }
+                const widthSizePx =
+                  (heightSizePx * imageDimensions.width) /
+                  imageDimensions.height
+                const resolutions = [...breakpointsAndResolutions.resolutions]
+                resolutions.splice(index - removedItems, 1)
                 removedItems += 1
                 return {
-                  breakpoints,
-                  resolutionWidths,
+                  breakpoints: [
+                    ...breakpointsAndResolutions.breakpoints,
+                    ...getHighDensityBreakpoints(
+                      widthSizePx,
+                      imageDimensions.width,
+                    ),
+                  ],
+                  resolutions,
                 }
               }
-              return breakpointsAndWidths
+
+              const widthSizePx = lengthToPx(size.length, resolution.width)
+              if (
+                !resolutionWidthMatchesMediaCondition(
+                  resolution.width,
+                  size.mediaCondition,
+                ) ||
+                wouldUpscale({
+                  sizePx: widthSizePx,
+                  maxPx: imageDimensions.width,
+                })
+              ) {
+                return breakpointsAndResolutions
+              }
+              const breakpoints = [
+                ...breakpointsAndResolutions.breakpoints,
+                ...getHighDensityBreakpoints(
+                  widthSizePx,
+                  imageDimensions.width,
+                ),
+              ]
+              const resolutions = [...breakpointsAndResolutions.resolutions]
+              resolutions.splice(index - removedItems, 1)
+              removedItems += 1
+              return {
+                breakpoints,
+                resolutions,
+              }
             },
-            allBreakpointsAndWidths,
+            allBreakpointsAndResolutions,
           )
         },
-        { breakpoints: [], resolutionWidths: [...RESOLUTION_WIDTHS] },
+        { breakpoints: [], resolutions: [...RESOLUTIONS] },
       ).breakpoints,
     ),
     estimateMaxPxBetweenBreakpoints(imageDimensions),
   )
 
-interface BreakpointsAndResolutionWidths {
-  readonly breakpoints: readonly number[]
-  readonly resolutionWidths: readonly number[]
+interface BreakpointsAndResolutions {
+  readonly breakpoints: Breakpoints
+  readonly resolutions: readonly ImageDimensions[]
 }
 
-const applicableResolutionWidth = (
-  resolutionWidth: number,
-  mediaCondition: SourceSize['mediaCondition'],
-  imageWidth: number,
-): boolean => {
-  if (resolutionWidth > imageWidth) return false
-  if (!mediaCondition) return true
-  switch (mediaCondition.limit) {
-    case MIN_LIMIT:
-      return resolutionWidth >= mediaCondition.length.quantity
-    case MAX_LIMIT:
-      return resolutionWidth <= mediaCondition.length.quantity
-  }
-}
-
-const lengthToPx = (
-  length: SourceSize['length'],
-  viewportWidth: number,
-): number =>
-  (Array.isArray(length) ? length : [length]).reduce<number>(
-    (accumulator, length) =>
-      accumulator + singleLengthToPx(length, viewportWidth),
-    0,
-  )
-
-const singleLengthToPx = (length: CssLength, viewportWidth: number): number => {
-  switch (length.unit) {
-    case CSS_PX_UNIT:
-      return length.quantity
-    case CSS_VW_UNIT:
-      return Math.ceil((viewportWidth * length.quantity) / 100)
-  }
-}
+const wouldUpscale = (args: { sizePx: number; maxPx: number }) =>
+  args.sizePx > args.maxPx
 
 const uniq = (array: readonly number[]): number[] => Array.from(new Set(array))
-
-const MAX_RESOLUTION_WIDTH = Math.max(...DEFAULT_RESOLUTIONS)
-//👇 For Lighthouse, as performs tests on a Moto G Power (412x823)
-// Indeed it's quite common web resolution:
-// https://gs.statcounter.com/screen-resolution-stats/mobile/worldwide
-//
-// Despite they are high density screens, so browsers will probably use
-// bigger images
-// Maybe if network allows only? So low density must be there too? 🤔
-// @visibleForTesting
-export const MOBILE_RESOLUTION_WIDTHS = [
-  // 414, // Too similar
-  412,
-  // 393, // Too similar
-  // 390, // Too similar
-  360,
-]
-const MAX_MOBILE_RESOLUTION_WIDTH = Math.max(...MOBILE_RESOLUTION_WIDTHS)
-const RESOLUTION_WIDTHS = Array.from(
-  new Set([...DEFAULT_RESOLUTIONS, ...MOBILE_RESOLUTION_WIDTHS]),
-).sort((a, b) => a - b)
 
 export const getHighDensityBreakpoints = (
   pxWidth: number,

@@ -1,6 +1,10 @@
 import { SourceSizeList, sourceSizeList } from './models/source-size-list'
-import { SourceSize, sourceSize } from './models/source-size'
-import { Px, Vw } from './models/css-length'
+import {
+  heightSourceSize,
+  sourceSize,
+  WidthSourceSize,
+} from './models/source-size'
+import { Px, Vh, Vw } from './models/css-length'
 import { maxWidth, minWidth } from './models/css-media-condition'
 import {
   BREAKPOINT_M_PX,
@@ -17,9 +21,9 @@ import { HORIZONTAL_PAGE_PADDING_PX } from '@/app/common/paddings'
 const horizontalPagePadding = (divider = 1) =>
   Px(HORIZONTAL_PAGE_PADDING_PX / divider)
 const withHorizontalPagePadding = (
-  length: SourceSize['length'],
+  length: WidthSourceSize['length'],
   divider = 1,
-): SourceSize['length'] => {
+): WidthSourceSize['length'] => {
   const padding = horizontalPagePadding(divider)
   return padding.quantity === 0
     ? length
@@ -28,9 +32,9 @@ const withHorizontalPagePadding = (
       : [length, padding]
 }
 const withoutHorizontalPagePadding = (
-  length: SourceSize['length'],
+  length: WidthSourceSize['length'],
   divider = 1,
-): SourceSize['length'] => withHorizontalPagePadding(length, divider * -1)
+): WidthSourceSize['length'] => withHorizontalPagePadding(length, divider * -1)
 
 export const ABOUT = sourceSizeList(
   sourceSize(withoutHorizontalPagePadding(Vw(35)), minWidth(BREAKPOINT_S_PX)),
@@ -51,15 +55,11 @@ export const logoSizesFromMaxWidth = (maxWidthPx: number) => {
 export const PROJECT_LIST_ITEM = (() => {
   const SLIDES_PER_VIEW = PROJECT_LIST_ITEM_SLIDES_PER_VIEW
   return sourceSizeList(
-    // 👇 TODO: to be accurate, this should be height -> 100vh
-    //          however, this needs a bit of work in this responsive images infra
-    sourceSize(
-      withoutHorizontalPagePadding(Vw(33.3), SLIDES_PER_VIEW),
-      minWidth(BREAKPOINT_M_PX),
-    ),
     sourceSize(
       withoutHorizontalPagePadding(Vw(100 / SLIDES_PER_VIEW), SLIDES_PER_VIEW),
+      maxWidth(BREAKPOINT_M_PX),
     ),
+    heightSourceSize(Vh(100)),
   )
 })()
 

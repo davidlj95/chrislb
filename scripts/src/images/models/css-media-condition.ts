@@ -17,12 +17,15 @@ export const MAX_LIMIT = 'max'
 type Limit = typeof MIN_LIMIT | typeof MAX_LIMIT
 
 const WIDTH_DIMENSION = 'width'
-type Dimension = typeof WIDTH_DIMENSION
+const HEIGHT_DIMENSION = 'height'
+type Dimension = typeof WIDTH_DIMENSION | typeof HEIGHT_DIMENSION
 
 export const minWidth = (px: number) =>
   new CssPxLimitMediaCondition(MIN_LIMIT, WIDTH_DIMENSION, Px(px))
 export const maxWidth = (px: number) =>
   new CssPxLimitMediaCondition(MAX_LIMIT, WIDTH_DIMENSION, Px(px))
+export const maxHeight = (px: number) =>
+  new CssPxLimitMediaCondition(MAX_LIMIT, HEIGHT_DIMENSION, Px(px))
 
 export const invertMediaConditionMinMax = (
   mediaCondition: CssPxLimitMediaCondition,

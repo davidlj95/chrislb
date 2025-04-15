@@ -12,16 +12,20 @@ export class CssLength<U extends CssUnit = CssUnit> {
   }
 }
 
-export type CssUnit = typeof CSS_PX_UNIT | typeof CSS_VW_UNIT
+export type CssUnit =
+  | typeof CSS_PX_UNIT
+  | typeof CSS_VW_UNIT
+  | typeof CSS_VH_UNIT
 export const CSS_PX_UNIT = 'px'
 export const CSS_VW_UNIT = 'vw'
+export const CSS_VH_UNIT = 'vh'
+
+export type HorizontalCssUnit = typeof CSS_VW_UNIT | typeof CSS_PX_UNIT
+export type HorizontalCssLength = CssLength<HorizontalCssUnit>
+
+export type VerticalCssUnit = typeof CSS_VH_UNIT | typeof CSS_PX_UNIT
+export type VerticalCssLength = CssLength<VerticalCssUnit>
 
 export const Px = (quantity: number) => new CssLength(quantity, CSS_PX_UNIT)
-export const Vw = (quantity: number) => {
-  if (quantity < 0 || quantity > 100) {
-    throw new Error(
-      `Invalid ${quantity} ${CSS_VW_UNIT} quantity: must be > 0 and <= 100`,
-    )
-  }
-  return new CssLength(quantity, CSS_VW_UNIT)
-}
+export const Vw = (quantity: number) => new CssLength(quantity, CSS_VW_UNIT)
+export const Vh = (quantity: number) => new CssLength(quantity, CSS_VH_UNIT)
