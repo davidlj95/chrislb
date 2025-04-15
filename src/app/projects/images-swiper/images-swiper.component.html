@@ -1,17 +1,9 @@
-@if (images().length) {
-  <!-- 👇 Avoid layout shift https://github.com/davidlj95/chrislb/pull/643 -->
-  <!--    Applying it to slide would be enough if Swiper.js didn't rewrite their HTML -->
-  @let firstImage = images()[0];
-  @let aspectRatio = (firstImage.width * slidesPerView()) / firstImage.height;
-  <swiper-container
-    [appSwiper]="_swiperOptions()"
-    appSwiperAutoplayScroll
-    init="false"
-    [style.aspect-ratio]="fixContainerAspectRatio() ? aspectRatio : undefined"
-  >
+<div class="swiper" [appSwiper]="_swiperOptions()" appSwiperAutoplayScroll>
+  <div class="swiper-wrapper">
     @for (image of _imageViewModels(); track image) {
-      <!-- 👇 Base layout until Swiper.js initializes -->
-      <swiper-slide
+      <!-- 👇 Styles for base layout until Swiper.js initializes -->
+      <div
+        class="swiper-slide"
         [style.width.%]="100 / slidesPerView()"
         [style.aspect-ratio]="image.width / image.height"
       >
@@ -26,7 +18,10 @@
           [attr.loading]="image.loading"
           [attr.fetchpriority]="image.fetchPriority"
         />
-      </swiper-slide>
+      </div>
     }
-  </swiper-container>
-}
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>

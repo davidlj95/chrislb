@@ -1,27 +1,33 @@
 import {
-  register as registerSwiper,
-  type SwiperContainer,
-} from 'swiper/element'
-import { Directive, effect, ElementRef, input } from '@angular/core'
+  Directive,
+  effect,
+  ElementRef,
+  Inject,
+  input,
+  OnDestroy,
+  PLATFORM_ID,
+} from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
-
-// There's no fancier way to install Web Components in Angular :P
-// https://stackoverflow.com/a/75353889/3263250
-registerSwiper()
+import Swiper from 'swiper'
+import { isPlatformBrowser } from '@angular/common'
 
 @Directive({ selector: '[appSwiper]' })
-export class SwiperDirective {
+export class SwiperDirective implements OnDestroy {
   readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
+  instance?: Swiper
 
-  constructor(elRef: ElementRef<Element & Partial<SwiperContainer>>) {
+  constructor(
+    elRef: ElementRef<HTMLElement>,
+    @Inject(PLATFORM_ID) platformId: object,
+  ) {
     effect(() => {
-      const element = elRef.nativeElement
-      const initializer = element.initialize
-      if (initializer) {
-        Object.assign(element, this.options())
-        //👇 If app wasn't zone-less, would use NgZone.runOutsideAngular
-        initializer.bind(element)()
+      if (!this.instance && isPlatformBrowser(platformId)) {
+        this.instance = new Swiper(elRef.nativeElement, this.options())
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.instance?.destroy()
   }
 }
