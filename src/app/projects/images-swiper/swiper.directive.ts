@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Directive,
   ElementRef,
   inject,
@@ -6,7 +7,6 @@ import {
   InjectionToken,
   input,
   OnDestroy,
-  OnInit,
   PLATFORM_ID,
 } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
@@ -14,7 +14,7 @@ import Swiper from 'swiper'
 import { isPlatformBrowser } from '@angular/common'
 
 @Directive({ selector: '[appSwiper]' })
-export class SwiperDirective implements OnInit, OnDestroy {
+export class SwiperDirective implements AfterViewInit, OnDestroy {
   readonly options = input.required<SwiperOptions>({ alias: 'appSwiper' })
   instance?: Swiper
 
@@ -23,7 +23,7 @@ export class SwiperDirective implements OnInit, OnDestroy {
     private readonly _elRef: ElementRef<HTMLElement>,
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (this._swiperJs && !this.instance) {
       this.instance = new this._swiperJs(
         this._elRef.nativeElement,
