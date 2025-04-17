@@ -22,7 +22,6 @@
     "format:check:all": "pnpm run format:check -- .",
     "format": "prettier --ignore-unknown --write",
     "format:all": "pnpm run format -- .",
-    "lint-staged": "lint-staged",
     "git-hooks": "husky",
     "cms-server": "npx decap-server",
     "analyze-main-bundle": "ng build --source-map && npx source-map-explorer dist/chrislb/browser/main.*.js",
