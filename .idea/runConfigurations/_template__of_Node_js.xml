@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="NodeJSConfigurationType" node-parameters="--env-file .env.sample --env-file .env" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

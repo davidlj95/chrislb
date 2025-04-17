@@ -4,7 +4,6 @@ import {
   UNPUBLISHED_TAG,
 } from '../image-cdn-api'
 import { ConfigOptions, v2 as cloudinary } from 'cloudinary'
-import dotenv from 'dotenv'
 import { Log } from '../../../utils/log'
 import {
   CLOUD_NAME,
@@ -23,9 +22,6 @@ export class CloudinaryCdnApi implements ImageCdnApi {
 
   static async getInstance(): Promise<CloudinaryCdnApi> {
     if (!this._sdkOptions) {
-      // Read from env
-      dotenv.config()
-
       const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env
       if (!CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
         Log.error('Either Cloudinary API key or API secret is missing')

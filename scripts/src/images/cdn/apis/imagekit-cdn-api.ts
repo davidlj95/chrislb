@@ -1,6 +1,5 @@
 import ImagekitSdk from 'imagekit'
 import ImageKit from 'imagekit'
-import dotenv from 'dotenv'
 import { Log } from '../../../utils/log'
 import {
   FileObject,
@@ -25,14 +24,10 @@ export class ImagekitCdnApi implements ImageCdnApi {
   }
 
   static getInstance(): ImagekitCdnApi {
-    dotenv.config()
-
     const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY } = process.env
     if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY) {
       Log.error('Either ImageKit public key or private key is missing')
-      Log.item(
-        'Add them as environment variables or to a .env file and try again',
-      )
+      Log.item('Add them as environment variables and try again')
       process.exit(1)
     }
 
