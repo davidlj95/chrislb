@@ -80,7 +80,7 @@
     "karma-coverage": "2.2.1",
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
-    "lint-staged": "15.5.0",
+    "lint-staged": "15.5.1",
     "ng-mocks": "14.13.4",
     "prettier": "3.5.3",
     "tsx": "4.19.3",
