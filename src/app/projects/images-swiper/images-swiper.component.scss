@@ -1,17 +1,26 @@
 @use 'logo';
 @use 'theme';
+@use 'sass:meta';
 
-@forward 'swiper/scss';
-@forward 'swiper/scss/a11y';
-@forward 'swiper/scss/autoplay';
-@forward 'swiper/scss/keyboard';
-@forward 'swiper/scss/navigation';
-@forward 'swiper/scss/pagination';
-@forward 'swiper/scss/virtual';
+:host {
+  ::ng-deep {
+    @include meta.load-css('swiper/scss');
+    @include meta.load-css('swiper/scss/a11y');
+    @include meta.load-css('swiper/scss/autoplay');
+    @include meta.load-css('swiper/scss/keyboard');
+    @include meta.load-css('swiper/scss/navigation');
+    @include meta.load-css('swiper/scss/pagination');
+    @include meta.load-css('swiper/scss/virtual');
+  }
 
-@at-root {
-  :root {
+  & {
+    //👇 Given imported Swiper.js styles are nested within `:host`,
+    //   @at-root + `:root` blocks output `[_nghost-...] :root` CSS. Example:
+    //   https://github.com/nolimits4web/swiper/blob/v11.2.6/src/modules/navigation/navigation.scss#L2-L4
+    //   Therefore they do not apply. So writing them manually here.
+    //   Theme color is actually needed anyway to overwrite default one.
     --swiper-theme-color: #{theme.$accent};
+    --swiper-navigation-size: 44px;
   }
 }
 

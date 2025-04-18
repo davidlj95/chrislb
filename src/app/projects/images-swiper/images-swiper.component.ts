@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  ViewEncapsulation,
-} from '@angular/core'
+import { Component, computed, inject, input } from '@angular/core'
 import { SwiperOptions } from 'swiper/types'
 import {
   A11y,
@@ -25,7 +19,6 @@ import { SwiperAutoplayScrollDirective } from './swiper-autoplay-scroll.directiv
   selector: 'app-images-swiper',
   templateUrl: './images-swiper.component.html',
   styleUrls: ['./images-swiper.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   imports: [SwiperDirective, SwiperAutoplayScrollDirective],
 })
 export class ImagesSwiperComponent {
