@@ -6,7 +6,6 @@
     'config:js-app',
     'github>davidlj95/renovate-config:angular/v19-lts',
     'github>davidlj95/renovate-config:personal/config',
-    'github>davidlj95/renovate-config:group/all',
   ],
   packageRules: [
     // Keep in Angular v19 til manually upgrading
