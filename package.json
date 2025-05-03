@@ -50,7 +50,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@unpic/core": "1.0.1",
     "compression": "1.8.0",
-    "express": "4.21.2",
+    "express": "5.1.0",
     "gardevoir": "1.0.0",
     "rxjs": "7.8.2",
     "swiper": "11.2.6",
