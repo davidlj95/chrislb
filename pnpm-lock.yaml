@@ -63,8 +63,8 @@ importers:
         specifier: 1.8.0
         version: 1.8.0
       express:
-        specifier: 4.21.2
-        version: 4.21.2
+        specifier: 5.1.0
+        version: 5.1.0
       gardevoir:
         specifier: 1.0.0
         version: 1.0.0
