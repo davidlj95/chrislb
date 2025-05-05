@@ -82,7 +82,7 @@
     "ng-mocks": "14.13.4",
     "prettier": "3.5.3",
     "tsx": "4.19.4",
-    "typescript": "5.5.4",
+    "typescript": "5.8.3",
     "typescript-eslint": "8.31.1"
   }
 }
