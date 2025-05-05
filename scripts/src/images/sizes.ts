@@ -23,10 +23,13 @@ const withHorizontalPagePadding = (
   const padding = horizontalPagePadding(divider)
   return padding.quantity === 0
     ? length
-    : Array.isArray(length)
+    : (Array.isArray as isArray)(length)
       ? [...length, padding]
       : [length, padding]
 }
+
+type isArray = <T>(x: T | T[] | readonly T[]) => x is T[] | readonly T[]
+
 const withoutHorizontalPagePadding = (
   length: SourceSize['length'],
   divider = 1,
