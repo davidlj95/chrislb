@@ -109,8 +109,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(chokidar@4.0.3)(eslint@9.26.0(jiti@1.21.7))(typescript-eslint@8.31.1(eslint@9.26.0(jiti@1.21.7))(typescript@5.8.3))(typescript@5.8.3)
       cloudinary:
-        specifier: 2.6.0
-        version: 2.6.0
+        specifier: 2.6.1
+        version: 2.6.1
       eslint:
         specifier: 9.26.0
         version: 9.26.0(jiti@1.21.7)
@@ -2664,8 +2664,8 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
-  cloudinary@2.6.0:
-    resolution: {integrity: sha512-FIlny9RR5LPgkMioG4V7yUpC6ASyIFQMWfx4TgOi/xBeLxJTegbyQc3itiXL0b0lDlSaL0KyT2THEw6osrKqpQ==}
+  cloudinary@2.6.1:
+    resolution: {integrity: sha512-Dt7o3p4VzxYoTi+EqWkVQmGy6WiXIyMcG5Gbr9kPR/EQ+jZa+3FFzlDKfDx1uDsaB1aTR1gYeO6wZqrgLFaByQ==}
     engines: {node: '>=9'}
 
   color-convert@1.9.3:
@@ -8493,7 +8493,7 @@ snapshots:
 
   clone@1.0.4: {}
 
-  cloudinary@2.6.0:
+  cloudinary@2.6.1:
     dependencies:
       lodash: 4.17.21
       q: 1.5.1
