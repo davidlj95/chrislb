@@ -65,7 +65,7 @@
     "@types/compression": "1.7.5",
     "@types/express": "5.0.2",
     "@types/jasmine": "5.1.8",
-    "@types/node": "22.15.3",
+    "@types/node": "22.15.29",
     "angular-eslint": "19.3.0",
     "cloudinary": "2.6.1",
     "eslint": "9.26.0",
