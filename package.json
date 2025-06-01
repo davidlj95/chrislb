@@ -1,7 +1,7 @@
 {
   "name": "chrislb",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.11.0",
   "type": "module",
   "private": true,
   "scripts": {
