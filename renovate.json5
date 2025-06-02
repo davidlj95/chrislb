@@ -8,10 +8,9 @@
     'github>davidlj95/renovate-config:personal/config',
   ],
   packageRules: [
-    // Keep in Angular v19 til manually upgrading
+    // Manual upgrade for Angular majors
     {
-      // 👇 Includes devkit & eslint
-      matchDepNames: ['@angular{/,}**'],
+      matchDepNames: ['@angular**', 'angular-eslint'],
       allowedVersions: '^19',
     },
     // Font Awesome & Angular v19
