@@ -4,7 +4,9 @@ module.exports = {
       target: 'temporary-public-storage',
     },
     collect: {
-      numberOfRuns: 3,
+      // Temporarily disable until an issue gets resolved
+      // https://github.com/GoogleChrome/lighthouse/issues/16513
+      numberOfRuns: 0,
       staticDistDir: process.env.CI ? '.' : 'dist/chrislb/browser',
       url: [
         'http://localhost/',
