@@ -63,7 +63,7 @@
     "@eslint/compat": "1.2.9",
     "@lhci/cli": "0.14.0",
     "@types/compression": "1.8.1",
-    "@types/express": "5.0.2",
+    "@types/express": "5.0.3",
     "@types/jasmine": "5.1.8",
     "@types/node": "22.15.30",
     "angular-eslint": "19.6.0",
