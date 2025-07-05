@@ -67,7 +67,7 @@
     "@types/jasmine": "5.1.8",
     "@types/node": "22.15.30",
     "angular-eslint": "19.8.1",
-    "cloudinary": "2.6.1",
+    "cloudinary": "2.7.0",
     "eslint": "9.28.0",
     "eslint-config-prettier": "10.1.5",
     "husky": "9.1.7",
