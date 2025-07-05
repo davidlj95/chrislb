@@ -42,7 +42,7 @@
     "@angular/platform-server": "19.2.14",
     "@angular/router": "19.2.14",
     "@angular/ssr": "19.2.15",
-    "@davidlj95/ngx-meta": "19.0.0",
+    "@davidlj95/ngx-meta": "20.0.0",
     "@fontsource/fira-sans": "5.2.6",
     "@fortawesome/angular-fontawesome": "1.0.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
