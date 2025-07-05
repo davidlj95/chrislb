@@ -61,7 +61,7 @@
     "@angular/cli": "19.2.15",
     "@angular/compiler-cli": "19.2.14",
     "@eslint/compat": "1.2.9",
-    "@lhci/cli": "0.14.0",
+    "@lhci/cli": "0.15.1",
     "@types/compression": "1.8.1",
     "@types/express": "5.0.3",
     "@types/jasmine": "5.1.8",
