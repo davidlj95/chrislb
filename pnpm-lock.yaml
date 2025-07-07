@@ -112,7 +112,7 @@ importers:
         specifier: 2.7.0
         version: 2.7.0
       eslint:
-        specifier: ^9.28.0
+        specifier: 9.30.1
         version: 9.30.1(jiti@1.21.7)
       eslint-config-prettier:
         specifier: 10.1.5
@@ -157,7 +157,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       typescript-eslint:
-        specifier: ^8.33.1
+        specifier: 8.35.1
         version: 8.35.1(eslint@9.30.1(jiti@1.21.7))(typescript@5.8.3)
 
 packages:
