@@ -5,14 +5,10 @@
     'config:best-practices',
     'config:js-app',
     'github>davidlj95/renovate-config:angular/v19-lts',
+    'github>davidlj95/renovate-config:angular/no-major-updates',
     'github>davidlj95/renovate-config:personal/config',
   ],
   packageRules: [
-    // Manual upgrade for Angular majors
-    {
-      matchDepNames: ['@angular**', 'angular-eslint'],
-      allowedVersions: '^19',
-    },
     // Font Awesome & Angular v19
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
