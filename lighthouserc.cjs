@@ -28,6 +28,8 @@ module.exports = {
             'cls-culprits-insight': ['warn', {}],
             // Seems not taking into account sizes :/
             'image-delivery-insight': ['warn', {}],
+            // Appeared in Angular v20 update, in projects page. Warning to move on.
+            'forced-reflow-insight': ['warn', {}],
           },
         },
       ],
