@@ -12,10 +12,11 @@ export const LOCAL_JSON_FETCHER = new InjectionToken<JsonFetcher>(
   {
     factory: () => {
       const pendingTasks = inject(PendingTasks)
-      return <T extends object>(...pathSegments: readonly string[]) =>
-        from(
-          pendingTasks.run(() =>
-            readJson<T>(
+      return <T extends object>(...pathSegments: readonly string[]) => {
+        const taskCleanup = pendingTasks.add()
+        return from(
+          (async () => {
+            const results = await readJson<T>(
               appendJsonExtensionIfNeeded(
                 join(
                   REPO_ROOT_DIRECTORY,
@@ -24,9 +25,12 @@ export const LOCAL_JSON_FETCHER = new InjectionToken<JsonFetcher>(
                   ...pathSegments,
                 ),
               ),
-            ),
-          ),
+            )
+            taskCleanup()
+            return results
+          })(),
         )
+      }
     },
   },
 )

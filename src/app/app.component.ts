@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core'
+import { Component, inject, OnInit, PLATFORM_ID, DOCUMENT } from '@angular/core'
 import { ENTER_LEAVE_FADE_IN_OUT_ANIMATIONS } from './common/animations'
 import { RouterOutlet } from '@angular/router'
 import { LogoComponent } from './logo/logo.component'
 import { HeaderComponent } from './header/header.component'
-import { DOCUMENT, isPlatformServer } from '@angular/common'
+import { isPlatformServer } from '@angular/common'
 import { BASE_URL as IMAGE_CDN_BASE_URL } from '../app/common/images/cdn'
 
 @Component({

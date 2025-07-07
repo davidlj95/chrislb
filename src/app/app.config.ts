@@ -1,6 +1,6 @@
 import {
   ApplicationConfig,
-  provideExperimentalZonelessChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core'
 import { APP_BASE_HREF } from '@angular/common'
 import {
@@ -74,6 +74,6 @@ export const appConfig: ApplicationConfig = {
     provideNgxMetaOpenGraph(),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
   ],
 }
