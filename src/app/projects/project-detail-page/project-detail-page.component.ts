@@ -1,4 +1,4 @@
-import { Component, computed, effect, Inject, PLATFORM_ID } from '@angular/core'
+import { Component, computed, effect, PLATFORM_ID, inject } from '@angular/core'
 import { map } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 import { ProjectDetailRouteData } from './projects-routes-data'
@@ -19,6 +19,9 @@ import { isPlatformBrowser } from '@angular/common'
   imports: [ImagesSwiperComponent, SanitizeResourceUrlPipe],
 })
 export class ProjectDetailPageComponent {
+  private readonly _activatedRoute = inject(ActivatedRoute)
+  private readonly _platformObject = inject(PLATFORM_ID)
+
   private readonly _projectDetail = toSignal(
     this._activatedRoute.data.pipe(
       map((data) => (data as ProjectDetailRouteData).projectDetail),
@@ -56,11 +59,9 @@ export class ProjectDetailPageComponent {
   })
   protected readonly _maxSwipersPerViewport = 2
 
-  constructor(
-    private readonly _activatedRoute: ActivatedRoute,
-    @Inject(PLATFORM_ID) private readonly _platformObject: object,
-    ngxMetaService: NgxMetaService,
-  ) {
+  constructor() {
+    const ngxMetaService = inject(NgxMetaService)
+
     effect(() => {
       const projectDetail = this._projectDetail()
       if (!projectDetail) {

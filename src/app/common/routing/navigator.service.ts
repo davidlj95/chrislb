@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { noop } from 'rxjs'
 import { NOT_FOUND_PATH } from './paths'
@@ -7,7 +7,7 @@ import { NOT_FOUND_PATH } from './paths'
   providedIn: 'root',
 })
 export class NavigatorService {
-  constructor(private readonly _router: Router) {}
+  private readonly _router = inject(Router)
 
   displayNotFoundPage() {
     this._router

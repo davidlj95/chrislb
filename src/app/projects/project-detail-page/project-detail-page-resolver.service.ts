@@ -3,15 +3,13 @@ import { EMPTY, tap } from 'rxjs'
 import { ProjectDetail } from '../project'
 import { ProjectsService } from '../projects.service'
 import { NavigatorService } from '../../common/routing/navigator.service'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { SLUG_PARAM } from '@/app/common/routes-params'
 
 @Injectable()
 export class ProjectDetailPageResolver {
-  constructor(
-    private readonly _projectsService: ProjectsService,
-    private readonly _navigatorService: NavigatorService,
-  ) {}
+  private readonly _projectsService = inject(ProjectsService)
+  private readonly _navigatorService = inject(NavigatorService)
 
   projectDetail(
     route: ActivatedRouteSnapshot,
