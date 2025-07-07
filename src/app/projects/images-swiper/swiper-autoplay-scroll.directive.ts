@@ -7,7 +7,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core'
-import { SwiperContainer } from 'swiper/swiper-element'
+import { SwiperContainer } from 'swiper/element'
 import { LOGO_HEIGHT_PX } from '@/app/logo/logo'
 import { isPlatformBrowser } from '@angular/common'
 
