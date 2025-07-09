@@ -4,16 +4,16 @@
   extends: [
     'config:best-practices',
     'config:js-app',
-    'github>davidlj95/renovate-config:angular/v19-lts',
+    'github>davidlj95/renovate-config:angular/v20-lts',
     'github>davidlj95/renovate-config:angular/no-major-updates',
     'github>davidlj95/renovate-config:personal/config',
   ],
   packageRules: [
-    // Font Awesome & Angular v19
+    // Font Awesome & Angular v20
     // https://github.com/FortAwesome/angular-fontawesome#compatibility-table
     {
       matchDepNames: ['@fortawesome/angular-fontawesome'],
-      allowedVersions: '1.x',
+      allowedVersions: '2.x',
     },
     {
       matchDepNames: [
