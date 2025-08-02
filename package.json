@@ -48,7 +48,7 @@
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
-    "@unpic/core": "1.0.1",
+    "@unpic/core": "1.0.2",
     "compression": "1.8.0",
     "express": "5.1.0",
     "gardevoir": "1.0.0",
