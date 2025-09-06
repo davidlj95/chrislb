@@ -80,7 +80,7 @@ importers:
     devDependencies:
       '@angular/build':
         specifier: 20.1.4
-        version: 20.1.4(841b02da93ff90b2c5eb507cd51fc3ce)
+        version: 20.1.4(8b7eb07e8df57f5620342b9ca5160c68)
       '@angular/cli':
         specifier: 20.1.4
         version: 20.1.4(@types/node@22.17.0)(chokidar@4.0.3)
@@ -142,8 +142,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0(jasmine-core@5.9.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
       lint-staged:
-        specifier: 16.1.4
-        version: 16.1.4
+        specifier: 16.1.6
+        version: 16.1.6
       ng-mocks:
         specifier: 14.13.5
         version: 14.13.5(57f9701161168d9f49ea8e237ce3251b)
@@ -2005,6 +2005,10 @@ packages:
     resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
+  chalk@5.6.0:
+    resolution: {integrity: sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
 
@@ -3084,8 +3088,8 @@ packages:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
 
-  lint-staged@16.1.4:
-    resolution: {integrity: sha512-xy7rnzQrhTVGKMpv6+bmIA3C0yET31x8OhKBYfvGo0/byeZ6E0BjGARrir3Kg/RhhYHutpsi01+2J5IpfVoueA==}
+  lint-staged@16.1.6:
+    resolution: {integrity: sha512-U4kuulU3CKIytlkLlaHcGgKscNfJPNTiDF2avIUGFCv7K95/DCYQ7Ra62ydeRWmgQGg9zJYw2dzdbztwJlqrow==}
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -3093,8 +3097,8 @@ packages:
     resolution: {integrity: sha512-LWzX2KsqcB1wqQ4AHgYb4RsDXauQiqhjLk+6hjbaeHG4zpjjVAB6wC/gz6X0l+Du1cN3pUB5ZlrvTbhGSNnUQQ==}
     engines: {node: '>=18.0.0'}
 
-  listr2@9.0.1:
-    resolution: {integrity: sha512-SL0JY3DaxylDuo/MecFeiC+7pedM0zia33zl0vcjgwcq1q1FWWF1To9EIauPbl8GbMCU0R2e0uJ8bZunhYKD2g==}
+  listr2@9.0.3:
+    resolution: {integrity: sha512-0aeh5HHHgmq1KRdMMDHfhMWQmIT/m7nRDTlxlFqni2Sp0had9baqsjJRvDGdlvgd6NmPE0nPloOipiQJGFtTHQ==}
     engines: {node: '>=20.0.0'}
 
   lmdb@3.4.1:
@@ -4390,8 +4394,8 @@ packages:
     resolution: {integrity: sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==}
     engines: {node: '>=18'}
 
-  yaml@2.8.0:
-    resolution: {integrity: sha512-4lLa/EcQCB0cJkyts+FpIRx5G/llPxfP6VQU5KByHEhLxY3IJCH0f0Hy1MHI8sClTvsIb8qwRJ6R/ZdlDJ/leQ==}
+  yaml@2.8.1:
+    resolution: {integrity: sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==}
     engines: {node: '>= 14.6'}
     hasBin: true
 
@@ -4664,7 +4668,7 @@ snapshots:
       '@angular/core': 20.1.4(@angular/compiler@20.1.4)(rxjs@7.8.2)(zone.js@0.15.0)
       tslib: 2.8.1
 
-  '@angular/build@20.1.4(841b02da93ff90b2c5eb507cd51fc3ce)':
+  '@angular/build@20.1.4(8b7eb07e8df57f5620342b9ca5160c68)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2001.4(chokidar@4.0.3)
@@ -4674,7 +4678,7 @@ snapshots:
       '@babel/helper-annotate-as-pure': 7.27.3
       '@babel/helper-split-export-declaration': 7.24.7
       '@inquirer/confirm': 5.1.13(@types/node@22.17.0)
-      '@vitejs/plugin-basic-ssl': 2.1.0(vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.0))
+      '@vitejs/plugin-basic-ssl': 2.1.0(vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.1))
       beasties: 0.3.4
       browserslist: 4.24.4
       esbuild: 0.25.5
@@ -4694,7 +4698,7 @@ snapshots:
       tinyglobby: 0.2.14
       tslib: 2.8.1
       typescript: 5.8.3
-      vite: 7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.0)
+      vite: 7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.1)
       watchpack: 2.4.4
     optionalDependencies:
       '@angular/core': 20.1.4(@angular/compiler@20.1.4)(rxjs@7.8.2)(zone.js@0.15.0)
@@ -6071,9 +6075,9 @@ snapshots:
     dependencies:
       unpic: 4.1.3
 
-  '@vitejs/plugin-basic-ssl@2.1.0(vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.0))':
+  '@vitejs/plugin-basic-ssl@2.1.0(vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.1))':
     dependencies:
-      vite: 7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.0)
+      vite: 7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.1)
 
   '@yarnpkg/lockfile@1.1.0': {}
 
@@ -6360,6 +6364,8 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.4.1: {}
+
+  chalk@5.6.0: {}
 
   chardet@0.7.0: {}
 
@@ -7659,18 +7665,18 @@ snapshots:
 
   lilconfig@3.1.3: {}
 
-  lint-staged@16.1.4:
+  lint-staged@16.1.6:
     dependencies:
-      chalk: 5.4.1
+      chalk: 5.6.0
       commander: 14.0.0
       debug: 4.4.1
       lilconfig: 3.1.3
-      listr2: 9.0.1
+      listr2: 9.0.3
       micromatch: 4.0.8
       nano-spawn: 1.0.2
       pidtree: 0.6.0
       string-argv: 0.3.2
-      yaml: 2.8.0
+      yaml: 2.8.1
     transitivePeerDependencies:
       - supports-color
 
@@ -7683,7 +7689,7 @@ snapshots:
       rfdc: 1.4.1
       wrap-ansi: 9.0.0
 
-  listr2@9.0.1:
+  listr2@9.0.3:
     dependencies:
       cli-truncate: 4.0.0
       colorette: 2.0.20
@@ -8926,7 +8932,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.0):
+  vite@7.0.6(@types/node@22.17.0)(jiti@1.21.7)(less@4.3.0)(sass@1.89.2)(terser@5.39.1)(tsx@4.20.3)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.5
       fdir: 6.4.6(picomatch@4.0.3)
@@ -8942,7 +8948,7 @@ snapshots:
       sass: 1.89.2
       terser: 5.39.1
       tsx: 4.20.3
-      yaml: 2.8.0
+      yaml: 2.8.1
 
   void-elements@2.0.1: {}
 
@@ -9032,7 +9038,7 @@ snapshots:
 
   yallist@5.0.0: {}
 
-  yaml@2.8.0: {}
+  yaml@2.8.1: {}
 
   yargs-parser@13.1.2:
     dependencies:
