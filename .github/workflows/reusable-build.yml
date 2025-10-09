@@ -31,7 +31,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Cache Angular build
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         env:
           cache-name: angular-cache
         with:
@@ -47,7 +47,7 @@ jobs:
           echo "week_of_year=${week_of_year}"
           } >> "$GITHUB_ENV"
       - name: Scripts cache (images breakpoints)
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         env:
           cache-name: scripts-cache
         with:
