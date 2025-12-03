@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Notify deploy preview will come
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/deploy-preview-status
@@ -61,7 +61,7 @@ jobs:
           CLOUDINARY_API_SECRET: ${{ secrets.cloudinary-api-secret }}
         run: cd .ci && make build
       - name: Upload built app
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: build
           path: 'dist/chrislb/browser'
