@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Notify deploy preview will come
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/deploy-preview-status
@@ -31,7 +31,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Cache Angular build
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         env:
           cache-name: angular-cache
         with:
@@ -47,7 +47,7 @@ jobs:
           echo "week_of_year=${week_of_year}"
           } >> "$GITHUB_ENV"
       - name: Scripts cache (images breakpoints)
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         env:
           cache-name: scripts-cache
         with:
@@ -61,7 +61,7 @@ jobs:
           CLOUDINARY_API_SECRET: ${{ secrets.cloudinary-api-secret }}
         run: cd .ci && make build
       - name: Upload built app
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: build
           path: 'dist/chrislb/browser'
