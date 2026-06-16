@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download built app
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: build
         # This whole step was created to mitigate an error: Cloudflare Pages deploying failed as PR branch was removed
@@ -33,7 +33,7 @@ jobs:
       - name: Check if reference exists
         if: github.event_name == 'pull_request'
         id: ref-exists
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             const ref = `heads/${context.payload.pull_request.head.ref}`
@@ -55,7 +55,7 @@ jobs:
             return response !== undefined
       - name: Publish
         if: "! (github.event_name == 'pull_request' && steps.ref-exists.outputs.result == 'false')"
-        uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # 1
+        uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # v1.5.0
         id: deploy
         with:
           accountId: ${{ secrets.cloudflare-account-id }}
@@ -68,7 +68,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       # 👇 Needed for Decap CMS. It will read this status to create the preview URL
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Deploy preview status
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/deploy-preview-status
