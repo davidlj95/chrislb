@@ -109,8 +109,8 @@ importers:
         specifier: 20.7.0
         version: 20.7.0(chokidar@4.0.3)(eslint@9.39.5)(typescript-eslint@8.69.0(eslint@9.39.5)(typescript@5.8.3))(typescript@5.8.3)
       cloudinary:
-        specifier: 2.7.0
-        version: 2.7.0
+        specifier: 2.11.0
+        version: 2.11.0
       eslint:
         specifier: 9.39.5
         version: 9.39.5
@@ -2170,8 +2170,8 @@ packages:
     resolution: {integrity: sha512-k7ndgKhwoQveBL+/1tqGJYNz097I7WOvwbmmU2AR5+magtbjPWQTS1C5vzGkBC8Ym8UWRzfKUzUUqFLypY4Q+w==}
     engines: {node: '>=20'}
 
-  cloudinary@2.7.0:
-    resolution: {integrity: sha512-qrqDn31+qkMCzKu1GfRpzPNAO86jchcNwEHCUiqvPHNSFqu7FTNF9FuAkBUyvM1CFFgFPu64NT0DyeREwLwK0w==}
+  cloudinary@2.11.0:
+    resolution: {integrity: sha512-o2pAkDDqrzPFE/mn9GCfFjBIGQmPs++Ts6rtkFl4vY528DNHiMovKWjH16HBjeGa9iwI7eAad24aWN2emT0aww==}
     engines: {node: '>=9'}
 
   color-convert@1.9.3:
@@ -3665,14 +3665,6 @@ packages:
   puppeteer-core@24.40.0:
     resolution: {integrity: sha512-MWL3XbUCfVgGR0gRsidzT6oKJT2QydPLhMITU6HoVWiiv4gkb6gJi3pcdAa8q4HwjBTbqISOWVP4aJiiyUJvag==}
     engines: {node: '>=18'}
-
-  q@1.5.1:
-    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
-    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
-    deprecated: |-
-      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
-      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qjobs@1.2.0:
     resolution: {integrity: sha512-8YOJEHtxpySA3fFDyCRxA+UUV+fA+rTWnuWvylOK/NCjhY+b4ocCtmu8TtsWb+mYeU+GCHf/S66KZF/AsteKHg==}
@@ -6474,10 +6466,9 @@ snapshots:
       strip-ansi: 7.2.0
       wrap-ansi: 9.0.2
 
-  cloudinary@2.7.0:
+  cloudinary@2.11.0:
     dependencies:
       lodash: 4.17.23
-      q: 1.5.1
 
   color-convert@1.9.3:
     dependencies:
@@ -8209,8 +8200,6 @@ snapshots:
       - react-native-b4a
       - supports-color
       - utf-8-validate
-
-  q@1.5.1: {}
 
   qjobs@1.2.0: {}
 
