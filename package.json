@@ -79,7 +79,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.3.0",
     "lint-staged": "16.4.0",
-    "ng-mocks": "14.17.3",
+    "ng-mocks": "14.18.1",
     "prettier": "3.6.2",
     "tsx": "4.23.15",
     "typescript": "5.8.3",
